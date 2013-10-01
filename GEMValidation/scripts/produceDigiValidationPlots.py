@@ -52,30 +52,6 @@ if __name__ == "__main__":
   if not treeDigis:
     sys.exit('Tree %s does not exist.' %(treeDigis))
 
-  ## recoxy plots
-    draw_occ(targetDir, "digi_xy_rm1_l1" + suff, ext, treeHits, pre + " Digi SimHit occupancy: region-1, layer1;globalX [cm];globalY [cm]", 
- 	     "h_", "(100,-260,260,100,-260,260)", "globalY:globalX", TCut("%s && %s && %s" %(rm1.GetTitle(), l1.GetTitle(), sel.GetTitle())), "COLZ")
-    draw_occ(targetDir, "digi_xy_rm1_l2" + suff, ext, treeHits, pre + " Digi SimHit occupancy: region-1, layer2;globalX [cm];globalY [cm]", 
- 	     "h_", "(100,-260,260,100,-260,260)", "globalY:globalX", TCut("%s && %s && %s" %(rm1.GetTitle(), l2.GetTitle(), sel.GetTitle())), "COLZ")
-    draw_occ(targetDir, "digi_xy_rp1_l1" + suff, ext, treeHits, pre + " Digi SimHit occupancy: region1, layer1;globalX [cm];globalY [cm]", 
- 	     "h_", "(100,-260,260,100,-260,260)", "globalY:globalX", TCut("%s && %s && %s" %(rp1.GetTitle(), l1.GetTitle(), sel.GetTitle())), "COLZ")
-    draw_occ(targetDir, "digi_xy_rp1_l2" + suff, ext, treeHits, pre + " Digi SimHit occupancy: region1, layer2;globalX [cm];globalY [cm]", 
- 	     "h_", "(100,-260,260,100,-260,260)", "globalY:globalX", TCut("%s && %s && %s" %(rp1.GetTitle(), l2.GetTitle(), sel.GetTitle())), "COLZ")
-    
-    draw_occ(targetDir, "digi_zr_rm1" + suff, ext, treeHits, pre + " Digi SimHit occupancy: region-1;globalZ [cm];globalR [cm]", 
-             "h_", "(200,-573,-564,110,130,240)", "sqrt(globalX*globalX+globalY*globalY):globalZ", TCut('%s && %s'%(rm1.GetTitle(), sel.GetTitle())), "COLZ")
-    draw_occ(targetDir, "digi_zr_rp1" + suff, ext, treeHits, pre + " Digi SimHit occupancy: region1;globalZ [cm];globalR [cm]", 
- 	     "h_", "(200,564,573,110,130,240)", "sqrt(globalX*globalX+globalY*globalY):globalZ", TCut('%s && %s'%(rp1.GetTitle(), sel.GetTitle())), "COLZ")
-
-    draw_1D(targetDir, "digi_tof_rm1_l1" + suff, ext, treeHits, pre + " Digi SimHit TOF: region-1, layer1;Time of flight [ns];entries", 
-            "h_", "(40,18,22)", "timeOfFlight", "%s && %s && %s" %(rm1.GetTitle(), l1.GetTitle(), sel.GetTitle()))
-    draw_1D(targetDir, "digi_tof_rm1_l2" + suff, ext, treeHits, pre + " Digi SimHit TOF: region-1, layer2;Time of flight [ns];entries", 
-            "h_", "(40,18,22)", "timeOfFlight", "%s && %s && %s" %(rm1.GetTitle(), l2.GetTitle(), sel.GetTitle()))
-    draw_1D(targetDir, "digi_tof_rp1_l1" + suff, ext, treeHits, pre + " Digi SimHit TOF: region1, layer1;Time of flight [ns];entries", 
-            "h_", "(40,18,22)", "timeOfFlight", "%s && %s && %s" %(rp1.GetTitle(), l1.GetTitle(), sel.GetTitle()))
-    draw_1D(targetDir, "digi_tof_rp1_l2" + suff, ext, treeHits, pre + " Digi TOF: region1, layer2;Time of flight [ns];entries", 
-            "h_", "(40,18,22)", "timeOfFlight", "%s && %s && %s" %(rp1.GetTitle(), l2.GetTitle(), sel.GetTitle()))
-
   ## occupancy plots
   draw_occ(targetDir, "strip_dg_xy_rm1_l1", ext, treeDigis, "Digi occupancy: region-1, layer1; globalX [cm]; globalY [cm]", 
 	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", TCut("%s && %s" %(rm1.GetTitle(), l1.GetTitle())), "COLZ")
