@@ -15,7 +15,7 @@ GEMRecHitMatcher::GEMRecHitMatcher(SimHitMatcher& sh)
 
 {
   gemRecHitInput_ = conf().getUntrackedParameter<edm::InputTag>("gemRecHitInput",
-      edm::InputTag("gemRecHits"));
+      edm::InputTag(""));
 
   minBXGEM_ = conf().getUntrackedParameter<int>("minBXGEM", -1);
   maxBXGEM_ = conf().getUntrackedParameter<int>("maxBXGEM", 1);
