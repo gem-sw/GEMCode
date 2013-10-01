@@ -19,8 +19,8 @@ ROOT.gROOT.SetBatch(1)
 
 if __name__ == "__main__":  
 
-  inputFile = './c.root'
-  targetDir = './digiplot'
+  inputFile = './gem_digi_ana.root'
+  targetDir = './'
   
   ## extension for figures - add more?
   ext = ".png"
