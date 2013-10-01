@@ -19,8 +19,8 @@ ROOT.gROOT.SetBatch(1)
 
 if __name__ == "__main__":  
 
-  inputFile = '/afs/cern.ch/user/d/dildick/work/GEM/CMSSW_6_2_0_pre5/src/gem_digi_ana.root'
-  targetDir = './'
+  inputFile = './c.root'
+  targetDir = './digiplot'
   
   ## extension for figures - add more?
   ext = ".png"
@@ -51,6 +51,30 @@ if __name__ == "__main__":
   treeDigis = dirAna.Get(digis)
   if not treeDigis:
     sys.exit('Tree %s does not exist.' %(treeDigis))
+
+  ## recoxy plots
+    draw_occ(targetDir, "digi_xy_rm1_l1" + suff, ext, treeHits, pre + " Digi SimHit occupancy: region-1, layer1;globalX [cm];globalY [cm]", 
+ 	     "h_", "(100,-260,260,100,-260,260)", "globalY:globalX", TCut("%s && %s && %s" %(rm1.GetTitle(), l1.GetTitle(), sel.GetTitle())), "COLZ")
+    draw_occ(targetDir, "digi_xy_rm1_l2" + suff, ext, treeHits, pre + " Digi SimHit occupancy: region-1, layer2;globalX [cm];globalY [cm]", 
+ 	     "h_", "(100,-260,260,100,-260,260)", "globalY:globalX", TCut("%s && %s && %s" %(rm1.GetTitle(), l2.GetTitle(), sel.GetTitle())), "COLZ")
+    draw_occ(targetDir, "digi_xy_rp1_l1" + suff, ext, treeHits, pre + " Digi SimHit occupancy: region1, layer1;globalX [cm];globalY [cm]", 
+ 	     "h_", "(100,-260,260,100,-260,260)", "globalY:globalX", TCut("%s && %s && %s" %(rp1.GetTitle(), l1.GetTitle(), sel.GetTitle())), "COLZ")
+    draw_occ(targetDir, "digi_xy_rp1_l2" + suff, ext, treeHits, pre + " Digi SimHit occupancy: region1, layer2;globalX [cm];globalY [cm]", 
+ 	     "h_", "(100,-260,260,100,-260,260)", "globalY:globalX", TCut("%s && %s && %s" %(rp1.GetTitle(), l2.GetTitle(), sel.GetTitle())), "COLZ")
+    
+    draw_occ(targetDir, "digi_zr_rm1" + suff, ext, treeHits, pre + " Digi SimHit occupancy: region-1;globalZ [cm];globalR [cm]", 
+             "h_", "(200,-573,-564,110,130,240)", "sqrt(globalX*globalX+globalY*globalY):globalZ", TCut('%s && %s'%(rm1.GetTitle(), sel.GetTitle())), "COLZ")
+    draw_occ(targetDir, "digi_zr_rp1" + suff, ext, treeHits, pre + " Digi SimHit occupancy: region1;globalZ [cm];globalR [cm]", 
+ 	     "h_", "(200,564,573,110,130,240)", "sqrt(globalX*globalX+globalY*globalY):globalZ", TCut('%s && %s'%(rp1.GetTitle(), sel.GetTitle())), "COLZ")
+
+    draw_1D(targetDir, "digi_tof_rm1_l1" + suff, ext, treeHits, pre + " Digi SimHit TOF: region-1, layer1;Time of flight [ns];entries", 
+            "h_", "(40,18,22)", "timeOfFlight", "%s && %s && %s" %(rm1.GetTitle(), l1.GetTitle(), sel.GetTitle()))
+    draw_1D(targetDir, "digi_tof_rm1_l2" + suff, ext, treeHits, pre + " Digi SimHit TOF: region-1, layer2;Time of flight [ns];entries", 
+            "h_", "(40,18,22)", "timeOfFlight", "%s && %s && %s" %(rm1.GetTitle(), l2.GetTitle(), sel.GetTitle()))
+    draw_1D(targetDir, "digi_tof_rp1_l1" + suff, ext, treeHits, pre + " Digi SimHit TOF: region1, layer1;Time of flight [ns];entries", 
+            "h_", "(40,18,22)", "timeOfFlight", "%s && %s && %s" %(rp1.GetTitle(), l1.GetTitle(), sel.GetTitle()))
+    draw_1D(targetDir, "digi_tof_rp1_l2" + suff, ext, treeHits, pre + " Digi TOF: region1, layer2;Time of flight [ns];entries", 
+            "h_", "(40,18,22)", "timeOfFlight", "%s && %s && %s" %(rp1.GetTitle(), l2.GetTitle(), sel.GetTitle()))
 
   ## occupancy plots
   draw_occ(targetDir, "strip_dg_xy_rm1_l1", ext, treeDigis, "Digi occupancy: region-1, layer1; globalX [cm]; globalY [cm]", 
@@ -299,4 +323,29 @@ if __name__ == "__main__":
 	    "h_", "(100,-3.141592654,3.141592654)", "phi", TCut("%s && %s && %s" %(ok_eta.GetTitle(),ok_gL1sh.GetTitle(),ok_gL2sh.GetTitle())),
             TCut("%s && %s" %(ok_gL1pad.GetTitle(),ok_gL2pad.GetTitle())), "P", kBlue)
 
+  ## simtrack local
+  draw_geff(targetDir, "eff_lx_track_dg_gem_l1_even", ext, treeTracks,
+            "Eff. for a SimTrack to have an associated GEM DigiHit in GEMl1;SimTrack localX [cm];Eff.", 
+            "h_", "(100,-100,100)", "gem_lx_even", TCut(""), ok_trk_gL1dg, "P", kBlue)
+  draw_geff(targetDir, "eff_lx_track_dg_gem_l2_even", ext, treeTracks,
+            "Eff. for a SimTrack to have an associated GEM DigiHit in GEMl2;SimTrack localX [cm];Eff.", 
+            "h_", "(100,-100,100)", "gem_lx_even", TCut(""), ok_trk_gL2dg, "P", kBlue)
+  draw_geff(targetDir, "eff_lx_track_dg_gem_l1or2_even", ext, treeTracks,
+            "Eff. for a SimTrack to have an associated GEM DigiHit in GEMl1 or GEMl2;SimTrack localX [cm];Eff.", 
+            "h_", "(100,-100,100)", "gem_lx_even", TCut(""), TCut("%s || %s" %(ok_trk_gL1dg.GetTitle(),ok_trk_gL2dg.GetTitle())), "P", kBlue)
+  draw_geff(targetDir, "eff_lx_track_dg_gem_l1and2_even", ext, treeTracks,
+            "Eff. for a SimTrack to have an associated GEM DigiHit in GEMl1 and GEMl2;SimTrack localX [cm];Eff.", 
+            "h_", "(100,-100,100)", "gem_lx_even", TCut(""), TCut("%s && %s" %(ok_trk_gL1dg.GetTitle(),ok_trk_gL2dg.GetTitle())), "P", kBlue)
 
+  draw_geff(targetDir, "eff_lx_track_dg_gem_l1_odd", ext, treeTracks,
+            "Eff. for a SimTrack to have an associated GEM DigiHit in GEMl1;SimTrack localX [cm];Eff.", 
+            "h_", "(100,-100,100)", "gem_lx_odd", TCut(""), ok_trk_gL1dg, "P", kBlue)
+  draw_geff(targetDir, "eff_lx_track_dg_gem_l2_odd", ext, treeTracks,
+            "Eff. for a SimTrack to have an associated GEM DigiHit in GEMl2;SimTrack localX [cm];Eff.", 
+            "h_", "(100,-100,100)", "gem_lx_odd", TCut(""), ok_trk_gL2dg, "P", kBlue)
+  draw_geff(targetDir, "eff_lx_track_dg_gem_l1or2_odd", ext, treeTracks,
+            "Eff. for a SimTrack to have an associated GEM DigiHit in GEMl1 or GEMl2;SimTrack localX [cm];Eff.", 
+            "h_", "(100,-100,100)", "gem_lx_odd", TCut(""), TCut("%s || %s" %(ok_trk_gL1dg.GetTitle(),ok_trk_gL2dg.GetTitle())), "P", kBlue)
+  draw_geff(targetDir, "eff_lx_track_dg_gem_l1and2_odd", ext, treeTracks,
+            "Eff. for a SimTrack to have an associated GEM DigiHit in GEMl1 and GEMl2;SimTrack localX [cm];Eff.", 
+            "h_", "(100,-100,100)", "gem_lx_odd", TCut(""), TCut("%s && %s" %(ok_trk_gL1dg.GetTitle(),ok_trk_gL2dg.GetTitle())), "P", kBlue)
