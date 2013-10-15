@@ -41,6 +41,7 @@ def getTree(fileName):
 
     analyzer = "GEMCSCAnalyzer"
     trk_eff = "trk_eff"
+    trk_eff = "trk_eff_st1"
 
     file = TFile.Open(fileName)
     if not file:
@@ -183,7 +184,7 @@ def padMatchingEffVsGenMuonPhiForPosAndNegMuons(
         cut1 = ok_pad1
         cut2 = ok_pad2
         overlapStr = ""
-        
+
     t = getTree("%sgem_csc_delta_pt%d_pad4.root"%(filesDir,pt));
 
     ## latest instructions by Vadim on 21-08-2013
@@ -200,7 +201,6 @@ def padMatchingEffVsGenMuonPhiForPosAndNegMuons(
     nBins = int(h_bins[1:-1].split(',')[0])
     minBin = int(h_bins[1:-1].split(',')[1])
     maxBin = int(h_bins[1:-1].split(',')[2])
-
     c = TCanvas("c","c",800,600)
     c.cd()
     base  = TH1F("base","",nBins,minBin,maxBin)
