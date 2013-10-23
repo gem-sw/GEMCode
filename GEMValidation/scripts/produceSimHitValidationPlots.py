@@ -18,7 +18,9 @@ ROOT.gROOT.SetBatch(1)
 
 if __name__ == "__main__":  
 
-  inputFile = '/afs/cern.ch/user/d/dildick/work/GEM/tempDir/CMSSW_6_2_0_pre7/src/GEMCode/GEMValidation/test/gem_sh_ana.test.root'
+  inputFile = str(sys.argv[1])
+  if len(inputFile) < 3:
+      inputFile = '/afs/cern.ch/user/d/dildick/work/GEM/tempDir/CMSSW_6_2_0_pre7/src/GEMCode/GEMValidation/test/gem_sh_ana.test.root'
   targetDir = './'
   
   ## extension for figures - add more?
@@ -216,58 +218,58 @@ if __name__ == "__main__":
   	    "h_", "(100,-3.14159265358979312,3.14159265358979312)", "phi", ok_eta, TCut("%s && %s" %(ok_gL1sh.GetTitle(),ok_gL2sh.GetTitle())), "P", kBlue)
 
 
-  
+  ## local x and y eff
   draw_geff(targetDir, "eff_lx_track_sh_gem_l1_even", ext, treeTracks,
             "Eff. for a SimTrack to have an associated GEM SimHit in GEMl1;SimTrack localX [cm];Eff.", 
-            "h_", "(100,-100,100)", "gem_lx_even", TCut(""), ok_trk_gL1sh, "P", kBlue)
+            "h_", "(100,-100,100)", "gem_lx_even", ok_eta, ok_trk_gL1sh, "P", kBlue)
   draw_geff(targetDir, "eff_lx_track_sh_gem_l2_even", ext, treeTracks,
             "Eff. for a SimTrack to have an associated GEM SimHit in GEMl2;SimTrack localX [cm];Eff.", 
-            "h_", "(100,-100,100)", "gem_lx_even", TCut(""), ok_trk_gL2sh, "P", kBlue)
+            "h_", "(100,-100,100)", "gem_lx_even", ok_eta, ok_trk_gL2sh, "P", kBlue)
   draw_geff(targetDir, "eff_lx_track_sh_gem_l1or2_even", ext, treeTracks,
             "Eff. for a SimTrack to have an associated GEM SimHit in GEMl1 or GEMl2;SimTrack localX [cm];Eff.", 
-            "h_", "(100,-100,100)", "gem_lx_even", TCut(""), TCut("%s || %s" %(ok_trk_gL1sh.GetTitle(),ok_trk_gL2sh.GetTitle())), "P", kBlue)
+            "h_", "(100,-100,100)", "gem_lx_even", ok_eta, TCut("%s || %s" %(ok_trk_gL1sh.GetTitle(),ok_trk_gL2sh.GetTitle())), "P", kBlue)
   draw_geff(targetDir, "eff_lx_track_sh_gem_l1and2_even", ext, treeTracks,
             "Eff. for a SimTrack to have an associated GEM SimHit in GEMl1 and GEMl2;SimTrack localX [cm];Eff.", 
-            "h_", "(100,-100,100)", "gem_lx_even", TCut(""), TCut("%s && %s" %(ok_trk_gL1sh.GetTitle(),ok_trk_gL2sh.GetTitle())), "P", kBlue)
+            "h_", "(100,-100,100)", "gem_lx_even", ok_eta, TCut("%s && %s" %(ok_trk_gL1sh.GetTitle(),ok_trk_gL2sh.GetTitle())), "P", kBlue)
 
   draw_geff(targetDir, "eff_ly_track_sh_gem_l1_even", ext, treeTracks,
             "Eff. for a SimTrack to have an associated GEM SimHit in GEMl1;SimTrack localy [cm];Eff.", 
-            "h_", "(100,-100,100)", "gem_ly_even", ok_lx_even, ok_trk_gL1sh, "P", kBlue)
+            "h_", "(100,-100,100)", "gem_ly_even", ok_eta, ok_trk_gL1sh, "P", kBlue)
   draw_geff(targetDir, "eff_ly_track_sh_gem_l2_even", ext, treeTracks,
             "Eff. for a SimTrack to have an associated GEM SimHit in GEMl2;SimTrack localy [cm];Eff.", 
-            "h_", "(100,-100,100)", "gem_ly_even", ok_lx_even, ok_trk_gL2sh, "P", kBlue)
+            "h_", "(100,-100,100)", "gem_ly_even", ok_eta, ok_trk_gL2sh, "P", kBlue)
   draw_geff(targetDir, "eff_ly_track_sh_gem_l1or2_even", ext, treeTracks,
             "Eff. for a SimTrack to have an associated GEM SimHit in GEMl1 or GEMl2;SimTrack localy [cm];Eff.", 
-            "h_", "(100,-100,100)", "gem_ly_even", ok_lx_even, TCut("%s || %s" %(ok_trk_gL1sh.GetTitle(),ok_trk_gL2sh.GetTitle())), "P", kBlue)
+            "h_", "(100,-100,100)", "gem_ly_even", ok_eta, TCut("%s || %s" %(ok_trk_gL1sh.GetTitle(),ok_trk_gL2sh.GetTitle())), "P", kBlue)
   draw_geff(targetDir, "eff_ly_track_sh_gem_l1and2_even", ext, treeTracks,
             "Eff. for a SimTrack to have an associated GEM SimHit in GEMl1 and GEMl2;SimTrack localy [cm];Eff.", 
-            "h_", "(100,-100,100)", "gem_ly_even", ok_lx_even, TCut("%s && %s" %(ok_trk_gL1sh.GetTitle(),ok_trk_gL2sh.GetTitle())), "P", kBlue)
+            "h_", "(100,-100,100)", "gem_ly_even", ok_eta, TCut("%s && %s" %(ok_trk_gL1sh.GetTitle(),ok_trk_gL2sh.GetTitle())), "P", kBlue)
 
   draw_geff(targetDir, "eff_lx_track_sh_gem_l1_odd", ext, treeTracks,
             "Eff. for a SimTrack to have an associated GEM SimHit in GEMl1;SimTrack localX [cm];Eff.", 
-            "h_", "(100,-100,100)", "gem_lx_odd", TCut(""), ok_trk_gL1sh, "P", kBlue)
+            "h_", "(100,-100,100)", "gem_lx_odd", ok_eta, ok_trk_gL1sh, "P", kBlue)
   draw_geff(targetDir, "eff_lx_track_sh_gem_l2_odd", ext, treeTracks,
             "Eff. for a SimTrack to have an associated GEM SimHit in GEMl2;SimTrack localX [cm];Eff.", 
-            "h_", "(100,-100,100)", "gem_lx_odd", TCut(""), ok_trk_gL2sh, "P", kBlue)
+            "h_", "(100,-100,100)", "gem_lx_odd", ok_eta, ok_trk_gL2sh, "P", kBlue)
   draw_geff(targetDir, "eff_lx_track_sh_gem_l1or2_odd", ext, treeTracks,
             "Eff. for a SimTrack to have an associated GEM SimHit in GEMl1 or GEMl2;SimTrack localX [cm];Eff.", 
-            "h_", "(100,-100,100)", "gem_lx_odd", TCut(""), TCut("%s || %s" %(ok_trk_gL1sh.GetTitle(),ok_trk_gL2sh.GetTitle())), "P", kBlue)
+            "h_", "(100,-100,100)", "gem_lx_odd", ok_eta, TCut("%s || %s" %(ok_trk_gL1sh.GetTitle(),ok_trk_gL2sh.GetTitle())), "P", kBlue)
   draw_geff(targetDir, "eff_lx_track_sh_gem_l1and2_odd", ext, treeTracks,
             "Eff. for a SimTrack to have an associated GEM SimHit in GEMl1 and GEMl2;SimTrack localX [cm];Eff.", 
-            "h_", "(100,-100,100)", "gem_lx_odd", TCut(""), TCut("%s && %s" %(ok_trk_gL1sh.GetTitle(),ok_trk_gL2sh.GetTitle())), "P", kBlue)
+            "h_", "(100,-100,100)", "gem_lx_odd", ok_eta, TCut("%s && %s" %(ok_trk_gL1sh.GetTitle(),ok_trk_gL2sh.GetTitle())), "P", kBlue)
 
   draw_geff(targetDir, "eff_ly_track_sh_gem_l1_odd", ext, treeTracks,
             "Eff. for a SimTrack to have an associated GEM SimHit in GEMl1;SimTrack localy [cm];Eff.", 
-            "h_", "(100,-100,100)", "gem_ly_odd", ok_lx_odd, ok_trk_gL1sh, "P", kBlue)
+            "h_", "(100,-100,100)", "gem_ly_odd", ok_eta, ok_trk_gL1sh, "P", kBlue)
   draw_geff(targetDir, "eff_ly_track_sh_gem_l2_odd", ext, treeTracks,
             "Eff. for a SimTrack to have an associated GEM SimHit in GEMl2;SimTrack localy [cm];Eff.", 
-            "h_", "(100,-100,100)", "gem_ly_odd", ok_lx_odd, ok_trk_gL2sh, "P", kBlue)
+            "h_", "(100,-100,100)", "gem_ly_odd", ok_eta, ok_trk_gL2sh, "P", kBlue)
   draw_geff(targetDir, "eff_ly_track_sh_gem_l1or2_odd", ext, treeTracks,
             "Eff. for a SimTrack to have an associated GEM SimHit in GEMl1 or GEMl2;SimTrack localy [cm];Eff.", 
-            "h_", "(100,-100,100)", "gem_ly_odd", ok_lx_odd, TCut("%s || %s" %(ok_trk_gL1sh.GetTitle(),ok_trk_gL2sh.GetTitle())), "P", kBlue)
+            "h_", "(100,-100,100)", "gem_ly_odd", ok_eta, TCut("%s || %s" %(ok_trk_gL1sh.GetTitle(),ok_trk_gL2sh.GetTitle())), "P", kBlue)
   draw_geff(targetDir, "eff_ly_track_sh_gem_l1and2_odd", ext, treeTracks,
             "Eff. for a SimTrack to have an associated GEM SimHit in GEMl1 and GEMl2;SimTrack localy [cm];Eff.", 
-            "h_", "(100,-100,100)", "gem_ly_odd", ok_lx_odd, TCut("%s && %s" %(ok_trk_gL1sh.GetTitle(),ok_trk_gL2sh.GetTitle())), "P", kBlue)
+            "h_", "(100,-100,100)", "gem_ly_odd", ok_eta, TCut("%s && %s" %(ok_trk_gL1sh.GetTitle(),ok_trk_gL2sh.GetTitle())), "P", kBlue)
 
 
     
