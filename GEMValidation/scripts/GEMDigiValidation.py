@@ -15,87 +15,87 @@ ROOT.gROOT.SetBatch(1)
 def gemGEMDigiOccupancyXY(plotter):
   ## station 1
   draw_occ(plotter.targetDir, "strip_dg_xy_rm1_st1_l1", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region-1, station1, layer1; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rm1,st1,l1), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rm1,st1,l1), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rm1_st1_l2", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region-1, station1, layer2; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rm1,st1,l2), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rm1,st1,l2), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rp1_st1_l1", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region1, station1, layer1; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rp1,st1,l1), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rp1,st1,l1), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rp1_st1_l2", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region1, station1, layer2; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rp1,st1,l2), "COLZ") 
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rp1,st1,l2), "COLZ") 
 
   draw_occ(plotter.targetDir, "strip_dg_xy_rm1_st1_l1_odd", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region-1, station1, layer1, Odd; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rm1,st1,l1,odd), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rm1,st1,l1,odd), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rm1_st1_l2_odd", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region-1, station1, layer2, Odd; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rm1,st1,l2,odd), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rm1,st1,l2,odd), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rp1_st1_l1_odd", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region1, station1, layer1, Odd; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rp1,st1,l1,odd), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rp1,st1,l1,odd), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rp1_st1_l2_odd", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region1, station1, layer2, Odd; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rp1,st1,l2,odd), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rp1,st1,l2,odd), "COLZ")
 
   draw_occ(plotter.targetDir, "strip_dg_xy_rm1_st1_l1_even", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region-1, station1, layer1, Even; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rm1,st1,l1,even), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rm1,st1,l1,even), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rm1_st1_l2_even", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region-1, station1, layer2, Even; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rm1,st1,l2,even), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rm1,st1,l2,even), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rp1_st1_l1_even", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region1, station1, layer1, Even; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rp1,st1,l1,even), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rp1,st1,l1,even), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rp1_st1_l2_even", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region1, station1, layer2, Even; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rp1,st1,l2,even), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rp1,st1,l2,even), "COLZ")
 
   ## station 2
   draw_occ(plotter.targetDir, "strip_dg_xy_rm1_st2_l1", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region-1, station2, layer1; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rm1,st2,l1), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rm1,st2,l1), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rm1_st2_l2", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region-1, station2, layer2; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rm1,st2,l2), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rm1,st2,l2), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rp1_st2_l1", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region1, station2, layer1; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rp1,st2,l1), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rp1,st2,l1), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rp1_st2_l2", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region1, station2, layer2; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rp1,st2,l2), "COLZ") 
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rp1,st2,l2), "COLZ") 
 
   draw_occ(plotter.targetDir, "strip_dg_xy_rm1_st2_l1_odd", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region-1, station2, layer1, Odd; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rm1,st2,l1,odd), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rm1,st2,l1,odd), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rm1_st2_l2_odd", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region-1, station2, layer2, Odd; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rm1,st2,l2,odd), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rm1,st2,l2,odd), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rp1_st2_l1_odd", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region1, station2, layer1, Odd; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rp1,st2,l1,odd), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rp1,st2,l1,odd), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rp1_st2_l2_odd", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region1, station2, layer2, Odd; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rp1,st2,l2,odd), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rp1,st2,l2,odd), "COLZ")
 
   draw_occ(plotter.targetDir, "strip_dg_xy_rm1_st2_l1_even", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region-1, station2, layer1, Even; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rm1,st2,l1,even), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rm1,st2,l1,even), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rm1_st2_l2_even", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region-1, station2, layer2, Even; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rm1,st2,l2,even), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rm1,st2,l2,even), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rp1_st2_l1_even", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region1, station2, layer1, Even; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rp1,st2,l1,even), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rp1,st2,l1,even), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rp1_st2_l2_even", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region1, station2, layer2, Even; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rp1,st2,l2,even), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rp1,st2,l2,even), "COLZ")
 
   ## station 3
   draw_occ(plotter.targetDir, "strip_dg_xy_rm1_st3_l1", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region-1, station3, layer1; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rm1,st3,l1), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rm1,st3,l1), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rm1_st3_l2", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region-1, station3, layer2; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rm1,st3,l2), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rm1,st3,l2), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rp1_st3_l1", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region1, station3, layer1; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rp1,st3,l1), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rp1,st3,l1), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rp1_st3_l2", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region1, station3, layer2; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rp1,st3,l2), "COLZ") 
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rp1,st3,l2), "COLZ") 
 
   draw_occ(plotter.targetDir, "strip_dg_xy_rm1_st3_l1_odd", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region-1, station3, layer1, Odd; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rm1,st3,l1,odd), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rm1,st3,l1,odd), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rm1_st3_l2_odd", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region-1, station3, layer2, Odd; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rm1,st3,l2,odd), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rm1,st3,l2,odd), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rp1_st3_l1_odd", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region1, station3, layer1, Odd; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rp1,st3,l1,odd), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rp1,st3,l1,odd), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rp1_st3_l2_odd", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region1, station3, layer2, Odd; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rp1,st3,l2,odd), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rp1,st3,l2,odd), "COLZ")
 
   draw_occ(plotter.targetDir, "strip_dg_xy_rm1_st3_l1_even", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region-1, station3, layer1, Even; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rm1,st3,l1,even), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rm1,st3,l1,even), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rm1_st3_l2_even", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region-1, station3, layer2, Even; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rm1,st3,l2,even), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rm1,st3,l2,even), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rp1_st3_l1_even", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region1, station3, layer1, Even; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rp1,st3,l1,even), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rp1,st3,l1,even), "COLZ")
   draw_occ(plotter.targetDir, "strip_dg_xy_rp1_st3_l2_even", plotter.ext, plotter.treeGEMDigis, "Digi occupancy: region1, station3, layer2, Even; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rp1,st3,l2,even), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rp1,st3,l2,even), "COLZ")
   
 
 #_______________________________________________________________________________
@@ -181,13 +181,13 @@ def gemGEMDigiOccupancyRZ(plotter):
 #_______________________________________________________________________________
 def gemGEMPadOccupancyXY(plotter):
   draw_occ(plotter.targetDir, "pad_dg_xy_rm1_l1", plotter.ext, plotter.treeGEMCSPadDigis, "Pad occupancy: region-1, layer1; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rm1,l1), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rm1,l1), "COLZ")
   draw_occ(plotter.targetDir, "pad_dg_xy_rm1_l2", plotter.ext, plotter.treeGEMCSPadDigis, "Pad occupancy: region-1, layer2; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rm1,l2), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rm1,l2), "COLZ")
   draw_occ(plotter.targetDir, "pad_dg_xy_rp1_l1", plotter.ext, plotter.treeGEMCSPadDigis, "Pad occupancy: region1, layer1; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rp1,l1), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rp1,l1), "COLZ")
   draw_occ(plotter.targetDir, "pad_dg_xy_rp1_l2", plotter.ext, plotter.treeGEMCSPadDigis, "Pad occupancy: region1, layer2; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", AND(rp1,l2), "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", AND(rp1,l2), "COLZ")
 
 
 #_______________________________________________________________________________
@@ -281,9 +281,9 @@ def gemGEMCoPadOccupancyCoPad(plotter):
 #_______________________________________________________________________________
 def gemGEMCoPadOccupancyXY(plotter):
   draw_occ(plotter.targetDir, "copad_dg_xy_rm1_l1", plotter.ext, plotter.treeGEMCSCoPadDigis, "Pad occupancy: region-1; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", rm1, "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", rm1, "COLZ")
   draw_occ(plotter.targetDir, "copad_dg_xy_rp1_l1", plotter.ext, plotter.treeGEMCSCoPadDigis, "Pad occupancy: region1; globalX [cm]; globalY [cm]", 
-	   "h_", "(260,-260,260,260,-260,260)", "g_x:g_y", rp1, "COLZ")
+	   "h_", "(260,-260,260,260,-260,260)", "g_y:g_x", rp1, "COLZ")
 
 
 #_______________________________________________________________________________
