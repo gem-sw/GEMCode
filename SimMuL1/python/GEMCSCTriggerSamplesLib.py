@@ -32,3 +32,41 @@ eosfiles['_SingleMuPt15_SLHC12_2023Muon_PU0_L1'] = ['/eos/uscms/store/user/lpcge
 eosfiles['_SingleMuPt20_SLHC12_2023Muon_PU0_L1'] = ['/eos/uscms/store/user/lpcgem/dildick/SingleMuPt20_SLHC12_GEN_SIM_DIGI_L1/SingleMuPt20_SLHC12_GEN_SIM_DIGI_L1/9f43e5aa0db40ecf4c6ad4f76ff3ba57/']
 eosfiles['_SingleMuPt30_SLHC12_2023Muon_PU0_L1'] = ['/eos/uscms/store/user/lpcgem/dildick/SingleMuPt30_SLHC12_GEN_SIM_DIGI_L1/SingleMuPt30_SLHC12_GEN_SIM_DIGI_L1/4c222e5f541a2a909af90d52da92bbae/']
 eosfiles['_SingleMuPt40_SLHC12_2023Muon_PU0_L1'] = ['/eos/uscms/store/user/lpcgem/dildick/SingleMuPt40_SLHC12_GEN_SIM_DIGI_L1/SingleMuPt40_SLHC12_GEN_SIM_DIGI_L1/0f0ae35ebf4e35077884bcb7db7d7ad0/']
+eosfiles['_SingleMuPt40_SLHC12_2023Muon_PU0_L1'] = ['/eos/uscms/store/user/lpcgem/dildick/SingleMuPt40_SLHC12_GEN_SIM_DIGI_L1/SingleMuPt40_SLHC12_GEN_SIM_DIGI_L1/0f0ae35ebf4e35077884bcb7db7d7ad0/']
+
+#Official DIGI Samples
+eosfiles['Digi_PU140'] = ['/eos/uscms/store/user/lpcgem/tahuang/SingleMuPt2-50_1M_SLHC11_2023Muon/SLHC12_patch2_2023_digi_PU140_200k/f6a82fd48e26eadaa3739932835fe094/']
+
+
+#TMB Baseline 1 = No improvments 
+eosfiles['PU140_TMB_Baseline_1'] = ['/eos/uscms/store/user/jdimasva/CSC_Up_N/PU140_v2/TMB_Baseline_1/']
+
+#ALCT improvements
+eosfiles['PU140_alctGhostCancellationBxDepth'] = ['/eos/uscms/store/user/jdimasva/CSC_Up_N/PU140_v2/alctGhostCancellationBxDepth/']
+eosfiles['PU140_alctGhostCancellationSideQuality'] = ['/eos/uscms/store/user/jdimasva/CSC_Up_N/PU140_v2/alctGhostCancellationSideQuality/']
+eosfiles['PU140_alctNarrowMaskForR1'] = ['/eos/uscms/store/user/jdimasva/CSC_Up_N/PU140_v2/alctNarrowMaskForR1/']
+eosfiles['PU140_alctPretrigDeadtime'] = ['/eos/uscms/store/user/jdimasva/CSC_Up_N/PU140_v2/alctPretrigDeadtime/']
+
+#CLCT improvements 
+eosfiles['PU140_useDeadTimeZoning'] = ['/eos/uscms/store/user/jdimasva/CSC_Up_N/PU140_v2/alctNarrowMaskForR1/']
+eosfiles['PU140_useDynamicStateMachineZone'] = ['/eos/uscms/store/user/jdimasva/CSC_Up_N/PU140_v2/useDynamicStateMachineZone/']
+eosfiles['PU140_clctPidThreshPretrig'] = ['/eos/uscms/store/user/jdimasva/CSC_Up_N/PU140_v2/clctPidThreshPretrig/']
+eosfiles['PU140_clctMinSeparation'] = ['/eos/uscms/store/user/jdimasva/CSC_Up_N/PU140_v2/clctMinSeparation/']
+
+
+#TMB Baseline 2 = ALCT + CLCT improvments 
+eosfiles['PU140_TMB_Baseline_2'] = ['/eos/uscms/store/user/jdimasva/CSC_Up_N/PU140_v2/TMB_Baseline_2/']
+
+
+#TMB improvments 
+eosfiles['PU140_matchTrigWindowSize'] = ['/eos/uscms/store/user/jdimasva/CSC_Up_N/PU140_v2/matchTrigWindowSize/']
+eosfiles['PU140_alctUseCorrectedBx'] = ['/eos/uscms/store/user/jdimasva/CSC_Up_N/PU140_v2/alctUseCorrectedBx/']
+eosfiles['PU140_clctUseCorrectedBx'] = ['/eos/uscms/store/user/jdimasva/CSC_Up_N/PU140_v2/clctUseCorrectedBx/']
+eosfiles['PU140_clctToAlct'] = ['/eos/uscms/store/user/jdimasva/CSC_Up_N/PU140_v2/clctToAlct/']
+eosfiles['PU140_tmbDropUsedClcts_matchEarliestClctME11Only'] = ['/eos/uscms/store/user/jdimasva/CSC_Up_N/PU140_v2/tmbDropUsedClcts_matchEarliestClctME11Only/']
+eosfiles['PU140_tmbCrossBxAlgorithm'] = ['/eos/uscms/store/user/jdimasva/CSC_Up_N/PU140_v2/tmbCrossBxAlgorithm/']
+eosfiles['PU140_tmbReadoutEarliest2'] = ['/eos/uscms/store/user/jdimasva/CSC_Up_N/PU140_v2/tmbReadoutEarliest2/']
+
+
+#SLHC = Actual configuration for CSC4 with CLCT, ALCT and TMB Improvments 
+eosfiles['PU140_SLHC'] = ['/eos/uscms/store/user/jdimasva/CSC_Up_N/PU140_v2/SLHC/']
