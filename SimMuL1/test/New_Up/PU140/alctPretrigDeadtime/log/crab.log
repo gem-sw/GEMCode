@@ -1,0 +1,663 @@
+2014-06-04 16:26:21,868 [DEBUG] 	/uscmst1/prod/grid/CRAB_2_10_5_patch1/python/crab.py -create -cfg alctPretrigDeadtime.cfg
+
+2014-06-04 16:26:21,869 [INFO] 	Version 2.10.5_patch1 running on Wed Jun  4 16:26:21 2014 CST (21:26:21 UTC)
+
+crab. Working options:
+	scheduler           condor
+	job type            CMSSW
+	server              OFF
+	working directory   /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/
+
+2014-06-04 16:26:21,869 [DEBUG] 	Downloading file [http://cmsdoc.cern.ch/cms/LCG/crab/config/] to [/uscms/home/jdimasva/.cms_crab/allowed_releases.conf].
+2014-06-04 16:26:21,869 [DEBUG] 	Service initialised ({'endpoint': 'http://cmsdoc.cern.ch/cms/LCG/crab/config/', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'basepath': '/cms/LCG/crab/config/', 'method': None, 'timeout': 20, 'requests': {'endpoint': 'http://cmsdoc.cern.ch/cms/LCG/crab/config/', 'timeout': 20, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'cacheduration': 0.5, 'host': 'cmsdoc.cern.ch', 'accept_type': 'text/html', 'content_type': 'application/x-www-form-urlencoded', 'logger': <logging.Logger object at 0xe8fe3d0>, 'type': 'txt/csv', 'conn': <httplib.HTTPConnection instance at 0xe90c9e0>}, 'logger': <logging.Logger object at 0xe8fe3d0>, 'cacheduration': 0.5, 'type': 'txt/csv', 'inputdata': {}}):
+	 host: cmsdoc.cern.ch, basepath: /cms/LCG/crab/config/ (text/html)
+	 cache: /uscms/home/jdimasva/.cms_crab (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:26:21,988 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0xe8fe3d0>, 'conn': <httplib.HTTPSConnection instance at 0xe90ca28>}, 'logger': <logging.Logger object at 0xe8fe3d0>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:26:21,989 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0xe8fe3d0>, 'conn': <httplib.HTTPSConnection instance at 0xea56518>}, 'logger': <logging.Logger object at 0xe8fe3d0>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:26:21,989 [DEBUG] 	Input whitelist: 
+2014-06-04 16:26:21,989 [DEBUG] 	Input blacklist: 
+2014-06-04 16:26:21,989 [DEBUG] 	Converted whitelist: 
+2014-06-04 16:26:21,989 [DEBUG] 	Converted blacklist: 
+2014-06-04 16:26:21,990 [INFO] 	Your domain name is fnal.gov: only local dataset will be considered
+2014-06-04 16:26:21,990 [INFO] 	Problem setting myproxy server endpoint: using myproxy.cern.ch
+2014-06-04 16:26:21,990 [DEBUG] 	global name 'Downloader' is not defined
+2014-06-04 16:26:23,181 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'cacheduration': 24, 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0xe8fe3d0>, 'conn': <httplib.HTTPSConnection instance at 0xe810050>}, 'logger': <logging.Logger object at 0xe8fe3d0>, 'cacheduration': 24, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 24 hours, max reuse 24.0 hours)
+2014-06-04 16:26:23,255 [DEBUG] 	Linux cmslpc32.fnal.gov 2.6.18-371.1.2.el5 #1 SMP Tue Oct 22 11:40:34 CDT 2013 x86_64 x86_64 x86_64 GNU/Linux
+ 
+Used properties:
+Linux cmslpc32.fnal.gov 2.6.18-371.1.2.el5 #1 SMP Tue Oct 22 11:40:34 CDT 2013 x86_64 x86_64 x86_64 GNU/Linux
+ 
+Used properties:
+   CMSSW.datasetpath : /SingleMuPt2-50_1M_SLHC11_2023Muon/tahuang-SLHC12_patch2_2023_digi_PU140_200k-f6a82fd48e26eadaa3739932835fe094/USER
+   CMSSW.dbs_url : phys03
+   CMSSW.number_of_jobs : 10
+   CMSSW.output_file : out_L1.root
+   CMSSW.pset : alctPretrigDeadtime.py
+   CMSSW.total_number_of_events : 100000
+   CRAB.cfg : alctPretrigDeadtime.cfg
+   CRAB.create : 
+   CRAB.jobtype : cmssw
+   CRAB.scheduler : condor
+   GRID.proxy_server : fg-myproxy.fnal.gov
+   GRID.rb : CERN
+   GRID.retry_count : 0
+   GRID.se_white_list : fnal.gov
+   USER.check_user_remote_dir : 0
+   USER.copy_data : 1
+   USER.return_data : 0
+   USER.srm_version : srmv2
+   USER.storage_element : cmseos.fnal.gov
+   USER.storage_path : /srm/v2/server?SFN=/eos/uscms/
+   USER.ui_working_dir : alctPretrigDeadtime
+   USER.user_remote_dir : /store/user/jdimasva/CSC_Up_N/PU140/alctPretrigDeadtime/
+End of used properties.
+
+2014-06-04 16:26:23,313 [DEBUG] 	CMSSW::__init__
+2014-06-04 16:26:23,313 [DEBUG] 	Scram::Scram() version is 2
+2014-06-04 16:26:23,314 [DEBUG] 	Scram::Scram() arch is slc5_amd64_gcc472
+2014-06-04 16:26:23,314 [DEBUG] 	Downloading file [https://cmssdt.cern.ch/SDT/cgi-bin] to [/uscms/home/jdimasva/.cms_crab/ReleasesXML?anytype=1].
+2014-06-04 16:26:23,314 [DEBUG] 	Service initialised ({'endpoint': 'https://cmssdt.cern.ch/SDT/cgi-bin', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'basepath': '/SDT/cgi-bin/', 'method': None, 'timeout': 20, 'requests': {'endpoint': 'https://cmssdt.cern.ch/SDT/cgi-bin', 'timeout': 20, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'cacheduration': 0.5, 'host': 'cmssdt.cern.ch', 'accept_type': 'text/html', 'content_type': 'application/x-www-form-urlencoded', 'logger': <logging.Logger object at 0xe8fe3d0>, 'type': 'txt/csv', 'conn': <httplib.HTTPSConnection instance at 0xe9222d8>}, 'logger': <logging.Logger object at 0xe8fe3d0>, 'cacheduration': 0.5, 'type': 'txt/csv', 'inputdata': {}}):
+	 host: cmssdt.cern.ch, basepath: /SDT/cgi-bin/ (text/html)
+	 cache: /uscms/home/jdimasva/.cms_crab (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:26:23,354 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0xe8fe3d0>, 'conn': <httplib.HTTPSConnection instance at 0xe922290>}, 'logger': <logging.Logger object at 0xe8fe3d0>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:26:23,354 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0xe8fe3d0>, 'conn': <httplib.HTTPSConnection instance at 0xeba10e0>}, 'logger': <logging.Logger object at 0xe8fe3d0>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:26:23,354 [DEBUG] 	Input whitelist: 
+2014-06-04 16:26:23,355 [DEBUG] 	Input blacklist: 
+2014-06-04 16:26:23,355 [DEBUG] 	Converted whitelist: 
+2014-06-04 16:26:23,355 [DEBUG] 	Converted blacklist: 
+2014-06-04 16:26:23,378 [INFO] 	Contacting Data Discovery Services ...
+2014-06-04 16:26:23,378 [DEBUG] 	No mapping to a DBS2 instance possible for dbs_url=https://cmsweb.cern.ch/dbs/prod/phys03/DBSReader
+2014-06-04 16:26:23,378 [INFO] 	Accessing DBS at: https://cmsweb.cern.ch/dbs/prod/phys03/DBSReader
+2014-06-04 16:26:23,378 [INFO] 	Will do Data Discovery using  DBS3
+2014-06-04 16:26:25,092 [INFO] 	DBS3 lookup took  1.69 sec
+2014-06-04 16:26:25,231 [INFO] 	Datatype is mc
+2014-06-04 16:26:25,234 [DEBUG] 	No mapping to a DBS2 instance possible for dbs_url=https://cmsweb.cern.ch/dbs/prod/phys03/DBSReader
+2014-06-04 16:26:26,134 [INFO] 	Requested dataset: /SingleMuPt2-50_1M_SLHC11_2023Muon/tahuang-SLHC12_patch2_2023_digi_PU140_200k-f6a82fd48e26eadaa3739932835fe094/USER has 95000 events in 1 blocks.
+
+2014-06-04 16:26:26,134 [DEBUG] 	Job splitting method: EventBased
+2014-06-04 16:26:26,134 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0xe8fe3d0>, 'conn': <httplib.HTTPSConnection instance at 0xe9598c0>}, 'logger': <logging.Logger object at 0xe8fe3d0>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:26:26,134 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0xe8fe3d0>, 'conn': <httplib.HTTPSConnection instance at 0xe9593b0>}, 'logger': <logging.Logger object at 0xe8fe3d0>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:26:26,135 [DEBUG] 	Input whitelist: fnal.gov
+2014-06-04 16:26:26,135 [DEBUG] 	Input blacklist: 
+2014-06-04 16:26:26,140 [DEBUG] 	Converted whitelist: fnal.gov
+2014-06-04 16:26:26,140 [DEBUG] 	Converted blacklist: 
+2014-06-04 16:26:26,140 [INFO] 	SE white list applied to data location: ['fnal.gov']
+2014-06-04 16:26:26,140 [DEBUG] 	List of blocks and used locations (SE):
+2014-06-04 16:26:26,141 [DEBUG] 	/SingleMuPt2-50_1M_SLHC11_2023Muon/tahuang-SLHC12_patch2_2023_digi_PU140_200k-f6a82fd48e26eadaa3739932835fe094/USER#ef0e5e03-04d7-4430-8293-e4833e1ec0f4 : ['cmseos.fnal.gov']
+2014-06-04 16:26:26,141 [INFO] 	Requested 100000 events, but only 95000 events are available.
+2014-06-04 16:26:26,141 [INFO] 	May not create the exact number_of_jobs requested.
+2014-06-04 16:26:26,141 [DEBUG] 	Events in Block File 95000
+2014-06-04 16:26:26,228 [DEBUG] 	
+Job 1 can run over 9500 events.
+Job 1 Destination: ['T3_US_FNALLPC']
+Job 2 can run over 9500 events.
+Job 2 Destination: ['T3_US_FNALLPC']
+Job 3 can run over 9500 events.
+Job 3 Destination: ['T3_US_FNALLPC']
+Job 4 can run over 9500 events.
+Job 4 Destination: ['T3_US_FNALLPC']
+Job 5 can run over 9500 events.
+Job 5 Destination: ['T3_US_FNALLPC']
+Job 6 can run over 9500 events.
+Job 6 Destination: ['T3_US_FNALLPC']
+Job 7 can run over 9500 events.
+Job 7 Destination: ['T3_US_FNALLPC']
+Job 8 can run over 9500 events.
+Job 8 Destination: ['T3_US_FNALLPC']
+Job 9 can run over 9500 events.
+Job 9 Destination: ['T3_US_FNALLPC']
+Job 10 can run over 9500 events.
+Job 10 Destination: ['T3_US_FNALLPC']
+
+2014-06-04 16:26:26,228 [INFO] 	10 job(s) can run on 95000 events.
+
+2014-06-04 16:26:26,228 [DEBUG] 	Selected sites for block /SingleMuPt2-50_1M_SLHC11_2023Muon/tahuang-SLHC12_patch2_2023_digi_PU140_200k-f6a82fd48e26eadaa3739932835fe094/USER#ef0e5e03-04d7-4430-8293-e4833e1ec0f4 via blacklist are cmseos.fnal.gov.
+
+2014-06-04 16:26:26,229 [DEBUG] 	Selected sites for block /SingleMuPt2-50_1M_SLHC11_2023Muon/tahuang-SLHC12_patch2_2023_digi_PU140_200k-f6a82fd48e26eadaa3739932835fe094/USER#ef0e5e03-04d7-4430-8293-e4833e1ec0f4 via whitelist  are cmseos.fnal.gov.
+
+2014-06-04 16:26:26,229 [INFO] 	List of jobs and available destination sites:
+
+Block     1: jobs                 1-10: sites: T3_US_FNALLPC
+
+2014-06-04 16:26:26,257 [DEBUG] 	PsetManipulator::__init__: PSet file = alctPretrigDeadtime.py
+2014-06-04 16:26:28,513 [DEBUG] 	lib /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/lib to be tarred
+2014-06-04 16:26:34,296 [DEBUG] 	data L1TriggerDPGUpgrade/L1TMuon/data to be tarred
+2014-06-04 16:26:36,785 [DEBUG] 	data GEMCode/GEMValidation/data to be tarred
+2014-06-04 16:26:37,132 [DEBUG] 	data L1Trigger/CSCTrackFinder/data to be tarred
+2014-06-04 16:26:37,276 [DEBUG] 	data Configuration/Generator/data to be tarred
+2014-06-04 16:26:45,096 [DEBUG] 	Creator: JobType CMSSW created
+2014-06-04 16:26:45,096 [DEBUG] 	Creator: total # of jobs = 10
+2014-06-04 16:26:45,096 [DEBUG] 	Creator constructor finished
+2014-06-04 16:26:45,180 [DEBUG] 	Creator::run() called
+2014-06-04 16:26:45,181 [DEBUG] 	Scram::Scram() version is 2
+2014-06-04 16:26:45,181 [DEBUG] 	Scram::Scram() arch is slc5_amd64_gcc472
+2014-06-04 16:26:45,279 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'cacheduration': 24, 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0xe8fe3d0>, 'conn': <httplib.HTTPSConnection instance at 0xeb8f0e0>}, 'logger': <logging.Logger object at 0xe8fe3d0>, 'cacheduration': 24, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 24 hours, max reuse 24.0 hours)
+2014-06-04 16:26:45,384 [INFO] 	Creating 10 jobs, please wait...
+2014-06-04 16:26:45,384 [DEBUG] 	Creation Time: 0.203320026398
+2014-06-04 16:26:45,384 [INFO] 	Total of 10 jobs created.
+
+2014-06-04 16:35:50,015 [DEBUG] 	/uscmst1/prod/grid/CRAB_2_10_5_patch1/python/crab.py -submit -c alctPretrigDeadtime
+
+2014-06-04 16:35:50,015 [INFO] 	Version 2.10.5_patch1 running on Wed Jun  4 16:35:50 2014 CST (21:35:50 UTC)
+
+crab. Working options:
+	scheduler           condor
+	job type            CMSSW
+	server              OFF
+	working directory   /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/
+
+2014-06-04 16:35:50,015 [DEBUG] 	Downloading file [http://cmsdoc.cern.ch/cms/LCG/crab/config/] to [/uscms/home/jdimasva/.cms_crab/allowed_releases.conf].
+2014-06-04 16:35:50,015 [DEBUG] 	Service initialised ({'endpoint': 'http://cmsdoc.cern.ch/cms/LCG/crab/config/', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'basepath': '/cms/LCG/crab/config/', 'method': None, 'timeout': 20, 'requests': {'endpoint': 'http://cmsdoc.cern.ch/cms/LCG/crab/config/', 'timeout': 20, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'cacheduration': 0.5, 'host': 'cmsdoc.cern.ch', 'accept_type': 'text/html', 'content_type': 'application/x-www-form-urlencoded', 'logger': <logging.Logger object at 0x6624350>, 'type': 'txt/csv', 'conn': <httplib.HTTPConnection instance at 0x66089e0>}, 'logger': <logging.Logger object at 0x6624350>, 'cacheduration': 0.5, 'type': 'txt/csv', 'inputdata': {}}):
+	 host: cmsdoc.cern.ch, basepath: /cms/LCG/crab/config/ (text/html)
+	 cache: /uscms/home/jdimasva/.cms_crab (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:35:50,138 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0x6624350>, 'conn': <httplib.HTTPSConnection instance at 0x6619050>}, 'logger': <logging.Logger object at 0x6624350>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:35:50,139 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0x6624350>, 'conn': <httplib.HTTPSConnection instance at 0x676b4d0>}, 'logger': <logging.Logger object at 0x6624350>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:35:50,139 [DEBUG] 	Input whitelist: 
+2014-06-04 16:35:50,139 [DEBUG] 	Input blacklist: 
+2014-06-04 16:35:50,139 [DEBUG] 	Converted whitelist: 
+2014-06-04 16:35:50,139 [DEBUG] 	Converted blacklist: 
+2014-06-04 16:35:50,140 [INFO] 	Your domain name is fnal.gov: only local dataset will be considered
+2014-06-04 16:35:50,140 [INFO] 	Problem setting myproxy server endpoint: using myproxy.cern.ch
+2014-06-04 16:35:50,140 [DEBUG] 	global name 'Downloader' is not defined
+2014-06-04 16:35:51,170 [DEBUG] 	parseRange_ None
+2014-06-04 16:35:51,225 [DEBUG] 	Scram::Scram() version is 2
+2014-06-04 16:35:51,225 [DEBUG] 	Scram::Scram() arch is slc5_amd64_gcc472
+2014-06-04 16:35:51,233 [DEBUG] 	Submitter::run() called
+2014-06-04 16:35:51,241 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0x6624350>, 'conn': <httplib.HTTPSConnection instance at 0x64c05f0>}, 'logger': <logging.Logger object at 0x6624350>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:35:51,241 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0x6624350>, 'conn': <httplib.HTTPSConnection instance at 0x65bcfc8>}, 'logger': <logging.Logger object at 0x6624350>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:35:51,241 [DEBUG] 	Input whitelist: fnal.gov
+2014-06-04 16:35:51,241 [DEBUG] 	Input blacklist: 
+2014-06-04 16:35:51,247 [DEBUG] 	Converted whitelist: fnal.gov
+2014-06-04 16:35:51,247 [DEBUG] 	Converted blacklist: 
+2014-06-04 16:35:51,247 [DEBUG] 	nsjobs -1
+2014-06-04 16:35:51,247 [DEBUG] 	Total jobs 10
+2014-06-04 16:35:51,256 [DEBUG] 	nj_list [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2014-06-04 16:35:51,277 [DEBUG] 	GRIDNAME: /CN=jose valledimas 
+2014-06-04 16:35:51,291 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'cacheduration': 24, 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0x6624350>, 'conn': <httplib.HTTPSConnection instance at 0x65bca28>}, 'logger': <logging.Logger object at 0x6624350>, 'cacheduration': 24, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 24 hours, max reuse 24.0 hours)
+2014-06-04 16:35:51,366 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'cacheduration': 24, 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0x6624350>, 'conn': <httplib.HTTPSConnection instance at 0x6a6f560>}, 'logger': <logging.Logger object at 0x6624350>, 'cacheduration': 24, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 24 hours, max reuse 24.0 hours)
+2014-06-04 16:35:51,432 [DEBUG] 	Submission DashBoard Pre-Submission report: {'ApplicationVersion': 'CMSSW_6_2_0_SLHC13', 'taskId': 'jdimasva_alctPretrigDeadtime_9tn6f4', 'resubmitter': 'user', 'tool': 'crab', 'vo': 'cms', 'tool_ui': 'cmslpc32.fnal.gov', 'JSToolVersion': '2.10.5_patch1', 'user': 'jdimasva', 'scheduler': 'condor', 'taskType': 'analysis', 'CMSUser': 'jdimasva', 'jobId': 'TaskMeta', 'datasetFull': '/SingleMuPt2-50_1M_SLHC11_2023Muon/tahuang-SLHC12_patch2_2023_digi_PU140_200k-f6a82fd48e26eadaa3739932835fe094/USER', 'exe': 'cmsRun', 'GridName': '/CN=jose valledimas', 'SubmissionType': 'direct'}
+2014-06-04 16:35:51,432 [INFO] 	Checking available resources...
+2014-06-04 16:35:51,444 [INFO] 	Found  compatible site(s) for job 1
+2014-06-04 16:35:51,445 [INFO] 	1 blocks of jobs will be submitted
+2014-06-04 16:35:51,445 [DEBUG] 	Delegating proxy 
+2014-06-04 16:35:51,445 [DEBUG] 	Submitting jobs [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2014-06-04 16:35:51,482 [INFO] 	SB requirements = 
+transfer_input_files = /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/share/default.tgz,/uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/share/arguments.xml,/uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/job/CMSSW.sh
+
+2014-06-04 16:35:51,483 [INFO] 	no submissionDay in input JDL, use today= 140604
+2014-06-04 16:35:52,182 [DEBUG] 	Result of cd /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/share/.condor_temp; condor_submit /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/share/.condor_temp/jdimasva_alctPretrigDeadtime_9tn6f4_job10.jdl
+0
+Submitting job(s)..........
+10 job(s) submitted to cluster 311129.
+2014-06-04 16:35:52,183 [DEBUG] 	Returning {u'jdimasva_alctPretrigDeadtime_9tn6f4_job8': 'cmslpc32.fnal.gov//140604//311129.7', u'jdimasva_alctPretrigDeadtime_9tn6f4_job9': 'cmslpc32.fnal.gov//140604//311129.8', u'jdimasva_alctPretrigDeadtime_9tn6f4_job2': 'cmslpc32.fnal.gov//140604//311129.1', u'jdimasva_alctPretrigDeadtime_9tn6f4_job3': 'cmslpc32.fnal.gov//140604//311129.2', u'jdimasva_alctPretrigDeadtime_9tn6f4_job1': 'cmslpc32.fnal.gov//140604//311129.0', u'jdimasva_alctPretrigDeadtime_9tn6f4_job6': 'cmslpc32.fnal.gov//140604//311129.5', u'jdimasva_alctPretrigDeadtime_9tn6f4_job7': 'cmslpc32.fnal.gov//140604//311129.6', u'jdimasva_alctPretrigDeadtime_9tn6f4_job4': 'cmslpc32.fnal.gov//140604//311129.3', u'jdimasva_alctPretrigDeadtime_9tn6f4_job5': 'cmslpc32.fnal.gov//140604//311129.4', u'jdimasva_alctPretrigDeadtime_9tn6f4_job10': 'cmslpc32.fnal.gov//140604//311129.9'}
+jdimasva_alctPretrigDeadtime_9tn6f4
+cmslpc32.fnal.gov
+2014-06-04 16:35:52,211 [DEBUG] 	WMS : cmslpc32.fnal.gov
+Collection ID : jdimasva_alctPretrigDeadtime_9tn6f4
+2014-06-04 16:35:52,218 [DEBUG] 	Submitted job # 1
+2014-06-04 16:35:52,219 [DEBUG] 	Submitted job # 2
+2014-06-04 16:35:52,219 [DEBUG] 	Submitted job # 3
+2014-06-04 16:35:52,219 [DEBUG] 	Submitted job # 4
+2014-06-04 16:35:52,219 [DEBUG] 	Submitted job # 5
+2014-06-04 16:35:52,219 [DEBUG] 	Submitted job # 6
+2014-06-04 16:35:52,219 [DEBUG] 	Submitted job # 7
+2014-06-04 16:35:52,219 [DEBUG] 	Submitted job # 8
+2014-06-04 16:35:52,219 [DEBUG] 	Submitted job # 9
+2014-06-04 16:35:52,219 [DEBUG] 	Submitted job # 10
+2014-06-04 16:35:52,249 [DEBUG] 	Updating [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]] state SubSuccess
+2014-06-04 16:35:52,294 [DEBUG] 	GRIDNAME: /CN=jose valledimas 
+2014-06-04 16:35:52,309 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'cacheduration': 24, 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0x6624350>, 'conn': <httplib.HTTPSConnection instance at 0x65e87e8>}, 'logger': <logging.Logger object at 0x6624350>, 'cacheduration': 24, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 24 hours, max reuse 24.0 hours)
+2014-06-04 16:35:52,383 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'cacheduration': 24, 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0x6624350>, 'conn': <httplib.HTTPSConnection instance at 0x6628b00>}, 'logger': <logging.Logger object at 0x6624350>, 'cacheduration': 24, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 24 hours, max reuse 24.0 hours)
+2014-06-04 16:35:52,517 [DEBUG] 	Submission Time: 1.28375005722
+2014-06-04 16:35:52,517 [INFO] 	Total of 10 jobs submitted.
+2014-06-04 16:37:37,263 [DEBUG] 	/uscmst1/prod/grid/CRAB_2_10_5_patch1/python/crab.py -status -c alctPretrigDeadtime
+
+2014-06-04 16:37:37,264 [INFO] 	Version 2.10.5_patch1 running on Wed Jun  4 16:37:37 2014 CST (21:37:37 UTC)
+
+crab. Working options:
+	scheduler           condor
+	job type            CMSSW
+	server              OFF
+	working directory   /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/
+
+2014-06-04 16:37:37,264 [DEBUG] 	Downloading file [http://cmsdoc.cern.ch/cms/LCG/crab/config/] to [/uscms/home/jdimasva/.cms_crab/allowed_releases.conf].
+2014-06-04 16:37:37,264 [DEBUG] 	Service initialised ({'endpoint': 'http://cmsdoc.cern.ch/cms/LCG/crab/config/', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'basepath': '/cms/LCG/crab/config/', 'method': None, 'timeout': 20, 'requests': {'endpoint': 'http://cmsdoc.cern.ch/cms/LCG/crab/config/', 'timeout': 20, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'cacheduration': 0.5, 'host': 'cmsdoc.cern.ch', 'accept_type': 'text/html', 'content_type': 'application/x-www-form-urlencoded', 'logger': <logging.Logger object at 0x134b0350>, 'type': 'txt/csv', 'conn': <httplib.HTTPConnection instance at 0x134949e0>}, 'logger': <logging.Logger object at 0x134b0350>, 'cacheduration': 0.5, 'type': 'txt/csv', 'inputdata': {}}):
+	 host: cmsdoc.cern.ch, basepath: /cms/LCG/crab/config/ (text/html)
+	 cache: /uscms/home/jdimasva/.cms_crab (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:37:37,399 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0x134b0350>, 'conn': <httplib.HTTPSConnection instance at 0x134a5050>}, 'logger': <logging.Logger object at 0x134b0350>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:37:37,399 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0x134b0350>, 'conn': <httplib.HTTPSConnection instance at 0x135fb4d0>}, 'logger': <logging.Logger object at 0x134b0350>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:37:37,400 [DEBUG] 	Input whitelist: 
+2014-06-04 16:37:37,400 [DEBUG] 	Input blacklist: 
+2014-06-04 16:37:37,400 [DEBUG] 	Converted whitelist: 
+2014-06-04 16:37:37,400 [DEBUG] 	Converted blacklist: 
+2014-06-04 16:37:37,401 [INFO] 	Your domain name is fnal.gov: only local dataset will be considered
+2014-06-04 16:37:37,401 [INFO] 	Problem setting myproxy server endpoint: using myproxy.cern.ch
+2014-06-04 16:37:37,401 [DEBUG] 	global name 'Downloader' is not defined
+2014-06-04 16:37:38,602 [DEBUG] 	Status::run() called
+2014-06-04 16:37:38,603 [INFO] 	Checking the status of all jobs: please wait
+2014-06-04 16:37:38,772 [INFO] 	
+ID    END STATUS            ACTION       ExeExitCode JobExitCode E_HOST
+----- --- ----------------- ------------  ---------- ----------- ---------
+1     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+2     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+3     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+4     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+5     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+6     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+7     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+8     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+9     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+10    N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+
+2014-06-04 16:37:38,834 [INFO] 	 10 Total Jobs 
+ >>>>>>>>> 10 Jobs Submitted 
+	List of jobs Submitted: 1-10 
+
+2014-06-04 16:37:38,841 [INFO] 	You can also follow the status of this task on :
+	CMS Dashboard: http://dashb-cms-job-task.cern.ch/taskmon.html#task=jdimasva_alctPretrigDeadtime_9tn6f4
+	Your task name is: jdimasva_alctPretrigDeadtime_9tn6f4 
+
+2014-06-04 16:37:38,841 [DEBUG] 	Status Time: 0.23858499527
+2014-06-04 16:38:59,927 [DEBUG] 	/uscmst1/prod/grid/CRAB_2_10_5_patch1/python/crab.py -status -c alctPretrigDeadtime
+
+2014-06-04 16:38:59,927 [INFO] 	Version 2.10.5_patch1 running on Wed Jun  4 16:38:59 2014 CST (21:38:59 UTC)
+
+crab. Working options:
+	scheduler           condor
+	job type            CMSSW
+	server              OFF
+	working directory   /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/
+
+2014-06-04 16:38:59,927 [DEBUG] 	Downloading file [http://cmsdoc.cern.ch/cms/LCG/crab/config/] to [/uscms/home/jdimasva/.cms_crab/allowed_releases.conf].
+2014-06-04 16:38:59,927 [DEBUG] 	Service initialised ({'endpoint': 'http://cmsdoc.cern.ch/cms/LCG/crab/config/', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'basepath': '/cms/LCG/crab/config/', 'method': None, 'timeout': 20, 'requests': {'endpoint': 'http://cmsdoc.cern.ch/cms/LCG/crab/config/', 'timeout': 20, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'cacheduration': 0.5, 'host': 'cmsdoc.cern.ch', 'accept_type': 'text/html', 'content_type': 'application/x-www-form-urlencoded', 'logger': <logging.Logger object at 0xee5350>, 'type': 'txt/csv', 'conn': <httplib.HTTPConnection instance at 0xec99e0>}, 'logger': <logging.Logger object at 0xee5350>, 'cacheduration': 0.5, 'type': 'txt/csv', 'inputdata': {}}):
+	 host: cmsdoc.cern.ch, basepath: /cms/LCG/crab/config/ (text/html)
+	 cache: /uscms/home/jdimasva/.cms_crab (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:39:00,046 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0xee5350>, 'conn': <httplib.HTTPSConnection instance at 0xeda050>}, 'logger': <logging.Logger object at 0xee5350>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:39:00,047 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0xee5350>, 'conn': <httplib.HTTPSConnection instance at 0x10324d0>}, 'logger': <logging.Logger object at 0xee5350>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:39:00,047 [DEBUG] 	Input whitelist: 
+2014-06-04 16:39:00,047 [DEBUG] 	Input blacklist: 
+2014-06-04 16:39:00,047 [DEBUG] 	Converted whitelist: 
+2014-06-04 16:39:00,047 [DEBUG] 	Converted blacklist: 
+2014-06-04 16:39:00,048 [INFO] 	Your domain name is fnal.gov: only local dataset will be considered
+2014-06-04 16:39:00,048 [INFO] 	Problem setting myproxy server endpoint: using myproxy.cern.ch
+2014-06-04 16:39:00,048 [DEBUG] 	global name 'Downloader' is not defined
+2014-06-04 16:39:01,065 [DEBUG] 	Status::run() called
+2014-06-04 16:39:01,065 [INFO] 	Checking the status of all jobs: please wait
+2014-06-04 16:39:01,209 [INFO] 	
+ID    END STATUS            ACTION       ExeExitCode JobExitCode E_HOST
+----- --- ----------------- ------------  ---------- ----------- ---------
+1     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+2     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+3     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+4     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+5     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+6     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+7     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+8     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+9     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+10    N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+
+2014-06-04 16:39:01,255 [INFO] 	 10 Total Jobs 
+ >>>>>>>>> 10 Jobs Submitted 
+	List of jobs Submitted: 1-10 
+
+2014-06-04 16:39:01,262 [INFO] 	You can also follow the status of this task on :
+	CMS Dashboard: http://dashb-cms-job-task.cern.ch/taskmon.html#task=jdimasva_alctPretrigDeadtime_9tn6f4
+	Your task name is: jdimasva_alctPretrigDeadtime_9tn6f4 
+
+2014-06-04 16:39:01,262 [DEBUG] 	Status Time: 0.196593999863
+2014-06-04 16:40:30,492 [DEBUG] 	/uscmst1/prod/grid/CRAB_2_10_5_patch1/python/crab.py -status -c alctPretrigDeadtime
+
+2014-06-04 16:40:30,492 [INFO] 	Version 2.10.5_patch1 running on Wed Jun  4 16:40:30 2014 CST (21:40:30 UTC)
+
+crab. Working options:
+	scheduler           condor
+	job type            CMSSW
+	server              OFF
+	working directory   /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/
+
+2014-06-04 16:40:30,493 [DEBUG] 	Downloading file [http://cmsdoc.cern.ch/cms/LCG/crab/config/] to [/uscms/home/jdimasva/.cms_crab/allowed_releases.conf].
+2014-06-04 16:40:30,493 [DEBUG] 	Service initialised ({'endpoint': 'http://cmsdoc.cern.ch/cms/LCG/crab/config/', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'basepath': '/cms/LCG/crab/config/', 'method': None, 'timeout': 20, 'requests': {'endpoint': 'http://cmsdoc.cern.ch/cms/LCG/crab/config/', 'timeout': 20, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'cacheduration': 0.5, 'host': 'cmsdoc.cern.ch', 'accept_type': 'text/html', 'content_type': 'application/x-www-form-urlencoded', 'logger': <logging.Logger object at 0x463f350>, 'type': 'txt/csv', 'conn': <httplib.HTTPConnection instance at 0x46239e0>}, 'logger': <logging.Logger object at 0x463f350>, 'cacheduration': 0.5, 'type': 'txt/csv', 'inputdata': {}}):
+	 host: cmsdoc.cern.ch, basepath: /cms/LCG/crab/config/ (text/html)
+	 cache: /uscms/home/jdimasva/.cms_crab (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:40:30,613 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0x463f350>, 'conn': <httplib.HTTPSConnection instance at 0x478a4d0>}, 'logger': <logging.Logger object at 0x463f350>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:40:30,613 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0x463f350>, 'conn': <httplib.HTTPSConnection instance at 0x44dddd0>}, 'logger': <logging.Logger object at 0x463f350>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:40:30,613 [DEBUG] 	Input whitelist: 
+2014-06-04 16:40:30,614 [DEBUG] 	Input blacklist: 
+2014-06-04 16:40:30,614 [DEBUG] 	Converted whitelist: 
+2014-06-04 16:40:30,614 [DEBUG] 	Converted blacklist: 
+2014-06-04 16:40:30,615 [INFO] 	Your domain name is fnal.gov: only local dataset will be considered
+2014-06-04 16:40:30,615 [INFO] 	Problem setting myproxy server endpoint: using myproxy.cern.ch
+2014-06-04 16:40:30,615 [DEBUG] 	global name 'Downloader' is not defined
+2014-06-04 16:40:31,625 [DEBUG] 	Status::run() called
+2014-06-04 16:40:31,626 [INFO] 	Checking the status of all jobs: please wait
+2014-06-04 16:40:31,766 [INFO] 	
+ID    END STATUS            ACTION       ExeExitCode JobExitCode E_HOST
+----- --- ----------------- ------------  ---------- ----------- ---------
+1     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+2     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+3     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+4     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+5     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+6     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+7     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+8     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+9     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+10    N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+
+2014-06-04 16:40:31,812 [INFO] 	 10 Total Jobs 
+ >>>>>>>>> 10 Jobs Submitted 
+	List of jobs Submitted: 1-10 
+
+2014-06-04 16:40:31,819 [INFO] 	You can also follow the status of this task on :
+	CMS Dashboard: http://dashb-cms-job-task.cern.ch/taskmon.html#task=jdimasva_alctPretrigDeadtime_9tn6f4
+	Your task name is: jdimasva_alctPretrigDeadtime_9tn6f4 
+
+2014-06-04 16:40:31,820 [DEBUG] 	Status Time: 0.194119930267
+2014-06-04 16:42:23,244 [DEBUG] 	/uscmst1/prod/grid/CRAB_2_10_5_patch1/python/crab.py -status -c alctPretrigDeadtime
+
+2014-06-04 16:42:23,244 [INFO] 	Version 2.10.5_patch1 running on Wed Jun  4 16:42:23 2014 CST (21:42:23 UTC)
+
+crab. Working options:
+	scheduler           condor
+	job type            CMSSW
+	server              OFF
+	working directory   /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/
+
+2014-06-04 16:42:23,244 [DEBUG] 	Downloading file [http://cmsdoc.cern.ch/cms/LCG/crab/config/] to [/uscms/home/jdimasva/.cms_crab/allowed_releases.conf].
+2014-06-04 16:42:23,244 [DEBUG] 	Service initialised ({'endpoint': 'http://cmsdoc.cern.ch/cms/LCG/crab/config/', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'basepath': '/cms/LCG/crab/config/', 'method': None, 'timeout': 20, 'requests': {'endpoint': 'http://cmsdoc.cern.ch/cms/LCG/crab/config/', 'timeout': 20, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'cacheduration': 0.5, 'host': 'cmsdoc.cern.ch', 'accept_type': 'text/html', 'content_type': 'application/x-www-form-urlencoded', 'logger': <logging.Logger object at 0x17983350>, 'type': 'txt/csv', 'conn': <httplib.HTTPConnection instance at 0x179679e0>}, 'logger': <logging.Logger object at 0x17983350>, 'cacheduration': 0.5, 'type': 'txt/csv', 'inputdata': {}}):
+	 host: cmsdoc.cern.ch, basepath: /cms/LCG/crab/config/ (text/html)
+	 cache: /uscms/home/jdimasva/.cms_crab (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:42:23,366 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0x17983350>, 'conn': <httplib.HTTPSConnection instance at 0x17978050>}, 'logger': <logging.Logger object at 0x17983350>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:42:23,366 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0x17983350>, 'conn': <httplib.HTTPSConnection instance at 0x17ad04d0>}, 'logger': <logging.Logger object at 0x17983350>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:42:23,366 [DEBUG] 	Input whitelist: 
+2014-06-04 16:42:23,366 [DEBUG] 	Input blacklist: 
+2014-06-04 16:42:23,366 [DEBUG] 	Converted whitelist: 
+2014-06-04 16:42:23,367 [DEBUG] 	Converted blacklist: 
+2014-06-04 16:42:23,367 [INFO] 	Your domain name is fnal.gov: only local dataset will be considered
+2014-06-04 16:42:23,367 [INFO] 	Problem setting myproxy server endpoint: using myproxy.cern.ch
+2014-06-04 16:42:23,368 [DEBUG] 	global name 'Downloader' is not defined
+2014-06-04 16:42:24,456 [DEBUG] 	Status::run() called
+2014-06-04 16:42:24,456 [INFO] 	Checking the status of all jobs: please wait
+2014-06-04 16:42:24,688 [INFO] 	
+ID    END STATUS            ACTION       ExeExitCode JobExitCode E_HOST
+----- --- ----------------- ------------  ---------- ----------- ---------
+1     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+2     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+3     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+4     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+5     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+6     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+7     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+8     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+9     N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+10    N   Submitted         SubSuccess                           cmslpc32.fnal.gov
+
+2014-06-04 16:42:24,734 [INFO] 	 10 Total Jobs 
+ >>>>>>>>> 10 Jobs Submitted 
+	List of jobs Submitted: 1-10 
+
+2014-06-04 16:42:24,741 [INFO] 	You can also follow the status of this task on :
+	CMS Dashboard: http://dashb-cms-job-task.cern.ch/taskmon.html#task=jdimasva_alctPretrigDeadtime_9tn6f4
+	Your task name is: jdimasva_alctPretrigDeadtime_9tn6f4 
+
+2014-06-04 16:42:24,742 [DEBUG] 	Status Time: 0.285392045975
+2014-06-04 16:50:09,608 [DEBUG] 	/uscmst1/prod/grid/CRAB_2_10_5_patch1/python/crab.py -status -c alctPretrigDeadtime
+
+2014-06-04 16:50:09,608 [INFO] 	Version 2.10.5_patch1 running on Wed Jun  4 16:50:09 2014 CST (21:50:09 UTC)
+
+crab. Working options:
+	scheduler           condor
+	job type            CMSSW
+	server              OFF
+	working directory   /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/
+
+2014-06-04 16:50:09,608 [DEBUG] 	Downloading file [http://cmsdoc.cern.ch/cms/LCG/crab/config/] to [/uscms/home/jdimasva/.cms_crab/allowed_releases.conf].
+2014-06-04 16:50:09,609 [DEBUG] 	Service initialised ({'endpoint': 'http://cmsdoc.cern.ch/cms/LCG/crab/config/', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'basepath': '/cms/LCG/crab/config/', 'method': None, 'timeout': 20, 'requests': {'endpoint': 'http://cmsdoc.cern.ch/cms/LCG/crab/config/', 'timeout': 20, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'cacheduration': 0.5, 'host': 'cmsdoc.cern.ch', 'accept_type': 'text/html', 'content_type': 'application/x-www-form-urlencoded', 'logger': <logging.Logger object at 0xef28350>, 'type': 'txt/csv', 'conn': <httplib.HTTPConnection instance at 0xef0c9e0>}, 'logger': <logging.Logger object at 0xef28350>, 'cacheduration': 0.5, 'type': 'txt/csv', 'inputdata': {}}):
+	 host: cmsdoc.cern.ch, basepath: /cms/LCG/crab/config/ (text/html)
+	 cache: /uscms/home/jdimasva/.cms_crab (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:50:09,740 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0xef28350>, 'conn': <httplib.HTTPSConnection instance at 0xef1d050>}, 'logger': <logging.Logger object at 0xef28350>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:50:09,741 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0xef28350>, 'conn': <httplib.HTTPSConnection instance at 0xf06f4d0>}, 'logger': <logging.Logger object at 0xef28350>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-04 16:50:09,741 [DEBUG] 	Input whitelist: 
+2014-06-04 16:50:09,741 [DEBUG] 	Input blacklist: 
+2014-06-04 16:50:09,741 [DEBUG] 	Converted whitelist: 
+2014-06-04 16:50:09,741 [DEBUG] 	Converted blacklist: 
+2014-06-04 16:50:09,742 [INFO] 	Your domain name is fnal.gov: only local dataset will be considered
+2014-06-04 16:50:09,742 [INFO] 	Problem setting myproxy server endpoint: using myproxy.cern.ch
+2014-06-04 16:50:09,742 [DEBUG] 	global name 'Downloader' is not defined
+2014-06-04 16:50:10,768 [DEBUG] 	Status::run() called
+2014-06-04 16:50:10,768 [INFO] 	Checking the status of all jobs: please wait
+2014-06-04 16:50:10,945 [INFO] 	
+ID    END STATUS            ACTION       ExeExitCode JobExitCode E_HOST
+----- --- ----------------- ------------  ---------- ----------- ---------
+1     N   Running           SubSuccess                           cmslpc32.fnal.gov
+2     N   Running           SubSuccess                           cmslpc32.fnal.gov
+3     N   Running           SubSuccess                           cmslpc32.fnal.gov
+4     N   Running           SubSuccess                           cmslpc32.fnal.gov
+5     N   Running           SubSuccess                           cmslpc32.fnal.gov
+6     N   Running           SubSuccess                           cmslpc32.fnal.gov
+7     N   Running           SubSuccess                           cmslpc32.fnal.gov
+8     N   Running           SubSuccess                           cmslpc32.fnal.gov
+9     N   Running           SubSuccess                           cmslpc32.fnal.gov
+10    N   Running           SubSuccess                           cmslpc32.fnal.gov
+
+2014-06-04 16:50:10,999 [INFO] 	 10 Total Jobs 
+ >>>>>>>>> 10 Jobs Running 
+	List of jobs Running: 1-10 
+
+2014-06-04 16:50:11,009 [INFO] 	You can also follow the status of this task on :
+	CMS Dashboard: http://dashb-cms-job-task.cern.ch/taskmon.html#task=jdimasva_alctPretrigDeadtime_9tn6f4
+	Your task name is: jdimasva_alctPretrigDeadtime_9tn6f4 
+
+2014-06-04 16:50:11,010 [DEBUG] 	Status Time: 0.241858005524
+2014-06-05 00:42:46,879 [DEBUG] 	/uscmst1/prod/grid/CRAB_2_10_5_patch1/python/crab.py -status -c alctPretrigDeadtime
+
+2014-06-05 00:42:46,879 [INFO] 	Version 2.10.5_patch1 running on Thu Jun  5 00:42:46 2014 CST (05:42:46 UTC)
+
+crab. Working options:
+	scheduler           condor
+	job type            CMSSW
+	server              OFF
+	working directory   /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/
+
+2014-06-05 00:42:46,879 [DEBUG] 	Downloading file [http://cmsdoc.cern.ch/cms/LCG/crab/config/] to [/uscms/home/jdimasva/.cms_crab/allowed_releases.conf].
+2014-06-05 00:42:46,879 [DEBUG] 	Service initialised ({'endpoint': 'http://cmsdoc.cern.ch/cms/LCG/crab/config/', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'basepath': '/cms/LCG/crab/config/', 'method': None, 'timeout': 20, 'requests': {'endpoint': 'http://cmsdoc.cern.ch/cms/LCG/crab/config/', 'timeout': 20, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'cacheduration': 0.5, 'host': 'cmsdoc.cern.ch', 'accept_type': 'text/html', 'content_type': 'application/x-www-form-urlencoded', 'logger': <logging.Logger object at 0xf3b350>, 'type': 'txt/csv', 'conn': <httplib.HTTPConnection instance at 0xf1f9e0>}, 'logger': <logging.Logger object at 0xf3b350>, 'cacheduration': 0.5, 'type': 'txt/csv', 'inputdata': {}}):
+	 host: cmsdoc.cern.ch, basepath: /cms/LCG/crab/config/ (text/html)
+	 cache: /uscms/home/jdimasva/.cms_crab (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-05 00:42:47,032 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0xf3b350>, 'conn': <httplib.HTTPSConnection instance at 0xf30050>}, 'logger': <logging.Logger object at 0xf3b350>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-05 00:42:47,033 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0xf3b350>, 'conn': <httplib.HTTPSConnection instance at 0x101a4d0>}, 'logger': <logging.Logger object at 0xf3b350>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-05 00:42:47,033 [DEBUG] 	Input whitelist: 
+2014-06-05 00:42:47,033 [DEBUG] 	Input blacklist: 
+2014-06-05 00:42:47,033 [DEBUG] 	Converted whitelist: 
+2014-06-05 00:42:47,033 [DEBUG] 	Converted blacklist: 
+2014-06-05 00:42:47,034 [INFO] 	Your domain name is fnal.gov: only local dataset will be considered
+2014-06-05 00:42:47,034 [INFO] 	Problem setting myproxy server endpoint: using myproxy.cern.ch
+2014-06-05 00:42:47,034 [DEBUG] 	global name 'Downloader' is not defined
+2014-06-05 00:42:48,066 [DEBUG] 	Status::run() called
+2014-06-05 00:42:48,066 [INFO] 	Checking the status of all jobs: please wait
+2014-06-05 00:42:48,853 [INFO] 	
+ID    END STATUS            ACTION       ExeExitCode JobExitCode E_HOST
+----- --- ----------------- ------------  ---------- ----------- ---------
+1     N   Done              Terminated                           cmslpc32.fnal.gov
+2     N   Done              Terminated                           cmslpc32.fnal.gov
+3     N   Done              Terminated                           cmslpc32.fnal.gov
+4     N   Done              Terminated                           cmslpc32.fnal.gov
+5     N   Done              Terminated                           cmslpc32.fnal.gov
+6     N   Done              Terminated                           cmslpc32.fnal.gov
+7     N   Done              Terminated                           cmslpc32.fnal.gov
+8     N   Done              Terminated                           cmslpc32.fnal.gov
+9     N   Done              Terminated                           cmslpc32.fnal.gov
+10    N   Done              Terminated                           cmslpc32.fnal.gov
+
+2014-06-05 00:42:48,907 [INFO] 	 10 Total Jobs 
+ >>>>>>>>> 10 Jobs Done
+	Jobs terminated: retrieve them with: crab -getoutput <List of jobs>
+	List of jobs: 1-10 
+
+2014-06-05 00:42:48,915 [INFO] 	You can also follow the status of this task on :
+	CMS Dashboard: http://dashb-cms-job-task.cern.ch/taskmon.html#task=jdimasva_alctPretrigDeadtime_9tn6f4
+	Your task name is: jdimasva_alctPretrigDeadtime_9tn6f4 
+
+2014-06-05 00:42:48,915 [DEBUG] 	Status Time: 0.849315881729
+2014-06-05 00:46:48,125 [DEBUG] 	/uscmst1/prod/grid/CRAB_2_10_5_patch1/python/crab.py -get -c alctPretrigDeadtime
+
+2014-06-05 00:46:48,125 [INFO] 	Version 2.10.5_patch1 running on Thu Jun  5 00:46:48 2014 CST (05:46:48 UTC)
+
+crab. Working options:
+	scheduler           condor
+	job type            CMSSW
+	server              OFF
+	working directory   /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/
+
+2014-06-05 00:46:48,125 [DEBUG] 	Downloading file [http://cmsdoc.cern.ch/cms/LCG/crab/config/] to [/uscms/home/jdimasva/.cms_crab/allowed_releases.conf].
+2014-06-05 00:46:48,126 [DEBUG] 	Service initialised ({'endpoint': 'http://cmsdoc.cern.ch/cms/LCG/crab/config/', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'basepath': '/cms/LCG/crab/config/', 'method': None, 'timeout': 20, 'requests': {'endpoint': 'http://cmsdoc.cern.ch/cms/LCG/crab/config/', 'timeout': 20, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'cacheduration': 0.5, 'host': 'cmsdoc.cern.ch', 'accept_type': 'text/html', 'content_type': 'application/x-www-form-urlencoded', 'logger': <logging.Logger object at 0x60be350>, 'type': 'txt/csv', 'conn': <httplib.HTTPConnection instance at 0x60a29e0>}, 'logger': <logging.Logger object at 0x60be350>, 'cacheduration': 0.5, 'type': 'txt/csv', 'inputdata': {}}):
+	 host: cmsdoc.cern.ch, basepath: /cms/LCG/crab/config/ (text/html)
+	 cache: /uscms/home/jdimasva/.cms_crab (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-05 00:46:48,262 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0x60be350>, 'conn': <httplib.HTTPSConnection instance at 0x60b3050>}, 'logger': <logging.Logger object at 0x60be350>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-05 00:46:48,263 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0x60be350>, 'conn': <httplib.HTTPSConnection instance at 0x61a64d0>}, 'logger': <logging.Logger object at 0x60be350>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-05 00:46:48,263 [DEBUG] 	Input whitelist: 
+2014-06-05 00:46:48,263 [DEBUG] 	Input blacklist: 
+2014-06-05 00:46:48,263 [DEBUG] 	Converted whitelist: 
+2014-06-05 00:46:48,263 [DEBUG] 	Converted blacklist: 
+2014-06-05 00:46:48,264 [INFO] 	Your domain name is fnal.gov: only local dataset will be considered
+2014-06-05 00:46:48,264 [INFO] 	Problem setting myproxy server endpoint: using myproxy.cern.ch
+2014-06-05 00:46:48,264 [DEBUG] 	global name 'Downloader' is not defined
+2014-06-05 00:46:49,484 [DEBUG] 	GetOutput::run() called
+2014-06-05 00:46:49,527 [DEBUG] 	fs: Invalid argument; it is possible that /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/res/ is not in AFS.
+Volume Name                    Quota       Used %Used   Partition
+ while checking AFS quota. Treat as check OK
+2014-06-05 00:46:49,545 [DEBUG] 	fs: Invalid argument; it is possible that /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/res/ is not in AFS.
+Volume Name                  kbytes      used     avail %used
+ while checking partition. Treat as check OK
+2014-06-05 00:46:50,320 [INFO] 	Results of Jobs # 1 are in /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/res/
+2014-06-05 00:46:50,508 [DEBUG] 	fs: Invalid argument; it is possible that /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/res/ is not in AFS.
+Volume Name                    Quota       Used %Used   Partition
+ while checking AFS quota. Treat as check OK
+2014-06-05 00:46:50,517 [DEBUG] 	fs: Invalid argument; it is possible that /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/res/ is not in AFS.
+Volume Name                  kbytes      used     avail %used
+ while checking partition. Treat as check OK
+2014-06-05 00:46:51,613 [INFO] 	Results of Jobs # 2 are in /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/res/
+2014-06-05 00:46:51,767 [INFO] 	Results of Jobs # 3 are in /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/res/
+2014-06-05 00:46:51,942 [INFO] 	Results of Jobs # 4 are in /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/res/
+2014-06-05 00:46:52,090 [INFO] 	Results of Jobs # 5 are in /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/res/
+2014-06-05 00:46:52,232 [INFO] 	Results of Jobs # 6 are in /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/res/
+2014-06-05 00:46:52,370 [INFO] 	Results of Jobs # 7 are in /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/res/
+2014-06-05 00:46:52,544 [INFO] 	Results of Jobs # 8 are in /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/res/
+2014-06-05 00:46:52,685 [INFO] 	Results of Jobs # 9 are in /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/res/
+2014-06-05 00:46:52,834 [INFO] 	Results of Jobs # 10 are in /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/res/
+2014-06-05 00:46:52,954 [DEBUG] 	GetOutput Time: 3.46908521652
+2014-06-05 00:48:01,210 [DEBUG] 	/uscmst1/prod/grid/CRAB_2_10_5_patch1/python/crab.py -status -c alctPretrigDeadtime
+
+2014-06-05 00:48:01,211 [INFO] 	Version 2.10.5_patch1 running on Thu Jun  5 00:48:01 2014 CST (05:48:01 UTC)
+
+crab. Working options:
+	scheduler           condor
+	job type            CMSSW
+	server              OFF
+	working directory   /uscms_data/d3/jdimasva/N_CSC/CMSSW_6_2_0_SLHC13/src/GEMCode/SimMuL1/test/New_Up/PU140/alctPretrigDeadtime/
+
+2014-06-05 00:48:01,211 [DEBUG] 	Downloading file [http://cmsdoc.cern.ch/cms/LCG/crab/config/] to [/uscms/home/jdimasva/.cms_crab/allowed_releases.conf].
+2014-06-05 00:48:01,211 [DEBUG] 	Service initialised ({'endpoint': 'http://cmsdoc.cern.ch/cms/LCG/crab/config/', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'basepath': '/cms/LCG/crab/config/', 'method': None, 'timeout': 20, 'requests': {'endpoint': 'http://cmsdoc.cern.ch/cms/LCG/crab/config/', 'timeout': 20, 'cachepath': '/uscms/home/jdimasva/.cms_crab', 'cacheduration': 0.5, 'host': 'cmsdoc.cern.ch', 'accept_type': 'text/html', 'content_type': 'application/x-www-form-urlencoded', 'logger': <logging.Logger object at 0x165fb350>, 'type': 'txt/csv', 'conn': <httplib.HTTPConnection instance at 0x165df9e0>}, 'logger': <logging.Logger object at 0x165fb350>, 'cacheduration': 0.5, 'type': 'txt/csv', 'inputdata': {}}):
+	 host: cmsdoc.cern.ch, basepath: /cms/LCG/crab/config/ (text/html)
+	 cache: /uscms/home/jdimasva/.cms_crab (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-05 00:48:01,337 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0x165fb350>, 'conn': <httplib.HTTPSConnection instance at 0x165f0050>}, 'logger': <logging.Logger object at 0x165fb350>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-05 00:48:01,337 [DEBUG] 	Service initialised ({'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'content_type': 'application/json', 'maxcachereuse': 24.0, 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'basepath': '/sitedb/data/prod/', 'method': None, 'accept_type': 'application/json', 'timeout': 30, 'requests': {'endpoint': 'https://cmsweb.cern.ch/sitedb/data/prod/', 'cachepath': '/uscms/home/jdimasva/.cms_sitedbcache', 'host': 'cmsweb.cern.ch', 'accept_type': 'application/json', 'content_type': 'application/json', 'logger': <logging.Logger object at 0x165fb350>, 'conn': <httplib.HTTPSConnection instance at 0x166da4d0>}, 'logger': <logging.Logger object at 0x165fb350>, 'cacheduration': 0.5, 'inputdata': {}}):
+	 host: cmsweb.cern.ch, basepath: /sitedb/data/prod/ (application/json)
+	 cache: /uscms/home/jdimasva/.cms_sitedbcache (duration 0.5 hours, max reuse 24.0 hours)
+2014-06-05 00:48:01,337 [DEBUG] 	Input whitelist: 
+2014-06-05 00:48:01,337 [DEBUG] 	Input blacklist: 
+2014-06-05 00:48:01,337 [DEBUG] 	Converted whitelist: 
+2014-06-05 00:48:01,338 [DEBUG] 	Converted blacklist: 
+2014-06-05 00:48:01,338 [INFO] 	Your domain name is fnal.gov: only local dataset will be considered
+2014-06-05 00:48:01,338 [INFO] 	Problem setting myproxy server endpoint: using myproxy.cern.ch
+2014-06-05 00:48:01,339 [DEBUG] 	global name 'Downloader' is not defined
+2014-06-05 00:48:02,433 [DEBUG] 	Status::run() called
+2014-06-05 00:48:02,433 [INFO] 	Checking the status of all jobs: please wait
+2014-06-05 00:48:02,481 [INFO] 	
+ID    END STATUS            ACTION       ExeExitCode JobExitCode E_HOST
+----- --- ----------------- ------------  ---------- ----------- ---------
+1     Y   Retrieved         Cleared       0          0           cmslpc32.fnal.gov
+2     Y   Retrieved         Cleared       0          0           cmslpc32.fnal.gov
+3     Y   Retrieved         Cleared       0          0           cmslpc32.fnal.gov
+4     Y   Retrieved         Cleared       0          0           cmslpc32.fnal.gov
+5     Y   Retrieved         Cleared       0          0           cmslpc32.fnal.gov
+6     Y   Retrieved         Cleared       0          0           cmslpc32.fnal.gov
+7     Y   Retrieved         Cleared       0          0           cmslpc32.fnal.gov
+8     Y   Retrieved         Cleared       0          0           cmslpc32.fnal.gov
+9     Y   Retrieved         Cleared       0          0           cmslpc32.fnal.gov
+10    Y   Retrieved         Cleared       0          0           cmslpc32.fnal.gov
+
+2014-06-05 00:48:02,500 [INFO] 	ExitCodes Summary
+ >>>>>>>>> 10 Jobs with Wrapper Exit Code : 0 
+	 List of jobs: 1-10 
+	See https://twiki.cern.ch/twiki/bin/view/CMS/JobExitCodes for Exit Code meaning
+
+2014-06-05 00:48:02,501 [INFO] 	 10 Total Jobs 
+
+2014-06-05 00:48:02,508 [INFO] 	You can also follow the status of this task on :
+	CMS Dashboard: http://dashb-cms-job-task.cern.ch/taskmon.html#task=jdimasva_alctPretrigDeadtime_9tn6f4
+	Your task name is: jdimasva_alctPretrigDeadtime_9tn6f4 
+
+2014-06-05 00:48:02,508 [DEBUG] 	Status Time: 0.0747590065002
