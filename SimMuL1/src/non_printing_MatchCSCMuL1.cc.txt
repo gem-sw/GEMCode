@@ -933,9 +933,8 @@ MatchCSCMuL1::print (const char msg[300], bool psimtr, bool psimh,
                 {   if (flaggers==1) continue;
                    // bool matchALCT = (stubs[i].alct != 0), matchCLCT = (stubs[i].clct != 0);
                     //std::cout<<" LCT: "<<stubs[i].alct->getKeyWG();
-                    std::cout<<" LCT Quality "<<stubs[i].trgdigi->getQuality();
-                    std::cout<<" LCT HS: "<<stubs[i].trgdigi->getStrip();
-                    std::cout<<" LCT WG: "<<stubs[i].trgdigi->getKeyWG();
+                    std::cout<<" ,LCT_Quality "<<stubs[i].trgdigi->getQuality()<<" ,ALCT_WG: "<<stubs[i].trgdigi->getKeyWG()+1;
+                    std::cout<<" ,CLCT_HStrip: "<<stubs[i].trgdigi->getStrip()+1;
                             flaggers=1;
                  //   std::cout<<"         is ghost="<<stubs[i].ghost<<"  inReadOut="<<stubs[i].inReadOut()
                  //       <<"  found assiciated ALCT="<< matchALCT <<" CLCT="<< matchCLCT <<std::endl;
@@ -970,8 +969,7 @@ MatchCSCMuL1::print (const char msg[300], bool psimtr, bool psimh,
               //  std::cout<<"   *** bx "<<bxs[b]<<" has "<<stubs.size()<<" ALCTs"<<std::endl;
                 for (size_t i=0; i<stubs.size(); i++)
                 {   if (ALCTflaggers==1) continue;
-                    std::cout<<" ALCT WG: "<<stubs[i].trgdigi->getKeyWG();
-                    std::cout<<" Alct Quality: "<<stubs[i].trgdigi->getQuality();
+                    std::cout<<" ,Alct_Quality: "<<stubs[i].trgdigi->getQuality();
                         ALCTflaggers=1;
                 //    std::cout<<"       inReadOut="<<stubs[i].inReadOut()<<"  eta="<<stubs[i].eta<<"  deltaWire="<<stubs[i].deltaWire<<" deltaOk="<<stubs[i].deltaOk<<std::endl;
                   //  std::cout<<"       matched simhits to ALCT n="<<stubs[i].simHits.size()<<" nHitsShared="<<stubs[i].nHitsShared<<std::endl;
@@ -1001,8 +999,7 @@ MatchCSCMuL1::print (const char msg[300], bool psimtr, bool psimh,
            //     std::cout<<"   *** bx "<<bxs[b]<<" has "<<stubs.size()<<" CLCTs"<<std::endl;
                 for (size_t i=0; i<stubs.size(); i++)
                 {   if (CLCTflaggers==1) continue;
-                    std::cout<<" CLCT Strip: "<<stubs[i].trgdigi->getStrip();
-                    std::cout<<" Clct Quality: "<<stubs[i].trgdigi->getQuality()<<std::endl;
+                    std::cout<<" ,Clct_Quality: "<<stubs[i].trgdigi->getQuality()<<std::endl;
                     CLCTflaggers=1;
              //       std::cout<<"       inReadOut="<<stubs[i].inReadOut()<<"  phi="<<stubs[i].phi<<"  deltaStrip="<<stubs[i].deltaStrip<<" deltaOk="<<stubs[i].deltaOk<<std::endl;
               //      std::cout<<"       matched simhits to CLCT n="<<stubs[i].simHits.size()<<" nHitsShared="<<stubs[i].nHitsShared<<std::endl;

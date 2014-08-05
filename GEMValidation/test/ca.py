@@ -22,14 +22,14 @@ process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring('file:out_L1.root')
 )
 
-process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32(100)
+process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32(1000000000)
 
 ## input
 from GEMCode.SimMuL1.GEMCSCTriggerSamplesLib import *
 from GEMCode.GEMValidation.InputFileHelpers import *
 suffix = 'PU140_TMB_Baseline_2'
 process = useInputDir(process, eosfiles[suffix], True)
-events=100000
+events=1
 process.maxEvents = cms.untracked.PSet(
      input = cms.untracked.int32(events)
 )
@@ -39,6 +39,8 @@ process.TFileService = cms.Service("TFileService",
     fileName = cms.string(outputFileName)
 )
 
+
+process.source.eventsToProcess = cms.untracked.VEventRange('1:788')
 process.source.duplicateCheckMode = cms.untracked.string('noDuplicateCheck')
 
 ##Change to handle old partition geometry for SLHC7 and arround

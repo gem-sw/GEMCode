@@ -22,7 +22,7 @@ process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring('file:out_L1.root')
 )
 
-process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32(100)
+process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32(1000000000)
 
 ## input
 from GEMCode.SimMuL1.GEMCSCTriggerSamplesLib import *
@@ -39,6 +39,8 @@ process.TFileService = cms.Service("TFileService",
     fileName = cms.string(outputFileName)
 )
 
+
+#process.source.eventsToProcess = cms.untracked.VEventRange('1:788')
 process.source.duplicateCheckMode = cms.untracked.string('noDuplicateCheck')
 
 ##Change to handle old partition geometry for SLHC7 and arround

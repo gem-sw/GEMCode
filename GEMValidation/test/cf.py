@@ -27,7 +27,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32(100)
 ## input
 from GEMCode.SimMuL1.GEMCSCTriggerSamplesLib import *
 from GEMCode.GEMValidation.InputFileHelpers import *
-suffix = 'PU140_TMB_Baseline_2'
+suffix = 'PU140_SLHC'
 process = useInputDir(process, eosfiles[suffix], True)
 events=100000
 process.maxEvents = cms.untracked.PSet(

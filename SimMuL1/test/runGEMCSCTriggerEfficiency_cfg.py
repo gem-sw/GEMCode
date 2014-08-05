@@ -77,9 +77,15 @@ process.source = cms.Source("PoolSource",
     )
 )
 
+process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32(1000000)
+process.MessageLogger.cerr.noTimeStamps = cms.untracked.bool(True)
+process.MessageLogger.cerr.FwkReport.optionalPSet = cms.untracked.bool(False)
+process.MessageLogger.cerr.optionalPSet=cms.untracked.bool(False)
+
+
 from GEMCode.GEMValidation.InputFileHelpers import useInputDir
 from GEMCode.SimMuL1.GEMCSCTriggerSamplesLib import eosfiles
-suffix = '_pt2-50_PU140_dphi0_preTrig33_NoLQCLCTwithoutGEM_ALCTGEM'
+suffix = 'PU140_TMB_Baseline_2'
 process = useInputDir(process, eosfiles[suffix], True)
 
 process.maxEvents = cms.untracked.PSet(
@@ -105,9 +111,13 @@ process.GEMCSCTriggerEfficiency.maxBxLCT = readout_windows[2][1]
 process.GEMCSCTriggerEfficiency.minBxMPLCT = readout_windows[3][0]
 process.GEMCSCTriggerEfficiency.maxBxMPLCT = readout_windows[3][1]
 process.GEMCSCTriggerEfficiency.minNHitsChamber = cms.untracked.int32(3)
-process.GEMCSCTriggerEfficiency.minSimTrPt = cms.untracked.double(2)
+#process.GEMCSCTriggerEfficiency.minSimTrPt = cms.untracked.double(10)
+#GEMmatching = process.GEMCSCTriggerEfficiency.simTrackMatching
+#GEMmatching.gemRecHit.input = ""
 GEMmatching = process.GEMCSCTriggerEfficiency.simTrackMatching
 GEMmatching.gemRecHit.input = ""
+GEMmatching.simTrack.minPt= cms.double(10)
+
 
 ## sequence, path and schedule
 process.ana_seq = cms.Sequence(process.GEMCSCTriggerEfficiency)
