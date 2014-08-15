@@ -28,8 +28,9 @@
 #include "RecoMuon/Records/interface/MuonRecoGeometryRecord.h"
 
 #include "CondFormats/DataRecord/interface/L1MuTriggerScalesRcd.h"
-#include "CondFormats/DataRecord/interface/L1MuTriggerPtScaleRcd.h"
 
+#include "CondFormats/DataRecord/interface/L1MuTriggerPtScaleRcd.h"
+#include "FWCore/Framework/interface/Event.h"
 #include "SimMuon/CSCDigitizer/src/CSCDbStripConditions.h"
 
 #include <Geometry/CSCGeometry/interface/CSCChamberSpecs.h>
@@ -1429,7 +1430,7 @@ GEMCSCTriggerEfficiency::analyze(const edm::Event& iEvent, const edm::EventSetup
         // checks
         if (debugALLEVENT) {
             //charge = static_cast<int> (-itrack->type()/13); //static_cast<int> (itrack->charge());
-            std::cout<<"SimTrk\t id eta phi pt nSH: "<<istrk->trackId()<<" "<<steta <<" "<< stphi <<" "<<stpt <<" "<<match->simHits.size()<<std::endl;
+            std::cout<<" SimTrk\t id eta phi pt nSH: "<<istrk->trackId()<<" "<<steta <<" "<< stphi <<" "<<stpt <<" "<<match->simHits.size()<<std::endl;
             std::cout<<"      \t nALCT: "<<match->ALCTs.size() 
                 <<" nCLCT: "<<match->CLCTs.size() 
                 <<" nLCT: "<<match->LCTs.size() 
@@ -1598,7 +1599,20 @@ GEMCSCTriggerEfficiency::analyze(const edm::Event& iEvent, const edm::EventSetup
 
             // SimHIts:
             if (has_hits_in_me11) h_eta_me11_initial->Fill(steta);
-            if (has_hits_in_st[1]) h_eta_me1_initial->Fill(steta);
+            if (has_hits_in_st[1]) {
+
+                    h_eta_me1_initial->Fill(steta);
+            //here for Denominator
+
+
+                    if (steta>=1.65 and steta<=2.35 and stpt>10){
+                     std::cout<<"Event: "<<iEvent.id().event()<<" Luminosity: "<< iEvent.id().luminosityBlock()<<" Run: "<< iEvent.id().run();
+                     std::cout<<" SimTrack Pt: "<<stpt<<" SimTrack eta: "<<steta<<" SimTrack phi: "<<stphi;
+                     match->print("",0,0,1,1,1,0,0,0);
+
+                 }
+
+                }
             if (has_hits_in_st[2]) h_eta_me2_initial->Fill(steta);
             if (has_hits_in_st[3]) h_eta_me3_initial->Fill(steta);
             if (has_hits_in_st[4]) h_eta_me4_initial->Fill(steta);
@@ -2191,6 +2205,18 @@ GEMCSCTriggerEfficiency::analyze(const edm::Event& iEvent, const edm::EventSetup
             if(okME1alctclct) 
             {
                 h_eta_me1_after_lct_okAlctClct->Fill(steta);
+
+
+                    //Here's filled the numerator, therefore: 
+                    /*
+                    if (steta>=1.65 and steta<=2.35 and stpt>10){
+                    std::cout<<"Event: "<<iEvent.id().event()<<" Luminosity: "<< iEvent.id().luminosityBlock()<<" Run: "<< iEvent.id().run();
+                    std::cout<<" SimTrack Pt: "<<stpt<<" SimTrack eta: "<<steta<<" SimTrack phi: "<<stphi;
+                    match->print("",0,0,1,1,1,0,0,0);
+                    
+                }
+                    */
+
                 h_phi_me1_after_lct_okAlctClct->Fill(stphi);
                 h_pt_me1_after_lct_okAlctClct->Fill(stpt);
 

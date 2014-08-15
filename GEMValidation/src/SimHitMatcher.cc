@@ -57,7 +57,7 @@ SimHitMatcher::init()
   event().getByLabel(cscSimHitInput_, csc_hits);
   event().getByLabel(gemSimHitInput_, gem_hits);
   event().getByLabel(rpcSimHitInput_, rpc_hits);
-  event().getByLabel(me0SimHitInput_, me0_hits);
+ // event().getByLabel(me0SimHitInput_, me0_hits);
 
   // fill trkId2Index associoation:
   int no = 0;
@@ -207,6 +207,8 @@ SimHitMatcher::matchSimHitsToSimTrack(std::vector<unsigned int> track_ids,
       RPCDetId layer_id( h.detUnitId() );
       rpc_chamber_to_hits_[ layer_id.chamberId().rawId() ].push_back(h);
     }
+
+    runME0SimHit_=false;
     if (runME0SimHit_) for (auto& h: me0_hits)
     {
       if (h.trackId() != track_id) continue;

@@ -829,10 +829,12 @@ MatchCSCMuL1::print (const char msg[300], bool psimtr, bool psimh,
         bool palct, bool pclct, bool plct, bool pmplct,
         bool ptftrack, bool ptfcand)
 {
-    std::cout<<"####### MATCH PRINT: "<<msg<<" #######"<<std::endl;
+    //std::cout<<"####### MATCH PRINT: "<<msg<<" #######"<<std::endl;
 
     bool DETAILED_HIT_LAYERS = 0;
-
+    int flaggers=0;
+    int CLCTflaggers=0;
+    int ALCTflaggers=0;
     if (psimtr) 
     {
         std::cout<<"****** SimTrack: id="<<strk->trackId()<<"  pt="<<sqrt(strk->momentum().perp2())
@@ -911,89 +913,139 @@ MatchCSCMuL1::print (const char msg[300], bool psimtr, bool psimh,
         //    }
     }
 
-    if (palct) 
-    {
-        std::vector<int> chs = chambersWithALCTs();
-        std::cout<<"****** match ALCTs: total="<< ALCTs.size()<<" in "<<chs.size()<<" chambers"<<std::endl;
-        for (size_t c=0; c<chs.size(); c++)
-        {
-            std::vector<int> bxs = bxsWithALCTs( chs[c] );
-            CSCDetId id(chs[c]);
-            std::cout<<" ***** chamber "<<chs[c]<<"  "<<id<<"  has "<<bxs.size()<<" ALCT bxs"<<std::endl;
-            for (size_t b=0; b<bxs.size(); b++)
-            {
-                std::vector<ALCT> stubs = chamberALCTsInBx( chs[c], bxs[b] );
-                std::cout<<"   *** bx "<<bxs[b]<<" has "<<stubs.size()<<" ALCTs"<<std::endl;
-                for (size_t i=0; i<stubs.size(); i++)
-                {
-                    std::cout<<"     * ALCT: "<<*(stubs[i].trgdigi)<<std::endl;
-                    std::cout<<"       inReadOut="<<stubs[i].inReadOut()<<"  eta="<<stubs[i].eta<<"  deltaWire="<<stubs[i].deltaWire<<" deltaOk="<<stubs[i].deltaOk<<std::endl;
-                    std::cout<<"       matched simhits to ALCT n="<<stubs[i].simHits.size()<<" nHitsShared="<<stubs[i].nHitsShared<<std::endl;
-                    if (psimh) for (unsigned h=0; h<stubs[i].simHits.size();h++) 
-                        std::cout<<"     "<<(stubs[i].simHits)[h]<<" "<<(stubs[i].simHits)[h].exitPoint()
-                            <<"  "<<(stubs[i].simHits)[h].momentumAtEntry()<<" "<<(stubs[i].simHits)[h].energyLoss()
-                            <<" "<<(stubs[i].simHits)[h].particleType()<<" "<<(stubs[i].simHits)[h].trackId()<<std::endl;
-                }
-            }
-        }
-    }
+    //Moved here:
 
-    if (pclct) 
-    {
-        std::vector<int> chs = chambersWithCLCTs();
-        std::cout<<"****** match CLCTs: total="<< CLCTs.size()<<" in "<<chs.size()<<" chambers"<<std::endl;
-        for (size_t c=0; c<chs.size(); c++)
-        {
-            std::vector<int> bxs = bxsWithCLCTs( chs[c] );
-            CSCDetId id(chs[c]);
-            std::cout<<" ***** chamber "<<chs[c]<<"  "<<id<<"  has "<<bxs.size()<<" CLCT bxs"<<std::endl;
-            for (size_t b=0; b<bxs.size(); b++)
-            {
-                std::vector<CLCT> stubs = chamberCLCTsInBx( chs[c], bxs[b] );
-                std::cout<<"   *** bx "<<bxs[b]<<" has "<<stubs.size()<<" CLCTs"<<std::endl;
-                for (size_t i=0; i<stubs.size(); i++)
-                {
-                    std::cout<<"     * CLCT: "<<*(stubs[i].trgdigi)<<std::endl;
-                    std::cout<<"       inReadOut="<<stubs[i].inReadOut()<<"  phi="<<stubs[i].phi<<"  deltaStrip="<<stubs[i].deltaStrip<<" deltaOk="<<stubs[i].deltaOk<<std::endl;
-                    std::cout<<"       matched simhits to CLCT n="<<stubs[i].simHits.size()<<" nHitsShared="<<stubs[i].nHitsShared<<std::endl;
-                    if (psimh) for (unsigned h=0; h<stubs[i].simHits.size();h++) 
-                        std::cout<<"     "<<(stubs[i].simHits)[h]<<" "<<(stubs[i].simHits)[h].exitPoint()
-                            <<"  "<<(stubs[i].simHits)[h].momentumAtEntry()<<" "<<(stubs[i].simHits)[h].energyLoss()
-                            <<" "<<(stubs[i].simHits)[h].particleType()<<" "<<(stubs[i].simHits)[h].trackId()<<std::endl;
-                }
-            }
-        }
-    }
-
-    if (plct)
-    {
+    if (plct and flaggers==0)    {
         std::vector<int> chs = chambersWithLCTs();
-        std::cout<<"****** match LCTs: total="<< LCTs.size()<<" in "<<chs.size()<<" chambers"<<std::endl;
+        //std::cout<<"****** match LCTs: total="<< LCTs.size()<<" in "<<chs.size()<<" chambers"<<std::endl;
         for (size_t c=0; c<chs.size(); c++)
         {
             std::vector<int> bxs = bxsWithLCTs( chs[c] );
             CSCDetId id(chs[c]);
-            std::cout<<" ***** chamber "<<chs[c]<<"  "<<id<<"  has "<<bxs.size()<<" LCT bxs"<<std::endl;
+
+            if (id.station()==1 and (id.ring()==1 or id.ring()==4)){
+        //    std::cout<<" ***** chamber "<<chs[c]<<"  "<<id<<"  has "<<bxs.size()<<" LCT bxs"<<std::endl;
             for (size_t b=0; b<bxs.size(); b++)
             {
                 std::vector<LCT> stubs = chamberLCTsInBx( chs[c], bxs[b] );
-                std::cout<<"   *** bx "<<bxs[b]<<" has "<<stubs.size()<<" LCTs"<<std::endl;
+          //      std::cout<<"   *** bx "<<bxs[b]<<" has "<<stubs.size()<<" LCTs"<<std::endl;
                 for (size_t i=0; i<stubs.size(); i++)
-                {
-                    bool matchALCT = (stubs[i].alct != 0), matchCLCT = (stubs[i].clct != 0);
-                    std::cout<<"     * LCT: "<<*(stubs[i].trgdigi);
-                    std::cout<<"         is ghost="<<stubs[i].ghost<<"  inReadOut="<<stubs[i].inReadOut()
-                        <<"  found assiciated ALCT="<< matchALCT <<" CLCT="<< matchCLCT <<std::endl;
-                    if (matchALCT && matchCLCT)
-                        std::cout<<"         BX(A)-BX(C)="<<stubs[i].alct->getBX() - stubs[i].clct->getBX()
-                            <<"  deltaWire="<<stubs[i].alct->deltaWire<<"  deltaStrip="<<stubs[i].clct->deltaStrip
-                            <<"  deltaOk="<<stubs[i].deltaOk<<"="<<stubs[i].alct->deltaOk<<"&"<<stubs[i].clct->deltaOk<<std::endl;
+                {   if (flaggers==1) continue;
+                   // bool matchALCT = (stubs[i].alct != 0), matchCLCT = (stubs[i].clct != 0);
+                    //std::cout<<" LCT: "<<stubs[i].alct->getKeyWG();
+                    std::cout<<" LCT Quality "<<stubs[i].trgdigi->getQuality();
+                    std::cout<<" LCT HS: "<<stubs[i].trgdigi->getStrip()+1<<" LCT WG: "<<stubs[i].trgdigi->getKeyWG()+1;
+                            flaggers=1;
+                 //   std::cout<<"         is ghost="<<stubs[i].ghost<<"  inReadOut="<<stubs[i].inReadOut()
+                 //       <<"  found assiciated ALCT="<< matchALCT <<" CLCT="<< matchCLCT <<std::endl;
+                  //  if (matchALCT && matchCLCT)
+                  //      std::cout<<"         BX(A)-BX(C)="<<stubs[i].alct->getBX() - stubs[i].clct->getBX()
+                  //          <<"  deltaWire="<<stubs[i].alct->deltaWire<<"  deltaStrip="<<stubs[i].clct->deltaStrip
+                   //         <<"  deltaOk="<<stubs[i].deltaOk<<"="<<stubs[i].alct->deltaOk<<"&"<<stubs[i].clct->deltaOk<<std::endl;
 
                 }
             }
-        }
+        }}
     }
 
+
+
+
+
+    if (palct and ALCTflaggers==0) 
+    {
+        std::vector<int> chs = chambersWithALCTs();
+       // std::cout<<"****** match ALCTs: total="<< ALCTs.size()<<" in "<<chs.size()<<" chambers"<<std::endl;
+        for (size_t c=0; c<chs.size(); c++)
+        {
+            std::vector<int> bxs = bxsWithALCTs( chs[c] );
+            CSCDetId id(chs[c]);
+
+            if (id.station()==1 and (id.ring()==1 or id.ring()==4)){
+            //std::cout<<" ***** chamber "<<chs[c]<<"  "<<id<<"  has "<<bxs.size()<<" ALCT bxs"<<std::endl;
+            for (size_t b=0; b<bxs.size(); b++)
+            {
+                std::vector<ALCT> stubs = chamberALCTsInBx( chs[c], bxs[b] );
+              //  std::cout<<"   *** bx "<<bxs[b]<<" has "<<stubs.size()<<" ALCTs"<<std::endl;
+                for (size_t i=0; i<stubs.size(); i++)
+                {   if (ALCTflaggers==1) continue;
+                    std::cout<<" ALCT WG: "<<stubs[i].trgdigi->getKeyWG()+1<<" Alct Quality: "<<stubs[i].trgdigi->getQuality();
+                        ALCTflaggers=1;
+                //    std::cout<<"       inReadOut="<<stubs[i].inReadOut()<<"  eta="<<stubs[i].eta<<"  deltaWire="<<stubs[i].deltaWire<<" deltaOk="<<stubs[i].deltaOk<<std::endl;
+                  //  std::cout<<"       matched simhits to ALCT n="<<stubs[i].simHits.size()<<" nHitsShared="<<stubs[i].nHitsShared<<std::endl;
+                   // if (psimh) for (unsigned h=0; h<stubs[i].simHits.size();h++) 
+                    //    std::cout<<"     "<<(stubs[i].simHits)[h]<<" "<<(stubs[i].simHits)[h].exitPoint()
+                     //       <<"  "<<(stubs[i].simHits)[h].momentumAtEntry()<<" "<<(stubs[i].simHits)[h].energyLoss()
+                     //       <<" "<<(stubs[i].simHits)[h].particleType()<<" "<<(stubs[i].simHits)[h].trackId()<<std::endl;
+                }
+            }
+        }}
+    }
+
+    if (pclct and CLCTflaggers==0) 
+    {
+        std::vector<int> chs = chambersWithCLCTs();
+       // std::cout<<"****** match CLCTs: total="<< CLCTs.size()<<" in "<<chs.size()<<" chambers"<<std::endl;
+        for (size_t c=0; c<chs.size(); c++)
+        {
+            std::vector<int> bxs = bxsWithCLCTs( chs[c] );
+            CSCDetId id(chs[c]);
+
+            if (id.station()==1 and (id.ring()==1 or id.ring()==4)){
+         //   std::cout<<" ***** chamber "<<chs[c]<<"  "<<id<<"  has "<<bxs.size()<<" CLCT bxs"<<std::endl;
+            for (size_t b=0; b<bxs.size(); b++)
+            {
+                std::vector<CLCT> stubs = chamberCLCTsInBx( chs[c], bxs[b] );
+           //     std::cout<<"   *** bx "<<bxs[b]<<" has "<<stubs.size()<<" CLCTs"<<std::endl;
+                for (size_t i=0; i<stubs.size(); i++)
+                {   if (CLCTflaggers==1) continue;
+                    std::cout<<" CLCT Strip: "<<stubs[i].trgdigi->getStrip()+1<<" Clct Quality: "<<stubs[i].trgdigi->getQuality()<<std::endl;
+                    CLCTflaggers=1;
+             //       std::cout<<"       inReadOut="<<stubs[i].inReadOut()<<"  phi="<<stubs[i].phi<<"  deltaStrip="<<stubs[i].deltaStrip<<" deltaOk="<<stubs[i].deltaOk<<std::endl;
+              //      std::cout<<"       matched simhits to CLCT n="<<stubs[i].simHits.size()<<" nHitsShared="<<stubs[i].nHitsShared<<std::endl;
+              //      if (psimh) for (unsigned h=0; h<stubs[i].simHits.size();h++) 
+              //          std::cout<<"     "<<(stubs[i].simHits)[h]<<" "<<(stubs[i].simHits)[h].exitPoint()
+              //              <<"  "<<(stubs[i].simHits)[h].momentumAtEntry()<<" "<<(stubs[i].simHits)[h].energyLoss()
+               //             <<" "<<(stubs[i].simHits)[h].particleType()<<" "<<(stubs[i].simHits)[h].trackId()<<std::endl;
+                }
+            }
+        }}
+    }
+//I will move it up:
+
+/*
+    if (plct)
+    {
+        std::vector<int> chs = chambersWithLCTs();
+        //std::cout<<"****** match LCTs: total="<< LCTs.size()<<" in "<<chs.size()<<" chambers"<<std::endl;
+        for (size_t c=0; c<chs.size(); c++)
+        {
+            std::vector<int> bxs = bxsWithLCTs( chs[c] );
+            CSCDetId id(chs[c]);
+
+            if (id.station()==1 and (id.ring()==1 or id.ring()==4)){
+        //    std::cout<<" ***** chamber "<<chs[c]<<"  "<<id<<"  has "<<bxs.size()<<" LCT bxs"<<std::endl;
+            for (size_t b=0; b<bxs.size(); b++)
+            {
+                std::vector<LCT> stubs = chamberLCTsInBx( chs[c], bxs[b] );
+          //      std::cout<<"   *** bx "<<bxs[b]<<" has "<<stubs.size()<<" LCTs"<<std::endl;
+                for (size_t i=0; i<stubs.size(); i++)
+                {
+                   // bool matchALCT = (stubs[i].alct != 0), matchCLCT = (stubs[i].clct != 0);
+                    //std::cout<<" LCT: "<<stubs[i].alct->getKeyWG();
+                    std::cout<<" LCT: WG: "<<stubs[i].trgdigi->getKeyWG();
+                 //   std::cout<<"         is ghost="<<stubs[i].ghost<<"  inReadOut="<<stubs[i].inReadOut()
+                 //       <<"  found assiciated ALCT="<< matchALCT <<" CLCT="<< matchCLCT <<std::endl;
+                  //  if (matchALCT && matchCLCT)
+                  //      std::cout<<"         BX(A)-BX(C)="<<stubs[i].alct->getBX() - stubs[i].clct->getBX()
+                  //          <<"  deltaWire="<<stubs[i].alct->deltaWire<<"  deltaStrip="<<stubs[i].clct->deltaStrip
+                   //         <<"  deltaOk="<<stubs[i].deltaOk<<"="<<stubs[i].alct->deltaOk<<"&"<<stubs[i].clct->deltaOk<<std::endl;
+
+                }
+            }
+        }}
+    }
+*/
     if (pmplct)
     {
         std::vector<int> chs = chambersWithMPLCTs();
@@ -1039,7 +1091,7 @@ MatchCSCMuL1::print (const char msg[300], bool psimtr, bool psimh,
         }
     }
 
-    std::cout<<"####### END MATCH PRINT #######"<<std::endl;
+//    std::cout<<"####### END MATCH PRINT #######"<<std::endl;
 }
 
 
