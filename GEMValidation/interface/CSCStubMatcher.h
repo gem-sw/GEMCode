@@ -82,6 +82,8 @@ public:
   const CSCCorrelatedLCTDigiContainer& cscLctsInChamber(unsigned int) const;
   const CSCCorrelatedLCTDigiContainer& cscMplctsInChamber(unsigned int) const;
 
+  ///return all lcts matched to simmuon
+  std::map<unsigned int, CSCCorrelatedLCTDigiContainer> allLctsMatched2SimMuon() const { return chamber_to_cscLcts_; }
   /// best matching from a particular crossed chamber
   CSCCLCTDigi bestCscClctInChamber(unsigned int) const;
   CSCALCTDigi bestCscAlctInChamber(unsigned int) const;
@@ -96,6 +98,8 @@ public:
    
   //get global position of matching comparator digi in each layer
   void positionsOfComparatorInLCT(unsigned int, const CSCCorrelatedLCTDigi&, std::vector<GlobalPoint>&) const;
+  //z position of  certain layer
+  float zpositionOfLayer(unsigned int detid, int layer) const;
 
   // check if comp digis belongs to CLCT pattern
   bool comparatorInCLCTPattern(int keyStrip, int pattern, int layer, int halfstrip) const;

@@ -2,10 +2,9 @@
 #include "TGraphErrors.h"
 
 #include "DataFormats/Math/interface/deltaPhi.h"
-#include "GEMCode/GEMValidation/interface/Ptassignment.h"
+#include "GEMCode/GEMValidation/interface/PtassignmentHelper.h"
 #include <iostream>
 #include <math.h>       /* atan */
-#define PI 3.14159265
 
 
 int GetEtaPartition(float eta ){
@@ -40,6 +39,13 @@ float Ptassign_Position(float deltay12, float deltay23, float eta, int par){
     return pt;
 }
 
+float deltaYcalculation(GlobalPoint gp1, GlobalPoint gp2){
+   float anglea = gp2.phi();
+   float newyst1 = -gp1.x()*sin(anglea) + gp1.y()*cos(anglea);
+   float newyst2 = -gp2.x()*sin(anglea) + gp2.y()*cos(anglea);
+   return (newyst2-newyst1);
+
+}
 
 float Ptassign_Position_gp(GlobalPoint gp1, GlobalPoint gp2, GlobalPoint gp3, float eta, int par){
 
@@ -122,7 +128,7 @@ float PhiMomentum_Xfactor(float dphi, float phi_position, float X){
      if (phiM <= -PI) phiM = phiM+2*PI;
      else if (phiM > PI) phiM = phiM-2*PI;
      
-     //std::cout <<"PhiMomentum_Xfactor: dphi "<< dphi <<" phi_gem "<< phi_position <<" X "<<X <<" phi_diff "<< phi_diff <<" phiM "<< phiM << std::endl;
+     //std::cout <<"PhiMomentum_Xfactor: dphi "<< dphi <<" phi_position "<< phi_position <<" X "<<X <<" phi_diff "<< phi_diff <<" phiM "<< phiM << std::endl;
      return phiM;
 
 }
@@ -146,7 +152,7 @@ float PhiMomentum_Xfactor_V2(float phi_CSC, float phi_GEM, float X){
      if (phiM <= -PI) phiM = phiM+2*PI;
      else if (phiM > PI) phiM = phiM-2*PI;
      
-     //std::cout <<"PhiMomentum_Xfactor: dphi "<< dphi <<" phi_csc "<< phi_CSC <<" phi_gem "<< phi_GEM <<" X "<<X <<" phi_diff "<< phi_diff <<" phiM "<< phiM << std::endl;
+     //std::cout <<"PhiMomentum_Xfactor: dphi "<< dphi <<" phi_poistion1 "<< phi_GEM <<" phi_position2 "<< phi_CSC <<" Xfactor "<<X <<" phi_diff "<< phi_diff <<" phiM "<< phiM << std::endl;
 
      return phiM;
 
@@ -192,3 +198,13 @@ void calculateAlphaBeta(const std::vector<float>& v,
   }
   else {alpha = -99; beta= 0.0;}
 }
+
+
+
+float normalizePhi(float phi) { 
+    float result = phi;
+    if(result > float(M_PI)) result -= float(2*M_PI);
+    else if (result <= -float(M_PI)) result += float(2*M_PI);
+    return result;
+}
+
