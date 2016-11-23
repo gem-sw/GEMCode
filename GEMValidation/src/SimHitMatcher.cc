@@ -292,6 +292,14 @@ SimHitMatcher::matchCSCSimHitsToSimTrack(std::vector<unsigned int> track_ids, co
       if (simMuOnlyCSC_ && std::abs(pdgid) != 13) continue;
       // discard electron hits in the CSC chambers
       if (discardEleHitsCSC_ && pdgid == 11) continue;
+      LocalPoint lp = h.entryPoint();
+      GlobalPoint gp;
+      if (gemvalidation::is_csc(h.detUnitId()))
+       {
+     	 gp = getCSCGeometry()->idToDet(h.detUnitId())->surface().toGlobal(lp);
+	 if (verboseCSC_) std::cout <<" csc id "<< CSCDetId(h.detUnitId()) <<" x "<< gp.x()<<" y "<< gp.y() <<" z "<< gp.z()<< std::endl;
+       }
+	
       csc_detid_to_hits_[ h.detUnitId() ].push_back(h);
       csc_hits_.push_back(h);
       CSCDetId layer_id( h.detUnitId() );
@@ -1106,6 +1114,7 @@ SimHitMatcher::simHitPositionKeyLayer(unsigned int chid) const
         float x_pos_L3 = fit->GetParameter(0) + fit->GetParameter(1) * z_pos_L3;
         float y_pos_L3 = fit2->GetParameter(0) + fit2->GetParameter(1) * z_pos_L3;
         returnValue =  GlobalPoint(x_pos_L3, y_pos_L3, z_pos_L3);
+	//std::cout <<"return gp of keylayer at sim level, id "<<  chamberId <<" z "<< z_pos_L3 <<" perp "<< returnValue.perp()<< std::endl;
       }
       else{
         returnValue = simHitsMeanPosition(hitsInChamber(chid));
@@ -1116,6 +1125,10 @@ SimHitMatcher::simHitPositionKeyLayer(unsigned int chid) const
       delete grr;
     } 
   }
+   
+	//GlobalPoint gptest(simHitsMeanPosition(hitsInChamber(chid)));
+	//std::cout <<"as comparison, gp from MeanPosition, id  "<< chamberId <<" z "<< gptest.z()<<" perp "<< gptest.perp() << std::endl;
+  std::cout <<"final return gp of keylayer at sim level, id "<< chamberId <<" z "<< returnValue.z() <<" perp "<< returnValue.perp()<< std::endl;
   return returnValue;
 }
    

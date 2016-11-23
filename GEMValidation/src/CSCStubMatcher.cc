@@ -132,10 +132,14 @@ CSCStubMatcher::matchCLCTsToSimTrack(const CSCCLCTDigiCollection& clcts)
       {
         //cout<<"WARNING!!! there already was matching CLCT "<<chamber_to_clct_[id]<<endl;
         //cout<<"   new digi: "<<mydigi<<endl;
-
+	//sh_matcher_.	
+	//GlobalPoint keygp(sh_matcher_.simHitPositionKeyLayer(id));
+  	//LocalPoint csc_intersect = layer_geo->intersectionOfStripAndWire(fractional_strip, wire);
+  	//GlobalPoint csc_gp = cscGeometry_->idToDet(key_id)->surface().toGlobal(csc_intersect);
         // decide which one to choose
         int q_old = digi_quality(chamber_to_clct_[id]);
         int q_new = digi_quality(mydigi);
+
         if (q_old > q_new) continue; // keep old
         else if (q_old == q_new)
         {
@@ -204,7 +208,8 @@ CSCStubMatcher::matchALCTsToSimTrack(const CSCALCTDigiCollection& alcts)
     {
       if (!a->isValid()) continue;
 
-      if (verbose()) cout<<"alct "<<ch_id<<" "<<*a<<endl;
+      if (verbose()) 
+	  cout<<"alct "<<ch_id<<" "<<*a<<endl;
 
       // check that the BX for stub wasn't too early or too late
       if (a->getBX() < minBXALCT_ || a->getBX() > maxBXALCT_) continue;
@@ -335,17 +340,22 @@ CSCStubMatcher::matchLCTsToSimTrack(const CSCCorrelatedLCTDigiCollection& lcts)
           auto lct12 = lct11;
           digi_wg(lct12) = wg2;
           lcts_tmp.push_back(lct12);
+	  //CSCCorrelatedLCTDigi LCT12(0, const int valid, const int quality, const int keywire, const int strip, const int pattern, const int bend, const int bx, const int mpclink=0, const uint16_t bx0=0, const uint16_t syncErr=0, const uint16_t cscID=0)
+	  CSCCorrelatedLCTDigi LCT12(0, 1, digi_quality(lct12), digi_wg(lct12), digi_channel(lct12), digi_pattern(lct12), 0, digi_bx(lct12));
+	  cscLcts_tmp.push_back(LCT12);
 
           auto lct21 = lct22;
           digi_wg(lct21) = wg1;
           lcts_tmp.push_back(lct21);
+	  CSCCorrelatedLCTDigi LCT21(0, 1, digi_quality(lct21), digi_wg(lct21), digi_channel(lct21), digi_pattern(lct21), 0, digi_bx(lct21));
+	  cscLcts_tmp.push_back(LCT21);
           //cout<<"added ghosts"<<endl<<lct11<<"    "<<lct22<<endl <<lct12<<"    "<<lct21<<endl;
         }
       }
     } // lcts_in_det
 
     size_t n_lct = lcts_tmp.size();
-    if (verbose()) cout<< "number of lcts = "<<n_lct<<endl;
+    if (verbose()) cout<< "number of lcts = "<<n_lct <<" from cscLcts_tmp "<< cscLcts_tmp.size() <<endl;
     if (n_lct == 0) continue; // no LCTs in this chamber
 
     // assign the non necessarily matching LCTs
@@ -384,7 +394,7 @@ CSCStubMatcher::matchLCTsToSimTrack(const CSCCorrelatedLCTDigiCollection& lcts)
         for (unsigned int i=0; i<clct.size()+1;i++){
           
           if (verbose()) 
-            std::cout <<"lct size "<< lcts_tmp.size() << " available LCT " << lct << std::endl;
+            std::cout <<"lct size "<< lcts_tmp.size()<<" ilct "<< iLct++ << " available LCT " << lct << std::endl;
           if (verbose())
             std::cout <<"alcts size "<< alct.size() <<" jth "<<j<< " available ALCT " << alct[j] << std::endl;
           if (verbose() and i<clct.size()) 
@@ -438,7 +448,12 @@ CSCStubMatcher::matchLCTsToSimTrack(const CSCCorrelatedLCTDigiCollection& lcts)
           const int my_bx(digi_bx(alct[j]));
           auto digi_wgs = digi_matcher_->wiregroupsInChamber(id,1);
           
-          
+	  if (not(caseAlctClct) and not(caseAlctGem) and not(caseAlctRpc)){
+	      if (verbose())
+	      	std::cout <<"this LCT can not be match AlctClct, AlctGem, AlctRpc, skip it: "<< lct<< std::endl;
+	      continue;
+	  }
+            
           if ( caseAlctClct and !((my_bx == digi_bx(lct) || 6 == digi_bx(lct)) and my_hs == digi_channel(lct) and my_wg == digi_wg(lct))){
             if (verbose()) cout<<"  BAD LCT in AlctClct case"<<endl;
             continue;
@@ -969,7 +984,8 @@ CSCStubMatcher::matchingComparatorDigisLCT(unsigned int detid, const CSCCorrelat
   int patternNumber = stub.getPattern();
   //2) loop on the layers
   auto chamberId = CSCDetId(detid);
-  //std::cout << chamberId << std::endl;
+  if (chamberId.ring()==4 and verboseLCT_)
+  	std::cout << chamberId << std::endl;
   for (int ilayer=1; ilayer<=6; ilayer++){
     auto layer(cscGeometry_->chamber(chamberId)->layer(ilayer));
     auto layerId(layer->id());
@@ -980,7 +996,8 @@ CSCStubMatcher::matchingComparatorDigisLCT(unsigned int detid, const CSCCorrelat
     for (auto comp: comps){
       //check if they match the LCT pattern
       int halfStrip = digi_matcher_->getHalfStrip(comp);
-      //std::cout << "\t"<<comp<<" "<<halfStrip<<endl;
+      if (chamberId.ring()==4 and verboseLCT_)
+      	std::cout <<"layerid "<< layerId << "\t"<<comp<<" "<<halfStrip<<endl;
       // auto pattern = CSCCathodeLCTProcessor::pattern2007[patternNumber];
       // int actualLayer = ilayer - 1;
       // auto subPatternL0 = 
@@ -1029,20 +1046,33 @@ CSCStubMatcher::positionsOfComparatorInLCT(unsigned int detid, const CSCCorrelat
 		    auto comp = p.second;
           	    float fractional_strip = digi_matcher_->getFractionalStrip(comp);
     		    auto layer_geo(cscGeometry_->chamber(id)->layer(l)->geometry());
-          	    LocalPoint csc_intersect = layer_geo->intersectionOfStripAndWire(fractional_strip, stub.getKeyWG() + 1);
+  		    float wire = layer_geo->middleWireOfGroup(stub.getKeyWG() + 1);
+          	    LocalPoint csc_intersect = layer_geo->intersectionOfStripAndWire(fractional_strip, wire);
           	    GlobalPoint csc_gp = cscGeometry_->idToDet(l_id)->surface().toGlobal(csc_intersect);
 		    //std::cout <<"In positionsOfComparatorInLCT local Point "<< csc_intersect <<" globalPoint "<< csc_gp << std::endl;
 		    sum_x += csc_gp.x();
 		    sum_y += csc_gp.y();
 		    sum_z += csc_gp.z();
 		    n++;
+		    //std::cout <<"n "<< n <<" layerid "<< l_id <<" comparadigi hs "<< comp << " fractional strip "<< fractional_strip << " wg "<< wire <<" csc_phi "<< csc_gp.phi()<<" lp "<< csc_intersect.phi() << std::endl;
 		}
 	 }
-	 //if (n>0) std::cout <<"Digi cscid "<< l_id <<" n "<< n <<" x "<< sum_x/n <<" y "<< sum_y/n <<" z "<< sum_z/n <<" z from geo "<< z_pos<< std::endl;
+	 if (n>0 and verboseLCT_) std::cout <<"Digi cscid "<< l_id <<" n "<< n <<" x "<< sum_x/n <<" y "<< sum_y/n <<" z "<< sum_z/n << std::endl;
 	 if (n>0) gps.push_back(GlobalPoint(sum_x/n, sum_y/n, sum_z/n));
   }
   
 }
+
+//to do 
+float 
+CSCStubMatcher::zpositionOfLayer(unsigned int detid, int layer) const{
+
+  auto id = CSCDetId(detid);
+  auto cscChamber(cscGeometry_->chamber(id));
+  return fabs(cscChamber->layer(layer)->centerOfStrip(20).z());
+
+}
+
 int
 CSCStubMatcher::nChambersWithCLCT(int min_quality) const
 {
