@@ -28,15 +28,19 @@ DisplacedMuonTriggerPtassignment::DisplacedMuonTriggerPtassignment(const CSCCorr
   setupGeometry(es);
 }
 
-DisplacedMuonTriggerPtassignment::DisplacedMuonTriggerPtassignment(const CSCCorrelatedLCTDigiContainer lcts, const CSCDetIdContainer cscids, const edm::EventSetup& es, const edm::Event& ev)
+DisplacedMuonTriggerPtassignment::DisplacedMuonTriggerPtassignment(const CSCCorrelatedLCTDigiContainer lcts,
+                                                                   const CSCDetIdContainer cscids,
+                                                                   const edm::EventSetup& es, const edm::Event& ev)
   : ev_(ev), es_(es), verbose_(0)
 {
   setupGeometry(es);
 }
 
 //chamberid_lcts: LCTs matched to simmuon and their associated chamberid, detid_pads: gempads matched to simmuon and their associated detid_pads
-DisplacedMuonTriggerPtassignment::DisplacedMuonTriggerPtassignment(std::map<unsigned int, CSCCorrelatedLCTDigiContainer> chamberid_lcts, std::map<unsigned int, GEMCSCPadDigiContainer> detid_pads, const edm::EventSetup& es, const edm::Event& ev)
-  : ev_(ev), es_(es), verbose_(0)
+DisplacedMuonTriggerPtassignment::DisplacedMuonTriggerPtassignment(std::map<unsigned int, CSCCorrelatedLCTDigiContainer> chamberid_lcts,
+                                                                   std::map<unsigned int, GEMCSCPadDigiContainer> detid_pads,
+                                                                   const edm::EventSetup& es, const edm::Event& ev)
+  : ev_(ev), es_(es), verbose_(10)
 {
   setupGeometry(es);
   chamberid_lcts_ = chamberid_lcts;
@@ -61,7 +65,7 @@ DisplacedMuonTriggerPtassignment::DisplacedMuonTriggerPtassignment(std::map<unsi
 	    continue;
     }
     if (idlcts.second.size()>1 and verbose_>0)
-	std::cout <<"more than one LCT  available in chamber id "<< chid <<" LCT size "<< idlcts.second.size()<<std::endl;
+      std::cout <<"more than one LCT  available in chamber id "<< chid <<" LCT size "<< idlcts.second.size()<<std::endl;
     globalPositionOfLCT(idlcts.second, chid);
     if (chid.station() == 1 or chid.station()==2){
       //find GEMPads
@@ -69,6 +73,10 @@ DisplacedMuonTriggerPtassignment::DisplacedMuonTriggerPtassignment(std::map<unsi
         GEMDetId gemid(idgempads.first);
         if (((chid.station() == 1 and gemid.station() == 1) or (chid.station()==2 and gemid.station() ==3))
             and chid.chamber() == gemid.chamber()){
+
+          // ignore second layer GE21 pads
+          if (gemid.station()==3 and gemid.layer()==2)  continue;
+
           //if gp_ge11 or gp_ge21 are taken from GME pad in layer1, then ignore the layer2
           if (hasGEMPad_st1 and gemid.station()==1 and gemid.layer()==2)  continue;
           if (hasGEMPad_st2 and gemid.station()==3 and gemid.layer()==2)  continue;
@@ -76,8 +84,13 @@ DisplacedMuonTriggerPtassignment::DisplacedMuonTriggerPtassignment(std::map<unsi
           else if (gemid.station() == 3) hasGEMPad_st2 = true;
           else if (verbose_>0)
             std::cout <<" gemid "<< gemid <<" CSC chamber id "<< chid << std::endl;
+
           //maybe also check the dR(csc, gem)
-          globalPositionOfGEMPad(idgempads.second[0], gemid);
+          if (idgempads.second.size()>0){
+            // stores the pad locations in members
+            globalPositionOfGEMPad(idgempads.second[0], gemid);
+
+          }
         }
       }
     }
@@ -298,6 +311,7 @@ DisplacedMuonTriggerPtassignment::DisplacedMuonTriggerPtassignment(GlobalPoint g
   if (fabs(gp_ge11.z())>100) hasGEMPad_st1 = true;
   else if (verbose_>0)
       std::cout <<" gp_ge11 x "<< gp_ge11.x()<<" y "<< gp_ge11.y()<<" z "<< gp_ge11.z()<< " eta "<< gp_ge11.eta()<<" phi "<< gp_ge11.phi()<< std::endl;
+
   gp_ge21 = GlobalPoint(gp6);
   if (fabs(gp_ge21.z())>100) hasGEMPad_st2 = true;
   else if (verbose_>0)
@@ -722,14 +736,16 @@ void DisplacedMuonTriggerPtassignment::globalPositionOfGEMPad(const GEMCSCPadDig
   if (gemid.station() == 1){
   	const LocalPoint lpGEM(gemRoll->centreOfPad(gempad.pad()));
   	gp_ge11 = GlobalPoint(gemRoll->toGlobal(lpGEM));
-	phi_gem[0] = gp_ge11.phi();
-	if (verbose_>0) std::cout <<" gempad in GE11 id " << gemid <<" gp eta "<< gp_ge11.eta()<<" phi "<< gp_ge11.phi()<<" pad "<<gempad.pad()<< std::endl;
-  }else if (gemid.station() == 3){
+    phi_gem[0] = gp_ge11.phi();
+    if (verbose_>0) std::cout <<" gempad in GE11 id " << gemid <<" gp eta "<< gp_ge11.eta()<<" phi "<< gp_ge11.phi()<<" pad "<<gempad.pad()<< std::endl;
+  }
+  else if (gemid.station() == 3){
   	const LocalPoint lpGEM(gemRoll->centreOfStrip(float(gempad.pad()*2.0-1.0)));
   	gp_ge21 = GlobalPoint(gemRoll->toGlobal(lpGEM));
-	phi_gem[1] = gp_ge21.phi();
-	if (verbose_>0) std::cout <<" gempad in GE21 id "<< gemid <<" gp eta "<< gp_ge21.eta()<<" phi "<< gp_ge21.phi()<<" pad "<<gempad.pad()<< std::endl;
-  }else if (verbose_>0)
+    phi_gem[1] = gp_ge21.phi();
+    if (verbose_>0) std::cout <<" gempad in GE21 id "<< gemid <<" gp eta "<< gp_ge21.eta()<<" phi "<< gp_ge21.phi()<<" pad "<<gempad.pad()<< std::endl;
+  }
+  else if (verbose_>0)
       std::cout <<" gemid "<< gemid  <<" not in station 1 or 3" << std::endl;
 
 }
@@ -853,20 +869,24 @@ bool DisplacedMuonTriggerPtassignment::runDirectionbasedGE21()
    float xfactor_st1 = 0.0;
    float xfactor_st2 = 0.0;
    if (meRing==1 and hasGEMPad_st1){
-	xfactor_st1 = xfactor*fabs(gp_ge11.z() - gp_st_layer3[0].z());
-   	phiM_st1 = phiMomentum_Xfactor(gp_st_layer3[0].phi(), gp_ge11.phi(), xfactor_st1);//
-   }else{
-        xfactor_st1 = xfactor*fabs(z_st_layers[0][0] - z_st_layers[0][5])/(xfactor*fabs(gp_st_layer3[0].z() - z_st_layers[0][5])+1);
-   	phiM_st1 = phiMomentum_Xfactor(gp_st_layer6[0].phi(), gp_st_layer1[0].phi(), xfactor_st1);//
+     xfactor_st1 = xfactor*fabs(gp_ge11.z() - gp_st_layer3[0].z());
+     phiM_st1 = phiMomentum_Xfactor(gp_st_layer3[0].phi(), gp_ge11.phi(), xfactor_st1);//
+   }
+   else{
+     xfactor_st1 = xfactor*fabs(z_st_layers[0][0] - z_st_layers[0][5])/(xfactor*fabs(gp_st_layer3[0].z() - z_st_layers[0][5])+1);
+     phiM_st1 = phiMomentum_Xfactor(gp_st_layer6[0].phi(), gp_st_layer1[0].phi(), xfactor_st1);//
    }
 
    if (meRing==1 and hasGEMPad_st2){
-	xfactor_st2 = xfactor*fabs(gp_ge21.z() - gp_st_layer3[1].z())/(xfactor*fabs(gp_st_layer3[0].z() - gp_st_layer3[1].z())+1);
-   	phiM_st2 = phiMomentum_Xfactor(gp_st_layer3[1].phi(), phi_gem[1], xfactor_st2);
-   }else if(meRing==2){
-   	xfactor_st2 = xfactor*fabs(z_st_layers[1][0] - z_st_layers[1][5])/(xfactor*fabs(gp_st_layer3[0].z() - z_st_layers[1][5])+1);
-   	phiM_st2 = phiMomentum_Xfactor(gp_st_layer6[1].phi(), gp_st_layer1[1].phi(), xfactor_st2);//
-   }else return false;
+     xfactor_st2 = xfactor*fabs(gp_ge21.z() - gp_st_layer3[1].z())/(xfactor*fabs(gp_st_layer3[0].z() - gp_st_layer3[1].z())+1);
+     phiM_st2 = phiMomentum_Xfactor(gp_st_layer3[1].phi(), phi_gem[1], xfactor_st2);
+   }
+   else if(meRing==2){
+     xfactor_st2 = xfactor*fabs(z_st_layers[1][0] - z_st_layers[1][5])/(xfactor*fabs(gp_st_layer3[0].z() - z_st_layers[1][5])+1);
+     phiM_st2 = phiMomentum_Xfactor(gp_st_layer6[1].phi(), gp_st_layer1[1].phi(), xfactor_st2);//
+   }
+   else
+     return false;
 
    float xfactor_st12 = xfactor*fabs(gp_st_layer3[0].z() - gp_st_layer3[1].z())/(xfactor*fabs(gp_st_layer3[0].z() - gp_st_layer3[1].z())+1);
    float xfactor_st23 = xfactor*fabs(gp_st_layer3[1].z() - gp_st_layer3[2].z())/(xfactor*fabs(gp_st_layer3[0].z() - gp_st_layer3[2].z())+1);
@@ -882,16 +902,16 @@ bool DisplacedMuonTriggerPtassignment::runDirectionbasedGE21()
    dPhi_dir_st12_st23 = (fabs(phiM_st12)<4 and fabs(phiM_st23)<4)? deltaPhi(phiM_st12, phiM_st23):-9;
 
    if (npar>=0 and npar<=3){
-        direction_pt = 2.0;
-   	int neta = PtassignmentHelper::GetEtaPartition(eta_st2);
-   	for (int i=0; i<PtassignmentHelper::NPt2; i++){
-	    if (fabs(dPhi_dir_st1_st2) <= PtassignmentHelper::DirectionbasedDeltaPhiLUT[i][neta][npar])
-		direction_pt = float(PtassignmentHelper::PtBins2[i]);
-	    else
-		break;
-	    if (verbose_>0)
-		std::cout <<"eta "<< eta_st2 <<" neta "<< neta <<" npar "<< npar <<" fabs dphi "<< fabs(dPhi_dir_st1_st2) <<" cut "<< PtassignmentHelper::DirectionbasedDeltaPhiLUT[i][neta][npar] <<" direction pt "<< direction_pt<<std::endl;
-	}
+     direction_pt = 2.0;
+     int neta = PtassignmentHelper::GetEtaPartition(eta_st2);
+     for (int i=0; i<PtassignmentHelper::NPt2; i++){
+       if (fabs(dPhi_dir_st1_st2) <= PtassignmentHelper::DirectionbasedDeltaPhiLUT[i][neta][npar])
+         direction_pt = float(PtassignmentHelper::PtBins2[i]);
+       else
+         break;
+       if (verbose_>0)
+         std::cout <<"eta "<< eta_st2 <<" neta "<< neta <<" npar "<< npar <<" fabs dphi "<< fabs(dPhi_dir_st1_st2) <<" cut "<< PtassignmentHelper::DirectionbasedDeltaPhiLUT[i][neta][npar] <<" direction pt "<< direction_pt<<std::endl;
+     }
    }
    return true;
 }
@@ -951,39 +971,39 @@ bool DisplacedMuonTriggerPtassignment::runHybrid(bool useGE21)
    bool checkPosition = runPositionbased();
    bool checkDirection = false;
    if (useGE21)
-   	checkDirection = runDirectionbasedGE21();
+     checkDirection = runDirectionbasedGE21();
    else
- 	checkDirection = runDirectionbasedCSConly();
+     checkDirection = runDirectionbasedCSConly();
    if (not (checkPosition and checkDirection))
-       return false;
+     return false;
    hybrid_pt = 2.0;
    if (npar>=0 and npar<=3){
-   	int neta = PtassignmentHelper::GetEtaPartition(eta_st2);
-	if (fabs(ddY123)>=40 or fabs(dPhi_dir_st1_st2)>=1.0){//rejected by hybrid
-	    return true;
-	}
-	//ignore pt=40
+     int neta = PtassignmentHelper::GetEtaPartition(eta_st2);
+     if (fabs(ddY123)>=40 or fabs(dPhi_dir_st1_st2)>=1.0){//rejected by hybrid
+       return true;
+     }
+     //ignore pt=40
    	for (int i=0; i<PtassignmentHelper::NPt-1; i++){
-           if(useGE21 and PtassignmentHelper::ellipse(PtassignmentHelper::HybridDDYAndDeltaPhiLUT[i][neta][npar][0],
-		  			  PtassignmentHelper::HybridDDYAndDeltaPhiLUT[i][neta][npar][1],
-		  			  PtassignmentHelper::HybridDDYAndDeltaPhiLUT[i][neta][npar][2],
-		  			  PtassignmentHelper::HybridDDYAndDeltaPhiLUT[i][neta][npar][3],
-					//PtassignmentHelper::HybridDDYAndDeltaPhiLUT[i][neta][npar][4], ddY123*charge, dPhi_dir_st1_st2*charge) <=1)
-		  			  PtassignmentHelper::HybridDDYAndDeltaPhiLUT[i][neta][npar][4], ddY123, dPhi_dir_st1_st2) <=1)
-		hybrid_pt = PtassignmentHelper::PtBins[i];
-	   else if(not(useGE21) and PtassignmentHelper::ellipse(PtassignmentHelper::HybridDDYAndDeltaPhiLUTME21CSConly[i][neta][npar][0],
-		  			  PtassignmentHelper::HybridDDYAndDeltaPhiLUTME21CSConly[i][neta][npar][1],
-		  			  PtassignmentHelper::HybridDDYAndDeltaPhiLUTME21CSConly[i][neta][npar][2],
-		  			  PtassignmentHelper::HybridDDYAndDeltaPhiLUTME21CSConly[i][neta][npar][3],
-		  		//PtassignmentHelper::HybridDDYAndDeltaPhiLUTME21CSConly[i][neta][npar][4], ddY123*charge, dPhi_dir_st1_st2*charge) <=1)
-		  			  PtassignmentHelper::HybridDDYAndDeltaPhiLUTME21CSConly[i][neta][npar][4], ddY123, dPhi_dir_st1_st2) <=1)
-		hybrid_pt = PtassignmentHelper::PtBins[i];
-	   else//make sure LUT is consitent
-	   	break;
-	   if (verbose_>0)
-   		std::cout <<"eta_st2 "<< eta_st2 <<" npar "<< npar <<" charge "<< charge <<" ddY123 "<< ddY123 << " dphi_dir "<< dPhi_dir_st1_st2 <<" hybrid_pt "<< hybrid_pt << std::endl;
+      if(useGE21 and PtassignmentHelper::ellipse(PtassignmentHelper::HybridDDYAndDeltaPhiLUT[i][neta][npar][0],
+                                                 PtassignmentHelper::HybridDDYAndDeltaPhiLUT[i][neta][npar][1],
+                                                 PtassignmentHelper::HybridDDYAndDeltaPhiLUT[i][neta][npar][2],
+                                                 PtassignmentHelper::HybridDDYAndDeltaPhiLUT[i][neta][npar][3],
+                                                 //PtassignmentHelper::HybridDDYAndDeltaPhiLUT[i][neta][npar][4], ddY123*charge, dPhi_dir_st1_st2*charge) <=1)
+                                                 PtassignmentHelper::HybridDDYAndDeltaPhiLUT[i][neta][npar][4], ddY123, dPhi_dir_st1_st2) <=1)
+        hybrid_pt = PtassignmentHelper::PtBins[i];
+      else if(not(useGE21) and PtassignmentHelper::ellipse(PtassignmentHelper::HybridDDYAndDeltaPhiLUTME21CSConly[i][neta][npar][0],
+                                                           PtassignmentHelper::HybridDDYAndDeltaPhiLUTME21CSConly[i][neta][npar][1],
+                                                           PtassignmentHelper::HybridDDYAndDeltaPhiLUTME21CSConly[i][neta][npar][2],
+                                                           PtassignmentHelper::HybridDDYAndDeltaPhiLUTME21CSConly[i][neta][npar][3],
+                                                           //PtassignmentHelper::HybridDDYAndDeltaPhiLUTME21CSConly[i][neta][npar][4], ddY123*charge, dPhi_dir_st1_st2*charge) <=1)
+                                                           PtassignmentHelper::HybridDDYAndDeltaPhiLUTME21CSConly[i][neta][npar][4], ddY123, dPhi_dir_st1_st2) <=1)
+        hybrid_pt = PtassignmentHelper::PtBins[i];
+      else//make sure LUT is consitent
+        break;
+      if (verbose_>0)
+        std::cout <<"eta_st2 "<< eta_st2 <<" npar "<< npar <<" charge "<< charge <<" ddY123 "<< ddY123 << " dphi_dir "<< dPhi_dir_st1_st2 <<" hybrid_pt "<< hybrid_pt << std::endl;
 
-	}
+    }
    }
    return true;
 }
