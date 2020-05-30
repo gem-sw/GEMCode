@@ -83,28 +83,28 @@ namespace gem {
 
     void book(TTree* t) {
 
-      t->Branch("has_csc_sh_even", has_csc_sh_even, "has_csc_sh_even[nStations]/O");
-      t->Branch("has_csc_sh_odd", has_csc_sh_odd, "has_csc_sh_odd[nStations]/O");
+      t->Branch("has_csc_sh_even", has_csc_sh_even, "has_csc_sh_even[11]/O");
+      t->Branch("has_csc_sh_odd", has_csc_sh_odd, "has_csc_sh_odd[11]/O");
 
-      t->Branch("chamber_sh_odd", chamber_sh_odd, "chamber_sh_odd[nStations]/I");
-      t->Branch("chamber_sh_even", chamber_sh_even, "chamber_sh_even[nStations]/I");
+      t->Branch("chamber_sh_odd", chamber_sh_odd, "chamber_sh_odd[11]/I");
+      t->Branch("chamber_sh_even", chamber_sh_even, "chamber_sh_even[11]/I");
 
-      t->Branch("nlayers_csc_sh_odd", nlayers_csc_sh_odd, "nlayers_csc_sh_odd[nStations]/I");
-      t->Branch("nlayers_csc_sh_even", nlayers_csc_sh_even, "nlayers_csc_sh_even[nStations]/I");
+      t->Branch("nlayers_csc_sh_odd", nlayers_csc_sh_odd, "nlayers_csc_sh_odd[11]/I");
+      t->Branch("nlayers_csc_sh_even", nlayers_csc_sh_even, "nlayers_csc_sh_even[11]/I");
 
-      t->Branch("bending_sh", bending_sh, "bending_sh[nStations]/I");
+      t->Branch("bending_sh", bending_sh, "bending_sh[11]/I");
 
-      t->Branch("perp_cscsh_odd", perp_cscsh_odd, "perp_cscsh_odd[nStations]/F");
-      t->Branch("perp_cscsh_even", perp_cscsh_even, "perp_cscsh_even[nStations]/F");
+      t->Branch("perp_cscsh_odd", perp_cscsh_odd, "perp_cscsh_odd[11]/F");
+      t->Branch("perp_cscsh_even", perp_cscsh_even, "perp_cscsh_even[11]/F");
 
-      t->Branch("phi_cscsh_even", phi_cscsh_even, "phi_cscsh_even[nStations]/F");
-      t->Branch("phi_cscsh_odd", phi_cscsh_odd, "phi_cscsh_odd[nStations]/F");
+      t->Branch("phi_cscsh_even", phi_cscsh_even, "phi_cscsh_even[11]/F");
+      t->Branch("phi_cscsh_odd", phi_cscsh_odd, "phi_cscsh_odd[11]/F");
 
-      t->Branch("eta_cscsh_even", eta_cscsh_even, "eta_cscsh_even[nStations]/F");
-      t->Branch("eta_cscsh_odd", eta_cscsh_odd, "eta_cscsh_odd[nStations]/F");
+      t->Branch("eta_cscsh_even", eta_cscsh_even, "eta_cscsh_even[11]/F");
+      t->Branch("eta_cscsh_odd", eta_cscsh_odd, "eta_cscsh_odd[11]/F");
 
-      t->Branch("dphi_sh_odd", dphi_sh_odd, "dphi_sh_odd[nStations]/F");
-      t->Branch("dphi_sh_even", dphi_sh_even, "dphi_sh_even[nStations]/F");
+      t->Branch("dphi_sh_odd", dphi_sh_odd, "dphi_sh_odd[11]/F");
+      t->Branch("dphi_sh_even", dphi_sh_even, "dphi_sh_even[11]/F");
     }
   };
 }  // namespace

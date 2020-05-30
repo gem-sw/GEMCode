@@ -63,28 +63,28 @@ namespace gem {
       }
     };
 
-    void book(TTree* t) {
+   void book(TTree* t) {
 
-      t->Branch("has_csc_strips_odd", has_csc_strips_odd, "has_csc_strips_odd[nStations]/O");
-      t->Branch("has_csc_strips_even", has_csc_strips_even, "has_csc_strips_even[nStations]/O");
+      t->Branch("has_csc_strips_odd", has_csc_strips_odd, "has_csc_strips_odd[11]/O");
+      t->Branch("has_csc_strips_even", has_csc_strips_even, "has_csc_strips_even[11]/O");
 
-      t->Branch("has_csc_wires_odd", has_csc_wires_odd, "has_csc_wires_odd[nStations]/O");
-      t->Branch("has_csc_wires_even", has_csc_wires_even, "has_csc_wires_even[nStations]/O");
+      t->Branch("has_csc_wires_odd", has_csc_wires_odd, "has_csc_wires_odd[11]/O");
+      t->Branch("has_csc_wires_even", has_csc_wires_even, "has_csc_wires_even[11]/O");
 
-      t->Branch("chamber_dg_odd", chamber_dg_odd, "chamber_dg_odd[nStations]/I");
-      t->Branch("chamber_dg_even", chamber_dg_even, "chamber_dg_even[nStations]/I");
+      t->Branch("chamber_dg_odd", chamber_dg_odd, "chamber_dg_odd[11]/I");
+      t->Branch("chamber_dg_even", chamber_dg_even, "chamber_dg_even[11]/I");
 
-      t->Branch("nlayers_wg_dg_odd", nlayers_wg_dg_odd, "nlayers_wg_dg_odd[nStations]/I");
-      t->Branch("nlayers_wg_dg_even", nlayers_wg_dg_even, "nlayers_wg_dg_even[nStations]/I");
+      t->Branch("nlayers_wg_dg_odd", nlayers_wg_dg_odd, "nlayers_wg_dg_odd[11]/I");
+      t->Branch("nlayers_wg_dg_even", nlayers_wg_dg_even, "nlayers_wg_dg_even[11]/I");
 
-      t->Branch("nlayers_st_dg_odd", nlayers_st_dg_odd, "nlayers_st_dg_odd[nStations]/I");
-      t->Branch("nlayers_st_dg_even", nlayers_st_dg_even, "nlayers_st_dg_even[nStations]/I");
+      t->Branch("nlayers_st_dg_odd", nlayers_st_dg_odd, "nlayers_st_dg_odd[11]/I");
+      t->Branch("nlayers_st_dg_even", nlayers_st_dg_even, "nlayers_st_dg_even[11]/I");
 
-      t->Branch("wiregroup_odd", wiregroup_odd, "wiregroup_odd[nStations]/I");
-      t->Branch("wiregroup_even", wiregroup_even, "wiregroup_even[nStations]/I");
+      t->Branch("wiregroup_odd", wiregroup_odd, "wiregroup_odd[11]/I");
+      t->Branch("wiregroup_even", wiregroup_even, "wiregroup_even[11]/I");
 
-      t->Branch("halfstrip_odd", halfstrip_odd, "halfstrip_odd[nStations]/I");
-      t->Branch("halfstrip_even", halfstrip_even, "halfstrip_even[nStations]/I");
+      t->Branch("halfstrip_odd", halfstrip_odd, "halfstrip_odd[11]/I");
+      t->Branch("halfstrip_even", halfstrip_even, "halfstrip_even[11]/I");
     }
   };  // namespace
 }

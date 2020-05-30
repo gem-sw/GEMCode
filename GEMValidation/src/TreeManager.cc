@@ -4,8 +4,8 @@ void TreeManager::book() {
   edm::Service<TFileService> fs;
   simTrackTree_ = fs->make<TTree>("SimTrack","SimTrack");
   gemSimHitTree_ = fs->make<TTree>("GEMSimHit","GEMSimHit");
-  cscSimHitTree_ = fs->make<TTree>("GEMSimHit","GEMSimHit");
   gemDigiTree_ = fs->make<TTree>("GEMDigi","GEMDigi");
+  cscSimHitTree_ = fs->make<TTree>("CSCSimHit","CSCSimHit");
   cscDigiTree_ = fs->make<TTree>("CSCDigi","CSCDigi");
   cscStubTree_ = fs->make<TTree>("CSCStub","CSCStub");
   l1MuTree_ = fs->make<TTree>("L1Mu","L1Mu");

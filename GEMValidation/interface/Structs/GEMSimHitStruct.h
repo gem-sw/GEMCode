@@ -87,37 +87,37 @@ namespace gem {
 
     void book(TTree* t) {
 
-      t->Branch("has_gem_sh_odd", has_gem_sh_odd, "has_gem_sh_odd[nStation]/O");
-      t->Branch("has_gem_sh_even", has_gem_sh_even, "has_gem_sh_even[nStation]/O");
+      t->Branch("has_gem_sh_odd", has_gem_sh_odd, "has_gem_sh_odd[3]/O");
+      t->Branch("has_gem_sh_even", has_gem_sh_even, "has_gem_sh_even[3]/O");
 
-      t->Branch("has_gem_sh2_odd", has_gem_sh2_odd, "has_gem_sh2_odd[nStation]/O");
-      t->Branch("has_gem_sh2_even", has_gem_sh2_even, "has_gem_sh2_even[nStation]/O");
+      t->Branch("has_gem_sh2_odd", has_gem_sh2_odd, "has_gem_sh2_odd[3]/O");
+      t->Branch("has_gem_sh2_even", has_gem_sh2_even, "has_gem_sh2_even[3]/O");
 
-      t->Branch("has_gemcopad_sh_even", has_gemcopad_sh_even, "has_gemcopad_sh_even[nStation]/O");
-      t->Branch("has_gemcopad_sh_odd", has_gemcopad_sh_odd, "has_gemcopad_sh_odd[nStation]/O");
+      t->Branch("has_gemcopad_sh_even", has_gemcopad_sh_even, "has_gemcopad_sh_even[3]/O");
+      t->Branch("has_gemcopad_sh_odd", has_gemcopad_sh_odd, "has_gemcopad_sh_odd[3]/O");
 
-      t->Branch("chamber_sh_odd", chamber_sh_odd, "chamber_sh_odd[nStation]/I");
-      t->Branch("chamber_sh_even", chamber_sh_even, "chamber_sh_even[nStation]/I");
+      t->Branch("chamber_sh_odd", chamber_sh_odd, "chamber_sh_odd[3]/I");
+      t->Branch("chamber_sh_even", chamber_sh_even, "chamber_sh_even[3]/I");
 
-      t->Branch("bending_sh", bending_sh, "bending_sh[nStation]/F");
+      t->Branch("bending_sh", bending_sh, "bending_sh[3]/F");
 
-      t->Branch("perp_gemsh_odd", perp_gemsh_odd, "perp_gemsh_odd[nStation]/F");
-      t->Branch("perp_gemsh_even", perp_gemsh_even, "perp_gemsh_even[nStation]/F");
+      t->Branch("perp_gemsh_odd", perp_gemsh_odd, "perp_gemsh_odd[3]/F");
+      t->Branch("perp_gemsh_even", perp_gemsh_even, "perp_gemsh_even[3]/F");
 
-      t->Branch("centralperp_gemsh_odd", centralperp_gemsh_odd, "centralperp_gemsh_odd[nStation]/F");
-      t->Branch("centralperp_gemsh_even", centralperp_gemsh_even, "centralperp_gemsh_even[nStation]/F");
+      t->Branch("centralperp_gemsh_odd", centralperp_gemsh_odd, "centralperp_gemsh_odd[3]/F");
+      t->Branch("centralperp_gemsh_even", centralperp_gemsh_even, "centralperp_gemsh_even[3]/F");
 
-      t->Branch("strip_gemsh_odd", strip_gemsh_odd, "strip_gemsh_odd[nStation]/F");
-      t->Branch("strip_gemsh_even", strip_gemsh_even, "strip_gemsh_even[nStation]/F");
+      t->Branch("strip_gemsh_odd", strip_gemsh_odd, "strip_gemsh_odd[3]/F");
+      t->Branch("strip_gemsh_even", strip_gemsh_even, "strip_gemsh_even[3]/F");
 
-      t->Branch("eta_gemsh_odd", eta_gemsh_odd, "eta_gemsh_odd[nStation]/F");
-      t->Branch("eta_gemsh_even", eta_gemsh_even, "eta_gemsh_even[nStation]/F");
+      t->Branch("eta_gemsh_odd", eta_gemsh_odd, "eta_gemsh_odd[3]/F");
+      t->Branch("eta_gemsh_even", eta_gemsh_even, "eta_gemsh_even[3]/F");
 
-      t->Branch("phi_gemsh_odd", phi_gemsh_odd, "phi_gemsh_odd[nStation]/F");
-      t->Branch("phi_gemsh_even", phi_gemsh_even, "phi_gemsh_even[nStation]/F");
+      t->Branch("phi_gemsh_odd", phi_gemsh_odd, "phi_gemsh_odd[3]/F");
+      t->Branch("phi_gemsh_even", phi_gemsh_even, "phi_gemsh_even[3]/F");
 
-      t->Branch("dphi_sh_odd", dphi_sh_odd, "dphi_sh_odd[nStation]/F");
-      t->Branch("dphi_sh_even", dphi_sh_even, "dphi_sh_even[nStation]/F");
+      t->Branch("dphi_sh_odd", dphi_sh_odd, "dphi_sh_odd[3]/F");
+      t->Branch("dphi_sh_even", dphi_sh_even, "dphi_sh_even[3]/F");
     }
   };
 }  // namespace
