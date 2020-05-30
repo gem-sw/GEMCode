@@ -8,17 +8,19 @@ namespace gem {
 
   struct GEMDigiStruct {
 
-    bool has_gem_dg_even;
-    bool has_gem_dg2_even;
+    static const int nStations = 3;
 
-    bool has_gem_dg_odd;
-    bool has_gem_dg2_odd;
+    bool has_gem_dg_even[nStations];
+    bool has_gem_dg2_even[nStations];
 
-    Int_t strip_gemdg_odd;
-    Int_t strip_gemdg_even;
+    bool has_gem_dg_odd[nStations];
+    bool has_gem_dg2_odd[nStations];
 
-    int bx_dg_odd;
-    int bx_dg_even;
+    Int_t strip_gemdg_odd[nStations];
+    Int_t strip_gemdg_even[nStations];
+
+    int bx_dg_odd[nStations];
+    int bx_dg_even[nStations];
 
     void init() {
       for (unsigned i = 0 ; i < nStations; i++) {
@@ -37,17 +39,17 @@ namespace gem {
     };
 
     void book(TTree* t) {
-      t->Branch("has_gem_dg_odd", has_gem_dg_odd);
-      t->Branch("has_gem_dg2_odd", has_gem_dg2_odd);
+      t->Branch("has_gem_dg_odd", has_gem_dg_odd, "has_gem_dg_odd[3]/O");
+      t->Branch("has_gem_dg2_odd", has_gem_dg2_odd, "has_gem_dg2_odd[3]/O");
 
-      t->Branch("has_gem_dg_even", has_gem_dg_even);
-      t->Branch("has_gem_dg2_even", has_gem_dg2_even);
+      t->Branch("has_gem_dg_even", has_gem_dg_even, "has_gem_dg_even[3]/O");
+      t->Branch("has_gem_dg2_even", has_gem_dg2_even, "has_gem_dg2_even[3]/O");
 
-      t->Branch("strip_gemdg_odd", strip_gemdg_odd);
-      t->Branch("strip_gemdg_even", strip_gemdg_even);
+      t->Branch("strip_gemdg_odd", strip_gemdg_odd, "strip_gemdg_odd[3]/I");
+      t->Branch("strip_gemdg_even", strip_gemdg_even, "strip_gemdg_even[3]/I");
 
-      t->Branch("bx_dg_odd", bx_dg_odd);
-      t->Branch("bx_dg_even", bx_dg_even);
+      t->Branch("bx_dg_odd", bx_dg_odd, "bx_dg_odd[3]/I");
+      t->Branch("bx_dg_even", bx_dg_even, "bx_dg_even[3]/I");
     }
   };
 }  // namespace

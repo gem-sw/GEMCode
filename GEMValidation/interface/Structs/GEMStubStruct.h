@@ -8,32 +8,37 @@ namespace gem {
 
   struct GEMStubStruct {
 
-    int pad_odd;
-    int pad_even;
-    int copad_odd;
-    int copad_even;
+    static const int nStations = 3;
 
-    bool has_gem_pad_even;
-    bool has_gem_pad2_even;
-    bool has_gem_copad_even;
+    // bools
+    bool has_gem_pad_even[nStations];
+    bool has_gem_pad2_even[nStations];
+    bool has_gem_copad_even[nStations];
 
-    bool has_gem_pad_odd;
-    bool has_gem_pad2_odd;
-    bool has_gem_copad_odd;
+    bool has_gem_pad_odd[nStations];
+    bool has_gem_pad2_odd[nStations];
+    bool has_gem_copad_odd[nStations];
 
-    int bx_pad_odd;
-    int bx_pad_even;
-    float phi_pad_odd;
-    float phi_pad_even;
-    float z_pad_odd;
-    float z_pad_even;
-    float eta_pad_odd;
-    float eta_pad_even;
+    // ints
+    int pad_odd[nStations];
+    int pad_even[nStations];
+    int copad_odd[nStations];
+    int copad_even[nStations];
+    int bx_pad_odd[nStations];
+    int bx_pad_even[nStations];
 
-    float dphi_pad_odd;
-    float dphi_pad_even;
-    float deta_pad_odd;
-    float deta_pad_even;
+    // floats
+    float phi_pad_odd[nStations];
+    float phi_pad_even[nStations];
+    float z_pad_odd[nStations];
+    float z_pad_even[nStations];
+    float eta_pad_odd[nStations];
+    float eta_pad_even[nStations];
+
+    float dphi_pad_odd[nStations];
+    float dphi_pad_even[nStations];
+    float deta_pad_odd[nStations];
+    float deta_pad_even[nStations];
 
     void init() {
       for (unsigned i = 0 ; i < nStations; i++) {
@@ -67,32 +72,37 @@ namespace gem {
 
     void book(TTree* t) {
 
-      t->Branch("pad_odd", pad_odd);
-      t->Branch("pad_even", pad_even);
-      t->Branch("copad_odd", copad_odd);
-      t->Branch("copad_even", copad_even);
+      t->Branch("has_gem_pad_odd", has_gem_pad_odd, "has_gem_pad_odd[3]/I");
+      t->Branch("has_gem_pad2_odd", has_gem_pad2_odd, "has_gem_pad2_odd[3]/I");
+      t->Branch("has_gem_copad_odd", has_gem_copad_odd, "has_gem_copad_odd[3]/I");
 
-      t->Branch("has_gem_pad_odd", has_gem_pad_odd);
-      t->Branch("has_gem_pad2_odd", has_gem_pad2_odd);
-      t->Branch("has_gem_copad_odd", has_gem_copad_odd);
+      t->Branch("has_gem_pad_even", has_gem_pad_even, "has_gem_pad_even[3]/I");
+      t->Branch("has_gem_pad2_even", has_gem_pad2_even, "has_gem_pad2_even[3]/I");
+      t->Branch("has_gem_copad_even", has_gem_copad_even, "has_gem_copad_even[3]/I");
 
-      t->Branch("has_gem_pad_even", has_gem_pad_even);
-      t->Branch("has_gem_pad2_even", has_gem_pad2_even);
-      t->Branch("has_gem_copad_even", has_gem_copad_even);
+      t->Branch("pad_odd", pad_odd, "pad_odd[3]/I");
+      t->Branch("pad_even", pad_even, "pad_even[3]/I");
 
-      t->Branch("bx_pad_odd", bx_pad_odd);
-      t->Branch("bx_pad_even", bx_pad_even);
-      t->Branch("phi_pad_odd", phi_pad_odd);
-      t->Branch("phi_pad_even", phi_pad_even);
-      t->Branch("z_pad_odd", z_pad_odd);
-      t->Branch("z_pad_even", z_pad_even);
-      t->Branch("eta_pad_odd", eta_pad_odd);
-      t->Branch("eta_pad_even", eta_pad_even);
+      t->Branch("copad_odd", copad_odd, "copad_odd[3]/I");
+      t->Branch("copad_even", copad_even, "copad_odd[3]/I");
 
-      t->Branch("dphi_pad_odd", dphi_pad_odd);
-      t->Branch("dphi_pad_even", dphi_pad_even);
-      t->Branch("deta_pad_odd", deta_pad_odd);
-      t->Branch("deta_pad_even", deta_pad_even);
+      t->Branch("bx_pad_odd", bx_pad_odd, "bx_pad_odd[3]/I");
+      t->Branch("bx_pad_even", bx_pad_even, "bx_pad_even[3]/I");
+
+      t->Branch("phi_pad_odd", phi_pad_odd, "phi_pad_odd[3]/F");
+      t->Branch("phi_pad_even", phi_pad_even, "phi_pad_even[3]/F");
+
+      t->Branch("z_pad_odd", z_pad_odd, "z_pad_odd[3]/F");
+      t->Branch("z_pad_even", z_pad_even, "z_pad_even[3]/F");
+
+      t->Branch("eta_pad_odd", eta_pad_odd, "eta_pad_odd[3]/F");
+      t->Branch("eta_pad_even", eta_pad_even, "eta_pad_even[3]/F");
+
+      t->Branch("dphi_pad_odd", dphi_pad_odd, "dphi_pad_odd[3]/F");
+      t->Branch("dphi_pad_even", dphi_pad_even, "dphi_pad_even[3]/F");
+
+      t->Branch("deta_pad_odd", deta_pad_odd, "deta_pad_odd[3]/F");
+      t->Branch("deta_pad_even", deta_pad_even, "deta_pad_even[3]/F");
     }
   };
 }  // namespace
