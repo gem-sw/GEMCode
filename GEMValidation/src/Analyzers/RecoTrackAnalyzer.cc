@@ -1,16 +1,17 @@
 #include "GEMCode/GEMValidation/interface/Analyzers/RecoTrackAnalyzer.h"
 
-RecoTrackAnalyzer::RecoTrackAnalyzer(const RecoTrackMatcher& match_sh)
+RecoTrackAnalyzer::RecoTrackAnalyzer(const edm::ParameterSet& conf)
+{
+}
+
+void RecoTrackAnalyzer::init(const RecoTrackMatcher& match_sh)
 {
   match_.reset(new RecoTrackMatcher(match_sh));
 }
 
-void RecoTrackAnalyzer::init(const edm::ParameterSet& conf)
+void RecoTrackAnalyzer::analyze(TreeManager& tree)
 {
-}
-
-void RecoTrackAnalyzer::analyze(std::vector<gem::MyTrack>& track)
-{
+  /*
   // RecoTrackExtra
   const auto& recoTrackExtra(match_->getMatchedRecoTrackExtra());
   if (recoTrackExtra != nullptr) {
@@ -42,7 +43,6 @@ void RecoTrackAnalyzer::analyze(std::vector<gem::MyTrack>& track)
     track[0].recoChargedCandidate_nValidDTHits = (recoChargedCandidate->track().get())->hitPattern().numberOfValidMuonDTHits();
     track[0].recoChargedCandidate_nValidCSCHits = (recoChargedCandidate->track().get())->hitPattern().numberOfValidMuonCSCHits();
     track[0].recoChargedCandidate_nValidRPCHits = (recoChargedCandidate->track().get())->hitPattern().numberOfValidMuonRPCHits();
-    /*
     if (verbose_) {
       std::cout << "recoChargedCandidate_pt " << track[0].recoChargedCandidate_pt << std::endl;
       std::cout << "recoChargedCandidate_eta " << track[0].recoChargedCandidate_eta << std::endl;
@@ -52,6 +52,6 @@ void RecoTrackAnalyzer::analyze(std::vector<gem::MyTrack>& track)
                 << " CSC " << track[0].recoChargedCandidate_nValidCSCHits
                 << " RPC " << track[0].recoChargedCandidate_nValidRPCHits << std::endl;
     }
-    */
-  }
+    }
+  */
 }

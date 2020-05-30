@@ -12,6 +12,7 @@ void GEMDigiAnalyzer::init(const edm::ParameterSet& conf)
 
 void GEMDigiAnalyzer::analyze(std::vector<gem::MyTrack>& track, std::vector<int> stations_to_use_)
 {
+  /*
   // placeholders for best mtching pads
   GlobalPoint best_pad_odd[12];
   GlobalPoint best_pad_even[12];
@@ -139,6 +140,7 @@ void GEMDigiAnalyzer::analyze(std::vector<gem::MyTrack>& track, std::vector<int>
       else     track[1].Copad_even = copads.at(0).pad(0);
     }
   }
+  */
 }
 
 int GEMDigiAnalyzer::median(const GEMDigiContainer& digis) const

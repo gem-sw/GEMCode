@@ -1,17 +1,18 @@
 #include "GEMCode/GEMValidation/interface/Analyzers/CSCStubAnalyzer.h"
 
-CSCStubAnalyzer::CSCStubAnalyzer(const CSCStubMatcher& match_sh)
-{
-  match_.reset(new CSCStubMatcher(match_sh));
-}
-
-void CSCStubAnalyzer::init(const edm::ParameterSet& conf)
+CSCStubAnalyzer::CSCStubAnalyzer(const edm::ParameterSet& conf)
 {
   minNHitsChamber_ = conf.getParameter<int>("minNHitsChamberCSCStub");
 }
 
-void CSCStubAnalyzer::analyze(std::vector<gem::MyTrack>& track, std::vector<int> stations_to_use_)
+void CSCStubAnalyzer::init(const CSCStubMatcher& match_sh)
 {
+  match_.reset(new CSCStubMatcher(match_sh));
+}
+
+void CSCStubAnalyzer::analyze(TreeManager& tree)
+{
+  /*
   // CSC CLCTs
   for(const auto& d: match_->chamberIdsCLCT(0)) {
     CSCDetId id(d);
@@ -163,4 +164,5 @@ void CSCStubAnalyzer::analyze(std::vector<gem::MyTrack>& track, std::vector<int>
       }
     }
   }
+  */
 }

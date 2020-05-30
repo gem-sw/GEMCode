@@ -1,12 +1,11 @@
-#ifndef GEMCode_GEMValidation_SimHitStruct
-#define GEMCode_GEMValidation_SimHitStruct
+#ifndef GEMCode_GEMValidation_CSCSimHitStruct
+#define GEMCode_GEMValidation_CSCSimHitStruct
 
 #include "TTree.h"
-#include <string>
 
 namespace gem {
 
-  struct SimHitStruct {
+  struct CSCSimHitStruct {
 
     bool chamber_ME1_csc_sh_odd;
     bool chamber_ME1_csc_sh_even;

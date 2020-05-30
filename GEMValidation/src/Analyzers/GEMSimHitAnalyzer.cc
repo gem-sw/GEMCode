@@ -1,17 +1,18 @@
 #include "GEMCode/GEMValidation/interface/Analyzers/GEMSimHitAnalyzer.h"
 
-GEMSimHitAnalyzer::GEMSimHitAnalyzer(const GEMSimHitMatcher& match_sh)
-{
-  match_.reset(new GEMSimHitMatcher(match_sh));
-}
-
-void GEMSimHitAnalyzer::init(const edm::ParameterSet& conf)
+GEMSimHitAnalyzer::GEMSimHitAnalyzer(const edm::ParameterSet& conf)
 {
   minNHitsChamber_ = conf.getParameter<int>("minNHitsChamberGEMSimHit");
 }
 
-void GEMSimHitAnalyzer::analyze(std::vector<gem::MyTrack>& track, std::vector<int> stations_to_use_)
+void GEMSimHitAnalyzer::init(const GEMSimHitMatcher& match_sh)
 {
+  match_.reset(new GEMSimHitMatcher(match_sh));
+}
+
+void GEMSimHitAnalyzer::analyze(TreeManager& tree)
+{
+  /*
   // for GEMs in station1, it will be also filled in ME11
   // GEM simhits in superchamber
   for(const auto& d: match_->superChamberIds()) {
@@ -52,4 +53,5 @@ void GEMSimHitAnalyzer::analyze(std::vector<gem::MyTrack>& track, std::vector<in
       fill(1);
     }
   }
+  */
 }

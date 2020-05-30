@@ -2,6 +2,7 @@
 #define GEMCode_GEMValidation_AnalyzerManager_h
 
 #include "GEMCode/GEMValidation/interface/MatchManager.h"
+#include "GEMCode/GEMValidation/interface/TreeManager.h"
 #include "GEMCode/GEMValidation/interface/Analyzers/CSCSimHitAnalyzer.h"
 #include "GEMCode/GEMValidation/interface/Analyzers/GEMSimHitAnalyzer.h"
 #include "GEMCode/GEMValidation/interface/Analyzers/GEMDigiAnalyzer.h"
@@ -12,19 +13,20 @@
 class AnalyzerManager
 {
  public:
-  AnalyzerManager(const MatchManager&);
+  AnalyzerManager(const edm::ParameterSet& conf);
 
   ~AnalyzerManager() {}
 
   /// initialize
-  void init(const edm::ParameterSet& conf);
+  void init(const MatchManager&);
 
   /// do the matching
-  void analyze(std::vector<gem::MyTrack>& track, std::vector<int> stations);
+  void analyze(TreeManager& tree, const SimTrack& t);
 
  private:
 
   // analyzers
+  std::unique_ptr<SimTrackAnalyzer> simt_;
   std::unique_ptr<CSCSimHitAnalyzer> cscsh_;
   std::unique_ptr<GEMSimHitAnalyzer> gemsh_;
   std::unique_ptr<CSCDigiAnalyzer> cscdg_;

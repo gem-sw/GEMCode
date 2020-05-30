@@ -33,7 +33,7 @@ process.source = cms.Source(
 #  fileNames = cms.untracked.vstring('/store/user/awarden/MiniBias/SingleMu_May2020_MC_step2/200512_202254/0000/step2_1.root')
 )
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-100) )
 
 process.TFileService = cms.Service("TFileService",
     fileName = cms.string("out_ana.root")
@@ -70,13 +70,15 @@ ana.simTrack.minEta = 1.2
 ana.simTrack.maxEta = 2.4
 ana.gemStripDigi.inputTag = "muonGEMDigis"
 ana.gemStripDigi.verbose = 0
-ana.cscALCT.verbose = 0
-ana.cscALCT.minBX = 3
-ana.cscALCT.maxBX = 3
-ana.cscCLCT.verbose = 0
-ana.cscCLCT.minBX = 7
-ana.cscCLCT.maxBX = 7
-ana.cscLCT.verbose = 0
+ana.cscComparatorDigi.verbose = 1
+ana.cscWireDigi.verbose = 1
+ana.cscALCT.verbose = 1
+ana.cscALCT.minBX = 2
+ana.cscALCT.maxBX = 4
+ana.cscCLCT.verbose = 1
+ana.cscCLCT.minBX = 6
+ana.cscCLCT.maxBX = 8
+ana.cscLCT.verbose = 1
 
 process.options = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 

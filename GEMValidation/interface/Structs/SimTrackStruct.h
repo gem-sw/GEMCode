@@ -2,7 +2,6 @@
 #define GEMCode_GEMValidation_SimTrackStruct
 
 #include "TTree.h"
-#include <string>
 
 namespace gem {
 

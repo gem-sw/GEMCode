@@ -1,17 +1,18 @@
 #include "GEMCode/GEMValidation/interface/Analyzers/CSCDigiAnalyzer.h"
 
-CSCDigiAnalyzer::CSCDigiAnalyzer(const CSCDigiMatcher& match_sh)
-{
-  match_.reset(new CSCDigiMatcher(match_sh));
-}
-
-void CSCDigiAnalyzer::init(const edm::ParameterSet& conf)
+CSCDigiAnalyzer::CSCDigiAnalyzer(const edm::ParameterSet& conf)
 {
   minNHitsChamber_ = conf.getParameter<int>("minNHitsChamberCSCDigi");
 }
 
-void CSCDigiAnalyzer::analyze(std::vector<gem::MyTrack>& track, std::vector<int> stations_to_use_)
+void CSCDigiAnalyzer::init(const CSCDigiMatcher& match_sh)
 {
+  match_.reset(new CSCDigiMatcher(match_sh));
+}
+
+void CSCDigiAnalyzer::analyze(TreeManager& tree)
+{
+  /*
   // CSC strip digis
   for(const auto& d: match_->chamberIdsStrip(0)) {
     CSCDetId id(d);
@@ -78,4 +79,5 @@ void CSCDigiAnalyzer::analyze(std::vector<gem::MyTrack>& track, std::vector<int>
       else track[1].nlayers_wg_dg_even = nlayers;
     }
   }
+  */
 }

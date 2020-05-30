@@ -1,16 +1,17 @@
 #include "GEMCode/GEMValidation/interface/Analyzers/L1MuAnalyzer.h"
 
-L1MuAnalyzer::L1MuAnalyzer(const L1MuMatcher& match_sh)
+L1MuAnalyzer::L1MuAnalyzer(const edm::ParameterSet& conf)
+{
+}
+
+void L1MuAnalyzer::init(const L1MuMatcher& match_sh)
 {
   match_.reset(new L1MuMatcher(match_sh));
 }
 
-void L1MuAnalyzer::init(const edm::ParameterSet& conf)
+void L1MuAnalyzer::analyze(TreeManager& tree)
 {
-}
-
-void L1MuAnalyzer::analyze(std::vector<gem::MyTrack>& track)
-{
+  /*
   const auto& emtfTrack = match_->emtfTrack();
   const auto& muon = match_->muon();
 
@@ -39,4 +40,5 @@ void L1MuAnalyzer::analyze(std::vector<gem::MyTrack>& track)
     track[0].L1Mu_bx = muon->bx();
     track[0].L1Mu_quality = muon->quality();
   }
+  */
 }

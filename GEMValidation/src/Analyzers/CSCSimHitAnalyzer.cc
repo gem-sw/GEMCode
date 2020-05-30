@@ -2,18 +2,19 @@
 
 using namespace std;
 
-CSCSimHitAnalyzer::CSCSimHitAnalyzer(const CSCSimHitMatcher& match_sh)
-{
-  match_.reset(new CSCSimHitMatcher(match_sh));
-}
-
-void CSCSimHitAnalyzer::init(const edm::ParameterSet& conf)
+CSCSimHitAnalyzer::CSCSimHitAnalyzer(const edm::ParameterSet& conf)
 {
   minNHitsChamber_ = conf.getParameter<int>("minNHitsChamberCSCSimHit");
 }
 
-void CSCSimHitAnalyzer::analyze(std::vector<gem::MyTrack>& track, std::vector<int> stations_to_use_)
+void CSCSimHitAnalyzer::init(const CSCSimHitMatcher& match_sh)
 {
+  match_.reset(new CSCSimHitMatcher(match_sh));
+}
+
+void CSCSimHitAnalyzer::analyze(TreeManager& tree)
+{
+  /*
   const auto& csc_simhits(match_->chamberIds(0));
 
   for(const auto& d: match_->chamberIds(0)) {
@@ -90,4 +91,5 @@ void CSCSimHitAnalyzer::analyze(std::vector<gem::MyTrack>& track, std::vector<in
       }
     }
   }
+  */
 }

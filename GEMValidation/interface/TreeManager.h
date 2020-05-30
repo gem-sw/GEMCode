@@ -20,53 +20,24 @@
 class TreeManager
 {
  public:
-  TreeManager(const SimTrackMatchManager&);
+  TreeManager();
 
   ~TreeManager() {}
 
-  void book() {
-    edm::Service<TFileService> fs;
-    simTrackTree_ = fs->make<TTree>("SimTrack","SimTrack");
-    gemSimHitTree_ = fs->make<TTree>("GEMSimHit","GEMSimHit");
-    cscSimHitTree_ = fs->make<TTree>("GEMSimHit","GEMSimHit");
-    gemDigiTree_ = fs->make<TTree>("GEMDigi","GEMDigi");
-    cscDigiTree_ = fs->make<TTree>("CSCDigi","CSCDigi");
-    cscStubTree_ = fs->make<TTree>("CSCStub","CSCStub");
-    l1MuTree_ = fs->make<TTree>("L1Mu","L1Mu");
-    recoTrackTree_ = fs->make<TTree>("RecoTrack","RecoTrack");
+  void book();
 
-    simTrackSt_.book(simTrackTree_);
-    gemSimHitSt_.book(gemSimHitTree_);
-    cscSimHitSt_.book(cscSimHitTree_);
-    gemDigiSt_.book(gemDigiTree_);
-    cscDigiSt_.book(cscDigiTree_);
-    cscStubSt_.book(cscStubTree_);
-    l1MuSt_.book(l1MuTree_);
-    recoTrackSt_.book(recoTrackTree_);
-  }
+  void init();
 
-  /// initialize
-  void init() {
-    simTrackSt_.init();
-    gemSimHitSt_.init();
-    cscSimHitSt_.init();
-    gemDigiSt_.init();
-    cscDigiSt_.init();
-    cscStubSt_.init();
-    l1MuSt_.init(l);
-    recoTrackSt_.init();
-  }
+  void fill();
 
-  void fill() {
-    simTrackTree_->Fill();
-    gemSimHitTree_->Fill();
-    cscSimHitTree_->Fill();
-    gemDigiTree_->Fill();
-    cscDigiTree_->Fill();
-    cscStubTree_->Fill();
-    l1MuTree_->Fill();
-    recoTrackTree_->Fill();
-  }
+  gem::SimTrackStruct& simTrack() { return simTrackSt_; }
+  gem::GEMSimHitStruct& gemSimHit() { return gemSimHitSt_; }
+  gem::CSCSimHitStruct& cscSimHit() { return cscSimHitSt_; }
+  gem::GEMDigiStruct& gemDigi() { return gemDigiSt_; }
+  gem::CSCDigiStruct& cscDigi() { return cscDigiSt_; }
+  gem::CSCStubStruct& cscStub() { return cscStubSt_; }
+  gem::L1MuStruct& l1mu() { return l1MuSt_; }
+  gem::RecoTrackStruct& recoTrack() { return recoTrackSt_; }
 
   TTree* simTrackTree_;
   TTree* gemSimHitTree_;
@@ -76,6 +47,8 @@ class TreeManager
   TTree* cscStubTree_;
   TTree* l1MuTree_;
   TTree* recoTrackTree_;
+
+ private:
 
   gem::SimTrackStruct simTrackSt_;
   gem::GEMSimHitStruct gemSimHitSt_;
