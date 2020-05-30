@@ -17,11 +17,11 @@
 #include <math.h>
 #include <bitset>
 
-class GEMCSCAnalyzer : public edm::EDAnalyzer {
+class MuonAnalyzer : public edm::EDAnalyzer {
 public:
-  explicit GEMCSCAnalyzer(const edm::ParameterSet&);
+  explicit MuonAnalyzer(const edm::ParameterSet&);
 
-  ~GEMCSCAnalyzer() {}
+  ~MuonAnalyzer() {}
 
   virtual void analyze(const edm::Event&, const edm::EventSetup&);
 
@@ -43,7 +43,7 @@ private:
   std::unique_ptr<AnalyzerManager> analyzer_;
 };
 
-GEMCSCAnalyzer::GEMCSCAnalyzer(const edm::ParameterSet& ps) :
+MuonAnalyzer::MuonAnalyzer(const edm::ParameterSet& ps) :
   verbose_(ps.getUntrackedParameter<int>("verbose", 0))
 {
   const auto& simVertex = ps.getParameter<edm::ParameterSet>("simVertex");
@@ -66,7 +66,7 @@ GEMCSCAnalyzer::GEMCSCAnalyzer(const edm::ParameterSet& ps) :
   analyzer_.reset(new AnalyzerManager(ps));
 }
 
-void GEMCSCAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es) {
+void MuonAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es) {
   matcher_->init(ev, es);
 
   edm::Handle<edm::SimTrackContainer> sim_tracks;
@@ -104,7 +104,7 @@ void GEMCSCAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es) {
   }
 }
 
-void GEMCSCAnalyzer::analyze(const SimTrack& track, const SimVertex& v)
+void MuonAnalyzer::analyze(const SimTrack& track, const SimVertex& v)
 {
   // reset all structs
   tree_->init();
@@ -122,7 +122,7 @@ void GEMCSCAnalyzer::analyze(const SimTrack& track, const SimVertex& v)
   tree_->fill();
 }
 
-bool GEMCSCAnalyzer::isSimTrackGood(const SimTrack& t) {
+bool MuonAnalyzer::isSimTrackGood(const SimTrack& t) {
   // SimTrack selection
   if (t.noVertex())
     return false;
@@ -142,4 +142,4 @@ bool GEMCSCAnalyzer::isSimTrackGood(const SimTrack& t) {
 }
 
 
-DEFINE_FWK_MODULE(GEMCSCAnalyzer);
+DEFINE_FWK_MODULE(MuonAnalyzer);

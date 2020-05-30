@@ -1,7 +1,7 @@
 import FWCore.ParameterSet.Config as cms
 from Configuration.Eras.Era_Run3_cff import Run3
 
-process = cms.Process("GEMCSCANA", Run3)
+process = cms.Process("ANA", Run3)
 
 ## Standard sequence
 process.load('Configuration.StandardSequences.Services_cff')
@@ -24,7 +24,7 @@ process.MessageLogger = cms.Service("MessageLogger",
         lineLength = cms.untracked.int32(132),
         noLineBreaks = cms.untracked.bool(True)
     ),
-    debugModules = cms.untracked.vstring("GEMCSCAnalyzer")
+    debugModules = cms.untracked.vstring("MuonAnalyzer")
 )
 """
 process.source = cms.Source(
@@ -45,8 +45,8 @@ process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '
 
 # the analyzer configuration
 from GEMCode.GEMValidation.simTrackMatching_cfi import simTrackPSet
-process.GEMCSCAnalyzer = cms.EDAnalyzer(
-    "GEMCSCAnalyzer",
+process.MuonAnalyzer = cms.EDAnalyzer(
+    "MuonAnalyzer",
     simTrackPSet,
     runSim = cms.bool(True),
     runDigi = cms.bool(True),
@@ -61,7 +61,7 @@ process.GEMCSCAnalyzer = cms.EDAnalyzer(
     minNHitsChamberCSCStub = cms.int32(4),
 )
 
-ana = process.GEMCSCAnalyzer
+ana = process.MuonAnalyzer
 ana.simTrack.minEta = 1.2
 ana.simTrack.maxEta = 2.4
 ana.gemStripDigi.inputTag = "muonGEMDigis"
@@ -78,7 +78,7 @@ ana.cscLCT.verbose = 1
 
 process.options = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 
-process.p = cms.Path(process.GEMCSCAnalyzer)
+process.p = cms.Path(process.MuonAnalyzer)
 
 ## messages
 print

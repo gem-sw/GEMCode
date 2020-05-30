@@ -13,7 +13,7 @@ class GEMCSCStubPlotter():
     self.inputFile = "out_ana.root"
     self.targetDir = "gem_csc_matching/"
     self.ext = ".png"
-    self.analyzer = "GEMCSCAnalyzer"
+    self.analyzer = "MuonAnalyzer"
     self.effSt = "trk_eff_"
     self.stations = enum('CSC_ALL','CSC_ME11','CSC_ME1a','CSC_ME1b','CSC_ME12','CSC_ME13',
                          'CSC_ME21','CSC_ME22','CSC_ME31','CSC_ME32','CSC_ME41','CSC_ME42')

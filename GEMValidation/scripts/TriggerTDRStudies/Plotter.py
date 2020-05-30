@@ -25,7 +25,7 @@ class TriggerTDREfficiencyPlotter():
     self.inputFiles = inputFiles
     self.targetDir = "plots_summary/"
     self.ext = ".png"
-    self.analyzer = "GEMCSCAnalyzer"
+    self.analyzer = "MuonAnalyzer"
     self.effSt = "trk_eff_"
     self.stations = enum(
       'CSC_ME11',
