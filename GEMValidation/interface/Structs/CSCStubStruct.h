@@ -136,7 +136,7 @@ namespace gem {
       lct_type = -1;
     };
 
-    TTree* book(TTree* t) {
+    void book(TTree* t) {
 
       t->Branch("quality_odd", &quality_odd);
       t->Branch("quality_even", &quality_even);
@@ -204,8 +204,6 @@ namespace gem {
       t->Branch("passdphi_odd", &passdphi_odd);
       t->Branch("passdphi_even", &passdphi_even);
       t->Branch("lct_type", &lct_type);
-
-      return t;
     }
   };
 }  // namespace

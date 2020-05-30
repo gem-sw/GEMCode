@@ -1,7 +1,7 @@
-#ifndef GEMCode_GEMValidation_SimTrackAnalyzerManager_h
-#define GEMCode_GEMValidation_SimTrackAnalyzerManager_h
+#ifndef GEMCode_GEMValidation_AnalyzerManager_h
+#define GEMCode_GEMValidation_AnalyzerManager_h
 
-#include "GEMCode/GEMValidation/interface/SimTrackMatchManager.h"
+#include "GEMCode/GEMValidation/interface/MatchManager.h"
 #include "GEMCode/GEMValidation/interface/Analyzers/CSCSimHitAnalyzer.h"
 #include "GEMCode/GEMValidation/interface/Analyzers/GEMSimHitAnalyzer.h"
 #include "GEMCode/GEMValidation/interface/Analyzers/GEMDigiAnalyzer.h"
@@ -9,12 +9,12 @@
 #include "GEMCode/GEMValidation/interface/Analyzers/CSCStubAnalyzer.h"
 #include "GEMCode/GEMValidation/interface/Analyzers/L1MuAnalyzer.h"
 
-class SimTrackAnalyzerManager
+class AnalyzerManager
 {
  public:
-  SimTrackAnalyzerManager(const SimTrackMatchManager&);
+  AnalyzerManager(const MatchManager&);
 
-  ~SimTrackAnalyzerManager() {}
+  ~AnalyzerManager() {}
 
   /// initialize
   void init(const edm::ParameterSet& conf);

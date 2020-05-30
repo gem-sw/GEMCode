@@ -1,5 +1,5 @@
-#ifndef GEMCode_GEMValidation_SimTrackMatchManager_h
-#define GEMCode_GEMValidation_SimTrackMatchManager_h
+#ifndef GEMCode_GEMValidation_MatchManager_h
+#define GEMCode_GEMValidation_MatchManager_h
 
 #include "GEMCode/GEMValidation/interface/Matchers/GenParticleMatcher.h"
 #include "GEMCode/GEMValidation/interface/Matchers/ME0RecHitMatcher.h"
@@ -7,12 +7,12 @@
 #include "GEMCode/GEMValidation/interface/Matchers/L1TrackMatcher.h"
 #include "GEMCode/GEMValidation/interface/Matchers/RecoTrackMatcher.h"
 
-class SimTrackMatchManager
+class MatchManager
 {
 public:
-  SimTrackMatchManager(edm::ParameterSet const& iPS, edm::ConsumesCollector&& iC);
+  MatchManager(edm::ParameterSet const& iPS, edm::ConsumesCollector&& iC);
 
-  ~SimTrackMatchManager() {}
+  ~MatchManager() {}
 
   void init(const edm::Event& e, const edm::EventSetup& eventSetup);
 

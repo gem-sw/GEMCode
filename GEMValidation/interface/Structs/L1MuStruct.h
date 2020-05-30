@@ -103,7 +103,7 @@ namespace gem {
       L1Mu_charge = -99;
     };
 
-    TTree* book(TTree* t) {
+    void book(TTree* t) {
 
       //t->Branch("", &);
       t->Branch("has_emtfTrack", &has_emtfTrack);
@@ -168,7 +168,6 @@ namespace gem {
       t->Branch("L1Mu_quality", &L1Mu_quality);
       t->Branch("L1Mu_bx", &L1Mu_bx);
       t->Branch("L1Mu_charge", &L1Mu_charge);
-      return t;
     }
   };
 }  // namespace

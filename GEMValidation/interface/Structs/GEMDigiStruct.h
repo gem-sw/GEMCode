@@ -86,7 +86,7 @@ namespace gem {
 
     };
 
-    TTree* book(TTree* t) {
+    void book(TTree* t) {
 
       t->Branch("pad_odd", &pad_odd);
       t->Branch("pad_even", &pad_even);
@@ -126,8 +126,6 @@ namespace gem {
       t->Branch("dphi_pad_fit_even", &dphi_pad_fit_even);
       t->Branch("deta_pad_odd", &deta_pad_odd);
       t->Branch("deta_pad_even", &deta_pad_even);
-
-      return t;
     }
   };
 }  // namespace

@@ -1,6 +1,6 @@
-#include "GEMCode/GEMValidation/interface/SimTrackAnalyzerManager.h"
+#include "GEMCode/GEMValidation/interface/AnalyzerManager.h"
 
-SimTrackAnalyzerManager::SimTrackAnalyzerManager(const SimTrackMatchManager& manager)
+AnalyzerManager::AnalyzerManager(const MatchManager& manager)
 {
   cscsh_.reset(new CSCSimHitAnalyzer(*manager.cscSimHits()));
   gemsh_.reset(new GEMSimHitAnalyzer(*manager.gemSimHits()));
@@ -10,7 +10,7 @@ SimTrackAnalyzerManager::SimTrackAnalyzerManager(const SimTrackMatchManager& man
   l1mu_.reset(new L1MuAnalyzer(*manager.l1Muons()));
 }
 
-void SimTrackAnalyzerManager::init(const edm::ParameterSet& conf)
+void AnalyzerManager::init(const edm::ParameterSet& conf)
 {
   cscsh_->init(conf);
   gemsh_->init(conf);
@@ -21,7 +21,7 @@ void SimTrackAnalyzerManager::init(const edm::ParameterSet& conf)
 }
 
 void
-SimTrackAnalyzerManager::analyze(std::vector<gem::MyTrack>& track, std::vector<int> stations)
+AnalyzerManager::analyze(std::vector<gem::MyTrack>& track, std::vector<int> stations)
 {
   cscsh_->analyze(track, stations);
   gemsh_->analyze(track, stations);

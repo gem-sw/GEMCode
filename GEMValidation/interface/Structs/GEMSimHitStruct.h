@@ -81,7 +81,7 @@ namespace gem {
       dphi_sh_even = -9;
     };
 
-    TTree* book(TTree* t) {
+    void book(TTree* t) {
 
       t->Branch("bending_sh", &bending_sh);
 
@@ -114,8 +114,6 @@ namespace gem {
 
       t->Branch("dphi_sh_odd", &dphi_sh_odd);
       t->Branch("dphi_sh_even", &dphi_sh_even);
-
-      return t;
     }
   };
 }  // namespace

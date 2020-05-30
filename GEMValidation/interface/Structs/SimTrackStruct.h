@@ -22,8 +22,7 @@ namespace gem {
       pdgid = -9999;
     };
 
-    TTree* book(TTree* t) {
-
+    void book(TTree* t) {
       t->Branch("pt", &pt);
       t->Branch("pz", &pz);
       t->Branch("eta", &eta);
@@ -32,8 +31,6 @@ namespace gem {
       t->Branch("charge", &charge);
       t->Branch("endcap", &endcap);
       t->Branch("pdgid", &pdgid);
-
-      return t;
     }
   };
 }  // namespace

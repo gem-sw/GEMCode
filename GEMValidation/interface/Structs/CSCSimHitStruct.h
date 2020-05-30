@@ -119,7 +119,7 @@ namespace gem {
       dphi_sh_even = -9;
     };
 
-    TTree* book(TTree* t) {
+    void book(TTree* t) {
 
       t->Branch("bending_sh", &bending_sh);
 
@@ -152,12 +152,6 @@ namespace gem {
 
       t->Branch("eta_cscsh_even", &eta_cscsh_even);
       t->Branch("eta_cscsh_odd", &eta_cscsh_odd);
-      /* t->Branch("pt_sh_even", &pt_sh_even); */
-      /* t->Branch("pteta_sh_even", &pteta_sh_even); */
-      /* t->Branch("ptphi_sh_even", &ptphi_sh_even); */
-      /* t->Branch("pt_sh_odd", &pt_sh_odd); */
-      /* t->Branch("pteta_sh_odd", &pteta_sh_odd); */
-      /* t->Branch("ptphi_sh_odd", &ptphi_sh_odd); */
 
       t->Branch("has_gem_sh_odd", &has_gem_sh_odd);
       t->Branch("has_gem_sh_even", &has_gem_sh_even);
@@ -179,8 +173,6 @@ namespace gem {
 
       t->Branch("dphi_sh_odd", &dphi_sh_odd);
       t->Branch("dphi_sh_even", &dphi_sh_even);
-
-      return t;
     }
   };
 }  // namespace
