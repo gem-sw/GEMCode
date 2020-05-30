@@ -66,7 +66,7 @@ void CSCSimHitAnalyzer::analyze(TreeManager& tree)
     }
 
     // case ME11
-    if (st==2 or st==3){
+    if (st==1 or st==2){
       if (odd) {
         tree.cscSimHit().chamber_sh_odd[0] = id.chamber();
         tree.cscSimHit().nlayers_csc_sh_odd[0] = nlayers;

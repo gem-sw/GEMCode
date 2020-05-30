@@ -12,7 +12,6 @@ void CSCDigiAnalyzer::init(const CSCDigiMatcher& match_sh)
 
 void CSCDigiAnalyzer::analyze(TreeManager& tree)
 {
-  /*
   // CSC strip digis
   for(const auto& d: match_->chamberIdsStrip(0)) {
     CSCDetId id(d);
@@ -23,28 +22,28 @@ void CSCDigiAnalyzer::analyze(TreeManager& tree)
     cout << "use this station? " << st << " "  << endl;
 
     const int nlayers(match_->nLayersWithStripInChamber(d));
-    cout << "use this station " << st << " " << stt << " " << nlayers << " " << minNHitsChamber_ << endl;
+    cout << "use this station " << st << " " << nlayers << " " << minNHitsChamber_ << endl;
 
     if (nlayers < minNHitsChamber_) continue;
 
-    cout << "use this station " << st << " " << stt << " " << nlayers << " " << minNHitsChamber_ << endl;
+    cout << "use this station " << st << " " << nlayers << " " << minNHitsChamber_ << endl;
     cout << "has strip digis " << endl;
 
     const bool odd(id.chamber()%2==1);
 
-    if (odd) track[stt].has_csc_strips_odd = true;
-    else     track[stt].has_csc_strips_even = true;
+    if (odd) tree.cscDigi().has_csc_strips_odd[st] = true;
+    else     tree.cscDigi().has_csc_strips_even[st] = true;
 
-    if (odd) track[stt].nlayers_st_dg_odd = nlayers;
-    else     track[stt].nlayers_st_dg_even = nlayers;
+    if (odd) tree.cscDigi().nlayers_st_dg_odd[st] = nlayers;
+    else     tree.cscDigi().nlayers_st_dg_even[st] = nlayers;
 
     // case ME11
-    if (st==2 or st==3){
-      if (odd) track[1].has_csc_strips_odd = true;
-      else     track[1].has_csc_strips_even = true;
+    if (st==1 or st==2){
+      if (odd) tree.cscDigi().has_csc_strips_odd[0] = true;
+      else     tree.cscDigi().has_csc_strips_even[0] = true;
 
-      if (odd) track[1].nlayers_st_dg_odd = nlayers;
-      else     track[1].nlayers_st_dg_even = nlayers;
+      if (odd) tree.cscDigi().nlayers_st_dg_odd[0] = nlayers;
+      else     tree.cscDigi().nlayers_st_dg_even[0] = nlayers;
     }
   }
 
@@ -58,20 +57,19 @@ void CSCDigiAnalyzer::analyze(TreeManager& tree)
 
     const bool odd(id.chamber()%2==1);
 
-    if (odd) track[stt].has_csc_wires_odd = true;
-    else track[stt].has_csc_wires_even = true;
+    if (odd) tree.cscDigi().has_csc_wires_odd[st] = true;
+    else tree.cscDigi().has_csc_wires_even[st] = true;
 
-    if (odd) track[stt].nlayers_wg_dg_odd = nlayers;
-    else track[stt].nlayers_wg_dg_even = nlayers;
+    if (odd) tree.cscDigi().nlayers_wg_dg_odd[st] = nlayers;
+    else tree.cscDigi().nlayers_wg_dg_even[st] = nlayers;
 
     // case ME11
-    if (st==2 or st==3){
-      if (odd) track[1].has_csc_wires_odd = true;
-      else track[1].has_csc_wires_even = true;
+    if (st==1 or st==2){
+      if (odd) tree.cscDigi().has_csc_wires_odd[0] = true;
+      else tree.cscDigi().has_csc_wires_even[0] = true;
 
-      if (odd) track[1].nlayers_wg_dg_odd = nlayers;
-      else track[1].nlayers_wg_dg_even = nlayers;
+      if (odd) tree.cscDigi().nlayers_wg_dg_odd[0] = nlayers;
+      else tree.cscDigi().nlayers_wg_dg_even[0] = nlayers;
     }
   }
-  */
 }

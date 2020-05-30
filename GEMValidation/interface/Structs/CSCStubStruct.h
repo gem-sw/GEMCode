@@ -9,6 +9,28 @@ namespace gem {
 
     static const int nStations = 11;
 
+    /* struct Stub { */
+    /*   bool hasStub; */
+    /*   bool quality; */
+    /*   bool isEven; */
+    /*   bool bx; */
+    /*   bool chamber; */
+    /* }; */
+
+    /* struct ALCT : Stub { */
+    /*   bool wg; */
+    /* }; */
+
+    /* struct CLCT : Stub { */
+    /*   bool hs; */
+    /* }; */
+
+    /* struct LCT : Stub { */
+    /*   bool wg; */
+    /*   bool hs; */
+    /* }; */
+
+
     // bools
     bool has_clct_odd[nStations];
     bool has_alct_odd[nStations];
@@ -33,6 +55,7 @@ namespace gem {
 
     int chamber_lct_odd[nStations];
     int chamber_lct_even[nStations];
+
     int bend_lct_odd[nStations];
     int bend_lct_even[nStations];
 
