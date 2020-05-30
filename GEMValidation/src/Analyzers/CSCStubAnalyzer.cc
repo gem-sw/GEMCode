@@ -18,7 +18,6 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
     CSCDetId id(d);
 
     const int st(gem::detIdToMEStation(id.station(),id.ring()));
-    if (std::find(stations_to_use_.begin(), stations_to_use_.end(), st) == stations_to_use_.end()) continue;
 
     const int stt( std::find(stations_to_use_.begin(), stations_to_use_.end(), st) - stations_to_use_.begin());
 

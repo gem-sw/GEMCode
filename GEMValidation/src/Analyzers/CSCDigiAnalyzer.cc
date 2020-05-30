@@ -21,9 +21,6 @@ void CSCDigiAnalyzer::analyze(TreeManager& tree)
 
     const int st(gem::detIdToMEStation(id.station(),id.ring()));
     cout << "use this station? " << st << " "  << endl;
-    if (std::find(stations_to_use_.begin(), stations_to_use_.end(), st) == stations_to_use_.end()) continue;
-
-    const int stt( std::find(stations_to_use_.begin(), stations_to_use_.end(), st) - stations_to_use_.begin());
 
     const int nlayers(match_->nLayersWithStripInChamber(d));
     cout << "use this station " << st << " " << stt << " " << nlayers << " " << minNHitsChamber_ << endl;
