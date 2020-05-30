@@ -14,9 +14,7 @@ void GEMSimHitAnalyzer::analyze(TreeManager& tree)
 {
   for(const auto& d: match_->superChamberIds()) {
     GEMDetId id(d);
-    int MEStation = id.station();
-
-    const int st(gem::detIdToMEStation(MEStation,id.ring()));
+    const int st = id.station();
 
     const bool odd(id.chamber()%2==1);
 

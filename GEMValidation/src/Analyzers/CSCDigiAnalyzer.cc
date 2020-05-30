@@ -52,9 +52,6 @@ void CSCDigiAnalyzer::analyze(TreeManager& tree)
   for(const auto& d: match_->chamberIdsWire(0)) {
     CSCDetId id(d);
     const int st(gem::detIdToMEStation(id.station(),id.ring()));
-    if (std::find(stations_to_use_.begin(), stations_to_use_.end(), st) == stations_to_use_.end()) continue;
-
-    const int stt( std::find(stations_to_use_.begin(), stations_to_use_.end(), st) - stations_to_use_.begin());
 
     const int nlayers(match_->nLayersWithWireInChamber(d));
     if (nlayers < minNHitsChamber_) continue;

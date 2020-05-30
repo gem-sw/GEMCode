@@ -37,8 +37,7 @@ enum MuonType { DT = 1, CSC = 2, RPC = 3, GEM = 4, ME0 = 5 };
 
 /// CSC chamber types, according to CSCDetId::iChamberType()
 enum CSCType {
-  CSC_ALL = 0,
-  CSC_ME11,
+  CSC_ME11 = 0,
   CSC_ME1a,
   CSC_ME1b,
   CSC_ME12,
@@ -48,21 +47,15 @@ enum CSCType {
   CSC_ME31,
   CSC_ME32,
   CSC_ME41,
-  CSC_ME42,
-  GEM_ME0,
-  CSC_ME1,
-  CSC_ME2,
-  CSC_ME3,
-  CSC_ME4
+  CSC_ME42
 };
 
 /// GEM chamber types
-enum GEMType { GEM_ALL = 0, GEM_ME11, GEM_ME21 };
+enum GEMType { GEM_ME0 = 0, GEM_ME11, GEM_ME21 };
 
 /// RPC endcap chamber types -- FIXME
 enum RPCType {
-  RPC_ALL = 0,
-  RPC_ME12,
+  RPC_ME12 = 0,
   RPC_ME13,
   RPC_ME22,
   RPC_ME23,
@@ -91,21 +84,12 @@ enum RPCType {
   RPC_MB21n,
   RPC_MB22n,
   RPC_MB23n,
-  RPC_MB24n,
-  RPC_ME1,
-  RPC_ME2,
-  RPC_ME3,
-  RPC_ME4,
-  RPC_MB1,
-  RPC_MB2,
-  RPC_MB3,
-  RPC_MB4
+  RPC_MB24n
 };
 
 /// DT chamber types -- FIXME
 enum DTType {
-  DT_ALL = 0,
-  DT_MB01,
+  DT_MB01 = 0,
   DT_MB02,
   DT_MB03,
   DT_MB04,
@@ -124,11 +108,7 @@ enum DTType {
   DT_MB21n,
   DT_MB22n,
   DT_MB23n,
-  DT_MB24n,
-  DT_MB1,
-  DT_MB2,
-  DT_MB3,
-  DT_MB4
+  DT_MB24n
 };
 
 const double ME11GEMdPhi[8][3] = {
@@ -185,7 +165,6 @@ namespace gem {
   std::string toCSCTypeString(int st, int ri);
 
   static const std::vector<std::pair<int, int> > cscStationsCo_ = {
-    {-99,-99},
     {1, 0},
     {1, 4},
     {1, 1},

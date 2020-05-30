@@ -19,8 +19,6 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
 
     const int st(gem::detIdToMEStation(id.station(),id.ring()));
 
-    const int stt( std::find(stations_to_use_.begin(), stations_to_use_.end(), st) - stations_to_use_.begin());
-
     const bool odd(id.chamber()%2==1);
     const auto& clct = match_->bestClctInChamber(d);
 
@@ -62,9 +60,6 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
   for(const auto& d: match_->chamberIdsALCT(0)) {
     CSCDetId id(d);
     const int st(gem::detIdToMEStation(id.station(),id.ring()));
-    if (std::find(stations_to_use_.begin(), stations_to_use_.end(), st) == stations_to_use_.end()) continue;
-
-    const int stt( std::find(stations_to_use_.begin(), stations_to_use_.end(), st) - stations_to_use_.begin());
 
     const bool odd(id.chamber()%2==1);
     const auto& alct = match_->bestAlctInChamber(d);
@@ -106,9 +101,6 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
     for(const auto& d: match_->chamberIdsLCT(0)) {
       CSCDetId id(d);
       const int st(gem::detIdToMEStation(id.station(),id.ring()));
-      if (std::find(stations_to_use_.begin(), stations_to_use_.end(), st) == stations_to_use_.end()) continue;
-
-      const int stt( std::find(stations_to_use_.begin(), stations_to_use_.end(), st) - stations_to_use_.begin());
 
       const auto& lct = match_->bestLctInChamber(d);
       const GlobalPoint& gp = match_->getGlobalPosition(d, lct);
