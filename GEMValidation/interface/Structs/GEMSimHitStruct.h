@@ -5,9 +5,9 @@
 
 namespace gem {
 
-  const int nStations = 3;
-
   struct GEMSimHitStruct {
+
+    static const int nStations = 3;
 
     // bools
     bool has_gem_sh_even[nStations];

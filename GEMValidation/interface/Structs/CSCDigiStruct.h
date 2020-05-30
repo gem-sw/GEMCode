@@ -4,71 +4,88 @@
 #include "TTree.h"
 
 namespace gem {
+  /*
+    "CSC_ME11", "CSC_ME1a", "CSC_ME1b", "CSC_ME12", "CSC_ME13",
+    "CSC_ME21", "CSC_ME22", "CSC_ME31",
+    "CSC_ME32", "CSC_ME41", "CSC_ME42"
+  */
 
   struct CSCDigiStruct {
 
-    // CSC
-    bool has_csc_strips_even;
-    bool has_csc_strips_odd;
+    static const int nStations = 11;
 
-    bool has_csc_wires_even;
-    bool has_csc_wires_odd;
+    // bool
+    bool has_csc_strips_even[nStations];
+    bool has_csc_strips_odd[nStations];
 
-    Int_t nlayers_wg_dg_odd;
-    Int_t nlayers_st_dg_odd;
+    bool has_csc_wires_even[nStations];
+    bool has_csc_wires_odd[nStations];
 
-    Int_t nlayers_wg_dg_even;
-    Int_t nlayers_st_dg_even;
+    // int
+    Int_t nlayers_wg_dg_odd[nStations];
+    Int_t nlayers_st_dg_odd[nStations];
 
-    int chamber_dg_odd, chamber_dg_even;
-    Int_t wiregroup_odd;
-    Int_t wiregroup_even;
+    Int_t nlayers_wg_dg_even[nStations];
+    Int_t nlayers_st_dg_even[nStations];
 
-    Int_t halfstrip_odd;
-    Int_t halfstrip_even;
+    int chamber_dg_odd[nStations];
+    int chamber_dg_even[nStations];
+
+    Int_t wiregroup_odd[nStations];
+    Int_t wiregroup_even[nStations];
+
+    Int_t halfstrip_odd[nStations];
+    Int_t halfstrip_even[nStations];
 
     void init() {
-      has_csc_strips_even = 0;
-      has_csc_strips_odd = 0;
+      for (unsigned i = 0 ; i < nStations; i++) {
 
-      has_csc_wires_even = 0;
-      has_csc_wires_odd = 0;
+        has_csc_strips_even[i] = 0;
+        has_csc_strips_odd[i] = 0;
 
-      nlayers_wg_dg_odd = -1;
-      nlayers_st_dg_odd = -1;
-      nlayers_wg_dg_even = -1;
-      nlayers_st_dg_even = -1;
+        has_csc_wires_even[i] = 0;
+        has_csc_wires_odd[i] = 0;
 
-      chamber_dg_odd = -1;
-      chamber_dg_even = -1;
-      wiregroup_odd = -1;
-      wiregroup_even = -1;
-      halfstrip_odd = -1;
-      halfstrip_even = -1;
+        nlayers_wg_dg_odd[i] = -1;
+        nlayers_wg_dg_even[i] = -1;
 
+        nlayers_st_dg_odd[i] = -1;
+        nlayers_st_dg_even[i] = -1;
+
+        chamber_dg_odd[i] = -1;
+        chamber_dg_even[i] = -1;
+
+        wiregroup_odd[i] = -1;
+        wiregroup_even[i] = -1;
+
+        halfstrip_odd[i] = -1;
+        halfstrip_even[i] = -1;
+      }
     };
 
     void book(TTree* t) {
 
-      t->Branch("chamber_dg_odd", &chamber_dg_odd);
-      t->Branch("chamber_dg_even", &chamber_dg_even);
+      t->Branch("has_csc_strips_odd", has_csc_strips_odd, "has_csc_strips_odd[nStations]/O");
+      t->Branch("has_csc_strips_even", has_csc_strips_even, "has_csc_strips_even[nStations]/O");
 
-      t->Branch("nlayers_wg_dg_odd", &nlayers_wg_dg_odd);
-      t->Branch("nlayers_wg_dg_even", &nlayers_wg_dg_even);
-      t->Branch("nlayers_st_dg_odd", &nlayers_st_dg_odd);
-      t->Branch("nlayers_st_dg_even", &nlayers_st_dg_even);
+      t->Branch("has_csc_wires_odd", has_csc_wires_odd, "has_csc_wires_odd[nStations]/O");
+      t->Branch("has_csc_wires_even", has_csc_wires_even, "has_csc_wires_even[nStations]/O");
 
-      t->Branch("wiregroup_odd", &wiregroup_odd);
-      t->Branch("wiregroup_even", &wiregroup_even);
-      t->Branch("halfstrip_odd", &halfstrip_odd);
-      t->Branch("halfstrip_even", &halfstrip_even);
+      t->Branch("chamber_dg_odd", chamber_dg_odd, "chamber_dg_odd[nStations]/I");
+      t->Branch("chamber_dg_even", chamber_dg_even, "chamber_dg_even[nStations]/I");
 
-      t->Branch("has_csc_strips_odd", &has_csc_strips_odd);
-      t->Branch("has_csc_wires_odd", &has_csc_wires_odd);
-      t->Branch("has_csc_strips_even", &has_csc_strips_even);
-      t->Branch("has_csc_wires_even", &has_csc_wires_even);
+      t->Branch("nlayers_wg_dg_odd", nlayers_wg_dg_odd, "nlayers_wg_dg_odd[nStations]/I");
+      t->Branch("nlayers_wg_dg_even", nlayers_wg_dg_even, "nlayers_wg_dg_even[nStations]/I");
+
+      t->Branch("nlayers_st_dg_odd", nlayers_st_dg_odd, "nlayers_st_dg_odd[nStations]/I");
+      t->Branch("nlayers_st_dg_even", nlayers_st_dg_even, "nlayers_st_dg_even[nStations]/I");
+
+      t->Branch("wiregroup_odd", wiregroup_odd, "wiregroup_odd[nStations]/I");
+      t->Branch("wiregroup_even", wiregroup_even, "wiregroup_even[nStations]/I");
+
+      t->Branch("halfstrip_odd", halfstrip_odd, "halfstrip_odd[nStations]/I");
+      t->Branch("halfstrip_even", halfstrip_even, "halfstrip_even[nStations]/I");
     }
-  };
-}  // namespace
-
+  };  // namespace
+}
 #endif
