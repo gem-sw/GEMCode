@@ -111,46 +111,17 @@ enum DTType {
   DT_MB24n
 };
 
-const double ME11GEMdPhi[8][3] = {
-    {-2, 1.0, 1.0},
-    {5.0, 0.02131422, 0.00907379},
-    {7.0, 0.01480166, 0.00658598},
-    {10.0, 0.01019511, 0.00467867},
-    {15.0, 0.00685720, 0.00336636},
-    {20.0, 0.00528981, 0.00279064},
-    {30.0, 0.00381797, 0.00231837},
-    {40.0, 0.00313074, 0.00213513},
-};
-const double ME21GEMdPhi[8][3] = {
-    {-2, 1.0, 1.0},
-    {5.0, 0.00884066, 0.00479478},
-    {7.0, 0.00660301, 0.00403733},
-    {10.0, 0.00503144, 0.00369953},
-    {15.0, 0.00409270, 0.00358023},
-    {20.0, 0.00378257, 0.00358023},
-    {30.0, 0.00369842, 0.00358023},
-    {40.0, 0.00369842, 0.00358023},
-};
-
 namespace gem {
   inline bool is_dt(unsigned int detId) { return (DetId(detId)).subdetId() == MuonSubdetId::DT; }
-
   inline bool is_gem(unsigned int detId) { return (DetId(detId)).subdetId() == MuonSubdetId::GEM; }
-
   inline bool is_csc(unsigned int detId) { return (DetId(detId)).subdetId() == MuonSubdetId::CSC; }
-
   inline bool is_rpc(unsigned int detId) { return (DetId(detId)).subdetId() == MuonSubdetId::RPC; }
-
   inline bool is_me0(unsigned int detId) { return (DetId(detId)).subdetId() == MuonSubdetId::ME0; }
 
   int chamber(const DetId& id);
-
   unsigned int gemDetFromCSCDet(unsigned int id, int layer);
-
   float cscHalfStripWidth(CSCDetId id);
-
   int detIdToMEStation(int st, int ri);
-
   std::pair<unsigned int, unsigned int> gemDetsFromCSCDet(unsigned int id);
 
   // return MuonType for a particular DetId
@@ -158,11 +129,6 @@ namespace gem {
   int toRPCType(int re, int st, int ri);
   int toDTType(int wh, int st);
   int toCSCType(int st, int ri);
-
-  std::string toGEMTypeString(int st, int ri);
-  std::string toRPCTypeString(int re, int st, int ri);
-  std::string toDTTypeString(int wh, int st);
-  std::string toCSCTypeString(int st, int ri);
 
   static const std::vector<std::pair<int, int> > cscStationsCo_ = {
     {1, 0},
@@ -179,39 +145,6 @@ namespace gem {
   };
 
   bool PtOrder(const reco::GenParticle* p1, const reco::GenParticle* p2);
-
-  template <typename PROD>
-  bool getByLabel(std::vector<edm::InputTag> const& tags, edm::Handle<PROD>& result, const edm::Event& iEvent) {
-    const bool verbose(false);
-    bool inputTagIsNotValid(true);
-    for (unsigned i = 0; i < tags.size(); ++i) {
-      iEvent.getByLabel(tags[i], result);
-      if (result.isValid()) {
-        if (verbose)
-          std::cout << tags[i] << " is a valid inputTag " << i << std::endl;
-        inputTagIsNotValid = false;
-        break;
-      } else {
-        if (verbose)
-          std::cout << tags[i] << " is an invalid inputTag " << i << std::endl;
-      }
-    }
-    return (!inputTagIsNotValid);
-  }
-
-  template <typename PROD>
-  bool getByToken(const edm::EDGetTokenT<PROD>& tag, edm::Handle<PROD>& result, const edm::Event& iEvent) {
-    //  const bool verbose(false);
-    bool inputTagIsNotValid(true);
-    iEvent.getByToken(tag, result);
-    if (result.isValid()) {
-      //    if (verbose) std::cout << tag << " is a valid inputTag " << std::endl;
-      inputTagIsNotValid = false;
-    } else {
-      //    if (verbose) std::cout << tag << " is an invalid inputTag " << std::endl;
-    }
-    return (!inputTagIsNotValid);
-  }
 
 }  // namespace gemvalidation
 
