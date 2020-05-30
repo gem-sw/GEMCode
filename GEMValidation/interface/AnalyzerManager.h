@@ -6,6 +6,7 @@
 #include "GEMCode/GEMValidation/interface/Analyzers/SimTrackAnalyzer.h"
 #include "GEMCode/GEMValidation/interface/Analyzers/GEMSimHitAnalyzer.h"
 #include "GEMCode/GEMValidation/interface/Analyzers/GEMDigiAnalyzer.h"
+#include "GEMCode/GEMValidation/interface/Analyzers/GEMStubAnalyzer.h"
 #include "GEMCode/GEMValidation/interface/Analyzers/CSCSimHitAnalyzer.h"
 #include "GEMCode/GEMValidation/interface/Analyzers/CSCDigiAnalyzer.h"
 #include "GEMCode/GEMValidation/interface/Analyzers/CSCStubAnalyzer.h"
@@ -32,6 +33,7 @@ class AnalyzerManager
   std::unique_ptr<SimTrackAnalyzer> simt_;
   std::unique_ptr<GEMSimHitAnalyzer> gemsh_;
   std::unique_ptr<GEMDigiAnalyzer> gemdg_;
+  std::unique_ptr<GEMStubAnalyzer> gemstub_;
   std::unique_ptr<CSCSimHitAnalyzer> cscsh_;
   std::unique_ptr<CSCDigiAnalyzer> cscdg_;
   std::unique_ptr<CSCStubAnalyzer> cscstub_;

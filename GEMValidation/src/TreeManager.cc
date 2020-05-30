@@ -5,6 +5,7 @@ void TreeManager::book() {
   simTrackTree_ = fs->make<TTree>("SimTrack","SimTrack");
   gemSimHitTree_ = fs->make<TTree>("GEMSimHit","GEMSimHit");
   gemDigiTree_ = fs->make<TTree>("GEMDigi","GEMDigi");
+  gemStubTree_ = fs->make<TTree>("GEMStub","GEMStub");
   cscSimHitTree_ = fs->make<TTree>("CSCSimHit","CSCSimHit");
   cscDigiTree_ = fs->make<TTree>("CSCDigi","CSCDigi");
   cscStubTree_ = fs->make<TTree>("CSCStub","CSCStub");
@@ -13,8 +14,9 @@ void TreeManager::book() {
 
   simTrackSt_.book(simTrackTree_);
   gemSimHitSt_.book(gemSimHitTree_);
-  cscSimHitSt_.book(cscSimHitTree_);
   gemDigiSt_.book(gemDigiTree_);
+  gemStubSt_.book(gemStubTree_);
+  cscSimHitSt_.book(cscSimHitTree_);
   cscDigiSt_.book(cscDigiTree_);
   cscStubSt_.book(cscStubTree_);
   l1MuSt_.book(l1MuTree_);
@@ -25,8 +27,9 @@ void TreeManager::book() {
 void TreeManager::init() {
   simTrackSt_.init();
   gemSimHitSt_.init();
-  cscSimHitSt_.init();
   gemDigiSt_.init();
+  gemStubSt_.init();
+  cscSimHitSt_.init();
   cscDigiSt_.init();
   cscStubSt_.init();
   l1MuSt_.init();
@@ -36,8 +39,9 @@ void TreeManager::init() {
 void TreeManager::fill() {
   simTrackTree_->Fill();
   gemSimHitTree_->Fill();
-  cscSimHitTree_->Fill();
   gemDigiTree_->Fill();
+  gemStubTree_->Fill();
+  cscSimHitTree_->Fill();
   cscDigiTree_->Fill();
   cscStubTree_->Fill();
   l1MuTree_->Fill();

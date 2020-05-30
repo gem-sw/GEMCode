@@ -5,13 +5,14 @@
 #include "CommonTools/UtilAlgos/interface/TFileService.h"
 
 #include "GEMCode/GEMValidation/interface/Structs/SimTrackStruct.h"
-#include "GEMCode/GEMValidation/interface/Structs/CSCSimHitStruct.h"
 #include "GEMCode/GEMValidation/interface/Structs/GEMSimHitStruct.h"
+#include "GEMCode/GEMValidation/interface/Structs/GEMDigiStruct.h"
+#include "GEMCode/GEMValidation/interface/Structs/GEMStubStruct.h"
+#include "GEMCode/GEMValidation/interface/Structs/CSCSimHitStruct.h"
+#include "GEMCode/GEMValidation/interface/Structs/CSCDigiStruct.h"
+#include "GEMCode/GEMValidation/interface/Structs/CSCStubStruct.h"
 #include "GEMCode/GEMValidation/interface/Structs/L1MuStruct.h"
 #include "GEMCode/GEMValidation/interface/Structs/RecoTrackStruct.h"
-#include "GEMCode/GEMValidation/interface/Structs/CSCDigiStruct.h"
-#include "GEMCode/GEMValidation/interface/Structs/GEMDigiStruct.h"
-#include "GEMCode/GEMValidation/interface/Structs/CSCStubStruct.h"
 
 #include "TTree.h"
 #include <vector>
@@ -32,8 +33,9 @@ class TreeManager
 
   gem::SimTrackStruct& simTrack() { return simTrackSt_; }
   gem::GEMSimHitStruct& gemSimHit() { return gemSimHitSt_; }
-  gem::CSCSimHitStruct& cscSimHit() { return cscSimHitSt_; }
   gem::GEMDigiStruct& gemDigi() { return gemDigiSt_; }
+  gem::GEMStubStruct& gemStub() { return gemStubSt_; }
+  gem::CSCSimHitStruct& cscSimHit() { return cscSimHitSt_; }
   gem::CSCDigiStruct& cscDigi() { return cscDigiSt_; }
   gem::CSCStubStruct& cscStub() { return cscStubSt_; }
   gem::L1MuStruct& l1mu() { return l1MuSt_; }
@@ -43,8 +45,9 @@ class TreeManager
 
   TTree* simTrackTree_;
   TTree* gemSimHitTree_;
-  TTree* cscSimHitTree_;
   TTree* gemDigiTree_;
+  TTree* gemStubTree_;
+  TTree* cscSimHitTree_;
   TTree* cscDigiTree_;
   TTree* cscStubTree_;
   TTree* l1MuTree_;
@@ -52,8 +55,9 @@ class TreeManager
 
   gem::SimTrackStruct simTrackSt_;
   gem::GEMSimHitStruct gemSimHitSt_;
-  gem::CSCSimHitStruct cscSimHitSt_;
   gem::GEMDigiStruct gemDigiSt_;
+  gem::GEMStubStruct gemStubSt_;
+  gem::CSCSimHitStruct cscSimHitSt_;
   gem::CSCDigiStruct cscDigiSt_;
   gem::CSCStubStruct cscStubSt_;
   gem::L1MuStruct l1MuSt_;
