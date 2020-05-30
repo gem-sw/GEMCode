@@ -12,7 +12,7 @@ class GEMCSCStubPlotter():
     self.inputDir = os.getenv("CMSSW_BASE") + "/src/"
     self.inputFile = "out_ana.root"
     self.targetDir = "gem_csc_matching/"
-    self.ext = ".pdf"
+    self.ext = ".png"
     self.analyzer = "GEMCSCAnalyzer"
     self.effSt = "trk_eff_"
     self.stations = enum('CSC_ALL','CSC_ME11','CSC_ME1a','CSC_ME1b','CSC_ME12','CSC_ME13',

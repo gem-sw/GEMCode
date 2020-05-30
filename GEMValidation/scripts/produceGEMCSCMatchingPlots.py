@@ -1,4 +1,3 @@
-
 import sys
 
 from ROOT import *
@@ -7,7 +6,6 @@ from ROOT import *
 from cuts import *
 from drawPlots import *
 
-
 ## run quiet mode
 import sys
 sys.argv.append( '-b' )
@@ -15,9 +13,12 @@ sys.argv.append( '-b' )
 import ROOT
 ROOT.gROOT.SetBatch(1)
 
-from BaseValidation import *
-from GEMCSCValidation import *
 
+from BaseValidation import *
+
+#exit(1)
+
+from GEMCSCValidation import *
 
 if __name__ == "__main__":
 
@@ -32,4 +33,3 @@ if __name__ == "__main__":
     #simTrackToCscAlctClctMatching(plotter,st)
     #simTrackToCscAlctClctMatching_2(plotter,st)
     #simTrackToCscLctMatching(plotter,st)
-    #    simTrackToCscMpLctMatching(plotter,st)

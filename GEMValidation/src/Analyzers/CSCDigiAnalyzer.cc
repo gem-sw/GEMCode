@@ -16,13 +16,21 @@ void CSCDigiAnalyzer::analyze(std::vector<gem::MyTrack>& track, std::vector<int>
   for(const auto& d: match_->chamberIdsStrip(0)) {
     CSCDetId id(d);
 
+    cout << "test digi analysis" << endl;
+
     const int st(gem::detIdToMEStation(id.station(),id.ring()));
-    if (std::find(stations_to_use_.begin(), stations_to_use_.end(), st) != stations_to_use_.end()) continue;
+    cout << "use this station? " << st << " "  << endl;
+    if (std::find(stations_to_use_.begin(), stations_to_use_.end(), st) == stations_to_use_.end()) continue;
 
     const int stt( std::find(stations_to_use_.begin(), stations_to_use_.end(), st) - stations_to_use_.begin());
 
     const int nlayers(match_->nLayersWithStripInChamber(d));
+    cout << "use this station " << st << " " << stt << " " << nlayers << " " << minNHitsChamber_ << endl;
+
     if (nlayers < minNHitsChamber_) continue;
+
+    cout << "use this station " << st << " " << stt << " " << nlayers << " " << minNHitsChamber_ << endl;
+    cout << "has strip digis " << endl;
 
     const bool odd(id.chamber()%2==1);
 
@@ -46,7 +54,7 @@ void CSCDigiAnalyzer::analyze(std::vector<gem::MyTrack>& track, std::vector<int>
   for(const auto& d: match_->chamberIdsWire(0)) {
     CSCDetId id(d);
     const int st(gem::detIdToMEStation(id.station(),id.ring()));
-    if (std::find(stations_to_use_.begin(), stations_to_use_.end(), st) != stations_to_use_.end()) continue;
+    if (std::find(stations_to_use_.begin(), stations_to_use_.end(), st) == stations_to_use_.end()) continue;
 
     const int stt( std::find(stations_to_use_.begin(), stations_to_use_.end(), st) - stations_to_use_.begin());
 

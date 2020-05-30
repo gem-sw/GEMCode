@@ -17,7 +17,7 @@ void CSCStubAnalyzer::analyze(std::vector<gem::MyTrack>& track, std::vector<int>
     CSCDetId id(d);
 
     const int st(gem::detIdToMEStation(id.station(),id.ring()));
-    if (std::find(stations_to_use_.begin(), stations_to_use_.end(), st) != stations_to_use_.end()) continue;
+    if (std::find(stations_to_use_.begin(), stations_to_use_.end(), st) == stations_to_use_.end()) continue;
 
     const int stt( std::find(stations_to_use_.begin(), stations_to_use_.end(), st) - stations_to_use_.begin());
 
@@ -62,7 +62,7 @@ void CSCStubAnalyzer::analyze(std::vector<gem::MyTrack>& track, std::vector<int>
   for(const auto& d: match_->chamberIdsALCT(0)) {
     CSCDetId id(d);
     const int st(gem::detIdToMEStation(id.station(),id.ring()));
-    if (std::find(stations_to_use_.begin(), stations_to_use_.end(), st) != stations_to_use_.end()) continue;
+    if (std::find(stations_to_use_.begin(), stations_to_use_.end(), st) == stations_to_use_.end()) continue;
 
     const int stt( std::find(stations_to_use_.begin(), stations_to_use_.end(), st) - stations_to_use_.begin());
 
@@ -106,9 +106,9 @@ void CSCStubAnalyzer::analyze(std::vector<gem::MyTrack>& track, std::vector<int>
     for(const auto& d: match_->chamberIdsLCT(0)) {
       CSCDetId id(d);
       const int st(gem::detIdToMEStation(id.station(),id.ring()));
-      if (std::find(stations_to_use_.begin(), stations_to_use_.end(), st) != stations_to_use_.end()) continue;
+      if (std::find(stations_to_use_.begin(), stations_to_use_.end(), st) == stations_to_use_.end()) continue;
 
-    const int stt( std::find(stations_to_use_.begin(), stations_to_use_.end(), st) - stations_to_use_.begin());
+      const int stt( std::find(stations_to_use_.begin(), stations_to_use_.end(), st) - stations_to_use_.begin());
 
       const auto& lct = match_->bestLctInChamber(d);
       const GlobalPoint& gp = match_->getGlobalPosition(d, lct);

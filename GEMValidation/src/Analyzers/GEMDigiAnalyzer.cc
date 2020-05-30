@@ -22,7 +22,7 @@ void GEMDigiAnalyzer::analyze(std::vector<gem::MyTrack>& track, std::vector<int>
     int MEStation = id.station();
 
     const int st(gem::detIdToMEStation(MEStation,id.ring()));
-    if (std::find(stations_to_use_.begin(), stations_to_use_.end(), st) != stations_to_use_.end()) continue;
+    if (std::find(stations_to_use_.begin(), stations_to_use_.end(), st) == stations_to_use_.end()) continue;
 
     const bool odd(id.chamber()%2==1);
 

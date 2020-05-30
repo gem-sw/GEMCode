@@ -1,6 +1,6 @@
 import sys
 import math
-from ROOT import *
+from ROOT import TH1F, TPaveText, TGraphAsymmErrors, TF1, TCanvas, gPad, gStyle
 #from cuts import *
 
 """
