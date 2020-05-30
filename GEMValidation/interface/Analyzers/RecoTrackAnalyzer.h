@@ -10,12 +10,12 @@ class RecoTrackAnalyzer
 public:
 
   // constructor
-  RecoTrackAnalyzer(const RecoTrackMatcher& match_sh);
+  RecoTrackAnalyzer(const edm::ParameterSet& conf);
 
   // destructor
   ~RecoTrackAnalyzer() {}
 
-  void init(const edm::ParameterSet& conf);
+  void init(const RecoTrackMatcher& match_sh);
 
   // initialize the event
   void analyze(TreeManager& tree);

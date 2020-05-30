@@ -9,6 +9,8 @@ AnalyzerManager::AnalyzerManager(const edm::ParameterSet& conf)
   cscdg_.reset(new CSCDigiAnalyzer(conf));
   cscstub_.reset(new CSCStubAnalyzer(conf));
   l1mu_.reset(new L1MuAnalyzer(conf));
+  l1track_.reset(new L1TrackAnalyzer(conf));
+  recotrack_.reset(new RecoTrackAnalyzer(conf));
 }
 
 void AnalyzerManager::init(const MatchManager& manager)
@@ -19,6 +21,8 @@ void AnalyzerManager::init(const MatchManager& manager)
   gemdg_->init(*manager.gemDigis());
   cscstub_->init(*manager.cscStubs());
   l1mu_->init(*manager.l1Muons());;
+  l1track_->init(*manager.l1Tracks());;
+  recotrack_->init(*manager.recoTracks());;
 }
 
 void
@@ -31,4 +35,6 @@ AnalyzerManager::analyze(TreeManager& tree, const SimTrack& t)
   gemdg_->analyze(tree);
   cscstub_->analyze(tree);
   l1mu_->analyze(tree);
+  // l1mu_->analyze(tree);
+  // l1mu_->analyze(tree);
 }

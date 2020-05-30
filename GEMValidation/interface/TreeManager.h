@@ -20,7 +20,7 @@
 class TreeManager
 {
  public:
-  TreeManager();
+  TreeManager() {}
 
   ~TreeManager() {}
 
@@ -39,6 +39,8 @@ class TreeManager
   gem::L1MuStruct& l1mu() { return l1MuSt_; }
   gem::RecoTrackStruct& recoTrack() { return recoTrackSt_; }
 
+ private:
+
   TTree* simTrackTree_;
   TTree* gemSimHitTree_;
   TTree* cscSimHitTree_;
@@ -47,8 +49,6 @@ class TreeManager
   TTree* cscStubTree_;
   TTree* l1MuTree_;
   TTree* recoTrackTree_;
-
- private:
 
   gem::SimTrackStruct simTrackSt_;
   gem::GEMSimHitStruct gemSimHitSt_;

@@ -1,16 +1,16 @@
 #include "GEMCode/GEMValidation/interface/Analyzers/GEMDigiAnalyzer.h"
 
-GEMDigiAnalyzer::GEMDigiAnalyzer(const GEMDigiMatcher& match_sh)
-{
-  match_.reset(new GEMDigiMatcher(match_sh));
-}
-
-void GEMDigiAnalyzer::init(const edm::ParameterSet& conf)
+GEMDigiAnalyzer::GEMDigiAnalyzer(const edm::ParameterSet& conf)
 {
   minNHitsChamber_ = conf.getParameter<int>("minNHitsChamberGEMDigi");
 }
 
-void GEMDigiAnalyzer::analyze(std::vector<gem::MyTrack>& track, std::vector<int> stations_to_use_)
+void GEMDigiAnalyzer::init(const GEMDigiMatcher& match_sh)
+{
+  match_.reset(new GEMDigiMatcher(match_sh));
+}
+
+void GEMDigiAnalyzer::analyze(TreeManager& tree)
 {
   /*
   // placeholders for best mtching pads
