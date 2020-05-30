@@ -29,21 +29,9 @@ namespace gem {
 
     // initialize to default values
     void init() {
-      gem::SimTrackStruct::init();
-      gem::SimHitStruct::init();
-      gem::DigiStruct::init();
-      gem::StubStruct::init();
-      gem::L1MuStruct::init();
-      gem::RecoTrackStruct::init();
     };
 
     TTree* book(TTree* t) {
-      t = gem::SimTrackStruct::book(t);
-      t = gem::SimHitStruct::book(t);
-      t = gem::DigiStruct::book(t);
-      t = gem::StubStruct::book(t);
-      t = gem::L1MuStruct::book(t);
-      t = gem::RecoTrackStruct::book(t);
 
       return t;
     }
