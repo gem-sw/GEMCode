@@ -5,114 +5,119 @@
 
 namespace gem {
 
+  const int nStations = 3;
+
   struct GEMSimHitStruct {
 
-    Float_t dphi_sh_even;
-    Float_t dphi_sh_odd;
+    // bools
+    bool has_gem_sh_even[nStations];
+    bool has_gem_sh_odd[nStations];
 
-    Float_t dphipositionpt_gemsh_even, dphipositionpt_gemsh_odd;
+    bool has_gem_sh2_even[nStations];
+    bool has_gem_sh2_odd[nStations];
 
-    Float_t bending_sh;
+    bool has_gemcopad_sh_even[nStations];
+    bool has_gemcopad_sh_odd[nStations];
 
-    Float_t phi_layer1_sh_even, eta_layer1_sh_even;
-    float phi_layer1_sh_odd, eta_layer1_sh_odd;
-    float perp_layer1_sh_odd, perp_layer1_sh_even;
-    Float_t z_layer1_sh_odd, z_layer1_sh_even;
-    Float_t phi_layer6_sh_even, eta_layer6_sh_even;
-    float phi_layer6_sh_odd, eta_layer6_sh_odd;
-    float perp_layer6_sh_odd, perp_layer6_sh_even;
-    Float_t z_layer6_sh_odd, z_layer6_sh_even;
-    Float_t perp_gemsh_even, perp_gemsh_odd;
-    float centralperp_gemsh_even, centralperp_gemsh_odd;
+    // ints
+    int chamber_sh_odd[nStations];
+    int chamber_sh_even[nStations];
 
-    bool has_gem_sh_even;
-    bool has_gem_sh_odd;
+    // floats
+    float dphi_sh_even[nStations];
+    float dphi_sh_odd[nStations];
 
-    bool has_gem_sh2_even;
-    bool has_gem_sh2_odd;
+    float dphipositionpt_gemsh_even[nStations];
+    float dphipositionpt_gemsh_odd[nStations];
 
-    bool has_gemcopad_sh_even;
-    bool has_gemcopad_sh_odd;
+    float bending_sh[nStations];
 
-    Float_t strip_gemsh_odd;  // average hits' strip
-    Float_t strip_gemsh_even;
+    float perp_gemsh_even[nStations];
+    float perp_gemsh_odd[nStations];
 
-    Float_t eta_gemsh_odd;
-    Float_t eta_gemsh_even;
+    float centralperp_gemsh_even[nStations];
+    float centralperp_gemsh_odd[nStations];
 
-    Float_t phi_gemsh_odd;
-    Float_t phi_gemsh_even;
+    float strip_gemsh_odd[nStations];
+    float strip_gemsh_even[nStations];
 
-    int chamber_sh_odd;
-    int chamber_sh_even;
+    float eta_gemsh_odd[nStations];
+    float eta_gemsh_even[nStations];
+
+    float phi_gemsh_odd[nStations];
+    float phi_gemsh_even[nStations];
+
 
     void init() {
-      bending_sh = -10;
+      for (unsigned i = 0 ; i < nStations; i++) {
 
-      chamber_sh_odd = -1;
-      chamber_sh_even = -1;
+        has_gem_sh_even[i] = false;
+        has_gem_sh_odd[i] = false;
 
-      perp_gemsh_odd = -0.0;
-      perp_gemsh_even = -0.0;
+        has_gem_sh2_even[i] = false;
+        has_gem_sh2_odd[i] = false;
 
-      centralperp_gemsh_odd = -0.0;
-      centralperp_gemsh_even = -0.0;
+        has_gemcopad_sh_even[i] = false;
+        has_gemcopad_sh_odd[i] = false;
 
-      has_gem_sh_even = false;
-      has_gem_sh_odd = false;
+        chamber_sh_odd[i] = -1;
+        chamber_sh_even[i] = -1;
 
-      has_gem_sh2_even = false;
-      has_gem_sh2_odd = false;
+        bending_sh[i] = -10;
 
-      has_gemcopad_sh_even = false;
-      has_gemcopad_sh_odd = false;
+        perp_gemsh_odd[i] = -0.0;
+        perp_gemsh_even[i] = -0.0;
 
-      strip_gemsh_odd = -9.;
-      strip_gemsh_even = -9.;
+        centralperp_gemsh_odd[i] = -0.0;
+        centralperp_gemsh_even[i] = -0.0;
 
-      eta_gemsh_odd = -9.;
-      eta_gemsh_even = -9.;
+        strip_gemsh_odd[i] = -9.;
+        strip_gemsh_even[i] = -9.;
 
-      phi_gemsh_odd = -9.;
-      phi_gemsh_even = -9.;
+        eta_gemsh_odd[i] = -9.;
+        eta_gemsh_even[i] = -9.;
 
-      dphi_sh_odd = -9;
-      dphi_sh_even = -9;
+        phi_gemsh_odd[i] = -9.;
+        phi_gemsh_even[i] = -9.;
+
+        dphi_sh_odd[i] = -9;
+        dphi_sh_even[i] = -9;
+      }
     };
 
     void book(TTree* t) {
 
-      t->Branch("bending_sh", &bending_sh);
+      t->Branch("has_gem_sh_odd", has_gem_sh_odd, "has_gem_sh_odd[nStation]/O");
+      t->Branch("has_gem_sh_even", has_gem_sh_even, "has_gem_sh_even[nStation]/O");
 
-      t->Branch("chamber_sh_odd", &chamber_sh_odd);
-      t->Branch("chamber_sh_even", &chamber_sh_even);
+      t->Branch("has_gem_sh2_odd", has_gem_sh2_odd, "has_gem_sh2_odd[nStation]/O");
+      t->Branch("has_gem_sh2_even", has_gem_sh2_even, "has_gem_sh2_even[nStation]/O");
 
-      t->Branch("perp_gemsh_odd", &perp_gemsh_odd);
-      t->Branch("perp_gemsh_even", &perp_gemsh_even);
+      t->Branch("has_gemcopad_sh_even", has_gemcopad_sh_even, "has_gemcopad_sh_even[nStation]/O");
+      t->Branch("has_gemcopad_sh_odd", has_gemcopad_sh_odd, "has_gemcopad_sh_odd[nStation]/O");
 
-      t->Branch("centralperp_gemsh_odd", &centralperp_gemsh_odd);
-      t->Branch("centralperp_gemsh_even", &centralperp_gemsh_even);
+      t->Branch("chamber_sh_odd", chamber_sh_odd, "chamber_sh_odd[nStation]/I");
+      t->Branch("chamber_sh_even", chamber_sh_even, "chamber_sh_even[nStation]/I");
 
-      t->Branch("has_gem_sh_odd", &has_gem_sh_odd);
-      t->Branch("has_gem_sh_even", &has_gem_sh_even);
+      t->Branch("bending_sh", bending_sh, "bending_sh[nStation]/F");
 
-      t->Branch("has_gem_sh2_odd", &has_gem_sh2_odd);
-      t->Branch("has_gem_sh2_even", &has_gem_sh2_even);
+      t->Branch("perp_gemsh_odd", perp_gemsh_odd, "perp_gemsh_odd[nStation]/F");
+      t->Branch("perp_gemsh_even", perp_gemsh_even, "perp_gemsh_even[nStation]/F");
 
-      t->Branch("has_gemcopad_sh_even", &has_gemcopad_sh_even);
-      t->Branch("has_gemcopad_sh_odd", &has_gemcopad_sh_odd);
+      t->Branch("centralperp_gemsh_odd", centralperp_gemsh_odd, "centralperp_gemsh_odd[nStation]/F");
+      t->Branch("centralperp_gemsh_even", centralperp_gemsh_even, "centralperp_gemsh_even[nStation]/F");
 
-      t->Branch("strip_gemsh_odd", &strip_gemsh_odd);
-      t->Branch("strip_gemsh_even", &strip_gemsh_even);
+      t->Branch("strip_gemsh_odd", strip_gemsh_odd, "strip_gemsh_odd[nStation]/F");
+      t->Branch("strip_gemsh_even", strip_gemsh_even, "strip_gemsh_even[nStation]/F");
 
-      t->Branch("eta_gemsh_odd", &eta_gemsh_odd);
-      t->Branch("eta_gemsh_even", &eta_gemsh_even);
+      t->Branch("eta_gemsh_odd", eta_gemsh_odd, "eta_gemsh_odd[nStation]/F");
+      t->Branch("eta_gemsh_even", eta_gemsh_even, "eta_gemsh_even[nStation]/F");
 
-      t->Branch("phi_gemsh_odd", &phi_gemsh_odd);
-      t->Branch("phi_gemsh_even", &phi_gemsh_even);
+      t->Branch("phi_gemsh_odd", phi_gemsh_odd, "phi_gemsh_odd[nStation]/F");
+      t->Branch("phi_gemsh_even", phi_gemsh_even, "phi_gemsh_even[nStation]/F");
 
-      t->Branch("dphi_sh_odd", &dphi_sh_odd);
-      t->Branch("dphi_sh_even", &dphi_sh_even);
+      t->Branch("dphi_sh_odd", dphi_sh_odd, "dphi_sh_odd[nStation]/F");
+      t->Branch("dphi_sh_even", dphi_sh_even, "dphi_sh_even[nStation]/F");
     }
   };
 }  // namespace
