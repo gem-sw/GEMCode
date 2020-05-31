@@ -29,32 +29,32 @@ def produceOccupanyPlots(plotter):
     me0SimHitOccupancyRZ(plotter,i)
     me0SimHitTOF(plotter,i)
     me0SimHitOccupancyXY(plotter,i)
-    #gemSimhitMomentum(plotter,i) 
+    #gemSimhitMomentum(plotter,i)
     #GEMSimValidation.SimhitMomentum(plotter,i)
 
     """
     rpcSimHitOccupancyXY(plotter,i)
     rpcSimHitOccupancyRZ(plotter,i)
     rpcSimHitTOF(plotter,i)
-    
+
     cscSimHitOccupancyXY(plotter,i)
     cscSimHitOccupancyRZ(plotter,i)
     cscSimHitTOF(plotter,i)
-    
+
     """
 
 
 #_______________________________________________________________________________
 def produceMatchingPlots(plotter):
-  gemSimTrackToSimHitMatchingLX(plotter) 
-  gemSimTrackToSimHitMatchingLY(plotter) 
-  gemSimTrackToSimHitMatchingEta(plotter) 
+  gemSimTrackToSimHitMatchingLX(plotter)
+  gemSimTrackToSimHitMatchingLY(plotter)
+  gemSimTrackToSimHitMatchingEta(plotter)
   gemSimTrackToSimHitMatchingPhi(plotter)
-  me0SimTrackToSimHitMatchingLX(plotter) 
-  me0SimTrackToSimHitMatchingLY(plotter) 
-  me0SimTrackToSimHitMatchingEta(plotter) 
+  me0SimTrackToSimHitMatchingLX(plotter)
+  me0SimTrackToSimHitMatchingLY(plotter)
+  me0SimTrackToSimHitMatchingEta(plotter)
   me0SimTrackToSimHitMatchingPhi(plotter)
-  
+
 
 #_______________________________________________________________________________
 if __name__ == "__main__":
@@ -66,7 +66,41 @@ if __name__ == "__main__":
   """
   simTrackProperties(plotter)
   gemChamberNumbering(plotter)
-  
+
   """
   produceMatchingPlots(plotter)
   produceOccupanyPlots(plotter)
+
+  rpcDigiOccupancyXY(plotter)
+  """
+  gemDigiOccupancyXY(plotter)
+  gemDigiOccupancyStripPhi(plotter)
+  gemDigiOccupancyStrip(plotter)
+  gemDigiBX(plotter)
+  gemDigiOccupancyRZ(plotter)
+
+  gemPadOccupancyXY(plotter)
+  gemPadOccupancyPadPhi(plotter)
+  gemPadOccupancyPad(plotter)
+  gemPadBX(plotter)
+  gemPadOccupancyRZ(plotter)
+
+  gemCoPadOccupancyXY(plotter)
+  gemCoPadOccupancyCoPadPhi(plotter)
+  gemCoPadOccupancyCoPad(plotter)
+  gemCoPadBX(plotter)
+  gemCoPadOccupancyRZ(plotter)
+
+  simTrackDigiMatchingEta(plotter)
+  simTrackDigiMatchingPhi(plotter)
+  simTrackDigiMatchingLX(plotter)
+  simTrackDigiMatchingLY(plotter)
+  simTrackPadMatchingEta(plotter)
+  simTrackPadMatchingPhi(plotter)
+  simTrackPadMatchingLX(plotter)
+  simTrackPadMatchingLY(plotter)
+  simTrackCoPadMatchingEta(plotter)
+  simTrackCoPadMatchingPhi(plotter)
+  simTrackCoPadMatchingLX(plotter)
+  simTrackCoPadMatchingLY(plotter)
+  """
