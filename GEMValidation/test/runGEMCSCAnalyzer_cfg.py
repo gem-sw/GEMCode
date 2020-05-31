@@ -66,15 +66,15 @@ ana.simTrack.minEta = 1.2
 ana.simTrack.maxEta = 2.4
 ana.gemStripDigi.inputTag = "muonGEMDigis"
 ana.gemStripDigi.verbose = 0
-ana.cscComparatorDigi.verbose = 1
-ana.cscWireDigi.verbose = 1
-ana.cscALCT.verbose = 1
+ana.cscComparatorDigi.verbose = 0
+ana.cscWireDigi.verbose = 0
+ana.cscALCT.verbose = 0
 ana.cscALCT.minBX = 2
 ana.cscALCT.maxBX = 4
-ana.cscCLCT.verbose = 1
+ana.cscCLCT.verbose = 0
 ana.cscCLCT.minBX = 6
 ana.cscCLCT.maxBX = 8
-ana.cscLCT.verbose = 1
+ana.cscLCT.verbose = 0
 
 process.options = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 

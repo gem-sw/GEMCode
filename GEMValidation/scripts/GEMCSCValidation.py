@@ -50,7 +50,7 @@ def simTrackToCscSimHitMatching(plotter,st=1):
 
     index = plotter.stationsToUse.index(st)
 
-    h1 = draw_geff(plotter.treeEffSt[index], title, h_bins, toPlot, ok_eta, ok_csc_sh, "same")
+    h1 = draw_geff(plotter.tree[index], title, h_bins, toPlot, ok_eta, ok_csc_sh, "same")
 
     leg = TLegend(0.45,0.2,.75,0.35, "", "brNDC")
     leg.SetBorderSize(0)
