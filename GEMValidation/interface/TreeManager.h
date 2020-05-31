@@ -11,6 +11,9 @@
 #include "GEMCode/GEMValidation/interface/Structs/CSCSimHitStruct.h"
 #include "GEMCode/GEMValidation/interface/Structs/CSCDigiStruct.h"
 #include "GEMCode/GEMValidation/interface/Structs/CSCStubStruct.h"
+#include "GEMCode/GEMValidation/interface/Structs/RPCSimHitStruct.h"
+#include "GEMCode/GEMValidation/interface/Structs/RPCDigiStruct.h"
+#include "GEMCode/GEMValidation/interface/Structs/RPCRecHitStruct.h"
 #include "GEMCode/GEMValidation/interface/Structs/L1MuStruct.h"
 #include "GEMCode/GEMValidation/interface/Structs/RecoTrackStruct.h"
 
@@ -38,6 +41,9 @@ class TreeManager
   gem::CSCSimHitStruct& cscSimHit() { return cscSimHitSt_; }
   gem::CSCDigiStruct& cscDigi() { return cscDigiSt_; }
   gem::CSCStubStruct& cscStub() { return cscStubSt_; }
+  gem::RPCSimHitStruct& rpcSimHit() { return rpcSimHitSt_; }
+  gem::RPCDigiStruct& rpcDigi() { return rpcDigiSt_; }
+  gem::RPCRecHitStruct& rpcRecHit() { return rpcRecHitSt_; }
   gem::L1MuStruct& l1mu() { return l1MuSt_; }
   gem::RecoTrackStruct& recoTrack() { return recoTrackSt_; }
 
@@ -50,6 +56,9 @@ class TreeManager
   TTree* cscSimHitTree_;
   TTree* cscDigiTree_;
   TTree* cscStubTree_;
+  TTree* rpcSimHitTree_;
+  TTree* rpcDigiTree_;
+  TTree* rpcRecHitTree_;
   TTree* l1MuTree_;
   TTree* recoTrackTree_;
 
@@ -60,6 +69,9 @@ class TreeManager
   gem::CSCSimHitStruct cscSimHitSt_;
   gem::CSCDigiStruct cscDigiSt_;
   gem::CSCStubStruct cscStubSt_;
+  gem::RPCSimHitStruct rpcSimHitSt_;
+  gem::RPCDigiStruct rpcDigiSt_;
+  gem::RPCRecHitStruct rpcRecHitSt_;
   gem::L1MuStruct l1MuSt_;
   gem::RecoTrackStruct recoTrackSt_;
 };

@@ -10,6 +10,9 @@
 #include "GEMCode/GEMValidation/interface/Analyzers/CSCSimHitAnalyzer.h"
 #include "GEMCode/GEMValidation/interface/Analyzers/CSCDigiAnalyzer.h"
 #include "GEMCode/GEMValidation/interface/Analyzers/CSCStubAnalyzer.h"
+#include "GEMCode/GEMValidation/interface/Analyzers/RPCSimHitAnalyzer.h"
+#include "GEMCode/GEMValidation/interface/Analyzers/RPCDigiAnalyzer.h"
+#include "GEMCode/GEMValidation/interface/Analyzers/RPCRecHitAnalyzer.h"
 #include "GEMCode/GEMValidation/interface/Analyzers/L1MuAnalyzer.h"
 #include "GEMCode/GEMValidation/interface/Analyzers/L1TrackAnalyzer.h"
 #include "GEMCode/GEMValidation/interface/Analyzers/RecoTrackAnalyzer.h"
@@ -37,6 +40,9 @@ class AnalyzerManager
   std::unique_ptr<CSCSimHitAnalyzer> cscsh_;
   std::unique_ptr<CSCDigiAnalyzer> cscdg_;
   std::unique_ptr<CSCStubAnalyzer> cscstub_;
+  std::unique_ptr<RPCSimHitAnalyzer> rpcsh_;
+  std::unique_ptr<RPCDigiAnalyzer> rpcdg_;
+  std::unique_ptr<RPCRecHitAnalyzer> rpcrh_;
   std::unique_ptr<L1MuAnalyzer> l1mu_;
   std::unique_ptr<L1TrackAnalyzer> l1track_;
   std::unique_ptr<RecoTrackAnalyzer> recotrack_;
