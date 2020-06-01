@@ -24,7 +24,7 @@ process.MessageLogger = cms.Service("MessageLogger",
         lineLength = cms.untracked.int32(132),
         noLineBreaks = cms.untracked.bool(True)
     ),
-    debugModules = cms.untracked.vstring("MuonAnalyzer")
+    debugModules = cms.untracked.vstring("GEMCSCAnalyzer")
 )
 """
 process.source = cms.Source(
@@ -45,8 +45,8 @@ process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '
 
 # the analyzer configuration
 from GEMCode.GEMValidation.simTrackMatching_cfi import simTrackPSet
-process.MuonAnalyzer = cms.EDAnalyzer(
-    "MuonAnalyzer",
+process.GEMCSCAnalyzer = cms.EDAnalyzer(
+    "GEMCSCAnalyzer",
     simTrackPSet,
     runSim = cms.bool(True),
     runDigi = cms.bool(True),
@@ -61,7 +61,7 @@ process.MuonAnalyzer = cms.EDAnalyzer(
     minNHitsChamberCSCStub = cms.int32(4),
 )
 
-ana = process.MuonAnalyzer
+ana = process.GEMCSCAnalyzer
 ana.simTrack.minEta = 1.2
 ana.simTrack.maxEta = 2.4
 ana.gemStripDigi.inputTag = "muonGEMDigis"
@@ -78,7 +78,7 @@ ana.cscLCT.verbose = 0
 
 process.options = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 
-process.p = cms.Path(process.MuonAnalyzer)
+process.p = cms.Path(process.GEMCSCAnalyzer)
 
 ## messages
 print

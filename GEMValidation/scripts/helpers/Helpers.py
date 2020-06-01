@@ -2,7 +2,7 @@ from ROOT import gStyle, TH1F, TCanvas, TLegend, kRed, kBlue, TLatex, TEfficienc
 from cuts import *
 
 #_______________________________________________________________________________
-def drawCscLabel(title, x=0.17, y=0.35, font_size=0.):
+def drawCSCLabel(title, x=0.17, y=0.35, font_size=0.):
     tex = TLatex(x, y,title)
     if font_size > 0.:
       tex.SetTextSize(font_size)

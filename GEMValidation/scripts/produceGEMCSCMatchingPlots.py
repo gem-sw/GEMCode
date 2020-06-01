@@ -1,10 +1,9 @@
 import sys
 
 from ROOT import *
-from style import CMS_lumi
-
-from cuts import *
-from drawPlots import *
+from style.CMS_lumi import *
+from helpers.cuts import *
+from helpers.drawPlots import *
 
 ## run quiet mode
 import sys
@@ -18,9 +17,10 @@ from GEMCSCValidation import *
 
 plotter = GEMCSCStubPlotter()
 
-#simTrackToCscSimHitMatching(plotter)
-#simTrackToCscStripsWiresMatching(plotter,st)
-#simTrackToCscStripsWiresMatching_2(plotter,st)
-#simTrackToCscAlctClctMatching(plotter,st)
-#simTrackToCscAlctClctMatching_2(plotter,st)
-#simTrackToCscLctMatching(plotter,st)
+
+CSCSimHit(plotter)
+#CSCStripsWires(plotter,st)
+#CSCStripsWires2(plotter,st)
+#CSCAlctClct(plotter,st)
+#CSCAlctClct2(plotter,st)
+#CSCLct(plotter,st)
