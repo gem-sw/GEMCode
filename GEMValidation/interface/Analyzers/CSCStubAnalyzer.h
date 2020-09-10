@@ -2,7 +2,7 @@
 #define GEMCode_GEMValidation_CSCStubAnalyzer_h
 
 #include "GEMCode/GEMValidation/interface/Helpers.h"
-#include "GEMCode/GEMValidation/interface/MatcherManager.h"
+#include "GEMCode/GEMValidation/interface/MatcherSuperManager.h"
 #include "GEMCode/GEMValidation/interface/TreeManager.h"
 #include "L1Trigger/CSCTriggerPrimitives/interface/CSCComparatorCodeLUT.h"
 

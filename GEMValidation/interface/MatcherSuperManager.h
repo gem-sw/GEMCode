@@ -20,6 +20,7 @@ public:
 
   // accessors
   std::vector<std::shared_ptr<MatcherManager> > matchers() const { return matchers_; }
+  std::shared_ptr<MatcherManager> matcher(unsigned index) const {return matchers_[index]; }
 
 private:
   // one manager per Sim-level particle we're fully analyzing

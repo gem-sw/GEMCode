@@ -32,6 +32,8 @@ static const float AVERAGE_ME0_Z(568.6);  // [cm]
 static const float AVERAGE_DT1_R(440);  // [cm] for Barrel
 static const float AVERAGE_DT2_R(523);
 
+static const int MAX_PARTICLES(100);
+
 /// Muon Subsystem
 enum MuonType { DT = 1, CSC = 2, RPC = 3, GEM = 4, ME0 = 5 };
 

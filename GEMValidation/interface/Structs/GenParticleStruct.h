@@ -24,6 +24,7 @@ namespace gem {
     p_floats gen_d0_prod;
     p_floats gen_z0_prod;
     p_ints   gen_pdgid;
+    p_ints   gen_tpid;
 
     void init() {
       pt = 0.;
@@ -44,6 +45,7 @@ namespace gem {
       gen_z0_prod = new t_floats;
       gen_pdgid   = new t_ints;
       gen_charge  = new t_ints;
+      gen_tpid   = new t_ints;
     };
 
     void clear() {
@@ -81,6 +83,7 @@ namespace gem {
       t->Branch("gen_z0_prod",     &gen_z0_prod);
       t->Branch("gen_pdgid",       &gen_pdgid);
       t->Branch("gen_charge",      &gen_charge);
+      t->Branch("gen_tpid",       &gen_tpid);
     }
   };
 }  // namespace

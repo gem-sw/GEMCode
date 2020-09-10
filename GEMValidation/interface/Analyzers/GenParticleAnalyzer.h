@@ -2,7 +2,7 @@
 #define GEMCode_GEMValidation_GenParticleAnalyzer_h
 
 #include "GEMCode/GEMValidation/interface/Helpers.h"
-#include "GEMCode/GEMValidation/interface/MatcherManager.h"
+#include "GEMCode/GEMValidation/interface/MatcherSuperManager.h"
 #include "GEMCode/GEMValidation/interface/TreeManager.h"
 
 class GenParticleAnalyzer
@@ -20,7 +20,8 @@ public:
   void setMatcher(const GenParticleMatcher& match_sh);
 
   // initialize the event
-  void analyze(const edm::Event& ev, const edm::EventSetup& es, TreeManager& tree);
+  void analyze(const edm::Event& ev, const edm::EventSetup& es,
+               const MatcherSuperManager& manager, TreeManager& tree);
   void analyze(TreeManager& tree);
 
  private:

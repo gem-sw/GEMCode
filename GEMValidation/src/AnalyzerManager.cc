@@ -38,8 +38,8 @@ void AnalyzerManager::analyze(const edm::Event& ev,
                               const edm::EventSetup& es,
                               const MatcherSuperManager& manager,
                               TreeManager& tree) {
-  // simt_->analyze(ev, es, manager, tree);
-  // gent_->analyze(ev, es, manager, tree);
+  simt_->analyze(ev, es, tree);
+  gent_->analyze(ev, es, manager, tree);
   /*
   gemsh_->analyze(ev, es, tree_);
   gemdg_->analyze(ev, es, tree_);
