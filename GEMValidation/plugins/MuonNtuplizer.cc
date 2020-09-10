@@ -7,7 +7,7 @@
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 
 // Private code
-#include "GEMCode/GEMValidation/interface/MatcherManager.h"
+#include "GEMCode/GEMValidation/interface/MatcherSuperManager.h"
 #include "GEMCode/GEMValidation/interface/AnalyzerManager.h"
 #include "GEMCode/GEMValidation/interface/TreeManager.h"
 
@@ -20,10 +20,8 @@ public:
   virtual void analyze(const edm::Event&, const edm::EventSetup&);
 
 private:
-  void analyze(const SimTrack& t, const SimVertex& v);
-
   std::unique_ptr<TreeManager> tree_;
-  std::unique_ptr<MatcherManager> matcher_;
+  std::unique_ptr<MatcherSuperManager> matcher_;
   std::unique_ptr<AnalyzerManager> analyzer_;
 };
 
@@ -33,9 +31,6 @@ MuonNtuplizer::MuonNtuplizer(const edm::ParameterSet& ps)
   tree_.reset(new TreeManager());
   tree_->book();
 
-  // define new matchers
-  matcher_.reset(new MatcherManager(ps, consumesCollector()));
-
   // define new analyzers
   analyzer_.reset(new AnalyzerManager(ps, consumesCollector()));
 }
@@ -44,19 +39,11 @@ void MuonNtuplizer::analyze(const edm::Event& ev, const edm::EventSetup& es) {
   // reset all structs
   tree_->init();
 
-  // set event and setup
-  matcher_->init(ev, es);
-  analyzer_->init(ev, es);
-
-  // match the track
+  // match the tracks
   matcher_->match(ev, es);
 
-  // initialize the track analyzers
-  analyzer_->setManager(*matcher_);
-  analyzer_->setTree(*tree_);
-
-  // analyze the track
-  analyzer_->analyze(ev, es);
+  // analyze the track objects
+  analyzer_->analyze(ev, es, *matcher_, *tree_);
 
   // fill all trees
   tree_->fill();

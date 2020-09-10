@@ -14,6 +14,7 @@ namespace gem {
 
     // new stuff
     p_floats gen_pt;
+    p_floats gen_pz;
     p_floats gen_eta;
     p_floats gen_phi;
     p_ints   gen_charge;
@@ -47,6 +48,7 @@ namespace gem {
 
     void clear() {
       gen_pt->clear();
+      gen_pz->clear();
       gen_eta->clear();
       gen_phi->clear();
       gen_dxy->clear();
@@ -69,6 +71,7 @@ namespace gem {
       t->Branch("pdgid", &pdgid);
 
       t->Branch("gen_pt",     &gen_pt);
+      t->Branch("gen_pz",     &gen_pz);
       t->Branch("gen_eta",    &gen_eta);
       t->Branch("gen_phi",    &gen_phi);
       t->Branch("gen_dxy",    &gen_dxy);
