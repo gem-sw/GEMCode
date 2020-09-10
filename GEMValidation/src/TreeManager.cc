@@ -57,4 +57,6 @@ void TreeManager::fill() {
   l1MuTree_->Fill();
   l1TrackTree_->Fill();
   recoTrackTree_->Fill();
+
+  flatTree_->Fill();
 }

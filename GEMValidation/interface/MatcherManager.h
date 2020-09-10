@@ -1,6 +1,7 @@
 #ifndef GEMCode_GEMValidation_MatcherManager_h
 #define GEMCode_GEMValidation_MatcherManager_h
 
+#include "GEMCode/GEMValidation/interface/Analyzers/SimTrackAnalyzer.h"
 #include "GEMCode/GEMValidation/interface/Matchers/GenParticleMatcher.h"
 #include "GEMCode/GEMValidation/interface/Matchers/ME0RecHitMatcher.h"
 #include "GEMCode/GEMValidation/interface/Matchers/L1MuMatcher.h"
@@ -16,7 +17,10 @@ public:
 
   void init(const edm::Event& e, const edm::EventSetup& eventSetup);
 
+  bool isSimTrackGood(const SimTrack& t);
+
   /// do the matching
+  void match(const edm::Event& e, const edm::EventSetup& eventSetup);
   void match(const SimTrack& t, const SimVertex& v);
 
   // accessors
@@ -54,6 +58,17 @@ private:
   std::shared_ptr<L1MuMatcher> l1Muons_;
   std::shared_ptr<L1TrackMatcher> l1Tracks_;
   std::shared_ptr<RecoTrackMatcher> recoTracks_;
+
+  std::unique_ptr<SimTrackAnalyzer> simt_;
+
+  edm::EDGetTokenT<edm::SimVertexContainer> simVertexInput_;
+  edm::EDGetTokenT<edm::SimTrackContainer> simTrackInput_;
+
+  int verboseSimTrack_;
+  double simTrackMinPt_;
+  double simTrackMinEta_;
+  double simTrackMaxEta_;
+  int verbose_;
 };
 
 #endif

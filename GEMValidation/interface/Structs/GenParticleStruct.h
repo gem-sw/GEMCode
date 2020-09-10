@@ -68,16 +68,16 @@ namespace gem {
       t->Branch("endcap", &endcap);
       t->Branch("pdgid", &pdgid);
 
-      t->Branch("tp_pt",     &gen_pt);
-      t->Branch("tp_eta",    &gen_eta);
-      t->Branch("tp_phi",    &gen_phi);
-      t->Branch("tp_dxy",    &gen_dxy);
-      t->Branch("tp_d0",     &gen_d0);
-      t->Branch("tp_z0",     &gen_z0);
-      t->Branch("tp_d0_prod",     &gen_d0_prod);
-      t->Branch("tp_z0_prod",     &gen_z0_prod);
-      t->Branch("tp_pdgid",       &gen_pdgid);
-      t->Branch("tp_charge",      &gen_charge);
+      t->Branch("gen_pt",     &gen_pt);
+      t->Branch("gen_eta",    &gen_eta);
+      t->Branch("gen_phi",    &gen_phi);
+      t->Branch("gen_dxy",    &gen_dxy);
+      t->Branch("gen_d0",     &gen_d0);
+      t->Branch("gen_z0",     &gen_z0);
+      t->Branch("gen_d0_prod",     &gen_d0_prod);
+      t->Branch("gen_z0_prod",     &gen_z0_prod);
+      t->Branch("gen_pdgid",       &gen_pdgid);
+      t->Branch("gen_charge",      &gen_charge);
     }
   };
 }  // namespace

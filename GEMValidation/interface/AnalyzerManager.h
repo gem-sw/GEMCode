@@ -29,12 +29,16 @@ class AnalyzerManager
 
   /// initialize
   void setManager(const MatcherManager&);
+  /* void setMatcher(const MatcherManager& m) { setManager(m); } */
+  void setTree(const TreeManager& tree) { tree_ = tree; }
 
   /// do the matching
-  void analyze(const edm::Event& ev, const edm::EventSetup& es) {}
+  void analyze(const edm::Event& ev, const edm::EventSetup& es);
   void analyze(TreeManager& tree, const SimTrack& t, const SimVertex& v);
 
  private:
+
+  TreeManager tree_;
 
   // analyzers
   std::unique_ptr<GenParticleAnalyzer> gent_;

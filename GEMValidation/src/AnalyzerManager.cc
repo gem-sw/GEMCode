@@ -34,6 +34,23 @@ void AnalyzerManager::setManager(const MatcherManager& manager)
   // recotrack_->setMatcher(*manager.recoTracks());
 }
 
+void AnalyzerManager::analyze(const edm::Event& ev,
+                              const edm::EventSetup& es) {
+  /*
+  gent_->analyze(ev, es, tree_);
+  simt_->analyze(ev, es, tree_);
+  gemsh_->analyze(ev, es, tree_);
+  gemdg_->analyze(ev, es, tree_);
+  gemstub_->analyze(ev, es, tree_);
+  cscsh_->analyze(ev, es, tree_);
+  cscdg_->analyze(ev, es, tree_);
+  cscstub_->analyze(ev, es, tree_);
+  l1mu_->analyze(ev, es, tree_);
+  l1track_->analyze(ev, es, tree_);
+  */
+}
+
+
 void
 AnalyzerManager::analyze(TreeManager& tree, const SimTrack& t, const SimVertex& v)
 {
