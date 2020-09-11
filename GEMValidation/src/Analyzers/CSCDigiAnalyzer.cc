@@ -30,7 +30,7 @@ void CSCDigiAnalyzer::setMatcher(const CSCDigiMatcher& match_sh)
   match_.reset(new CSCDigiMatcher(match_sh));
 }
 
-void CSCDigiAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es, const MatcherSuperManager& manager, TreeManager& tree)
+void CSCDigiAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es, const MatcherSuperManager& manager, my::TreeManager& tree)
 {
 }
 

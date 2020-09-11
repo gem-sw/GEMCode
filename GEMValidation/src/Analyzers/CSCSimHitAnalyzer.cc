@@ -19,7 +19,7 @@ void CSCSimHitAnalyzer::setMatcher(const CSCSimHitMatcher& match_sh)
   match_.reset(new CSCSimHitMatcher(match_sh));
 }
 
-void CSCSimHitAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es, const MatcherSuperManager& manager, TreeManager& tree)
+void CSCSimHitAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es, const MatcherSuperManager& manager, my::TreeManager& tree)
 {
 }
 

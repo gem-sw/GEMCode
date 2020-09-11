@@ -21,7 +21,7 @@ public:
 
   // initialize the event
   void analyze(const edm::Event& ev, const edm::EventSetup& es,
-               const MatcherSuperManager& manager, TreeManager& tree);
+               const MatcherSuperManager& manager, my::TreeManager& tree);
   void analyze(TreeManager& tree);
 
  private:

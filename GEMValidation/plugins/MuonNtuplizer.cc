@@ -18,7 +18,7 @@ public:
   virtual void analyze(const edm::Event&, const edm::EventSetup&);
 
 private:
-  std::unique_ptr<TreeManager> tree_;
+  std::unique_ptr<my::TreeManager> tree_;
   std::unique_ptr<MatcherSuperManager> matcher_;
   std::unique_ptr<AnalyzerManager> analyzer_;
 };
@@ -26,8 +26,7 @@ private:
 MuonNtuplizer::MuonNtuplizer(const edm::ParameterSet& ps)
 {
   // book the trees
-  tree_.reset(new TreeManager());
-  tree_->book2();
+  tree_.reset(new my::TreeManager());
 
   // reset he matchers
   matcher_.reset(new MatcherSuperManager(ps, consumesCollector()));
@@ -47,7 +46,7 @@ void MuonNtuplizer::analyze(const edm::Event& ev, const edm::EventSetup& es) {
   analyzer_->analyze(ev, es, *matcher_, *tree_);
 
   // fill all trees
-  tree_->fill2();
+  tree_->fill();
 }
 
 DEFINE_FWK_MODULE(MuonNtuplizer);

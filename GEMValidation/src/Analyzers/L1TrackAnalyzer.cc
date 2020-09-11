@@ -23,7 +23,7 @@ void L1TrackAnalyzer::setMatcher(const L1TrackMatcher& match_sh)
   match_.reset(new L1TrackMatcher(match_sh));
 }
 
-void L1TrackAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es, const MatcherSuperManager& manager, TreeManager& tree) {}
+void L1TrackAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es, const MatcherSuperManager& manager, my::TreeManager& tree) {}
 
 void L1TrackAnalyzer::analyze(TreeManager& tree)
 {

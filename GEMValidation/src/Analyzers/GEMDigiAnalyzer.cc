@@ -17,7 +17,7 @@ void GEMDigiAnalyzer::setMatcher(const GEMDigiMatcher& match_sh)
   match_.reset(new GEMDigiMatcher(match_sh));
 }
 
-void GEMDigiAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, TreeManager& tree)
+void GEMDigiAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, my::TreeManager& tree)
 {
   iEvent.getByToken(gemDigiToken_, gemDigisH_);
 

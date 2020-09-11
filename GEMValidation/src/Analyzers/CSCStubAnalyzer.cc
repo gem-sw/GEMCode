@@ -68,7 +68,7 @@ void CSCStubAnalyzer::setMatcher(const CSCStubMatcher& match_sh)
   match_.reset(new CSCStubMatcher(match_sh));
 }
 
-void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, TreeManager& tree)
+void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, my::TreeManager& tree)
 {
   iSetup.get<MuonGeometryRecord>().get(csc_geom_);
   if (csc_geom_.isValid()) {

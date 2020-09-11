@@ -14,7 +14,7 @@ void GEMSimHitAnalyzer::setMatcher(const GEMSimHitMatcher& match_sh)
   match_.reset(new GEMSimHitMatcher(match_sh));
 }
 
-void GEMSimHitAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es, const MatcherSuperManager& manager, TreeManager& tree)
+void GEMSimHitAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es, const MatcherSuperManager& manager, my::TreeManager& tree)
 {
 }
 

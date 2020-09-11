@@ -31,7 +31,7 @@ void GenParticleAnalyzer::analyze(TreeManager& tree)
   tree.genParticle().pdgid = match_->getMatch()->pdgId();
 }
 
-void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, TreeManager& tree)
+void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, my::TreeManager& tree)
 {
   iEvent.getByToken(inputToken_, genParticlesHandle_);
 

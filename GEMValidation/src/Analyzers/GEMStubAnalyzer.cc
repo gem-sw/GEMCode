@@ -29,7 +29,7 @@ void GEMStubAnalyzer::setMatcher(const GEMDigiMatcher& match_sh)
   match_.reset(new GEMDigiMatcher(match_sh));
 }
 
-void GEMStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, TreeManager& tree)
+void GEMStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, my::TreeManager& tree)
 {
   iEvent.getByToken(gemPadToken_, gemPadsH_);
   iEvent.getByToken(gemClusterToken_, gemClustersH_);

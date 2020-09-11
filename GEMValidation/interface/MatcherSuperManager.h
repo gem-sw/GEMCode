@@ -3,6 +3,7 @@
 
 #include "FWCore/Framework/interface/ConsumesCollector.h"
 #include "GEMCode/GEMValidation/interface/MatcherManager.h"
+#include "GEMCode/GEMValidation/interface/new/TreeManager.h"
 
 // container class with managers
 

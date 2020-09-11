@@ -34,7 +34,7 @@ void SimTrackAnalyzer::analyze(TreeManager& tree, const SimTrack& t, const SimVe
   tree.simTrack().vz = v.position().z();
 }
 
-void SimTrackAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& eventSetup, TreeManager& tree)
+void SimTrackAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& eventSetup, my::TreeManager& tree)
 {
   edm::Handle<edm::SimTrackContainer> sim_tracks;
   ev.getByToken(simTrackInput_, sim_tracks);

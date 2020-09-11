@@ -6,6 +6,7 @@
 #include "SimDataFormats/Vertex/interface/SimVertexContainer.h"
 #include "GEMCode/GEMValidation/interface/Helpers.h"
 #include "GEMCode/GEMValidation/interface/TreeManager.h"
+#include "GEMCode/GEMValidation/interface/new/TreeManager.h"
 
 class SimTrackAnalyzer
 {
@@ -23,7 +24,7 @@ public:
 
   // initialize the event
   void analyze(TreeManager& tree, const SimTrack& t, const SimVertex& v);
-  void analyze(const edm::Event& ev, const edm::EventSetup& es, TreeManager&);
+  void analyze(const edm::Event& ev, const edm::EventSetup& es, my::TreeManager&);
 
  private:
   edm::EDGetTokenT<edm::SimVertexContainer> simVertexInput_;

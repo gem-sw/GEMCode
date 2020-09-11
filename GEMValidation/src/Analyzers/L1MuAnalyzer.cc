@@ -30,7 +30,7 @@ void L1MuAnalyzer::setMatcher(const L1MuMatcher& match_sh)
   match_.reset(new L1MuMatcher(match_sh));
 }
 
-void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, TreeManager& tree) {
+void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, my::TreeManager& tree) {
 
   iEvent.getByToken(emtfTrackToken_, emtfTrackHandle_);
   iEvent.getByToken(emtfCandToken_, emtfCandHandle_);
