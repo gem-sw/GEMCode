@@ -23,6 +23,14 @@ gem::EMTFTrack::~EMTFTrack()
   emtfHits_.clear();
 }
 
+bool gem::EMTFTrack::operator==(const gem::EMTFTrack& rhs) const {
+  return ((rhs.pt() == pt()) and
+          (rhs.eta() == eta()) and
+          (rhs.phi() == phi()) and
+          (rhs.charge() == charge()) and
+          (rhs.bx() == bx()));
+}
+
 unsigned int gem::EMTFTrack::nStubs() const
 {
   unsigned returnValue = 0;

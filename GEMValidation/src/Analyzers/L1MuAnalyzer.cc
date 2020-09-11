@@ -30,7 +30,41 @@ void L1MuAnalyzer::setMatcher(const L1MuMatcher& match_sh)
   match_.reset(new L1MuMatcher(match_sh));
 }
 
-void L1MuAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es, const MatcherSuperManager& manager, TreeManager& tree) {}
+void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, TreeManager& tree) {
+  iEvent.getByToken(emtfTrackToken_, emtfTrackHandle_);
+  iEvent.getByToken(emtfCandToken_, emtfCandHandle_);
+  iEvent.getByToken(muonToken_, muonHandle_);
+
+  auto& trkTree = tree.l1mu();
+
+  for (const auto& trk : *emtfTrackHandle_.product()) {
+
+    const gem::EMTFTrack gemtrk(trk);
+
+    int tpidfound = -1;
+    // check if it was matched to a simtrack
+    for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
+      const auto& trackMatch = manager.matcher(tpid)->l1Muons()->emtfTrack();
+      // check if the same
+      if (gemtrk == *trackMatch) {
+        tpidfound = tpid;
+        break;
+      }
+    }
+
+    trkTree.emtftrack_pt->push_back(gemtrk.pt());
+    trkTree.emtftrack_eta->push_back(gemtrk.eta());
+    trkTree.emtftrack_phi->push_back(gemtrk.phi());
+    trkTree.emtftrack_charge->push_back(gemtrk.charge());
+    trkTree.emtftrack_bx->push_back(gemtrk.bx());
+    trkTree.emtftrack_tpid->push_back(tpidfound);
+  }
+
+
+  // matchRegionalMuonCandToSimTrack(*emtfCandHandle_.product());
+  // matchGMTToSimTrack(*muonHandle_.product());
+
+}
 
 void L1MuAnalyzer::analyze(TreeManager& tree)
 {
