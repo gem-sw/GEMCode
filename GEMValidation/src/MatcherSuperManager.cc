@@ -27,8 +27,6 @@ MatcherSuperManager::MatcherSuperManager(const edm::ParameterSet& conf, edm::Con
 
 void MatcherSuperManager::match(const edm::Event& ev, const edm::EventSetup& eventSetup) {
 
-  return;
-
   edm::Handle<edm::SimTrackContainer> sim_tracks;
   ev.getByToken(simTrackInput_, sim_tracks);
   const edm::SimTrackContainer& sim_track = *sim_tracks.product();

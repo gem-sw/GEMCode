@@ -7,9 +7,7 @@
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 
 // Private code
-#include "GEMCode/GEMValidation/interface/MatcherSuperManager.h"
 #include "GEMCode/GEMValidation/interface/AnalyzerManager.h"
-#include "GEMCode/GEMValidation/interface/TreeManager.h"
 
 class MuonNtuplizer : public edm::one::EDAnalyzer<> {
 public:
@@ -29,9 +27,12 @@ MuonNtuplizer::MuonNtuplizer(const edm::ParameterSet& ps)
 {
   // book the trees
   tree_.reset(new TreeManager());
-  tree_->book();
+  tree_->book2();
 
-  // define new analyzers
+  // reset he matchers
+  matcher_.reset(new MatcherSuperManager(ps, consumesCollector()));
+
+  // reset the analyzers
   analyzer_.reset(new AnalyzerManager(ps, consumesCollector()));
 }
 
@@ -46,7 +47,7 @@ void MuonNtuplizer::analyze(const edm::Event& ev, const edm::EventSetup& es) {
   analyzer_->analyze(ev, es, *matcher_, *tree_);
 
   // fill all trees
-  tree_->fill();
+  tree_->fill2();
 }
 
 DEFINE_FWK_MODULE(MuonNtuplizer);

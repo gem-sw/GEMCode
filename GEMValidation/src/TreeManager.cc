@@ -25,7 +25,10 @@ void TreeManager::book() {
   l1MuSt_.book(l1MuTree_);
   l1TrackSt_.book(l1TrackTree_);
   recoTrackSt_.book(recoTrackTree_);
+}
 
+void TreeManager::book2() {
+  edm::Service<TFileService> fs;
   flatTree_ = fs->make<TTree>("FlatTree","FlatTree");
   genParticleSt_.book(flatTree_);
   simTrackSt_.book(flatTree_);
@@ -68,5 +71,9 @@ void TreeManager::fill() {
   l1TrackTree_->Fill();
   recoTrackTree_->Fill();
 
+  flatTree_->Fill();
+}
+
+void TreeManager::fill2() {
   flatTree_->Fill();
 }

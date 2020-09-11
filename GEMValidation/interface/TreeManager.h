@@ -31,10 +31,12 @@ class TreeManager
   ~TreeManager() {}
 
   void book();
+  void book2();
 
   void init();
 
   void fill();
+  void fill2();
 
   gem::GenParticleStruct& genParticle() { return genParticleSt_; }
   gem::SimTrackStruct& simTrack() { return simTrackSt_; }
