@@ -31,7 +31,6 @@ void GEMStubAnalyzer::setMatcher(const GEMDigiMatcher& match_sh)
 
 void GEMStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, TreeManager& tree)
 {
-
   iEvent.getByToken(gemPadToken_, gemPadsH_);
   iEvent.getByToken(gemClusterToken_, gemClustersH_);
   iEvent.getByToken(gemCoPadToken_, gemCoPadsH_);
@@ -63,7 +62,7 @@ void GEMStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
 
       int tpidfound = -1;
       for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
-        const auto& gemMatches = manager.matcher(tpid)->gemStubs()->padsInDetId(id.rawId());
+        const auto& gemMatches = manager.matcher(tpid)->gemDigis()->padsInDetId(id.rawId());
         for (const auto& gemMatch : gemMatches) {
           // check if the same
           if (*digiIt == gemMatch) {
@@ -97,7 +96,7 @@ void GEMStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
 
       int tpidfound = -1;
       for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
-        const auto& gemMatches = manager.matcher(tpid)->gemStubs()->coPadsInSuperChamber(id.rawId());
+        const auto& gemMatches = manager.matcher(tpid)->gemDigis()->coPadsInSuperChamber(id.rawId());
         for (const auto& gemMatch : gemMatches) {
           // check if the same
           if (*digiIt == gemMatch) {
@@ -130,7 +129,7 @@ void GEMStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
 
       int tpidfound = -1;
       for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
-        const auto& gemMatches = manager.matcher(tpid)->gemStubs()->clustersInDetId(id.rawId());
+        const auto& gemMatches = manager.matcher(tpid)->gemDigis()->clustersInDetId(id.rawId());
         for (const auto& gemMatch : gemMatches) {
           // check if the same
           if (*digiIt == gemMatch) {

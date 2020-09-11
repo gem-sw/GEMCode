@@ -22,9 +22,28 @@ namespace gem {
     int bx_dg_even[nStations];
 
     // dphi with simhits
-
+    p_ints gem_digi_bx;
+    p_ints gem_digi_strip;
+    p_ints gem_digi_isodd;
+    p_ints gem_digi_region;
+    p_ints gem_digi_station;
+    p_ints gem_digi_chamber;
+    p_ints gem_digi_roll;
+    p_ints gem_digi_layer;
+    p_ints gem_digi_tpid;
 
     void init() {
+
+      gem_digi_bx = new t_ints;
+      gem_digi_strip = new t_ints;
+      gem_digi_isodd = new t_ints;
+      gem_digi_region = new t_ints;
+      gem_digi_station = new t_ints;
+      gem_digi_chamber = new t_ints;
+      gem_digi_roll = new t_ints;
+      gem_digi_layer = new t_ints;
+      gem_digi_tpid = new t_ints;
+
       for (unsigned i = 0 ; i < nStations; i++) {
         has_gem_dg_even[i] = 0;
         has_gem_dg2_even[i] = 0;
@@ -41,6 +60,18 @@ namespace gem {
     };
 
     void book(TTree* t) {
+
+      t->Branch("gem_digi_bx", &gem_digi_bx);
+      t->Branch("gem_digi_strip", &gem_digi_strip);
+      t->Branch("gem_digi_isodd", &gem_digi_isodd);
+      t->Branch("gem_digi_region", &gem_digi_region);
+      t->Branch("gem_digi_station", &gem_digi_station);
+      t->Branch("gem_digi_chamber", &gem_digi_chamber);
+      t->Branch("gem_digi_roll", &gem_digi_roll);
+      t->Branch("gem_digi_layer", &gem_digi_layer);
+      t->Branch("gem_digi_tpid", &gem_digi_tpid);
+
+
       t->Branch("has_gem_dg_odd", has_gem_dg_odd, "has_gem_dg_odd[3]/O");
       t->Branch("has_gem_dg2_odd", has_gem_dg2_odd, "has_gem_dg2_odd[3]/O");
 

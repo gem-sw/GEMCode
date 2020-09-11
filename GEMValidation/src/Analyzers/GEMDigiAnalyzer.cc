@@ -17,8 +17,55 @@ void GEMDigiAnalyzer::setMatcher(const GEMDigiMatcher& match_sh)
   match_.reset(new GEMDigiMatcher(match_sh));
 }
 
-void GEMDigiAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es, const MatcherSuperManager& manager, TreeManager& tree)
+void GEMDigiAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, TreeManager& tree)
 {
+  iEvent.getByToken(gemDigiToken_, gemDigisH_);
+
+  iSetup.get<MuonGeometryRecord>().get(gem_geom_);
+  if (gem_geom_.isValid()) {
+  gemGeometry_ = &*gem_geom_;
+  } else {
+    std::cout << "+++ Info: GEM geometry is unavailable. +++\n";
+  }
+
+  // get the digi collections
+  const GEMDigiCollection& gemDigis = *gemDigisH_.product();
+
+  auto& gemTree = tree.gemDigi();
+
+  for (auto detUnitIt = gemDigis.begin(); detUnitIt != gemDigis.end(); ++detUnitIt) {
+    const GEMDetId& id = (*detUnitIt).first;
+    const bool isodd = (id.chamber()%2 == 1);
+
+    // Loop over the digis of this DetUnit
+    const auto& range = (*detUnitIt).second;
+    for (auto digiIt = range.first; digiIt != range.second; ++digiIt) {
+
+      if (!digiIt->isValid())
+        continue;
+
+      int tpidfound = -1;
+      for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
+        const auto& gemMatches = manager.matcher(tpid)->gemDigis()->digisInDetId(id.rawId());
+        for (const auto& gemMatch : gemMatches) {
+          // check if the same
+          if (*digiIt == gemMatch) {
+            tpidfound =  tpid;
+          }
+        }
+      }
+
+      gemTree.gem_digi_bx->push_back(digiIt->bx());
+      gemTree.gem_digi_strip->push_back(digiIt->strip());
+      gemTree.gem_digi_isodd->push_back(isodd);
+      gemTree.gem_digi_region->push_back(id.region());
+      gemTree.gem_digi_station->push_back(id.station());
+      gemTree.gem_digi_chamber->push_back(id.chamber());
+      gemTree.gem_digi_layer->push_back(id.layer());
+      gemTree.gem_digi_roll->push_back(id.roll());
+      gemTree.gem_digi_tpid->push_back(tpidfound);
+    }
+  }
 }
 
 void GEMDigiAnalyzer::analyze(TreeManager& tree)

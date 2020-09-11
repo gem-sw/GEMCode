@@ -32,6 +32,9 @@ public:
   std::unique_ptr<GEMDigiMatcher> match_;
   int minNHitsChamber_;
 
+  edm::ESHandle<GEMGeometry> gem_geom_;
+  const GEMGeometry* gemGeometry_;
+
   int minBXDigi_, maxBXDigi_;
   bool verboseDigi_;
 };
