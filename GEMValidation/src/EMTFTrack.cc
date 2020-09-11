@@ -67,7 +67,7 @@ l1t::EMTFHit gem::EMTFTrack::stub(int st, int ri) const
         stub.Station() == st and
         stub.Ring() == ri) return stub;
   }
-  return l1t::EMTFHit();;
+  return l1t::EMTFHit();
 
 }
 
@@ -96,4 +96,12 @@ gem::EMTFCand::EMTFCand(const l1t::Muon& cand)
 
 gem::EMTFCand::~EMTFCand()
 {
+}
+
+bool gem::EMTFCand::operator==(const gem::EMTFCand& rhs) const {
+  return ((rhs.pt() == pt()) and
+          (rhs.eta() == eta()) and
+          (rhs.phi() == phi()) and
+          (rhs.charge() == charge()) and
+          (rhs.bx() == bx()));
 }

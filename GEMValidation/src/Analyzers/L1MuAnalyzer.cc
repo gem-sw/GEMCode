@@ -31,6 +31,7 @@ void L1MuAnalyzer::setMatcher(const L1MuMatcher& match_sh)
 }
 
 void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, TreeManager& tree) {
+
   iEvent.getByToken(emtfTrackToken_, emtfTrackHandle_);
   iEvent.getByToken(emtfCandToken_, emtfCandHandle_);
   iEvent.getByToken(muonToken_, muonHandle_);
@@ -60,9 +61,52 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     trkTree.emtftrack_tpid->push_back(tpidfound);
   }
 
+  for (const auto& trk : *emtfCandHandle_.product()) {
 
-  // matchRegionalMuonCandToSimTrack(*emtfCandHandle_.product());
-  // matchGMTToSimTrack(*muonHandle_.product());
+    const gem::EMTFCand gemtrk(trk);
+
+    int tpidfound = -1;
+    // check if it was matched to a simtrack
+    for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
+      const auto& trackMatch = manager.matcher(tpid)->l1Muons()->emtfCand();
+      // check if the same
+      if (gemtrk == *trackMatch) {
+        tpidfound = tpid;
+        break;
+      }
+    }
+
+    trkTree.emtfcand_pt->push_back(gemtrk.pt());
+    trkTree.emtfcand_eta->push_back(gemtrk.eta());
+    trkTree.emtfcand_phi->push_back(gemtrk.phi());
+    trkTree.emtfcand_charge->push_back(gemtrk.charge());
+    trkTree.emtfcand_bx->push_back(gemtrk.bx());
+    trkTree.emtfcand_tpid->push_back(tpidfound);
+  }
+
+
+  for (const auto& trk : *muonHandle_.product()) {
+
+    const gem::EMTFCand gemtrk(trk);
+
+    int tpidfound = -1;
+    // check if it was matched to a simtrack
+    for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
+      const auto& trackMatch = manager.matcher(tpid)->l1Muons()->muon();
+      // check if the same
+      if (gemtrk == *trackMatch) {
+        tpidfound = tpid;
+        break;
+      }
+    }
+
+    trkTree.l1mu_pt->push_back(gemtrk.pt());
+    trkTree.l1mu_eta->push_back(gemtrk.eta());
+    trkTree.l1mu_phi->push_back(gemtrk.phi());
+    trkTree.l1mu_charge->push_back(gemtrk.charge());
+    trkTree.l1mu_bx->push_back(gemtrk.bx());
+    trkTree.l1mu_tpid->push_back(tpidfound);
+  }
 
 }
 

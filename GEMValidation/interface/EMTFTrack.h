@@ -76,6 +76,8 @@ class EMTFCand
   /// destructor
   ~EMTFCand();
 
+  bool operator==(const gem::EMTFCand& rhs) const;
+
   double pt() const {return pt_;}
   double eta() const {return eta_;}
   double phi() const {return phi_;}
