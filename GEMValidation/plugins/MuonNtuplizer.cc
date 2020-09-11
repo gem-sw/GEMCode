@@ -43,7 +43,7 @@ void MuonNtuplizer::analyze(const edm::Event& ev, const edm::EventSetup& es) {
   matcher_->match(ev, es);
 
   // analyze the track objects
-  analyzer_->analyze(ev, es, *matcher_, *tree_);
+  //analyzer_->analyze(ev, es, *matcher_, *tree_);
 
   // fill all trees
   tree_->fill();
