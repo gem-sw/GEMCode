@@ -125,7 +125,7 @@ namespace gem {
     p_ints gem_cluster_station;
     p_ints gem_cluster_chamber;
     p_ints gem_cluster_roll;
-    _ints gem_cluster_layer;
+    p_ints gem_cluster_layer;
     p_ints gem_cluster_tpid;
 
     void init() {
@@ -269,7 +269,6 @@ namespace gem {
       t->Branch("gem_copad_station", &gem_copad_station);
       t->Branch("gem_copad_chamber", &gem_copad_chamber);
       t->Branch("gem_copad_roll", &gem_copad_roll);
-      t->Branch("gem_copad_layer", &gem_copad_layer);
       t->Branch("gem_copad_tpid", &gem_copad_tpid);
 
       t->Branch("gem_cluster_bx", &gem_cluster_bx);

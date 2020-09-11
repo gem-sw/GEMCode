@@ -55,6 +55,9 @@ public:
   meanPosition(const GEMDetId& id,
                const GEMCoPadDigiContainer& digis) const;
 
+  edm::ESHandle<GEMGeometry> gem_geom_;
+  const GEMGeometry* gemGeometry_;
+
   std::unique_ptr<GEMDigiMatcher> match_;
   int minNHitsChamber_;
 };

@@ -99,7 +99,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
   // CSC ALCTs
   for (auto detUnitIt = alcts.begin(); detUnitIt != alcts.end(); detUnitIt++) {
     const CSCDetId& id = (*detUnitIt).first;
-    const bool isodd = (id.station()%2 == 1);
+    const bool isodd = (id.chamber()%2 == 1);
     const auto& range = (*detUnitIt).second;
     for (auto digiIt = range.first; digiIt != range.second; digiIt++) {
 
@@ -136,7 +136,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
   // CSC CLCTs
   for (auto detUnitIt = clcts.begin(); detUnitIt != clcts.end(); detUnitIt++) {
     const CSCDetId& id = (*detUnitIt).first;
-    const bool isodd = (id.station()%2 == 1);
+    const bool isodd = (id.chamber()%2 == 1);
     const auto& range = (*detUnitIt).second;
     for (auto digiIt = range.first; digiIt != range.second; digiIt++) {
 
@@ -172,7 +172,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
   // CSC LCTs
   for (auto detUnitIt = lcts.begin(); detUnitIt != lcts.end(); detUnitIt++) {
     const CSCDetId& id = (*detUnitIt).first;
-    const bool isodd = (id.station()%2 == 1);
+    const bool isodd = (id.chamber()%2 == 1);
     const auto& range = (*detUnitIt).second;
     for (auto digiIt = range.first; digiIt != range.second; digiIt++) {
 
@@ -208,7 +208,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
   // CSC MPLCTs
   for (auto detUnitIt = mplcts.begin(); detUnitIt != mplcts.end(); detUnitIt++) {
     const CSCDetId& id = (*detUnitIt).first;
-    const bool isodd = (id.station()%2 == 1);
+    const bool isodd = (id.chamber()%2 == 1);
     const auto& range = (*detUnitIt).second;
     for (auto digiIt = range.first; digiIt != range.second; digiIt++) {
 

@@ -29,17 +29,51 @@ void GEMStubAnalyzer::setMatcher(const GEMDigiMatcher& match_sh)
   match_.reset(new GEMDigiMatcher(match_sh));
 }
 
-void GEMStubAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es, const MatcherSuperManager& manager, TreeManager& tree)
+void GEMStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, TreeManager& tree)
 {
 
   iEvent.getByToken(gemPadToken_, gemPadsH_);
   iEvent.getByToken(gemClusterToken_, gemClustersH_);
   iEvent.getByToken(gemCoPadToken_, gemCoPadsH_);
 
+  iSetup.get<MuonGeometryRecord>().get(gem_geom_);
+  if (gem_geom_.isValid()) {
+  gemGeometry_ = &*gem_geom_;
+  } else {
+    std::cout << "+++ Info: GEM geometry is unavailable. +++\n";
+  }
+
   // get the digi collections
   const GEMPadDigiCollection& gemPads = *gemPadsH_.product();
   const GEMPadDigiClusterCollection& gemClusters = *gemClustersH_.product();
   const GEMCoPadDigiCollection& gemCoPads = *gemCoPadsH_.product();
+
+  auto& gemTree = tree.gemStub();
+
+  for (auto detUnitIt = gemPads.begin(); detUnitIt != gemPads.end(); ++detUnitIt) {
+    const GEMDetId& id = (*detUnitIt).first;
+    const bool isodd = (id.chamber()%2 == 1);
+    const GEMEtaPartition* roll = gemGeometry_->etaPartition(id);
+
+    // Loop over the digis of this DetUnit
+    const auto& range = (*detUnitIt).second;
+    for (auto digiIt = range.first; digiIt != range.second; ++digiIt) {
+
+      if (!digiIt->isValid())
+        continue;
+
+      int tpidfound = -1;
+      gemTree.gem_pad_bx->push_back(digiIt->bx());
+      gemTree.gem_pad_pad->push_back(digiIt->pad());
+      gemTree.gem_pad_isodd->push_back(isodd);
+      gemTree.gem_pad_region->push_back(id.region());
+      gemTree.gem_pad_station->push_back(id.station());
+      gemTree.gem_pad_chamber->push_back(id.chamber());
+      gemTree.gem_pad_layer->push_back(id.layer());
+      gemTree.gem_pad_roll->push_back(id.roll());
+      gemTree.gem_pad_tpid->push_back(tpidfound);
+    }
+  }
 }
 
 void GEMStubAnalyzer::analyze(TreeManager& tree)
