@@ -40,16 +40,14 @@ void AnalyzerManager::analyze(const edm::Event& ev,
                               TreeManager& tree) {
   simt_->analyze(ev, es, tree);
   gent_->analyze(ev, es, manager, tree);
-  /*
-  gemsh_->analyze(ev, es, tree_);
-  gemdg_->analyze(ev, es, tree_);
-  gemstub_->analyze(ev, es, tree_);
-  cscsh_->analyze(ev, es, tree_);
-  cscdg_->analyze(ev, es, tree_);
-  cscstub_->analyze(ev, es, tree_);
-  l1mu_->analyze(ev, es, tree_);
-  l1track_->analyze(ev, es, tree_);
-  */
+  gemsh_->analyze(ev, es, manager, tree);
+  gemdg_->analyze(ev, es, manager, tree);
+  gemstub_->analyze(ev, es, manager, tree);
+  cscsh_->analyze(ev, es, manager, tree);
+  cscdg_->analyze(ev, es, manager, tree);
+  cscstub_->analyze(ev, es, manager, tree);
+  l1mu_->analyze(ev, es, manager, tree);
+  l1track_->analyze(ev, es, manager, tree);
 }
 
 

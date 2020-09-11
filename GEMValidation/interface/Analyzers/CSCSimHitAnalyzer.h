@@ -18,7 +18,10 @@ public:
   void setMatcher(const CSCSimHitMatcher& match_sh);
 
   // initialize the event
-  void analyze(const edm::Event& ev, const edm::EventSetup& es) {}
+  void analyze(const edm::Event& ev,
+               const edm::EventSetup& es,
+               const MatcherSuperManager& manager,
+               TreeManager& tree);
   void analyze(TreeManager& tree);
 
  private:

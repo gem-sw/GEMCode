@@ -17,6 +17,10 @@ void GEMDigiAnalyzer::setMatcher(const GEMDigiMatcher& match_sh)
   match_.reset(new GEMDigiMatcher(match_sh));
 }
 
+void GEMDigiAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es, const MatcherSuperManager& manager, TreeManager& tree)
+{
+}
+
 void GEMDigiAnalyzer::analyze(TreeManager& tree)
 {
   for(const auto& d: match_->chamberIdsDigi()) {

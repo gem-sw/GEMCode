@@ -29,6 +29,10 @@ void GEMStubAnalyzer::setMatcher(const GEMDigiMatcher& match_sh)
   match_.reset(new GEMDigiMatcher(match_sh));
 }
 
+void GEMStubAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es, const MatcherSuperManager& manager, TreeManager& tree)
+{
+}
+
 void GEMStubAnalyzer::analyze(TreeManager& tree)
 {
   for(const auto& d: match_->chamberIdsPad()) {
