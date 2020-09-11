@@ -28,6 +28,16 @@ void TreeManager::book() {
 
   flatTree_ = fs->make<TTree>("FlatTree","FlatTree");
   genParticleSt_.book(flatTree_);
+  simTrackSt_.book(flatTree_);
+  gemSimHitSt_.book(flatTree_);
+  gemDigiSt_.book(flatTree_);
+  gemStubSt_.book(flatTree_);
+  cscSimHitSt_.book(flatTree_);
+  cscDigiSt_.book(flatTree_);
+  cscStubSt_.book(flatTree_);
+  l1MuSt_.book(flatTree_);
+  l1TrackSt_.book(flatTree_);
+  recoTrackSt_.book(flatTree_);
 }
 
 /// initialize

@@ -3,6 +3,8 @@
 
 MatcherSuperManager::MatcherSuperManager(const edm::ParameterSet& conf, edm::ConsumesCollector&& iC)
 {
+  verbose_ = conf.getParameter<int>("verbose") + 1;
+
   const auto& simVertex = conf.getParameter<edm::ParameterSet>("simVertex");
   simVertexInput_ = iC.consumes<edm::SimVertexContainer>(simVertex.getParameter<edm::InputTag>("inputTag"));
 
@@ -24,6 +26,9 @@ MatcherSuperManager::MatcherSuperManager(const edm::ParameterSet& conf, edm::Con
 }
 
 void MatcherSuperManager::match(const edm::Event& ev, const edm::EventSetup& eventSetup) {
+
+  return;
+
   edm::Handle<edm::SimTrackContainer> sim_tracks;
   ev.getByToken(simTrackInput_, sim_tracks);
   const edm::SimTrackContainer& sim_track = *sim_tracks.product();
@@ -36,6 +41,7 @@ void MatcherSuperManager::match(const edm::Event& ev, const edm::EventSetup& eve
     std::cout << "Total number of SimTrack in this event: "
               << sim_track.size() << std::endl;
   }
+
 
   edm::SimTrackContainer sim_track_selected;
   for (const auto& t : sim_track) {

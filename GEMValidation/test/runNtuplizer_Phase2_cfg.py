@@ -13,7 +13,7 @@ process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 process.load('TrackPropagation.SteppingHelixPropagator.SteppingHelixPropagatorOpposite_cfi')
 process.load('TrackPropagation.SteppingHelixPropagator.SteppingHelixPropagatorAlong_cfi')
-process.load('GEMCode.GEMValidation.GEMCSCAnalyzer_cff')
+process.load('GEMCode.GEMValidation.MuonNtuplizer_cff')
 
 """
 process.MessageLogger = cms.Service("MessageLogger",
@@ -25,7 +25,7 @@ process.MessageLogger = cms.Service("MessageLogger",
         lineLength = cms.untracked.int32(132),
         noLineBreaks = cms.untracked.bool(True)
     ),
-    debugModules = cms.untracked.vstring("GEMCSCAnalyzer")
+    debugModules = cms.untracked.vstring("MuonNtuplizer")
 )
 """
 process.source = cms.Source(
@@ -36,7 +36,7 @@ process.source = cms.Source(
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-100) )
 
 process.TFileService = cms.Service("TFileService",
-    fileName = cms.string("out_ana_phase2.root")
+    fileName = cms.string("out_ana_phase2.ntuple.root")
 )
 
 ## global tag for upgrade studies
@@ -44,21 +44,12 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase2_realistic_T15', '')
 
 # the analyzer configuration
-ana = process.GEMCSCAnalyzer
+ana = process.MuonNtuplizer
 ana.simTrack.minEta = 0.9
 ana.simTrack.maxEta = 2.4
 ana.simTrack.minPt = 2
-ana.gemSimHit.verbose = 0
-ana.gemStripDigi.verbose = 0
+ana.verbose = 1
 ana.gemStripDigi.matchDeltaStrip = 2
-ana.gemPadDigi.verbose = 0
-ana.gemCoPadDigi.verbose = 0
-ana.gemPadCluster.verbose = 0
-ana.cscComparatorDigi.verbose = 0
-ana.cscWireDigi.verbose = 0
-ana.cscALCT.verbose = 0
-ana.cscCLCT.verbose = 0
-ana.cscLCT.verbose = 0
 ana.cscLCT.addGhostLCTs = cms.bool(True)
 
 ana.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
@@ -71,17 +62,18 @@ if useUnpacked:
     ana.gemStripDigi.inputTag = "muonGEMDigis"
     ana.muon.inputTag = cms.InputTag("gmtStage2Digis","Muon")
 
-process.GEMCSCAnalyzerRun3CCLUT = process.GEMCSCAnalyzer.clone()
-process.GEMCSCAnalyzerRun3CCLUT.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","","ReL1")
-process.GEMCSCAnalyzerRun3CCLUT.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","","ReL1")
-process.GEMCSCAnalyzerRun3CCLUT.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","","ReL1")
-process.GEMCSCAnalyzerRun3CCLUT.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","MPCSORTED","ReL1")
+process.MuonNtuplizerRun3CCLUT = process.MuonNtuplizer.clone()
+process.MuonNtuplizerRun3CCLUT.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","","ReL1")
+process.MuonNtuplizerRun3CCLUT.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","","ReL1")
+process.MuonNtuplizerRun3CCLUT.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","","ReL1")
+process.MuonNtuplizerRun3CCLUT.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","MPCSORTED","ReL1")
 
 process.options = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 
 process.p = cms.Path(
-    process.GEMCSCAnalyzer *
-    process.GEMCSCAnalyzerRun3CCLUT)
+    process.MuonNtuplizer #*
+#    process.MuonNtuplizerRun3CCLUT
+)
 
 ## messages
 print
