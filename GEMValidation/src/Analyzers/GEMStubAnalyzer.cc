@@ -31,6 +31,15 @@ void GEMStubAnalyzer::setMatcher(const GEMDigiMatcher& match_sh)
 
 void GEMStubAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es, const MatcherSuperManager& manager, TreeManager& tree)
 {
+
+  iEvent.getByToken(gemPadToken_, gemPadsH_);
+  iEvent.getByToken(gemClusterToken_, gemClustersH_);
+  iEvent.getByToken(gemCoPadToken_, gemCoPadsH_);
+
+  // get the digi collections
+  const GEMPadDigiCollection& gemPads = *gemPadsH_.product();
+  const GEMPadDigiClusterCollection& gemClusters = *gemClustersH_.product();
+  const GEMCoPadDigiCollection& gemCoPads = *gemCoPadsH_.product();
 }
 
 void GEMStubAnalyzer::analyze(TreeManager& tree)

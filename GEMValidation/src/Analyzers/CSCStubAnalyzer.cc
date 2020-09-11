@@ -110,6 +110,17 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       if (digiIt->getBX() < minBXALCT_ || digiIt->getBX() > maxBXALCT_)
         continue;
 
+      int tpidfound = -1;
+      // check if it was matched to a simtrack
+      for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
+        const auto& lctMatch = manager.matcher(tpid)->cscStubs()->bestAlctInChamber(id.rawId());
+        // check if the same
+        if (*digiIt == lctMatch) {
+          tpidfound =  tpid;
+          break;
+        }
+      }
+
       cscTree.alct_bx->push_back(digiIt->getBX());
       cscTree.alct_wg->push_back(digiIt->getKeyWG());
       cscTree.alct_quality->push_back(digiIt->getQuality());
@@ -118,8 +129,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       cscTree.alct_station->push_back(id.station());
       cscTree.alct_ring->push_back(id.ring());
       cscTree.alct_chamber->push_back(id.chamber());
-      // alct_tpid;
-
+      cscTree.alct_tpid->push_back(tpidfound);
     }
   }
 
@@ -137,6 +147,17 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       if (digiIt->getBX() < minBXCLCT_ || digiIt->getBX() > maxBXCLCT_)
         continue;
 
+      int tpidfound = -1;
+      // check if it was matched to a simtrack
+      for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
+        const auto& lctMatch = manager.matcher(tpid)->cscStubs()->bestClctInChamber(id.rawId());
+        // check if the same
+        if (*digiIt == lctMatch) {
+          tpidfound =  tpid;
+          break;
+        }
+      }
+
       cscTree.clct_bx->push_back(digiIt->getBX());
       cscTree.clct_quality->push_back(digiIt->getQuality());
       cscTree.clct_isodd->push_back(isodd);
@@ -144,6 +165,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       cscTree.clct_station->push_back(id.station());
       cscTree.clct_ring->push_back(id.ring());
       cscTree.clct_chamber->push_back(id.chamber());
+      cscTree.clct_tpid->push_back(tpidfound);
     }
   }
 
@@ -161,6 +183,17 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       if (digiIt->getBX() < minBXLCT_ || digiIt->getBX() > maxBXLCT_)
         continue;
 
+      int tpidfound = -1;
+      // check if it was matched to a simtrack
+      for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
+        const auto& lctMatch = manager.matcher(tpid)->cscStubs()->bestLctInChamber(id.rawId());
+        // check if the same
+        if (*digiIt == lctMatch) {
+          tpidfound =  tpid;
+          break;
+        }
+      }
+
       cscTree.lct_bx->push_back(digiIt->getBX());
       cscTree.lct_quality->push_back(digiIt->getQuality());
       cscTree.lct_isodd->push_back(isodd);
@@ -168,6 +201,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       cscTree.lct_station->push_back(id.station());
       cscTree.lct_ring->push_back(id.ring());
       cscTree.lct_chamber->push_back(id.chamber());
+      cscTree.lct_tpid->push_back(tpidfound);
     }
   }
 
@@ -185,6 +219,17 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       if (digiIt->getBX() < minBXMPLCT_ || digiIt->getBX() > maxBXMPLCT_)
         continue;
 
+      int tpidfound = -1;
+      // check if it was matched to a simtrack
+      for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
+        const auto& lctMatch = manager.matcher(tpid)->cscStubs()->bestLctInChamber(id.rawId());
+        // check if the same
+        if (*digiIt == lctMatch) {
+          tpidfound =  tpid;
+          break;
+        }
+      }
+
       cscTree.mplct_bx->push_back(digiIt->getBX());
       cscTree.mplct_quality->push_back(digiIt->getQuality());
       cscTree.mplct_isodd->push_back(isodd);
@@ -192,6 +237,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       cscTree.mplct_station->push_back(id.station());
       cscTree.mplct_ring->push_back(id.ring());
       cscTree.mplct_chamber->push_back(id.chamber());
+      cscTree.mplct_tpid->push_back(tpidfound);
     }
   }
 }
