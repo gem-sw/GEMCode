@@ -62,6 +62,16 @@ void GEMStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
         continue;
 
       int tpidfound = -1;
+      for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
+        const auto& gemMatches = manager.matcher(tpid)->gemStubs()->padsInDetId(id.rawId());
+        for (const auto& gemMatch : gemMatches) {
+          // check if the same
+          if (*digiIt == gemMatch) {
+            tpidfound =  tpid;
+          }
+        }
+      }
+
       gemTree.gem_pad_bx->push_back(digiIt->bx());
       gemTree.gem_pad_pad->push_back(digiIt->pad());
       gemTree.gem_pad_isodd->push_back(isodd);
@@ -86,6 +96,16 @@ void GEMStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
         continue;
 
       int tpidfound = -1;
+      for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
+        const auto& gemMatches = manager.matcher(tpid)->gemStubs()->coPadsInSuperChamber(id.rawId());
+        for (const auto& gemMatch : gemMatches) {
+          // check if the same
+          if (*digiIt == gemMatch) {
+            tpidfound =  tpid;
+          }
+        }
+      }
+
       gemTree.gem_copad_bx->push_back(digiIt->bx(1));
       gemTree.gem_copad_pad->push_back(digiIt->pad(1));
       gemTree.gem_copad_isodd->push_back(isodd);
@@ -109,6 +129,16 @@ void GEMStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
         continue;
 
       int tpidfound = -1;
+      for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
+        const auto& gemMatches = manager.matcher(tpid)->gemStubs()->clustersInDetId(id.rawId());
+        for (const auto& gemMatch : gemMatches) {
+          // check if the same
+          if (*digiIt == gemMatch) {
+            tpidfound =  tpid;
+          }
+        }
+      }
+
       gemTree.gem_cluster_bx->push_back(digiIt->bx());
       gemTree.gem_cluster_pad->push_back(digiIt->pads()[0]);
       gemTree.gem_cluster_size->push_back(digiIt->pads().size());
