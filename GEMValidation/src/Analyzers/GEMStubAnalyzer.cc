@@ -53,7 +53,6 @@ void GEMStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
   for (auto detUnitIt = gemPads.begin(); detUnitIt != gemPads.end(); ++detUnitIt) {
     const GEMDetId& id = (*detUnitIt).first;
     const bool isodd = (id.chamber()%2 == 1);
-    const GEMEtaPartition* roll = gemGeometry_->etaPartition(id);
 
     // Loop over the digis of this DetUnit
     const auto& range = (*detUnitIt).second;
@@ -72,6 +71,54 @@ void GEMStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       gemTree.gem_pad_layer->push_back(id.layer());
       gemTree.gem_pad_roll->push_back(id.roll());
       gemTree.gem_pad_tpid->push_back(tpidfound);
+    }
+  }
+
+  for (auto detUnitIt = gemCoPads.begin(); detUnitIt != gemCoPads.end(); ++detUnitIt) {
+    const GEMDetId& id = (*detUnitIt).first;
+    const bool isodd = (id.chamber()%2 == 1);
+
+    // Loop over the digis of this DetUnit
+    const auto& range = (*detUnitIt).second;
+    for (auto digiIt = range.first; digiIt != range.second; ++digiIt) {
+
+      if (!digiIt->isValid())
+        continue;
+
+      int tpidfound = -1;
+      gemTree.gem_copad_bx->push_back(digiIt->bx(1));
+      gemTree.gem_copad_pad->push_back(digiIt->pad(1));
+      gemTree.gem_copad_isodd->push_back(isodd);
+      gemTree.gem_copad_region->push_back(id.region());
+      gemTree.gem_copad_station->push_back(id.station());
+      gemTree.gem_copad_chamber->push_back(id.chamber());
+      gemTree.gem_copad_roll->push_back(id.roll());
+      gemTree.gem_copad_tpid->push_back(tpidfound);
+    }
+  }
+
+  for (auto detUnitIt = gemClusters.begin(); detUnitIt != gemClusters.end(); ++detUnitIt) {
+    const GEMDetId& id = (*detUnitIt).first;
+    const bool isodd = (id.chamber()%2 == 1);
+
+    // Loop over the digis of this DetUnit
+    const auto& range = (*detUnitIt).second;
+    for (auto digiIt = range.first; digiIt != range.second; ++digiIt) {
+
+      if (!digiIt->isValid())
+        continue;
+
+      int tpidfound = -1;
+      gemTree.gem_cluster_bx->push_back(digiIt->bx());
+      gemTree.gem_cluster_pad->push_back(digiIt->pads()[0]);
+      gemTree.gem_cluster_size->push_back(digiIt->pads().size());
+      gemTree.gem_cluster_isodd->push_back(isodd);
+      gemTree.gem_cluster_region->push_back(id.region());
+      gemTree.gem_cluster_station->push_back(id.station());
+      gemTree.gem_cluster_chamber->push_back(id.chamber());
+      gemTree.gem_cluster_layer->push_back(id.layer());
+      gemTree.gem_cluster_roll->push_back(id.roll());
+      gemTree.gem_cluster_tpid->push_back(tpidfound);
     }
   }
 }
