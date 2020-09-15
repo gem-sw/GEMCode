@@ -27,22 +27,6 @@ void TreeManager::book() {
   recoTrackSt_.book(recoTrackTree_);
 }
 
-void TreeManager::book2() {
-  edm::Service<TFileService> fs;
-  flatTree_ = fs->make<TTree>("FlatTree","FlatTree");
-  genParticleSt_.book(flatTree_);
-  simTrackSt_.book(flatTree_);
-  gemSimHitSt_.book(flatTree_);
-  gemDigiSt_.book(flatTree_);
-  gemStubSt_.book(flatTree_);
-  cscSimHitSt_.book(flatTree_);
-  cscDigiSt_.book(flatTree_);
-  cscStubSt_.book(flatTree_);
-  l1MuSt_.book(flatTree_);
-  l1TrackSt_.book(flatTree_);
-  recoTrackSt_.book(flatTree_);
-}
-
 /// initialize
 void TreeManager::init() {
   genParticleSt_.init();
@@ -70,10 +54,4 @@ void TreeManager::fill() {
   l1MuTree_->Fill();
   l1TrackTree_->Fill();
   recoTrackTree_->Fill();
-
-  flatTree_->Fill();
-}
-
-void TreeManager::fill2() {
-  flatTree_->Fill();
 }
