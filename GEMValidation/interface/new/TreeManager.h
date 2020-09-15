@@ -55,21 +55,6 @@ class TreeManager
 
  private:
 
-  TTree* genParticleTree_;
-  TTree* simTrackTree_;
-  TTree* gemSimHitTree_;
-  TTree* gemDigiTree_;
-  TTree* gemStubTree_;
-  TTree* cscSimHitTree_;
-  TTree* cscDigiTree_;
-  TTree* cscStubTree_;
-  TTree* rpcSimHitTree_;
-  TTree* rpcDigiTree_;
-  TTree* rpcRecHitTree_;
-  TTree* l1MuTree_;
-  TTree* l1TrackTree_;
-  TTree* recoTrackTree_;
-
   my::GenParticleStruct genParticleSt_;
   my::SimTrackStruct simTrackSt_;
   my::GEMSimHitStruct gemSimHitSt_;
