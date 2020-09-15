@@ -63,6 +63,9 @@ void MatcherSuperManager::match(const edm::Event& ev, const edm::EventSetup& eve
                 << ", PDGiD =  " << t.type() << std::endl;
     }
 
+    // initialize the matchers!
+    matchers_[trk_no]->init(ev, eventSetup);
+
     // now do the matching with all other objects
     matchers_[trk_no]->match(t, sim_vert[t.vertIndex()]);
 
