@@ -1,7 +1,6 @@
 #include "GEMCode/GEMValidation/interface/AnalyzerManager.h"
 
-AnalyzerManager::AnalyzerManager(const edm::ParameterSet& conf, edm::ConsumesCollector&& iC)
-{
+AnalyzerManager::AnalyzerManager(const edm::ParameterSet& conf, edm::ConsumesCollector&& iC) {
   gent_.reset(new GenParticleAnalyzer(conf, std::move(iC)));
   simt_.reset(new SimTrackAnalyzer(conf, std::move(iC)));
   gemsh_.reset(new GEMSimHitAnalyzer(conf, std::move(iC)));
@@ -15,13 +14,19 @@ AnalyzerManager::AnalyzerManager(const edm::ParameterSet& conf, edm::ConsumesCol
   // recotrack_.reset(new RecoTrackAnalyzer(conf));
 }
 
-void AnalyzerManager::init(const edm::Event& iEvent, const edm::EventSetup& iSetup)
-{
+void AnalyzerManager::init(const edm::Event& iEvent, const edm::EventSetup& iSetup) {
+  // gent_->init(iEvent, iSetup);
+  // gemsh_->init(iEvent, iSetup);
+  // gemdg_->init(iEvent, iSetup);
+  // gemstub_->init(iEvent, iSetup);
+  // cscsh_->init(iEvent, iSetup);
+  // cscdg_->init(iEvent, iSetup);
   cscstub_->init(iEvent, iSetup);
+  // l1mu_->init(iEvent, iSetup);
+  // l1track_->init(iEvent, iSetup);
 }
 
-void AnalyzerManager::setMatcher(const MatcherManager& manager)
-{
+void AnalyzerManager::setMatcher(const MatcherManager& manager) {
   gent_->setMatcher(*manager.genParticles());
   gemsh_->setMatcher(*manager.gemSimHits());
   gemdg_->setMatcher(*manager.gemDigis());
@@ -52,8 +57,7 @@ void AnalyzerManager::analyze(const edm::Event& ev,
 
 
 void
-AnalyzerManager::analyze(TreeManager& tree, const SimTrack& t, const SimVertex& v)
-{
+AnalyzerManager::analyze(TreeManager& tree, const SimTrack& t, const SimVertex& v) {
   gent_->analyze(tree);
   simt_->analyze(tree, t, v);
   gemsh_->analyze(tree);

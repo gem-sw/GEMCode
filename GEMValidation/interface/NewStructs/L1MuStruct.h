@@ -74,18 +74,21 @@ namespace my {
       t->Branch("emtftrack_phi", &emtftrack_phi);
       t->Branch("emtftrack_charge", &emtftrack_charge);
       t->Branch("emtftrack_bx", &emtftrack_bx);
+      t->Branch("emtftrack_tpid", &emtftrack_tpid);
 
       t->Branch("emtfcand_pt", &emtfcand_pt);
       t->Branch("emtfcand_eta", &emtfcand_eta);
       t->Branch("emtfcand_phi", &emtfcand_phi);
       t->Branch("emtfcand_charge", &emtfcand_charge);
       t->Branch("emtfcand_bx", &emtfcand_bx);
+      t->Branch("emtfcand_tpid", &emtfcand_tpid);
 
       t->Branch("l1mu_pt", &l1mu_pt);
       t->Branch("l1mu_eta", &l1mu_eta);
       t->Branch("l1mu_phi", &l1mu_phi);
       t->Branch("l1mu_charge", &l1mu_charge);
       t->Branch("l1mu_bx", &l1mu_bx);
+      t->Branch("l1mu_tpid", &l1mu_tpid);
     }
   };
 }  // namespace

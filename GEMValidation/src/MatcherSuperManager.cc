@@ -14,14 +14,19 @@ MatcherSuperManager::MatcherSuperManager(const edm::ParameterSet& conf, edm::Con
   simTrackMinEta_ = simTrack.getParameter<double>("minEta");
   simTrackMaxEta_ = simTrack.getParameter<double>("maxEta");
 
-  matchers_.clear();
-
-  for (unsigned i = 0; i<100; i++) {
+  for (unsigned i = 0; i < MAX_PARTICLES; i++) {
     // make a new matcher (1 particle to many objects)
-    std::shared_ptr<MatcherManager> newMatcher(new MatcherManager(conf, std::move(iC)));
+    std::shared_ptr<MatcherManager>
+      newMatcher(new MatcherManager(conf, std::move(iC)));
 
     // add the matcher to the list
     matchers_.push_back(newMatcher);
+  }
+}
+
+void MatcherSuperManager::init() {
+  for (unsigned i = 0; i < MAX_PARTICLES; i++) {
+    matchers_[i]->setInValid();
   }
 }
 
@@ -55,13 +60,17 @@ void MatcherSuperManager::match(const edm::Event& ev, const edm::EventSetup& eve
     if (trk_no >= 100) break;
 
     if (verbose_) {
-      std::cout << "Processing selected SimTrack " << trk_no + 1 << std::endl;
+      std::cout << "Processing selected SimTrack " << trk_no + 1
+                << std::endl;
       std::cout << "pT = " << t.momentum().pt()
                 << "GeV, eta = " << t.momentum().eta()
                 << ", phi = " << t.momentum().phi()
                 << ", Q = " << t.charge()
                 << ", PDGiD =  " << t.type() << std::endl;
     }
+
+    // consider this match to be valid
+    matchers_[trk_no]->setValid();
 
     // initialize the matchers!
     matchers_[trk_no]->init(ev, eventSetup);

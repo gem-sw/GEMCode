@@ -14,14 +14,17 @@ public:
 
   ~MatcherSuperManager() {}
 
+  // initialize
+  void init();
+
   /// do the matching
-  void match(const edm::Event& e, const edm::EventSetup& eventSetup);
+  void match(const edm::Event& e, const edm::EventSetup&);
 
   bool isSimTrackGood(const SimTrack& t);
 
   // accessors
   std::vector<std::shared_ptr<MatcherManager> > matchers() const { return matchers_; }
-  std::shared_ptr<MatcherManager> matcher(unsigned index) const {return matchers_[index]; }
+  std::shared_ptr<MatcherManager> matcher(unsigned index) const {return matchers_.at(index); }
 
 private:
   // one manager per Sim-level particle we're fully analyzing

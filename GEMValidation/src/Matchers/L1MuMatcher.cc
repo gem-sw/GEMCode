@@ -120,13 +120,14 @@ L1MuMatcher::matchEmtfTrackToSimTrack(const SimTrack& simtrack, const l1t::EMTFT
       if ( bx < minBXEMTFTrack_ or bx > maxBXEMTFTrack_) continue;
 
       float dR = deltaR(float(simtrack.momentum().eta()), float(reco::reduceRange(simtrack.momentum().phi())),
-                        trk.Eta(), reco::reduceRange(emtf::deg_to_rad(trk.Phi_glob())));
+                        trk.Eta(), emtf::deg_to_rad(trk.Phi_glob()));
 
       if (verboseEMTFTrack_)
         std::cout <<"dR (track, sim) "<< dR <<" deltaREMTFTrack_ "
                   << deltaREMTFTrack_ << std::endl;
       if (dR < deltaREMTFTrack_){
         if (dR < mindREMTFTrack){
+          std::cout <<"...is matched" << std::endl;
           mindREMTFTrack = dR;
           emtfTrack_.reset(new gem::EMTFTrack(trk));
           mindREMTFTrack = dR;
@@ -171,7 +172,8 @@ void L1MuMatcher::matchRegionalMuonCandToSimTrack(const l1t::RegionalMuonCandBxC
       if (verboseRegMuCand_)
         std::cout << "\tdR " << dR << " dPtRel " << dPtRel << std::endl<< std::endl;
 
-      if (dR < mindRRegMuCand and dPtRel < mindPtRel){
+      if (dR < mindRRegMuCand and dR < 0.1){
+        std::cout <<"...is matched" << std::endl;
         mindRRegMuCand = dR;
         emtfCand_.reset(new gem::EMTFCand(*emtfCand));
       }
@@ -214,17 +216,11 @@ void L1MuMatcher::matchGMTToSimTrack(const BXVector<l1t::Muon>& gmtCands)
       if (verboseGMT_)
         std::cout << "\tdR " << dR << " dPtRel " << dPtRel << std::endl << std::endl;
 
-      if (dR < mindRGMT and dPtRel <= mindPtRel){
+      if (dR < mindRGMT and dR < 0.1){
+        std::cout <<"...is matched" << std::endl;
         mindRGMT = dR;
         muon_.reset(new gem::EMTFCand(*emtfCand));
       }
     }
-  }
-
-  if (verboseGMT_) {
-    if (emtfCand_ != nullptr)
-      std::cout << "Matched muon " << muon_->pt() << " " << muon_->eta() << " " << muon_->phi() << std::endl;
-    else
-      std::cout << "No Matched muon" << std::endl;
   }
 }

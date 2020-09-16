@@ -47,6 +47,11 @@ public:
   std::shared_ptr<L1TrackMatcher> l1Tracks() const { return l1Tracks_; }
   std::shared_ptr<RecoTrackMatcher> recoTracks() const { return recoTracks_; }
 
+  void setValid() {valid_ = true;}
+  void setInValid() {valid_ = false;}
+  bool isValid() const {return valid_;}
+  bool isInValid() const {return !valid_;}
+
 private:
   // top level matcher right now
   std::shared_ptr<GenParticleMatcher> genParticles_;
@@ -55,6 +60,8 @@ private:
   std::shared_ptr<L1MuMatcher> l1Muons_;
   std::shared_ptr<L1TrackMatcher> l1Tracks_;
   std::shared_ptr<RecoTrackMatcher> recoTracks_;
+
+  bool valid_;
 };
 
 #endif

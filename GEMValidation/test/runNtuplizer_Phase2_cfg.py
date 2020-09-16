@@ -45,7 +45,7 @@ process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase2_realistic_T15', ''
 
 # the analyzer configuration
 ana = process.MuonNtuplizer
-ana.simTrack.minEta = 0.9
+ana.simTrack.minEta = 1.2
 ana.simTrack.maxEta = 2.4
 ana.simTrack.minPt = 2
 ana.verbose = 1

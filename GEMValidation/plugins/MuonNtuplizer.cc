@@ -23,8 +23,7 @@ private:
   std::unique_ptr<AnalyzerManager> analyzer_;
 };
 
-MuonNtuplizer::MuonNtuplizer(const edm::ParameterSet& ps)
-{
+MuonNtuplizer::MuonNtuplizer(const edm::ParameterSet& ps) {
   // book the trees
   tree_.reset(new my::TreeManager());
 
@@ -40,10 +39,11 @@ void MuonNtuplizer::analyze(const edm::Event& ev, const edm::EventSetup& es) {
   tree_->init();
 
   // match the tracks
+  matcher_->init();
   matcher_->match(ev, es);
 
   // analyze the track objects
-  //analyzer_->analyze(ev, es, *matcher_, *tree_);
+  analyzer_->analyze(ev, es, *matcher_, *tree_);
 
   // fill all trees
   tree_->fill();
