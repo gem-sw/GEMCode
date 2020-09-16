@@ -53,30 +53,24 @@ void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
     int tpidfound = -1;
     // check if it was matched to a simtrack
     for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
-      std::cout << "GenParticleAnalyzer " << tpid << std::endl;
       const auto& genMatch = manager.matcher(tpid)->genParticles()->getMatch();
       if (genMatch) {
         // check if the same
         std::cout << genMatch->p4() <<  " " << iGenParticle->p4() << std::endl;
         if (genMatch->p4() == iGenParticle->p4()) {
           tpidfound =  tpid;
-          std::cout << "\tMatch" << std::endl;
           break;
         }
       }
     }
 
-    std::cout << "GenParticleAnalyzer " << tpidfound << std::endl;
-
     // genparticle properties
-    /*
     tree.genParticle().gen_pt->push_back(iGenParticle->pt());
     tree.genParticle().gen_pz->push_back(iGenParticle->pz());
     tree.genParticle().gen_eta->push_back(iGenParticle->eta());
     tree.genParticle().gen_phi->push_back(iGenParticle->phi());
     tree.genParticle().gen_charge->push_back(iGenParticle->charge());
     tree.genParticle().gen_pdgid->push_back(iGenParticle->pdgId());
-    */
-    //    tree.genParticle().gen_tpid->push_back(tpidfound);
+    tree.genParticle().gen_tpid->push_back(tpidfound);
   }
 }

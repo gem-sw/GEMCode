@@ -1,7 +1,6 @@
 #include "GEMCode/GEMValidation/interface/MatcherManager.h"
 
 MatcherManager::MatcherManager(const edm::ParameterSet& conf, edm::ConsumesCollector&& iC) {
-  valid_ = false;
   genParticles_.reset(new GenParticleMatcher(conf, std::move(iC)));
   l1Muons_.reset(new L1MuMatcher(conf, std::move(iC)));
   l1Tracks_.reset(new L1TrackMatcher(conf, std::move(iC)));
@@ -10,7 +9,6 @@ MatcherManager::MatcherManager(const edm::ParameterSet& conf, edm::ConsumesColle
 }
 
 void MatcherManager::init(const edm::Event& e, const edm::EventSetup& eventSetup) {
-  valid_ = false;
   genParticles_->init(e, eventSetup);
   l1Muons_->init(e, eventSetup);
   l1Tracks_->init(e, eventSetup);
