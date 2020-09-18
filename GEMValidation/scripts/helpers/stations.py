@@ -8,6 +8,8 @@ class Station:
         self.labelc = labelc
         self.phi_min = -3.2
         self.phi_max = 3.2
+        self.l_min = 0
+        self.l_max = 170
 
 ## csc
 ME11 = Station(1.55, 2.4, 'ME1/1', 'ME11')

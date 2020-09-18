@@ -98,6 +98,47 @@ def GEMPadPhi(plotter):
         c.Print("%sEff_GEMPad_phi_%s%s"%(plotter.targetDir + subdirectory, gemStations[st].labelc,  plotter.ext))
 
         del c, base, h1, leg, label
+        
+
+def GEMPadL(plotter):
+
+    ## variables for the plot
+    topTitle = " " * 11 + "GEM Pad matching" + " " * 35 + "CMS Simulation Preliminary"
+    xTitle = "Generated muon L"
+    title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
+    toPlot = "TMath::Sqrt((vx*vx)+(vy*vy))"
+
+
+    for st in range(0,len(gemStations)):
+        h_bins = "(50,%f,%f)"%(gemStations[st].l_min,gemStations[st].l_max)
+        nBins = int(h_bins[1:-1].split(',')[0])
+        minBin = float(h_bins[1:-1].split(',')[1])
+        maxBin = float(h_bins[1:-1].split(',')[2])
+
+        c = newCanvas()
+        base = TH1F("base",title,nBins,minBin,maxBin)
+        base.SetMinimum(plotter.yMin)
+        base.SetMaximum(plotter.yMax)
+        base.GetXaxis().SetLabelSize(0.05)
+        base.GetYaxis().SetLabelSize(0.05)
+        base.GetXaxis().SetTitleSize(0.05)
+        base.GetYaxis().SetTitleSize(0.05)
+        base.Draw("")
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+
+        h1 = draw_geff(plotter.tree, title, h_bins, toPlot, ok_gem_sh(st), ok_gem_pad(st), "same")
+
+        leg = TLegend(0.45,0.2,.75,0.35, "", "brNDC")
+        leg.SetBorderSize(0)
+        leg.SetFillStyle(0)
+        leg.SetTextSize(0.06)
+        leg.AddEntry(h1, "Pad","l")
+        leg.Draw("same")
+
+        label = drawCSCLabel(gemStations[st].label, 0.87,0.87,0.05)
+        c.Print("%sEff_GEMPad_L_%s%s"%(plotter.targetDir + subdirectory, gemStations[st].labelc,  plotter.ext))
+
+        del c, base, h1, leg, label
 
 
 def GEMPadEta2(plotter):
@@ -273,6 +314,52 @@ def GEMCoPadPhi(plotter):
 
         del c, base, h1, leg, label
 
+##################################################################
+### addition: Sept. 15th for L = sqrt(vx*vx + vy*vy) vs. eff.
+
+def GEMCoPadL(plotter):
+
+    ## variables for the plot
+    topTitle = " " * 11 + "GEM CoPad matching" + " " * 35 + "CMS Simulation Preliminary"
+    xTitle = "Generated muon L:"
+    title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
+    toPlot = "TMath::Sqrt((vx*vx)+(vy*vy))"
+
+
+    for st in range(1,len(gemStations)):
+
+        h_bins = "(50,%f,%f)"%(gemStations[st].l_min,gemStations[st].l_max)
+        nBins = int(h_bins[1:-1].split(',')[0])
+        minBin = float(h_bins[1:-1].split(',')[1])
+        maxBin = float(h_bins[1:-1].split(',')[2])
+
+        c = newCanvas()
+        base = TH1F("base",title,nBins,minBin,maxBin)
+        base.SetMinimum(plotter.yMin)
+        base.SetMaximum(plotter.yMax)
+        base.GetXaxis().SetLabelSize(0.05)
+        base.GetYaxis().SetLabelSize(0.05)
+        base.GetXaxis().SetTitleSize(0.05)
+        base.GetYaxis().SetTitleSize(0.05)
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+        base.Draw("")
+
+        h1 = draw_geff(plotter.tree, title, h_bins, toPlot, ok_gem_sh2(st), ok_gem_copad(st), "same")
+
+        leg = TLegend(0.45,0.2,.75,0.35, "", "brNDC")
+        leg.SetBorderSize(0)
+        leg.SetFillStyle(0)
+        leg.SetTextSize(0.06)
+        leg.AddEntry(h1, "CoPad","l")
+        leg.Draw("same")
+
+        label = drawCSCLabel(gemStations[st].label, 0.87,0.87,0.05)
+        c.Print("%sEff_GEMCoPad_L_%s%s"%(plotter.targetDir + subdirectory, gemStations[st].labelc,  plotter.ext))
+
+        del c, base, h1, leg, label
+
+
+        
 
 def GEMClusterEta(plotter):
 
@@ -360,12 +447,58 @@ def GEMClusterPhi(plotter):
         del c, base, h1, leg, label
 
 
+def GEMClusterL(plotter):
+
+    ## variables for the plot
+    topTitle = " " * 11 + "GEM Cluster matching" + " " * 35 + "CMS Simulation Preliminary"
+    xTitle = "Generated muon L"
+    title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
+    toPlot = "TMath::Sqrt((vx*vx)+(vy*vy))"
+
+    for st in range(1,len(gemStations)):
+
+        h_bins = "(50,%f,%f)"%(gemStations[st].l_min,gemStations[st].l_max)
+        nBins = int(h_bins[1:-1].split(',')[0])
+        minBin = float(h_bins[1:-1].split(',')[1])
+        maxBin = float(h_bins[1:-1].split(',')[2])
+
+        c = newCanvas()
+        base = TH1F("base",title,nBins,minBin,maxBin)
+        base.SetMinimum(plotter.yMin)
+        base.SetMaximum(plotter.yMax)
+        base.GetXaxis().SetLabelSize(0.05)
+        base.GetYaxis().SetLabelSize(0.05)
+        base.GetXaxis().SetTitleSize(0.05)
+        base.GetYaxis().SetTitleSize(0.05)
+        base.Draw("")
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+
+        h1 = draw_geff(plotter.tree, title, h_bins, toPlot, ok_gem_sh(st), ok_gem_cluster(st), "same")
+
+        leg = TLegend(0.45,0.2,.75,0.35, "", "brNDC")
+        leg.SetBorderSize(0)
+        leg.SetFillStyle(0)
+        leg.SetTextSize(0.06)
+        leg.AddEntry(h1, "Cluster","l")
+        leg.Draw("same")
+
+        label = drawCSCLabel(gemStations[st].label, 0.87,0.87,0.05)
+        c.Print("%sEff_GEMCluster_L_%s%s"%(plotter.targetDir + subdirectory, gemStations[st].labelc,  plotter.ext))
+
+        del c, base, h1, leg, label
+
+
+        
+
 def GEMStub(plotter):
     GEMPadEta(plotter)
     GEMPadPhi(plotter)
     GEMPadEta2(plotter)
     GEMPadPhi2(plotter)
+    GEMPadL(plotter)
     GEMCoPadEta(plotter)
     GEMCoPadPhi(plotter)
+    GEMCoPadL(plotter)
     GEMClusterEta(plotter)
     GEMClusterPhi(plotter)
+    GEMClusterL(plotter)
