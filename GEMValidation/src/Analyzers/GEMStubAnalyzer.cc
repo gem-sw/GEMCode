@@ -107,8 +107,6 @@ void GEMStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       if (!digiIt->isValid())
         continue;
 
-      index++;
-
       int tpidfound = -1;
       for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
 
@@ -151,8 +149,6 @@ void GEMStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
 
       if (!digiIt->isValid())
         continue;
-
-      index++;
 
       int tpidfound = -1;
       for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
