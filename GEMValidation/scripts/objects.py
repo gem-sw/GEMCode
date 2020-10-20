@@ -75,9 +75,50 @@ def getObjects(tree):
         "eta" : tree["l1mu_eta"],
         "phi" : tree["l1mu_phi"]
     })
-    return csc_clct, csc_alct, csc_lct, gem_cluster, emtftrack, l1mu
+    sim_muon = ak.zip({
+        "charge" : tree["sim_charge"],
+        "pdgid" : tree["sim_pdgid"],
+        "index" : tree["sim_index"],
+        "pt" : tree["sim_pt"],
+        "px" : tree["sim_px"],
+        "py" : tree["sim_py"],
+        "pz" : tree["sim_pz"],
+        "eta" : tree["sim_eta"],
+        "phi" : tree["sim_phi"],
+        "vx" : tree["sim_vx"],
+        "vy" : tree["sim_vy"],
+        "vz" : tree["sim_vz"]
+        #,
+        #"id_l1mu" : tree["sim_id_l1mu"]
+    })
+    return csc_clct, csc_alct, csc_lct, gem_cluster, emtftrack, l1mu, sim_muon
 
 '''
+        "d0" : tree["sim_d0"],
+        "z0" : tree["sim_z0"]
+
+  #        "d0_prod" : tree["sim_d0_prod"],
+#        "z0_prod" : tree["sim_z0_prod"]
+
+        "id_gem_sh" : tree["sim_id_gem_sh"],
+        "id_csc_sh" : tree["sim_id_csc_sh"],
+        "id_gen" : tree["sim_id_gen"],
+
+
+        "id_gem_dg" : tree["sim_id_gem_dg"],
+        "id_gem_pad" : tree["sim_id_gem_pad"],
+        "id_gem_copad" : tree["sim_id_gem_copad"],
+        "id_gem_cluster" : tree["sim_id_gem_cluster"],
+        "id_csc_wire" : tree["sim_id_csc_wire"],
+        "id_csc_strip" : tree["sim_id_csc_strip"],
+        "id_csc_clct" : tree["sim_id_csc_clct"],
+        "id_csc_alct" : tree["sim_id_csc_alct"],
+        "id_csc_lct" : tree["sim_id_csc_lct"],
+        "id_csc_mplct" : tree["sim_id_csc_mplct"],
+        "id_emtf_track" : tree["sim_id_emtf_track"],
+        "id_emtf_cand" : tree["sim_id_emtf_cand"],
+
+
 #"isodd" : tree["csc_lct_isodd"],
 #"region" : tree["csc_lct_region"]
 #"station" : tree["csc_lct_station"]
@@ -106,41 +147,6 @@ def getObjects(tree):
     })
     """
 
-    sim = ak.zip([
-        "charge" : tree["sim_charge"],
-        "pdgid" : tree["sim_pdgid"],
-        "index" : tree["sim_index"],
-        "pt" : tree["sim_pt"],
-        "px" : tree["sim_px"],
-        "py" : tree["sim_py"],
-        "pz" : tree["sim_pz"],
-        "eta" : tree["sim_eta"],
-        "phi" : tree["sim_phi"],
-        "id_gem_sh" : tree["sim_id_gem_sh"],
-        "id_csc_sh" : tree["sim_id_csc_sh"],
-        "id_gen" : tree["sim_id_gen"],
-        "vx" : tree["sim_vx"],
-        "vy" : tree["sim_vy"],
-        "vz" : tree["sim_vz"],
-        "d0" : tree["sim_d0"],
-        "z0" : tree["sim_z0"],
-        "d0_prod" : tree["sim_d0_prod"],
-        "z0_prod" : tree["sim_z0_prod"],
-        "id_gem_dg" : tree["sim_id_gem_dg"],
-        "id_gem_pad" : tree["sim_id_gem_pad"],
-        "id_gem_copad" : tree["sim_id_gem_copad"],
-        "id_gem_cluster" : tree["sim_id_gem_cluster"],
-        "id_csc_wire" : tree["sim_id_csc_wire"],
-        "id_csc_strip" : tree["sim_id_csc_strip"],
-        "id_csc_clct" : tree["sim_id_csc_clct"],
-        "id_csc_alct" : tree["sim_id_csc_alct"],
-        "id_csc_lct" : tree["sim_id_csc_lct"],
-        "id_csc_mplct" : tree["sim_id_csc_mplct"],
-        "id_emtf_track" : tree["sim_id_emtf_track"],
-        "id_emtf_cand" : tree["sim_id_emtf_cand"],
-        "id_l1mu" : tree["sim_id_l1mu"]],
-        depth_limit=1
-    )
 
 
     """

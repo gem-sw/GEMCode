@@ -148,3 +148,35 @@ ak.to_list(cuts)
 passEvents = ak.sum(cuts)
 objectRate = passEvents * normalization
 print("L1Mu trigger rate: %f kHz"%(objectRate))
+
+## efficiency
+#for ids in range(0,9):
+#    station = id_to_station[ids][0]
+#    ring = id_to_station[ids][1]
+#cuts = (sim_muon.pt>10)
+#cuts2 = (len(sim_muon.id_l1mu) > 0)
+#print(sim_muon.id_l1mu)
+#print(sim_muon.pt)
+#print(sim_muon.eta)
+#print(sim_muon.charge)
+#print(csc_clct.bx)
+#print(csc_clct.tpid)
+#print(cuts)
+#print(cuts2)
+#ak.to_list(cuts)
+#passEvents = ak.sum(cuts)
+#print(passEvents)
+
+
+iEvent = 0
+for event_pts, event_etas, event_clusterIDs in zip(tree["sim_pt"], tree["sim_eta"], tree["sim_id_gem_cluster"]):
+    iEvent += 1
+    if iEvent > 100:
+        break
+    print("Event", iEvent)
+    for pt in event_pts:
+        print(pt)
+    for eta in event_etas:
+        print(eta)
+    for Ids in event_clusterIDs:
+        print(Ids)
