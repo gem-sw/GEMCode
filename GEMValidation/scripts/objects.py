@@ -87,9 +87,8 @@ def getObjects(tree):
         "phi" : tree["sim_phi"],
         "vx" : tree["sim_vx"],
         "vy" : tree["sim_vy"],
-        "vz" : tree["sim_vz"]
-        #,
-        #"id_l1mu" : tree["sim_id_l1mu"]
+        "vz" : tree["sim_vz"],
+        "sim_id_gem_cluster" : tree["sim_id_gem_cluster"]
     })
     return csc_clct, csc_alct, csc_lct, gem_cluster, emtftrack, l1mu, sim_muon
 
