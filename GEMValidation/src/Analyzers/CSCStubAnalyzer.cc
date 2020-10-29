@@ -94,6 +94,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
 
   auto& cscTree = tree.cscStub();
   auto& simTree = tree.simTrack();
+  const bool validTracks(simTree.sim_pt->size()>0);
 
   int index = 0;
   // CSC ALCTs
@@ -138,7 +139,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       cscTree.csc_alct_chamber->push_back(id.chamber());
       cscTree.csc_alct_tpid->push_back(tpidfound);
 
-      if (tpidfound != -1) {
+      if (tpidfound != -1 and validTracks) {
         ((*simTree.sim_id_csc_alct)[tpidfound]).push_back(index);
       }
 
@@ -194,7 +195,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       cscTree.csc_clct_chamber->push_back(id.chamber());
       cscTree.csc_clct_tpid->push_back(tpidfound);
 
-      if (tpidfound != -1)
+      if (tpidfound != -1 and validTracks)
         ((*simTree.sim_id_csc_clct)[tpidfound]).push_back(index);
 
       index++;
@@ -250,7 +251,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       cscTree.csc_lct_chamber->push_back(id.chamber());
       cscTree.csc_lct_tpid->push_back(tpidfound);
 
-      if (tpidfound != -1)
+      if (tpidfound != -1 and validTracks)
         ((*simTree.sim_id_csc_lct)[tpidfound]).push_back(index);
 
       index++;
@@ -304,7 +305,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       cscTree.csc_mplct_chamber->push_back(id.chamber());
       cscTree.csc_mplct_tpid->push_back(tpidfound);
 
-      if (tpidfound != -1)
+      if (tpidfound != -1 and validTracks)
         ((*simTree.sim_id_csc_mplct)[tpidfound]).push_back(index);
 
       index++;

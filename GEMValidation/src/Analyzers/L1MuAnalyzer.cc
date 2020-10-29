@@ -43,10 +43,10 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
   auto& trkTree = tree.l1mu();
   auto& simTree = tree.simTrack();
+  const bool validTracks(simTree.sim_pt->size()>0);
 
   if (verboseEMTFTrack_)
     std::cout << "Analyzing " << emtfTracks.size() << " EMTF tracks" << std::endl;
-
 
   int index = 0;
   for (const auto& trk : emtfTracks) {
@@ -91,7 +91,7 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     trkTree.emtftrack_bx->push_back(gemtrk.bx());
     trkTree.emtftrack_tpid->push_back(tpidfound);
 
-    if (tpidfound != -1) {
+    if (tpidfound != -1 and validTracks) {
       ((*simTree.sim_id_emtf_track)[tpidfound]).push_back(index);
     }
   }
@@ -139,7 +139,7 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       trkTree.emtfcand_bx->push_back(gemtrk.bx());
       trkTree.emtfcand_tpid->push_back(tpidfound);
 
-      if (tpidfound != -1) {
+      if (tpidfound != -1 and validTracks) {
         ((*simTree.sim_id_emtf_cand)[tpidfound]).push_back(index);
       }
     }
@@ -188,7 +188,7 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       trkTree.l1mu_bx->push_back(gemtrk.bx());
       trkTree.l1mu_tpid->push_back(tpidfound);
 
-      if (tpidfound != -1) {
+      if (tpidfound != -1 and validTracks) {
         ((*simTree.sim_id_l1mu)[tpidfound]).push_back(index);
       }
     }
