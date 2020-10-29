@@ -47,6 +47,7 @@ void GEMStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
 
   auto& gemTree = tree.gemStub();
   auto& simTree = tree.simTrack();
+  const bool validTracks(simTree.sim_pt->size()>0);
 
   int index = 0;
   for (auto detUnitIt = gemPads.begin(); detUnitIt != gemPads.end(); ++detUnitIt) {
@@ -85,52 +86,9 @@ void GEMStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       gemTree.gem_pad_roll->push_back(id.roll());
       gemTree.gem_pad_tpid->push_back(tpidfound);
 
-      if (tpidfound != -1) {
+      if (tpidfound != -1 and validTracks) {
         ((*simTree.sim_id_gem_pad)[tpidfound]).push_back(index);
       }
-
-      index++;
-    }
-  }
-
-  index = 0;
-  for (auto detUnitIt = gemCoPads.begin(); detUnitIt != gemCoPads.end(); ++detUnitIt) {
-    const GEMDetId& id = (*detUnitIt).first;
-    const bool isodd = (id.chamber()%2 == 1);
-
-    // Loop over the digis of this DetUnit
-    const auto& range = (*detUnitIt).second;
-    for (auto digiIt = range.first; digiIt != range.second; ++digiIt) {
-
-      if (!digiIt->isValid())
-        continue;
-
-      int tpidfound = -1;
-      for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
-
-        // get the matcher
-        const auto& matcher = manager.matcher(tpid);
-
-        const auto& gemMatches = manager.matcher(tpid)->gemDigis()->coPadsInSuperChamber(id.rawId());
-        for (const auto& gemMatch : gemMatches) {
-          // check if the same
-          if (*digiIt == gemMatch) {
-            tpidfound =  tpid;
-          }
-        }
-      }
-
-      gemTree.gem_copad_bx->push_back(digiIt->bx(1));
-      gemTree.gem_copad_pad->push_back(digiIt->pad(1));
-      gemTree.gem_copad_isodd->push_back(isodd);
-      gemTree.gem_copad_region->push_back(id.region());
-      gemTree.gem_copad_station->push_back(id.station());
-      gemTree.gem_copad_chamber->push_back(id.chamber());
-      gemTree.gem_copad_roll->push_back(id.roll());
-      gemTree.gem_copad_tpid->push_back(tpidfound);
-
-      if (tpidfound != -1)
-        ((*simTree.sim_id_gem_copad)[tpidfound]).push_back(index);
 
       index++;
     }
@@ -174,8 +132,51 @@ void GEMStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       gemTree.gem_cluster_roll->push_back(id.roll());
       gemTree.gem_cluster_tpid->push_back(tpidfound);
 
-      if (tpidfound != -1)
+      if (tpidfound != -1 and validTracks)
         ((*simTree.sim_id_gem_cluster)[tpidfound]).push_back(index);
+
+      index++;
+    }
+  }
+
+  index = 0;
+  for (auto detUnitIt = gemCoPads.begin(); detUnitIt != gemCoPads.end(); ++detUnitIt) {
+    const GEMDetId& id = (*detUnitIt).first;
+    const bool isodd = (id.chamber()%2 == 1);
+
+    // Loop over the digis of this DetUnit
+    const auto& range = (*detUnitIt).second;
+    for (auto digiIt = range.first; digiIt != range.second; ++digiIt) {
+
+      if (!digiIt->isValid())
+        continue;
+
+      int tpidfound = -1;
+      for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
+
+        // get the matcher
+        const auto& matcher = manager.matcher(tpid);
+
+        const auto& gemMatches = manager.matcher(tpid)->gemDigis()->coPadsInSuperChamber(id.rawId());
+        for (const auto& gemMatch : gemMatches) {
+          // check if the same
+          if (*digiIt == gemMatch) {
+            tpidfound =  tpid;
+          }
+        }
+      }
+
+      gemTree.gem_copad_bx->push_back(digiIt->bx(1));
+      gemTree.gem_copad_pad->push_back(digiIt->pad(1));
+      gemTree.gem_copad_isodd->push_back(isodd);
+      gemTree.gem_copad_region->push_back(id.region());
+      gemTree.gem_copad_station->push_back(id.station());
+      gemTree.gem_copad_chamber->push_back(id.chamber());
+      gemTree.gem_copad_roll->push_back(id.roll());
+      gemTree.gem_copad_tpid->push_back(tpidfound);
+
+      if (tpidfound != -1 and validTracks)
+        ((*simTree.sim_id_gem_copad)[tpidfound]).push_back(index);
 
       index++;
     }
