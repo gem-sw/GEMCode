@@ -2,8 +2,6 @@
 
 GEMSimHitAnalyzer::GEMSimHitAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCollector&& iC)
 {
-  minNHitsChamber_ = conf.getParameter<int>("minNHitsChamberGEMSimHit");
-
   simHitPSet_ = conf.getParameterSet("gemSimHit");
   verbose_ = simHitPSet_.getParameter<int>("verbose");
   simHitInput_ = iC.consumes<edm::PSimHitContainer>(simHitPSet_.getParameter<edm::InputTag>("inputTag"));

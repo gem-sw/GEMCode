@@ -2,12 +2,11 @@
 
 CSCDigiAnalyzer::CSCDigiAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCollector&& iC)
 {
-  minNHitsChamber_ = conf.getParameter<int>("minNHitsChamberCSCDigi");
-
   const auto& wireDigi = conf.getParameterSet("cscWireDigi");
   verboseWG_ = wireDigi.getParameter<int>("verbose");
   minBXWire_ = wireDigi.getParameter<int>("minBX");
   maxBXWire_ = wireDigi.getParameter<int>("maxBX");
+  minNHitsChamber_ = wireDigi.getParameter<int>("minNHitsChamber");
 
   const auto& comparatorDigi = conf.getParameterSet("cscComparatorDigi");
   verboseComparator_ = comparatorDigi.getParameter<int>("verbose");

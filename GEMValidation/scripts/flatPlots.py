@@ -1,15 +1,20 @@
+#!/usr/bin/python
+
 import awkward1 as ak
 import uproot4
 import matplotlib.pyplot as plt
-from cuts_v2 import *
 from objects import getObjects, id_to_station
+from ROOT import TH1F, TEfficiency, SetOwnership, kBlue
+#import numba as nb
+import numpy as np
+import awkward1 as ak
 
 """
 Plots needed
 - alct rate per chamber type
 - lct rate per chamber type
 - anode/cathode pretrigger rate per chamber type
-- alct rate per chamber
+-1;95;0c alct rate per chamber
 - lct rate per chamber
 
 with/without CCLUT enabled
@@ -27,7 +32,7 @@ mycache = {}
 
 tree = uproot4.open("out_ana_phase2.ntuple.root")["MuonNtuplizer"]["FlatTree"].arrays(array_cache=mycache)
 
-csc_clct, csc_alct, csc_lct, gem_cluster, emtftrack,l1mu = getObjects(tree)
+csc_clct, csc_alct, csc_lct, gem_cluster, emtftrack, l1mu, sim_muon = getObjects(tree)
 
 ## number of events (get from tree)
 numberOfTotalEvents = 18000.
@@ -55,6 +60,7 @@ lct_daq_rate = []
 gem_trigger_rate = []
 gem_daq_rate = []
 
+"""
 ## trigger rates for each station
 for ids in range(0,9):
     station = id_to_station[ids][0]
@@ -167,8 +173,9 @@ print("L1Mu trigger rate: %f kHz"%(objectRate))
 #passEvents = ak.sum(cuts)
 #print(passEvents)
 
-
+"""
 iEvent = 0
+"""
 for event_pts, event_etas, event_clusterIDs in zip(tree["sim_pt"], tree["sim_eta"], tree["sim_id_gem_cluster"]):
     iEvent += 1
     if iEvent > 100:
@@ -180,3 +187,75 @@ for event_pts, event_etas, event_clusterIDs in zip(tree["sim_pt"], tree["sim_eta
         print(eta)
     for Ids in event_clusterIDs:
         print(Ids)
+"""
+print(ak.to_list(ak.Array(sim_muon))[2:3])
+print(ak.to_list(sim_muon.eta)[2:3])
+print(ak.to_list(sim_muon.sim_id_gem_cluster)[2:3])
+print(ak.to_list(sim_muon.pt)[2:3])
+print(ak.to_list(gem_cluster.station)[2:3])
+print(ak.to_list(gem_cluster.bx)[2:3])
+print(ak.to_list(gem_cluster.pad)[2:3])
+
+"""
+id_global = ak.flatten(
+    sim_muon.sim_id_gem_cluster + np.asarray(gem_cluster.layout.starts), axis=None
+)
+
+sim_muon["gem_clusters"] = ak.Array(
+    ak.layout.ListOffsetArray64(
+        sim_muon.layout.offsets,
+        ak.layout.ListOffsetArray64(
+            sim_muon.layout.content.offsets,
+            ak.flatten(gem_cluster)[id_global].layout,
+        ),
+    )
+)
+
+mymask = ak.any(sim_muon.gem_clusters.pad == 168, axis=1)
+print(ak.to_list(mymask)[2:3])
+mymask = ak.any(sim_muon.gem_clusters.pad == 173, axis=1)
+print(ak.to_list(mymask)[2:3])
+mymask = ak.any(sim_muon.gem_clusters.pad == 97, axis=1)
+print(ak.to_list(mymask)[2:3])
+mymask = ak.any(sim_muon.gem_clusters.pad == 169, axis=1)
+print(ak.to_list(mymask)[2:3])
+#print(ak.any(sim_muon.gem_clusters.station == 1, axis=1))
+"""
+
+"""
+sim_muons = ak.zip(
+    {
+        "pt": ak.Array([[], [], [20.0, 30.0]]),
+        "cluster_idx": ak.Array([[], [], [[2, 5], [6, 2]]]),
+    }
+)
+
+gem_clusters = ak.zip(
+{
+    "value": ak.Array(
+        [[10.0, 20.0], [30.0, 40.0], [50.0, 60.0, 70.0, 80.0, 90.0, 100.0, 110.0]]
+    ),
+    "bx": ak.Array([[-1, 0], [1, 0], [0, 1, 2, -2, 1, 1, 1]]),
+}
+)  # type "nevents * nclusters * whatever"
+
+id_global = ak.flatten(
+    sim_muons.cluster_idx + np.asarray(gem_clusters.layout.starts), axis=None
+)
+
+sim_muons["clusters"] = ak.Array(
+    ak.layout.ListOffsetArray64(
+        sim_muons.layout.offsets,
+        ak.layout.ListOffsetArray64(
+            sim_muons.layout.content.offsets,
+            ak.flatten(gem_clusters)[id_global].layout,
+        ),
+    )
+)
+
+print(ak.to_list(sim_muons)[:])
+print()
+print(ak.to_list(gem_clusters)[:])
+print()
+print(ak.to_list(ak.any(sim_muons.clusters.bx == 0, axis=1))[:])
+"""

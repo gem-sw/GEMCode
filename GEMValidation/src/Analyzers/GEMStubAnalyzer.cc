@@ -2,8 +2,6 @@
 
 GEMStubAnalyzer::GEMStubAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCollector&& iC)
 {
-  minNHitsChamber_ = conf.getParameter<int>("minNHitsChamberGEMDigi");
-
   const auto& gemPad = conf.getParameterSet("gemPadDigi");
   minBXPad_ = gemPad.getParameter<int>("minBX");
   maxBXPad_ = gemPad.getParameter<int>("maxBX");

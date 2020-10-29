@@ -1,17 +1,10 @@
-from ROOT import TH1F, TEfficiency, SetOwnership, kBlue
-import numpy as np
-import awkward1 as ak
 
 # functions operate on awkward arrays
-
 def has_gem_pad(my_tree):
     return has_object(my_tree, "sim_id_gem_pad")
 
 def has_gem_copad(my_tree):
     return has_object(my_tree, "sim_id_gem_copad")
-
-def has_gem_cluster(my_tree):
-    return has_object(my_tree, "sim_id_gem_cluster")
 
 def has_csc_alct(my_tree):
     return has_object(my_tree, "sim_id_csc_alct")

@@ -4,8 +4,6 @@
 
 CSCStubAnalyzer::CSCStubAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCollector&& iC)
 {
-  minNHitsChamber_ = conf.getParameter<int>("minNHitsChamberCSCStub");
-
   const auto& cscCLCT = conf.getParameter<edm::ParameterSet>("cscCLCT");
   minBXCLCT_ = cscCLCT.getParameter<int>("minBX");
   maxBXCLCT_ = cscCLCT.getParameter<int>("maxBX");

@@ -1,4 +1,6 @@
 import awkward1 as ak
+import numpy as np
+#import numba as nb
 
 id_to_station = {
     0 : [1,1],
@@ -12,7 +14,68 @@ id_to_station = {
     8 : [4,2]
 }
 
+def embed_crossref(source, idx_name, dest, dest_name):
+    """Embed a cross-reference
+
+    Parameters
+    ----------
+        source : ak.Array
+            any array with shape N * var * {record}
+        idx_name : str
+            A field in the source record
+        dest : ak.Array
+            any array with shape N * var * {record}, where:
+            ``ak.max(source[idx_name], axis=1) < ak.num(dest)`` and
+            ``ak.min(source[idx_name], axis=1) >= 0``
+    """
+    assert ak.all(ak.max(source[idx_name], axis=1) < ak.num(dest))
+    assert ak.all(ak.min(source[idx_name], axis=1) >= 0)
+
+    id_global = ak.flatten(
+        source[idx_name] + np.asarray(dest.layout.starts), axis=None
+    )
+    source[dest_name] = ak.Array(
+        ak.layout.ListOffsetArray64(
+            source.layout.offsets,
+            ak.layout.ListOffsetArray64(
+                source.layout.content.offsets,
+                ak.flatten(dest)[id_global].layout,
+            ),
+        )
+    )
+
+
 def getObjects(tree):
+    sim_muon = ak.zip({
+        "charge" : tree["sim_charge"],
+        "pdgid" : tree["sim_pdgid"],
+        "index" : tree["sim_index"],
+        "pt" : tree["sim_pt"],
+        "px" : tree["sim_px"],
+        "py" : tree["sim_py"],
+        "pz" : tree["sim_pz"],
+        "eta" : tree["sim_eta"],
+        "phi" : tree["sim_phi"],
+        "vx" : tree["sim_vx"],
+        "vy" : tree["sim_vy"],
+        "vz" : tree["sim_vz"],
+        "sim_id_gem_cluster" : tree["sim_id_gem_cluster"],
+        "id_gem_sh" : tree["sim_id_gem_sh"],
+        "id_csc_sh" : tree["sim_id_csc_sh"],
+        "id_gen" : tree["sim_id_gen"],
+        "id_gem_dg" : tree["sim_id_gem_dg"],
+        "id_gem_pad" : tree["sim_id_gem_pad"],
+        "id_gem_copad" : tree["sim_id_gem_copad"],
+        "id_gem_cluster" : tree["sim_id_gem_cluster"],
+        "id_csc_wire" : tree["sim_id_csc_wire"],
+        "id_csc_strip" : tree["sim_id_csc_strip"],
+        "id_csc_alct" : tree["sim_id_csc_alct"],
+        "id_csc_clct" : tree["sim_id_csc_clct"],
+        "id_csc_lct" : tree["sim_id_csc_lct"],
+        "id_csc_mplct" : tree["sim_id_csc_mplct"],
+        "id_emtf_track" : tree["sim_id_emtf_track"],
+        "id_emtf_cand" : tree["sim_id_emtf_cand"]
+    }, depth_limit=1)
     csc_clct = ak.zip( {
         "bx" : tree["csc_clct_bx"],
         "hs" : tree["csc_clct_hs"],
@@ -75,21 +138,6 @@ def getObjects(tree):
         "eta" : tree["l1mu_eta"],
         "phi" : tree["l1mu_phi"]
     })
-    sim_muon = ak.zip({
-        "charge" : tree["sim_charge"],
-        "pdgid" : tree["sim_pdgid"],
-        "index" : tree["sim_index"],
-        "pt" : tree["sim_pt"],
-        "px" : tree["sim_px"],
-        "py" : tree["sim_py"],
-        "pz" : tree["sim_pz"],
-        "eta" : tree["sim_eta"],
-        "phi" : tree["sim_phi"],
-        "vx" : tree["sim_vx"],
-        "vy" : tree["sim_vy"],
-        "vz" : tree["sim_vz"],
-        "sim_id_gem_cluster" : tree["sim_id_gem_cluster"]
-    })
     return csc_clct, csc_alct, csc_lct, gem_cluster, emtftrack, l1mu, sim_muon
 
 '''
@@ -99,23 +147,6 @@ def getObjects(tree):
   #        "d0_prod" : tree["sim_d0_prod"],
 #        "z0_prod" : tree["sim_z0_prod"]
 
-        "id_gem_sh" : tree["sim_id_gem_sh"],
-        "id_csc_sh" : tree["sim_id_csc_sh"],
-        "id_gen" : tree["sim_id_gen"],
-
-
-        "id_gem_dg" : tree["sim_id_gem_dg"],
-        "id_gem_pad" : tree["sim_id_gem_pad"],
-        "id_gem_copad" : tree["sim_id_gem_copad"],
-        "id_gem_cluster" : tree["sim_id_gem_cluster"],
-        "id_csc_wire" : tree["sim_id_csc_wire"],
-        "id_csc_strip" : tree["sim_id_csc_strip"],
-        "id_csc_clct" : tree["sim_id_csc_clct"],
-        "id_csc_alct" : tree["sim_id_csc_alct"],
-        "id_csc_lct" : tree["sim_id_csc_lct"],
-        "id_csc_mplct" : tree["sim_id_csc_mplct"],
-        "id_emtf_track" : tree["sim_id_emtf_track"],
-        "id_emtf_cand" : tree["sim_id_emtf_cand"],
 
 
 #"isodd" : tree["csc_lct_isodd"],

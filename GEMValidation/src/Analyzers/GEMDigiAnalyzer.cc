@@ -2,8 +2,6 @@
 
 GEMDigiAnalyzer::GEMDigiAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCollector&& iC)
 {
-  minNHitsChamber_ = conf.getParameter<int>("minNHitsChamberGEMDigi");
-
   const auto& gemDigi = conf.getParameterSet("gemStripDigi");
   minBXDigi_ = gemDigi.getParameter<int>("minBX");
   maxBXDigi_ = gemDigi.getParameter<int>("maxBX");

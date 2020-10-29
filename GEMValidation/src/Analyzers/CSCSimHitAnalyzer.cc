@@ -7,10 +7,9 @@ using namespace std;
 
 CSCSimHitAnalyzer::CSCSimHitAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCollector&& iC)
 {
-  minNHitsChamber_ = conf.getParameter<int>("minNHitsChamberCSCSimHit");
-
   simHitPSet_ = conf.getParameterSet("cscSimHit");
   verbose_ = simHitPSet_.getParameter<int>("verbose");
+  minNHitsChamber_ = simHitPSet_.getParameter<int>("minNHitsChamber");
   simHitInput_ = iC.consumes<edm::PSimHitContainer>(simHitPSet_.getParameter<edm::InputTag>("inputTag"));
 }
 
