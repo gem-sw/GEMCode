@@ -17,6 +17,22 @@ l1MuonPSet = cms.PSet(
         maxBX = cms.int32(0),
         deltaR = cms.double(0.5),
     ),
+    omtfCand = cms.PSet(
+        verbose = cms.int32(0),
+        run = cms.bool(False),
+        inputTag = cms.InputTag("simOmtfDigis","OMTF"),
+        minBX = cms.int32(0),
+        maxBX = cms.int32(0),
+        deltaR = cms.double(0.5),
+    ),
+    bmtfCand = cms.PSet(
+        verbose = cms.int32(0),
+        run = cms.bool(False),
+        inputTag = cms.InputTag("simKBmtfDigis","BMTF"),
+        minBX = cms.int32(0),
+        maxBX = cms.int32(0),
+        deltaR = cms.double(0.5),
+    ),
     muon = cms.PSet(
         verbose = cms.int32(0),
         run = cms.bool(True),

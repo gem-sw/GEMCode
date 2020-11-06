@@ -24,10 +24,14 @@ public:
  private:
 
   edm::EDGetTokenT<l1t::EMTFTrackCollection> emtfTrackToken_;
+  edm::EDGetTokenT<l1t::RegionalMuonCandBxCollection> bmtfCandToken_;
+  edm::EDGetTokenT<l1t::RegionalMuonCandBxCollection> omtfCandToken_;
   edm::EDGetTokenT<l1t::RegionalMuonCandBxCollection> emtfCandToken_;
   edm::EDGetTokenT<l1t::MuonBxCollection> muonToken_;
 
   edm::Handle<l1t::EMTFTrackCollection> emtfTrackHandle_;
+  edm::Handle<l1t::RegionalMuonCandBxCollection> bmtfCandHandle_;
+  edm::Handle<l1t::RegionalMuonCandBxCollection> omtfCandHandle_;
   edm::Handle<l1t::RegionalMuonCandBxCollection> emtfCandHandle_;
   edm::Handle<l1t::MuonBxCollection> muonHandle_;
 
@@ -40,6 +44,14 @@ public:
   int minBXEMTFCand_, maxBXEMTFCand_;
   int verboseEMTFCand_;
   bool runEMTFCand_;
+
+  int minBXBMTFCand_, maxBXBMTFCand_;
+  int verboseBMTFCand_;
+  bool runBMTFCand_;
+
+  int minBXOMTFCand_, maxBXOMTFCand_;
+  int verboseOMTFCand_;
+  bool runOMTFCand_;
 
   int minBXGMT_, maxBXGMT_;
   int verboseGMT_;
