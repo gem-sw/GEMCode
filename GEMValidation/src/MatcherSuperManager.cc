@@ -13,6 +13,7 @@ MatcherSuperManager::MatcherSuperManager(const edm::ParameterSet& conf, edm::Con
   simTrackMinPt_ = simTrack.getParameter<double>("minPt");
   simTrackMinEta_ = simTrack.getParameter<double>("minEta");
   simTrackMaxEta_ = simTrack.getParameter<double>("maxEta");
+  simTrackVerbose_ = simTrack.getParameter<double>("verbose");
 
   for (unsigned i = 0; i < MAX_PARTICLES; i++) {
     // make a new matcher (1 particle to many objects)
@@ -40,7 +41,7 @@ void MatcherSuperManager::match(const edm::Event& ev, const edm::EventSetup& eve
   ev.getByToken(simVertexInput_, sim_vertices);
   const edm::SimVertexContainer& sim_vert = *sim_vertices.product();
 
-  if (verbose_) {
+  if (simTrackVerbose_) {
     std::cout << "Total number of SimTrack in this event: "
               << sim_track.size() << std::endl;
   }
@@ -57,9 +58,9 @@ void MatcherSuperManager::match(const edm::Event& ev, const edm::EventSetup& eve
   for (const auto& t : sim_track_selected) {
 
     // only process the first 100 muons
-    if (trk_no >= 100) break;
+    if (trk_no >= MAX_PARTICLES) break;
 
-    if (verbose_) {
+    if (simTrackVerbose_) {
       std::cout << "Processing selected SimTrack " << trk_no + 1
                 << std::endl;
       std::cout << "pT = " << t.momentum().pt()

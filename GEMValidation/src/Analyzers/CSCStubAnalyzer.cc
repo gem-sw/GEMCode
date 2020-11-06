@@ -107,10 +107,6 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       if (!(*digiIt).isValid())
         continue;
 
-      // check that the BX for this stub wasn't too early or too late
-      if (digiIt->getBX() < minBXALCT_ || digiIt->getBX() > maxBXALCT_)
-        continue;
-
       int tpidfound = -1;
       // check if it was matched to a simtrack
       for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
@@ -156,10 +152,6 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
     for (auto digiIt = range.first; digiIt != range.second; digiIt++) {
 
       if (!(*digiIt).isValid())
-        continue;
-
-      // check that the BX for this stub wasn't too early or too late
-      if (digiIt->getBX() < minBXCLCT_ || digiIt->getBX() > maxBXCLCT_)
         continue;
 
       int tpidfound = -1;
@@ -212,10 +204,6 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
     for (auto digiIt = range.first; digiIt != range.second; digiIt++) {
 
       if (!(*digiIt).isValid())
-        continue;
-
-      // check that the BX for this stub wasn't too early or too late
-      if (digiIt->getBX() < minBXLCT_ || digiIt->getBX() > maxBXLCT_)
         continue;
 
       int tpidfound = -1;
@@ -363,7 +351,7 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
         cscStubTree.delta_fes_clct_odd[st] = cscStubTree.fes_clct_odd[st] - deltaStrip - tree.cscSimHit().strip_csc_sh_odd[st];
         // bending deltas
         cscStubTree.dslope_clct_odd[st] = cscStubTree.slope_clct_odd[st] - tree.cscSimHit().bend_csc_sh_odd[st];
-        std::cout << "CSCStubAnalyzer " << id << " " << clct << " " << cscStubTree.slope_clct_odd[st] << " " << tree.cscSimHit().bend_csc_sh_odd[st] << " " <<  cscStubTree.dslope_clct_odd[st] << std::endl;
+        // std::cout << "CSCStubAnalyzer " << id << " " << clct << " " << cscStubTree.slope_clct_odd[st] << " " << tree.cscSimHit().bend_csc_sh_odd[st] << " " <<  cscStubTree.dslope_clct_odd[st] << std::endl;
       }
       else {
         cscStubTree.has_clct_even[st] = true;
@@ -385,7 +373,7 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
         cscStubTree.delta_fes_clct_even[st] = cscStubTree.fes_clct_even[st] - deltaStrip - tree.cscSimHit().strip_csc_sh_even[st];
         // bending deltas
         cscStubTree.dslope_clct_even[st] = cscStubTree.slope_clct_even[st] - tree.cscSimHit().bend_csc_sh_even[st];
-        std::cout << "CSCStubAnalyzer " << id << " " << clct << " " << cscStubTree.slope_clct_even[st] << " " << tree.cscSimHit().bend_csc_sh_even[st] << " " <<  cscStubTree.dslope_clct_even[st] << std::endl;
+        // std::cout << "CSCStubAnalyzer " << id << " " << clct << " " << cscStubTree.slope_clct_even[st] << " " << tree.cscSimHit().bend_csc_sh_even[st] << " " <<  cscStubTree.dslope_clct_even[st] << std::endl;
       }
     };
 

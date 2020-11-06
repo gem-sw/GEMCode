@@ -33,7 +33,7 @@ private:
   edm::EDGetTokenT<edm::SimVertexContainer> simVertexInput_;
   edm::EDGetTokenT<edm::SimTrackContainer> simTrackInput_;
 
-  int verboseSimTrack_;
+  int simTrackVerbose_;
   double simTrackMinPt_;
   double simTrackMinEta_;
   double simTrackMaxEta_;
