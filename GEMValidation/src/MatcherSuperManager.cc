@@ -13,7 +13,7 @@ MatcherSuperManager::MatcherSuperManager(const edm::ParameterSet& conf, edm::Con
   simTrackMinPt_ = simTrack.getParameter<double>("minPt");
   simTrackMinEta_ = simTrack.getParameter<double>("minEta");
   simTrackMaxEta_ = simTrack.getParameter<double>("maxEta");
-  simTrackVerbose_ = simTrack.getParameter<double>("verbose");
+  simTrackVerbose_ = simTrack.getParameter<int>("verbose");
 
   for (unsigned i = 0; i < MAX_PARTICLES; i++) {
     // make a new matcher (1 particle to many objects)
