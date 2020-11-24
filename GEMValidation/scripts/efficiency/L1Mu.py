@@ -1,4 +1,4 @@
-from ROOT import gStyle, TH1F, TCanvas, TLegend, kRed, kBlue, kOrange, kGreen, kBlack
+from ROOT import gStyle, TH1F, TCanvas, TLegend, kRed, kBlue, kOrange, kGreen, kBlack, gPad
 
 from helpers.cuts import *
 from helpers.Helpers import *
@@ -6,6 +6,9 @@ from helpers.stations import *
 from style.tdrstyle import *
 import style.CMS_lumi as CMS_lumi
 from style.canvas import newCanvas
+
+xGrid = 2
+yGrid = 2
 
 topTitle = ""
 yTitle = "Efficiency"
@@ -16,7 +19,6 @@ setTDRStyle()
 iPeriod = 0
 iPos = 0
 if( iPos==0 ): CMS_lumi.relPosX = 0.12
-
 
 def EMTFPt(plotter):
 
@@ -32,6 +34,9 @@ def EMTFPt(plotter):
     maxBin = float(h_bins[1:-1].split(',')[2])
 
     c = newCanvas()
+    gPad.SetGridx(xGrid)
+    gPad.SetGridy(yGrid)
+
     base  = TH1F("base",title,nBins,minBin,maxBin)
     base.SetMinimum(0)
     base.SetMaximum(plotter.yMax)
@@ -80,6 +85,9 @@ def EMTFEta(plotter):
     maxBin = float(h_bins[1:-1].split(',')[2])
 
     c = newCanvas()
+    gPad.SetGridx(xGrid)
+    gPad.SetGridy(yGrid)
+
     base  = TH1F("base",title,nBins,minBin,maxBin)
     base.SetMinimum(0)
     base.SetMaximum(plotter.yMax)
@@ -128,6 +136,9 @@ def EMTFEta2(plotter):
     maxBin = float(h_bins[1:-1].split(',')[2])
 
     c = newCanvas()
+    gPad.SetGridx(xGrid)
+    gPad.SetGridy(yGrid)
+
     base  = TH1F("base",title,nBins,minBin,maxBin)
     base.SetMinimum(0)
     base.SetMaximum(plotter.yMax)
@@ -176,6 +187,9 @@ def EMTFPhi(plotter):
     maxBin = float(h_bins[1:-1].split(',')[2])
 
     c = newCanvas()
+    gPad.SetGridx(xGrid)
+    gPad.SetGridy(yGrid)
+
     base  = TH1F("base",title,nBins,minBin,maxBin)
     base.SetMinimum(0)
     base.SetMaximum(plotter.yMax)
