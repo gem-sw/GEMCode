@@ -226,7 +226,7 @@ def CSCPosResolutionComparison(plotter, plotter2):
         leg.SetBorderSize(0)
         leg.SetFillStyle(0)
         leg.SetTextSize(0.05)
-        leg.AddEntry(h11, "1/2 strip (Run-1/2)","pl")
+        leg.AddEntry(h11, "1/2 strip (Run-2)","pl")
         leg.AddEntry(h1,  "1/2 strip (Run-3)","pl")
         leg.AddEntry(h2,  "1/4 strip (Run-3)","pl")
         leg.AddEntry(h3,  "1/8 strip (Run-3)","pl")
@@ -291,7 +291,7 @@ def CSCPosResolutionComparison(plotter, plotter2):
     leg.SetBorderSize(0)
     leg.SetFillStyle(0)
     leg.SetTextSize(0.05)
-    leg.AddEntry(h11, "1/2 strip (Run-1/2)","pl")
+    leg.AddEntry(h11, "1/2 strip (Run-2)","pl")
     leg.AddEntry(h1,  "1/2 strip (Run-3)","pl")
     leg.AddEntry(h2,  "1/4 strip (Run-3)","pl")
     leg.AddEntry(h3,  "1/8 strip (Run-3)","pl")
@@ -304,6 +304,7 @@ def CSCPosResolutionComparison(plotter, plotter2):
 
 def CSCBendResolutionComparison(plotter, plotter2):
 
+    xTitle = "Slope_{L1T} - Slope_{SIM} [Strips/layer]"
     h11total = []
     h1total = []
     h2total = []
@@ -348,7 +349,7 @@ def CSCBendResolutionComparison(plotter, plotter2):
         leg.SetBorderSize(0)
         leg.SetFillStyle(0)
         leg.SetTextSize(0.05)
-        leg.AddEntry(h11, "CLCT (Run-1/2)","pl")
+        leg.AddEntry(h11, "CLCT (Run-2)","pl")
         leg.AddEntry(h1,  "CLCT (Run-3)","pl")
         leg.Draw("same");
 
@@ -396,7 +397,7 @@ def CSCBendResolutionComparison(plotter, plotter2):
     leg.SetBorderSize(0)
     leg.SetFillStyle(0)
     leg.SetTextSize(0.05)
-    leg.AddEntry(h11, "CLCT (Run-1/2)","pl")
+    leg.AddEntry(h11, "CLCT (Run-2)","pl")
     leg.AddEntry(h1,  "CLCT (Run-3)","pl")
     leg.Draw("same");
 

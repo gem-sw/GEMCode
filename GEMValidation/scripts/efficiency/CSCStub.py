@@ -98,7 +98,7 @@ def CSCALCTL(plotter):
 
         del c, base, h1, leg, csc
 
-        
+
 def CSCCLCT(plotter):
 
     ## variables for the plot
@@ -177,7 +177,7 @@ def CSCCLCTL(plotter):
         c.Print("%sEff_CSCCLCT_L_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
 
         del c, base, h2, leg, csc
-        
+
 
 def CSCCLCTPattern(plotter):
 
@@ -314,7 +314,7 @@ def CSCLCTL(plotter):
         c.Print("%sEff_CSCLCT_L_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
 
         del c, base, leg, csc, h2
-       
+
 
 def GEMCSCLCT(plotter):
 
@@ -415,7 +415,7 @@ def GEMCSCLCTL(plotter):
 
         del c, base, leg, csc, h2
 
-        
+
 
 
 def MultipleCSCLCTPt(plotter):
@@ -579,7 +579,7 @@ def MultipleCSCLCTL(plotter):
     c.Print("%sEff_MultiLCTs_L_%s"%(plotter.targetDir + subdirectory, plotter.ext))
 
     del c, base, h1, leg
-    
+
 
 
 def CSCStub(plotter):
@@ -628,7 +628,7 @@ def CSCStubComparison(plotter, plotter2):
         leg.SetBorderSize(0)
         leg.SetFillStyle(0)
         leg.SetTextSize(0.05)
-        leg.AddEntry(h2, "Run-1/2 CLCT","pl")
+        leg.AddEntry(h2, "Run-2 CLCT","pl")
         leg.AddEntry(h3, "Run-3 CLCT","pl")
         leg.Draw("same");
 
