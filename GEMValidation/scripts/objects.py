@@ -28,6 +28,10 @@ def embed_crossref(source, idx_name, dest, dest_name):
             ``ak.max(source[idx_name], axis=1) < ak.num(dest)`` and
             ``ak.min(source[idx_name], axis=1) >= 0``
     """
+    print(ak.max(source[idx_name], axis=1))
+    print(ak.num(dest))
+    print(ak.all(ak.max(source[idx_name], axis=1) < ak.num(dest)))
+
     assert ak.all(ak.max(source[idx_name], axis=1) < ak.num(dest))
     assert ak.all(ak.min(source[idx_name], axis=1) >= 0)
 
@@ -75,7 +79,8 @@ def getObjects(tree):
         "id_csc_mplct" : tree["sim_id_csc_mplct"],
         "id_emtf_track" : tree["sim_id_emtf_track"],
         "id_emtf_cand" : tree["sim_id_emtf_cand"]
-    }, depth_limit=1)
+    }, depth_limit=1
+    )
     csc_clct = ak.zip( {
         "bx" : tree["csc_clct_bx"],
         "hs" : tree["csc_clct_hs"],

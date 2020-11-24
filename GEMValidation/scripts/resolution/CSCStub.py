@@ -305,6 +305,9 @@ def CSCPosResolutionComparison(plotter, plotter2):
 def CSCBendResolutionComparison(plotter, plotter2):
 
     xTitle = "Slope_{L1T} - Slope_{SIM} [Strips/layer]"
+    yTitle = "Normalized"
+    title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
+
     h11total = []
     h1total = []
     h2total = []

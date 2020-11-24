@@ -8,6 +8,7 @@ from ROOT import TH1F, TEfficiency, SetOwnership, kBlue
 #import numba as nb
 import numpy as np
 import awkward1 as ak
+from objects import embed_crossref
 
 """
 Plots needed
@@ -175,19 +176,7 @@ print("L1Mu trigger rate: %f kHz"%(objectRate))
 
 """
 iEvent = 0
-"""
-for event_pts, event_etas, event_clusterIDs in zip(tree["sim_pt"], tree["sim_eta"], tree["sim_id_gem_cluster"]):
-    iEvent += 1
-    if iEvent > 100:
-        break
-    print("Event", iEvent)
-    for pt in event_pts:
-        print(pt)
-    for eta in event_etas:
-        print(eta)
-    for Ids in event_clusterIDs:
-        print(Ids)
-"""
+
 print(ak.to_list(ak.Array(sim_muon))[2:3])
 print(ak.to_list(sim_muon.eta)[2:3])
 print(ak.to_list(sim_muon.sim_id_gem_cluster)[2:3])
@@ -195,6 +184,8 @@ print(ak.to_list(sim_muon.pt)[2:3])
 print(ak.to_list(gem_cluster.station)[2:3])
 print(ak.to_list(gem_cluster.bx)[2:3])
 print(ak.to_list(gem_cluster.pad)[2:3])
+
+embed_crossref(sim_muon, "sim_id_gem_cluster", gem_cluster, "clusters")
 
 """
 id_global = ak.flatten(
