@@ -126,11 +126,6 @@ process = addCSCTriggerRun3(process)
 from GEMCode.GEMValidation.cscTriggerCustoms import addAnalysisRun3
 process = addAnalysisRun3(process)
 
-process.SimL1Emulator = cms.Sequence(
-    process.simCscTriggerPrimitiveDigis
-    * process.simCscTriggerPrimitiveDigisRun3CCLUT
-    * process.simEmtfDigis
-)
 # Path and EndPath definitions
 process.raw2digi_step = cms.Path(process.RawToDigi)
 process.L1simulation_step = cms.Path(process.SimL1Emulator)

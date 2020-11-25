@@ -8,7 +8,8 @@ def addCSCTriggerRun3(process):
     process.simCscTriggerPrimitiveDigisRun3CCLUT = process.simCscTriggerPrimitiveDigis.clone()
     process.simCscTriggerPrimitiveDigisRun3CCLUT.commonParam.runCCLUT = True
     process.simEmtfDigisRun3CCLUT = process.simEmtfDigis.clone()
-    process.simEmtfDigisRun3CCLUT.CSCInput  = cms.InputTag('simCscTriggerPrimitiveDigisRun3CCLUT','MPCSORTED',"ReL1")
+    process.simEmtfDigisRun3CCLUT.CSCInput  = cms.InputTag(
+        'simCscTriggerPrimitiveDigisRun3CCLUT','MPCSORTED',"ReL1")
 
     ## redefine the L1-step
     process.SimL1Emulator = cms.Sequence(
