@@ -4,7 +4,7 @@
 
 ## bending resolution GEM-CSC
 
-from ROOT import gStyle, TH1F, TCanvas, TLegend, kRed, kBlue, kOrange, kGreen, kBlack
+from ROOT import gStyle, TH1F, TCanvas, TLegend, kRed, kBlue, kOrange, kGreen, kBlack, gPad
 
 from helpers.cuts import *
 from helpers.Helpers import *
@@ -35,6 +35,7 @@ def CSCCLCTPos1(plotter):
         maxBin = float(h_bins[1:-1].split(',')[2])
 
         c = newCanvas()
+        gPad.SetGrid(1,1)
         base  = TH1F("base",title,nBins,minBin,maxBin)
         base.SetMinimum(0)
         base.SetMaximum(0.08)
@@ -76,6 +77,7 @@ def CSCCLCTPos(plotter):
         maxBin = float(h_bins[1:-1].split(',')[2])
 
         c = newCanvas()
+        gPad.SetGrid(1,1)
         base  = TH1F("base",title,nBins,minBin,maxBin)
         base.SetMinimum(0)
         base.SetMaximum(0.08)
@@ -132,6 +134,7 @@ def CSCCLCTBend(plotter):
         maxBin = float(h_bins[1:-1].split(',')[2])
 
         c = newCanvas()
+        gPad.SetGrid(1,1)
         base  = TH1F("base",title,nBins,minBin,maxBin)
         base.SetMinimum(0)
         base.SetMaximum(0.08)
@@ -184,6 +187,7 @@ def CSCPosResolutionComparison(plotter, plotter2):
         maxBin = float(h_bins[1:-1].split(',')[2])
 
         c = newCanvas()
+        gPad.SetGrid(1,1)
         base  = TH1F("base",title,nBins,minBin,maxBin)
         base.SetMinimum(0)
         base.SetMaximum(0.08)
@@ -321,6 +325,7 @@ def CSCBendResolutionComparison(plotter, plotter2):
         maxBin = float(h_bins[1:-1].split(',')[2])
 
         c = newCanvas()
+        gPad.SetGrid(1,1)
         base  = TH1F("base",title,nBins,minBin,maxBin)
         base.SetMinimum(0)
         base.SetMaximum(0.08)
@@ -369,6 +374,7 @@ def CSCBendResolutionComparison(plotter, plotter2):
     maxBin = float(h_bins[1:-1].split(',')[2])
 
     c = newCanvas()
+    gPad.SetGrid(1,1)
     base  = TH1F("base",title,nBins,minBin,maxBin)
     base.SetMinimum(0)
     base.SetMaximum(0.08)
