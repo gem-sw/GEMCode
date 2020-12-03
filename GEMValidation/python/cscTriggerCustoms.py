@@ -2,14 +2,15 @@ import FWCore.ParameterSet.Config as cms
 from Configuration.Eras.Modifier_phase2_muon_cff import phase2_muon
 
 def addCSCTriggerRun3(process):
-    process.simEmtfDigis.CSCInput  = cms.InputTag('simCscTriggerPrimitiveDigis','MPCSORTED',"ReL1")
-
     ## Run-3 patterns with CCLUT
     process.simCscTriggerPrimitiveDigisRun3CCLUT = process.simCscTriggerPrimitiveDigis.clone()
     process.simCscTriggerPrimitiveDigisRun3CCLUT.commonParam.runCCLUT = True
     process.simEmtfDigisRun3CCLUT = process.simEmtfDigis.clone()
-    process.simEmtfDigisRun3CCLUT.CSCInput  = cms.InputTag(
-        'simCscTriggerPrimitiveDigisRun3CCLUT','MPCSORTED',"ReL1")
+
+    process.simEmtfDigis.CSCInput = cms.InputTag(
+        'simCscTriggerPrimitiveDigis','MPCSORTED',process._Process__name)
+    process.simEmtfDigisRun3CCLUT.CSCInput = cms.InputTag(
+        'simCscTriggerPrimitiveDigisRun3CCLUT','MPCSORTED',process._Process__name)
 
     ## redefine the L1-step
     process.SimL1Emulator = cms.Sequence(

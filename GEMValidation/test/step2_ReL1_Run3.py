@@ -23,13 +23,16 @@ process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(1000),
+    input = cms.untracked.int32(100),
     output = cms.optional.untracked.allowed(cms.int32,cms.PSet)
 )
 
 # Input source
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('file:FFC59020-EA48-1F41-B4B8-FF34C0E09D88.root'),
+    fileNames = cms.untracked.vstring(
+        #'file:FFC59020-EA48-1F41-B4B8-FF34C0E09D88.root'
+        "/store/user/mdecaro/Mu_FlatPt1to1000-pythia8-gun/CRAB3_Mu_FlatPt1to1000-pythia8-gun_MiniAOD-NoPU_110X__DIGI_L1-Run3CCLUT/201105_041435/0000/step2_1.root"
+    ),
     secondaryFileNames = cms.untracked.vstring()
 )
 
@@ -102,7 +105,6 @@ process = addCSCTriggerRun3(process)
 
 ## customize unpacker
 process.muonGEMDigis.useDBEMap = False
-
 #process.simMuonGEMPadDigis.InputCollection = "muonGEMDigis"
 
 # Path and EndPath definitions
