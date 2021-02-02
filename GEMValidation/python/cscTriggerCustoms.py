@@ -1,6 +1,18 @@
 import FWCore.ParameterSet.Config as cms
 from Configuration.Eras.Modifier_phase2_muon_cff import phase2_muon
 
+def runOn110XMC(process):
+    ## customize unpacker
+    process.GlobalTag.toGet = cms.VPSet(
+        cms.PSet(record = cms.string("GEMeMapRcd"),
+                 tag = cms.string("GEMeMapDummy"),
+                 connect = cms.string("sqlite_file:GEMeMapDummy.db")
+             )
+    )
+    process.muonGEMDigis.useDBEMap = True
+    process.simMuonGEMPadDigis.InputCollection = "muonGEMDigis"
+    return process
+
 def addCSCTriggerRun3(process):
     ## Run-3 patterns with CCLUT
     process.simCscTriggerPrimitiveDigisRun3CCLUT = process.simCscTriggerPrimitiveDigis.clone()
