@@ -4,7 +4,7 @@
 #include "FWCore/ServiceRegistry/interface/Service.h"
 #include "CommonTools/UtilAlgos/interface/TFileService.h"
 
-#include "GEMCode/GEMValidation/interface/NewStructs/FlatStruct.h"
+#include "GEMCode/GEMValidation/interface/Structs/FlatStruct.h"
 
 #include "GEMCode/GEMValidation/interface/NewStructs/RPCSimHitStruct.h"
 #include "GEMCode/GEMValidation/interface/NewStructs/RPCDigiStruct.h"
