@@ -27,13 +27,17 @@ public:
   edm::EDGetTokenT<l1t::RegionalMuonCandBxCollection> bmtfCandToken_;
   edm::EDGetTokenT<l1t::RegionalMuonCandBxCollection> omtfCandToken_;
   edm::EDGetTokenT<l1t::RegionalMuonCandBxCollection> emtfCandToken_;
+  edm::EDGetTokenT<l1t::RegionalMuonShowerBxCollection> emtfShowerToken_;
   edm::EDGetTokenT<l1t::MuonBxCollection> muonToken_;
+  edm::EDGetTokenT<l1t::MuonShowerBxCollection> showerToken_;
 
   edm::Handle<l1t::EMTFTrackCollection> emtfTrackHandle_;
   edm::Handle<l1t::RegionalMuonCandBxCollection> bmtfCandHandle_;
   edm::Handle<l1t::RegionalMuonCandBxCollection> omtfCandHandle_;
   edm::Handle<l1t::RegionalMuonCandBxCollection> emtfCandHandle_;
+  edm::Handle<l1t::RegionalMuonShowerBxCollection> emtfShowerHandle_;
   edm::Handle<l1t::MuonBxCollection> muonHandle_;
+  edm::Handle<l1t::MuonShowerBxCollection> showerHandle_;
 
   std::shared_ptr<CSCStubMatcher> cscStubMatcher_;
 
@@ -44,6 +48,10 @@ public:
   int minBXEMTFCand_, maxBXEMTFCand_;
   int verboseEMTFCand_;
   bool runEMTFCand_;
+
+  int minBXEMTFShower_, maxBXEMTFShower_;
+  int verboseEMTFShower_;
+  bool runEMTFShower_;
 
   int minBXBMTFCand_, maxBXBMTFCand_;
   int verboseBMTFCand_;
@@ -56,6 +64,10 @@ public:
   int minBXGMT_, maxBXGMT_;
   int verboseGMT_;
   bool runGMT_;
+
+  int minBXShower_, maxBXShower_;
+  int verboseShower_;
+  bool runShower_;
 
   std::unique_ptr<L1MuMatcher> match_;
 };
