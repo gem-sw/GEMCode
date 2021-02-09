@@ -4,7 +4,7 @@ cmssw_compile:
     - cvmfs
   variables:
     CMS_PATH: /cvmfs/cms.cern.ch
-    CMSSW_RELEASE: CMSSW_11_2_0_pre7
+    CMSSW_RELEASE: CMSSW_11_2_0
   script:
     - shopt -s expand_aliases
     - set +u && source ${CMS_PATH}/cmsset_default.sh; set -u
@@ -19,7 +19,7 @@ cmssw_compile:
     # Important: run git cms-init with --upstream-only flag to not run into
     # problems with git config
     - git cms-init --upstream-only
-    - git cms-rebase-topic dildick:CMSSW_11_2_0_pre7-GEM-CSC-trigger-taskforce-20201001
+    - git cms-rebase-topic dildick:from-CMSSW_11_2_0-GEM-CSC-trigger-taskforce-20210120
     - ls -h ${CI_PROJECT_DIR}
     - mkdir "${CMSSW_BASE}/src/GEMCode/"
     - cp -r "${CI_PROJECT_DIR}/GEMValidation" "${CMSSW_BASE}/src/GEMCode/"
