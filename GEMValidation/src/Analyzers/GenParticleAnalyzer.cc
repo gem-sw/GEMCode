@@ -1,10 +1,15 @@
 #include "GEMCode/GEMValidation/interface/Analyzers/GenParticleAnalyzer.h"
+#include <algorithm>
 
 GenParticleAnalyzer::GenParticleAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCollector&& iC)
 {
   const auto& gen = conf.getParameter<edm::ParameterSet>("genParticle");
   verbose_ = gen.getParameter<int>("verbose");
   run_ = gen.getParameter<bool>("run");
+  pdgIds_ = gen.getParameter<std::vector<int> >("pdgIds");
+  stableParticle_ = gen.getParameter<bool>("stableParticle");
+  etaMin_ = gen.getParameter<double>("etaMin");
+  etaMax_ = gen.getParameter<double>("etaMax");
 
   inputToken_ = iC.consumes<reco::GenParticleCollection>(gen.getParameter<edm::InputTag>("inputTag"));
 }
@@ -45,14 +50,17 @@ void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
   for(auto iGenParticle = genParticles.begin();  iGenParticle != genParticles.end();  ++iGenParticle) {
 
     // require stable particle
-    if (iGenParticle->status() != 1) continue;
+    if (iGenParticle->status() != 1 and stableParticle_) continue;
 
     // add a few more selections
     if (iGenParticle->pt() < 2) continue;
-    if (std::abs(iGenParticle->eta()) > 2.4) continue;
+
+    // eta selection
+    if (iGenParticle->eta() < etaMin_) continue;
+    if (iGenParticle->eta() > etaMax_) continue;
 
     // require muons
-    if (std::abs(iGenParticle->pdgId()) != 13) continue;
+    if (!std::count(pdgIds_.begin(), pdgIds_.end(), iGenParticle->pdgId())) continue;
 
     int tpidfound = -1;
     // check if it was matched to a simtrack

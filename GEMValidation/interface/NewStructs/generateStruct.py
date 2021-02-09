@@ -221,6 +221,13 @@ mplct = {
     ]
 }
 
+cscshower = {
+    "int" : [
+        "bx",
+        "bits"
+    ]
+}
+
 emtftrack = {
     "float" : ["pt","eta","phi"],
     "int" : ["charge","bx","tpid"]
@@ -231,9 +238,17 @@ emtfcand = {
     "int" : ["charge","bx","tpid"]
 }
 
+emtfshower = {
+    "int" : ["bits","bx"]
+}
+
 l1mu = {
     "float" : ["pt","eta","phi"],
     "int" : ["charge","bx","tpid"]
+}
+
+l1mushower = {
+    "int" : ["bits","bx"]
 }
 
 l1track = {
@@ -288,11 +303,14 @@ cscStubStruct.add(Object("csc_alct", alct))
 cscStubStruct.add(Object("csc_clct", clct))
 cscStubStruct.add(Object("csc_lct",  lct))
 cscStubStruct.add(Object("csc_mplct", mplct))
+cscStubStruct.add(Object("csc_shower",  cscshower))
 
 l1MuStruct = Struct("L1MuStruct")
 l1MuStruct.add(Object("emtftrack", emtftrack))
 l1MuStruct.add(Object("emtfcand", emtfcand))
+l1MuStruct.add(Object("emtfshower", emtfshower))
 l1MuStruct.add(Object("l1mu", l1mu))
+l1MuStruct.add(Object("l1mushower", l1mushower))
 
 l1TrackStruct = Struct("L1TrackStruct")
 l1TrackStruct.add(Object("l1track", l1track))

@@ -562,6 +562,8 @@ namespace my {
     p_ints csc_mplct_pattern;
     p_ints csc_mplct_pattern_run3;
     p_ints csc_mplct_tpid;
+    p_ints csc_shower_bx;
+    p_ints csc_shower_bits;
 
     void init() {
       csc_alct_bx = new t_ints;
@@ -614,6 +616,8 @@ namespace my {
       csc_mplct_pattern = new t_ints;
       csc_mplct_pattern_run3 = new t_ints;
       csc_mplct_tpid = new t_ints;
+      csc_shower_bx = new t_ints;
+      csc_shower_bits = new t_ints;
     }
 
     void book(TTree* t) {
@@ -667,6 +671,8 @@ namespace my {
       t->Branch("csc_mplct_pattern", &csc_mplct_pattern);
       t->Branch("csc_mplct_pattern_run3", &csc_mplct_pattern_run3);
       t->Branch("csc_mplct_tpid", &csc_mplct_tpid);
+      t->Branch("csc_shower_bx", &csc_shower_bx);
+      t->Branch("csc_shower_bits", &csc_shower_bits);
     }
   };
 
@@ -684,12 +690,16 @@ namespace my {
     p_floats emtfcand_pt;
     p_floats emtfcand_eta;
     p_floats emtfcand_phi;
+    p_ints emtfshower_bits;
+    p_ints emtfshower_bx;
     p_ints l1mu_charge;
     p_ints l1mu_bx;
     p_ints l1mu_tpid;
     p_floats l1mu_pt;
     p_floats l1mu_eta;
     p_floats l1mu_phi;
+    p_ints l1mushower_bits;
+    p_ints l1mushower_bx;
 
     void init() {
       emtftrack_charge = new t_ints;
@@ -704,12 +714,16 @@ namespace my {
       emtfcand_pt = new t_floats;
       emtfcand_eta = new t_floats;
       emtfcand_phi = new t_floats;
+      emtfshower_bits = new t_ints;
+      emtfshower_bx = new t_ints;
       l1mu_charge = new t_ints;
       l1mu_bx = new t_ints;
       l1mu_tpid = new t_ints;
       l1mu_pt = new t_floats;
       l1mu_eta = new t_floats;
       l1mu_phi = new t_floats;
+      l1mushower_bits = new t_ints;
+      l1mushower_bx = new t_ints;
     }
 
     void book(TTree* t) {
@@ -725,12 +739,16 @@ namespace my {
       t->Branch("emtfcand_pt", &emtfcand_pt);
       t->Branch("emtfcand_eta", &emtfcand_eta);
       t->Branch("emtfcand_phi", &emtfcand_phi);
+      t->Branch("emtfshower_bits", &emtfshower_bits);
+      t->Branch("emtfshower_bx", &emtfshower_bx);
       t->Branch("l1mu_charge", &l1mu_charge);
       t->Branch("l1mu_bx", &l1mu_bx);
       t->Branch("l1mu_tpid", &l1mu_tpid);
       t->Branch("l1mu_pt", &l1mu_pt);
       t->Branch("l1mu_eta", &l1mu_eta);
       t->Branch("l1mu_phi", &l1mu_phi);
+      t->Branch("l1mushower_bits", &l1mushower_bits);
+      t->Branch("l1mushower_bx", &l1mushower_bx);
     }
   };
 

@@ -24,10 +24,16 @@ CSCStubAnalyzer::CSCStubAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCol
   maxBXMPLCT_ = cscMPLCT.getParameter<int>("maxBX");
   verboseMPLCT_ = cscMPLCT.getParameter<int>("verbose");
 
+  const auto& cscShower = conf.getParameter<edm::ParameterSet>("cscShower");
+  minBXShower_ = cscShower.getParameter<int>("minBX");
+  maxBXShower_ = cscShower.getParameter<int>("maxBX");
+  verboseShower_ = cscShower.getParameter<int>("verbose");
+
   clctToken_ = iC.consumes<CSCCLCTDigiCollection>(cscCLCT.getParameter<edm::InputTag>("inputTag"));
   alctToken_ = iC.consumes<CSCALCTDigiCollection>(cscALCT.getParameter<edm::InputTag>("inputTag"));
   lctToken_ = iC.consumes<CSCCorrelatedLCTDigiCollection>(cscLCT.getParameter<edm::InputTag>("inputTag"));
   mplctToken_ = iC.consumes<CSCCorrelatedLCTDigiCollection>(cscMPLCT.getParameter<edm::InputTag>("inputTag"));
+  showerToken_ = iC.consumes<CSCShowerDigiCollection>(cscShower.getParameter<edm::InputTag>("inputTag"));
 
   positionLUTFiles_ = conf.getParameter<std::vector<std::string>>("positionLUTFiles");
   positionFloatLUTFiles_ = conf.getParameter<std::vector<std::string>>("positionFloatLUTFiles");
@@ -86,11 +92,13 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
   iEvent.getByToken(alctToken_, alctsH_);
   iEvent.getByToken(lctToken_, lctsH_);
   iEvent.getByToken(mplctToken_, mplctsH_);
+  iEvent.getByToken(showerToken_, showersH_);
 
   const CSCCLCTDigiCollection& clcts = *clctsH_.product();
   const CSCALCTDigiCollection& alcts = *alctsH_.product();
   const CSCCorrelatedLCTDigiCollection& lcts = *lctsH_.product();
   const CSCCorrelatedLCTDigiCollection& mplcts = *mplctsH_.product();
+  const CSCShowerDigiCollection& showers = *showersH_.product();
 
   auto& cscTree = tree.cscStub();
   auto& simTree = tree.simTrack();
@@ -297,6 +305,21 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
         ((*simTree.sim_id_csc_mplct)[tpidfound]).push_back(index);
 
       index++;
+    }
+  }
+
+  // CSC Shower
+  for (auto detUnitIt = showers.begin(); detUnitIt != showers.end(); detUnitIt++) {
+    const CSCDetId& id = (*detUnitIt).first;
+    const bool isodd = (id.chamber()%2 == 1);
+    const auto& range = (*detUnitIt).second;
+    for (auto digiIt = range.first; digiIt != range.second; digiIt++) {
+
+      if (!(*digiIt).isValid())
+        continue;
+
+      cscTree.csc_shower_bx->push_back(0);
+      cscTree.csc_shower_bits->push_back(digiIt->bits());
     }
   }
 }

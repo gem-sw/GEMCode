@@ -30,21 +30,25 @@ public:
   edm::EDGetTokenT<CSCALCTDigiCollection> alctToken_;
   edm::EDGetTokenT<CSCCorrelatedLCTDigiCollection> lctToken_;
   edm::EDGetTokenT<CSCCorrelatedLCTDigiCollection> mplctToken_;
+  edm::EDGetTokenT<CSCShowerDigiCollection> showerToken_;
 
   edm::Handle<CSCCLCTDigiCollection> clctsH_;
   edm::Handle<CSCALCTDigiCollection> alctsH_;
   edm::Handle<CSCCorrelatedLCTDigiCollection> lctsH_;
   edm::Handle<CSCCorrelatedLCTDigiCollection> mplctsH_;
+  edm::Handle<CSCShowerDigiCollection> showersH_;
 
   bool verboseALCT_;
   bool verboseCLCT_;
   bool verboseLCT_;
   bool verboseMPLCT_;
+  bool verboseShower_;
 
   int minBXCLCT_, maxBXCLCT_;
   int minBXALCT_, maxBXALCT_;
   int minBXLCT_, maxBXLCT_;
   int minBXMPLCT_, maxBXMPLCT_;
+  int minBXShower_, maxBXShower_;
 
   // best here means "closest in phi"
   std::pair<GEMDigi, GlobalPoint>
