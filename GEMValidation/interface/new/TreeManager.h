@@ -4,12 +4,12 @@
 #include "FWCore/ServiceRegistry/interface/Service.h"
 #include "CommonTools/UtilAlgos/interface/TFileService.h"
 
-#include "GEMCode/GEMValidation/interface/NewStructs/FlatStruct.h"
+#include "GEMCode/GEMValidation/interface/Structs/FlatStruct.h"
 
-#include "GEMCode/GEMValidation/interface/NewStructs/RPCSimHitStruct.h"
-#include "GEMCode/GEMValidation/interface/NewStructs/RPCDigiStruct.h"
-#include "GEMCode/GEMValidation/interface/NewStructs/RPCRecHitStruct.h"
-#include "GEMCode/GEMValidation/interface/NewStructs/RecoTrackStruct.h"
+#include "GEMCode/GEMValidation/interface/Structs/RPCSimHitStruct.h"
+#include "GEMCode/GEMValidation/interface/Structs/RPCDigiStruct.h"
+#include "GEMCode/GEMValidation/interface/Structs/RPCRecHitStruct.h"
+#include "GEMCode/GEMValidation/interface/Structs/RecoTrackStruct.h"
 
 #include "TTree.h"
 #include <vector>
@@ -38,12 +38,12 @@ class TreeManager
   my::CSCSimHitStruct& cscSimHit() { return cscSimHitSt_; }
   my::CSCDigiStruct& cscDigi() { return cscDigiSt_; }
   my::CSCStubStruct& cscStub() { return cscStubSt_; }
-  my::RPCSimHitStruct& rpcSimHit() { return rpcSimHitSt_; }
-  my::RPCDigiStruct& rpcDigi() { return rpcDigiSt_; }
-  my::RPCRecHitStruct& rpcRecHit() { return rpcRecHitSt_; }
+  gem::RPCSimHitStruct& rpcSimHit() { return rpcSimHitSt_; }
+  gem::RPCDigiStruct& rpcDigi() { return rpcDigiSt_; }
+  gem::RPCRecHitStruct& rpcRecHit() { return rpcRecHitSt_; }
   my::L1MuStruct& l1mu() { return l1MuSt_; }
   my::L1TrackStruct& l1track() { return l1TrackSt_; }
-  my::RecoTrackStruct& recoTrack() { return recoTrackSt_; }
+  gem::RecoTrackStruct& recoTrack() { return recoTrackSt_; }
 
  private:
 
@@ -55,12 +55,12 @@ class TreeManager
   my::CSCSimHitStruct cscSimHitSt_;
   my::CSCDigiStruct cscDigiSt_;
   my::CSCStubStruct cscStubSt_;
-  my::RPCSimHitStruct rpcSimHitSt_;
-  my::RPCDigiStruct rpcDigiSt_;
-  my::RPCRecHitStruct rpcRecHitSt_;
+  gem::RPCSimHitStruct rpcSimHitSt_;
+  gem::RPCDigiStruct rpcDigiSt_;
+  gem::RPCRecHitStruct rpcRecHitSt_;
   my::L1MuStruct l1MuSt_;
   my::L1TrackStruct l1TrackSt_;
-  my::RecoTrackStruct recoTrackSt_;
+  gem::RecoTrackStruct recoTrackSt_;
 
   // new stuff
   TTree* flatTree_;
