@@ -70,6 +70,7 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
   iEvent.getByToken(emtfTrackToken_, emtfTrackHandle_);
   iEvent.getByToken(emtfCandToken_, emtfCandHandle_);
+  iEvent.getByToken(emtfShowerToken_, emtfShowerHandle_);
   iEvent.getByToken(muonToken_, muonHandle_);
   iEvent.getByToken(showerToken_, showerHandle_);
 
