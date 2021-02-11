@@ -241,7 +241,8 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     for (auto emtfShower = emtfShowers.begin(bx); emtfShower != emtfShowers.end(bx); ++emtfShower ){
 
       trkTree.emtfshower_bx->push_back(0);
-      trkTree.emtfshower_bits->push_back(emtfShower->bits());
+      trkTree.emtfshower_isTwoLoose->push_back(emtfShower->isTwoLoose());
+      trkTree.emtfshower_isOneNominal->push_back(emtfShower->isOneNominal());
     }
   }
 

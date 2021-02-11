@@ -28,6 +28,9 @@ namespace my {
     p_floats gen_z0;
     p_floats gen_d0_prod;
     p_floats gen_z0_prod;
+    p_floats gen_vx;
+    p_floats gen_vy;
+    p_floats gen_vz;
 
     void init() {
       gen_charge = new t_ints;
@@ -42,6 +45,9 @@ namespace my {
       gen_z0 = new t_floats;
       gen_d0_prod = new t_floats;
       gen_z0_prod = new t_floats;
+      gen_vx = new t_floats;
+      gen_vy = new t_floats;
+      gen_vz = new t_floats;
     }
 
     void book(TTree* t) {
@@ -57,6 +63,9 @@ namespace my {
       t->Branch("gen_z0", &gen_z0);
       t->Branch("gen_d0_prod", &gen_d0_prod);
       t->Branch("gen_z0_prod", &gen_z0_prod);
+      t->Branch("gen_vx", &gen_vx);
+      t->Branch("gen_vy", &gen_vy);
+      t->Branch("gen_vz", &gen_vz);
     }
   };
 
@@ -563,7 +572,9 @@ namespace my {
     p_ints csc_mplct_pattern_run3;
     p_ints csc_mplct_tpid;
     p_ints csc_shower_bx;
-    p_ints csc_shower_bits;
+    p_ints csc_shower_isLoose;
+    p_ints csc_shower_isNominal;
+    p_ints csc_shower_isTight;
 
     void init() {
       csc_alct_bx = new t_ints;
@@ -617,7 +628,9 @@ namespace my {
       csc_mplct_pattern_run3 = new t_ints;
       csc_mplct_tpid = new t_ints;
       csc_shower_bx = new t_ints;
-      csc_shower_bits = new t_ints;
+      csc_shower_isLoose = new t_ints;
+      csc_shower_isNominal = new t_ints;
+      csc_shower_isTight = new t_ints;
     }
 
     void book(TTree* t) {
@@ -672,7 +685,9 @@ namespace my {
       t->Branch("csc_mplct_pattern_run3", &csc_mplct_pattern_run3);
       t->Branch("csc_mplct_tpid", &csc_mplct_tpid);
       t->Branch("csc_shower_bx", &csc_shower_bx);
-      t->Branch("csc_shower_bits", &csc_shower_bits);
+      t->Branch("csc_shower_isLoose", &csc_shower_isLoose);
+      t->Branch("csc_shower_isNominal", &csc_shower_isNominal);
+      t->Branch("csc_shower_isTight", &csc_shower_isTight);
     }
   };
 
@@ -690,8 +705,9 @@ namespace my {
     p_floats emtfcand_pt;
     p_floats emtfcand_eta;
     p_floats emtfcand_phi;
-    p_ints emtfshower_bits;
     p_ints emtfshower_bx;
+    p_ints emtfshower_isTwoLoose;
+    p_ints emtfshower_isOneNominal;
     p_ints l1mu_charge;
     p_ints l1mu_bx;
     p_ints l1mu_tpid;
@@ -714,8 +730,9 @@ namespace my {
       emtfcand_pt = new t_floats;
       emtfcand_eta = new t_floats;
       emtfcand_phi = new t_floats;
-      emtfshower_bits = new t_ints;
       emtfshower_bx = new t_ints;
+      emtfshower_isTwoLoose = new t_ints;
+      emtfshower_isOneNominal = new t_ints;
       l1mu_charge = new t_ints;
       l1mu_bx = new t_ints;
       l1mu_tpid = new t_ints;
@@ -739,8 +756,9 @@ namespace my {
       t->Branch("emtfcand_pt", &emtfcand_pt);
       t->Branch("emtfcand_eta", &emtfcand_eta);
       t->Branch("emtfcand_phi", &emtfcand_phi);
-      t->Branch("emtfshower_bits", &emtfshower_bits);
       t->Branch("emtfshower_bx", &emtfshower_bx);
+      t->Branch("emtfshower_isTwoLoose", &emtfshower_isTwoLoose);
+      t->Branch("emtfshower_isOneNominal", &emtfshower_isOneNominal);
       t->Branch("l1mu_charge", &l1mu_charge);
       t->Branch("l1mu_bx", &l1mu_bx);
       t->Branch("l1mu_tpid", &l1mu_tpid);

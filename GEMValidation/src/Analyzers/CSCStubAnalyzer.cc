@@ -319,7 +319,9 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
         continue;
 
       cscTree.csc_shower_bx->push_back(0);
-      cscTree.csc_shower_bits->push_back(digiIt->bits());
+      cscTree.csc_shower_isLoose->push_back(digiIt->isLoose());
+      cscTree.csc_shower_isNominal->push_back(digiIt->isNominal());
+      cscTree.csc_shower_isTight->push_back(digiIt->isTight());
     }
   }
 }

@@ -59,3 +59,20 @@ def addAnalysisRun3(process):
     anaCCLUT.emtfTrack.inputTag = cms.InputTag("simEmtfDigisRun3CCLUT","","ReL1")
 
     return process
+
+
+def addAnalysisRun3HST(process):
+
+    ana = process.GEMCSCAnalyzer
+    ana.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+    ana.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+    ana.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+    ana.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED","ReL1")
+    ana.emtfTrack.inputTag = cms.InputTag("simEmtfDigis","","ReL1")
+
+    useUnpacked = True
+    if useUnpacked:
+        ana.gemStripDigi.inputTag = "muonGEMDigis"
+        ana.muon.inputTag = cms.InputTag("gmtStage2Digis","Muon")
+
+    return process

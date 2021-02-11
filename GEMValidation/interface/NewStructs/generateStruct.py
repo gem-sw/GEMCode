@@ -2,7 +2,7 @@
 
 ## gen particles
 gen = {
-    "float" : ["pt","pz","eta","phi","dxy","d0","z0","d0_prod","z0_prod"],
+    "float" : ["pt","pz","eta","phi","dxy","d0","z0","d0_prod","z0_prod","vx","vy","vz"],
     "int" : ["charge","pdgid","tpid"]
 }
 
@@ -12,7 +12,7 @@ sim = {
     "vint": ["id_gem_dg",
              "id_gem_pad",
              "id_gem_copad",
-             "id_gem_cluster",
+            "id_gem_cluster",
              "id_csc_wire",
              "id_csc_strip",
              "id_csc_clct",
@@ -224,7 +224,9 @@ mplct = {
 cscshower = {
     "int" : [
         "bx",
-        "bits"
+        "isLoose",
+        "isNominal",
+        "isTight"
     ]
 }
 
@@ -239,7 +241,7 @@ emtfcand = {
 }
 
 emtfshower = {
-    "int" : ["bits","bx"]
+    "int" : ["bx","isTwoLoose","isOneNominal"]
 }
 
 l1mu = {
