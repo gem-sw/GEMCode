@@ -575,6 +575,11 @@ namespace my {
     p_ints csc_mplct_pattern_run3;
     p_ints csc_mplct_tpid;
     p_ints csc_shower_bx;
+    p_ints csc_shower_region;
+    p_ints csc_shower_station;
+    p_ints csc_shower_ring;
+    p_ints csc_shower_chamber;
+    p_ints csc_shower_sector;
     p_ints csc_shower_isLoose;
     p_ints csc_shower_isNominal;
     p_ints csc_shower_isTight;
@@ -631,6 +636,11 @@ namespace my {
       csc_mplct_pattern_run3 = new t_ints;
       csc_mplct_tpid = new t_ints;
       csc_shower_bx = new t_ints;
+      csc_shower_region = new t_ints;
+      csc_shower_station = new t_ints;
+      csc_shower_ring = new t_ints;
+      csc_shower_chamber = new t_ints;
+      csc_shower_sector = new t_ints;
       csc_shower_isLoose = new t_ints;
       csc_shower_isNominal = new t_ints;
       csc_shower_isTight = new t_ints;
@@ -688,6 +698,11 @@ namespace my {
       t->Branch("csc_mplct_pattern_run3", &csc_mplct_pattern_run3);
       t->Branch("csc_mplct_tpid", &csc_mplct_tpid);
       t->Branch("csc_shower_bx", &csc_shower_bx);
+      t->Branch("csc_shower_region", &csc_shower_region);
+      t->Branch("csc_shower_station", &csc_shower_station);
+      t->Branch("csc_shower_ring", &csc_shower_ring);
+      t->Branch("csc_shower_chamber", &csc_shower_chamber);
+      t->Branch("csc_shower_sector", &csc_shower_sector);
       t->Branch("csc_shower_isLoose", &csc_shower_isLoose);
       t->Branch("csc_shower_isNominal", &csc_shower_isNominal);
       t->Branch("csc_shower_isTight", &csc_shower_isTight);
@@ -711,6 +726,8 @@ namespace my {
     p_ints emtfshower_bx;
     p_ints emtfshower_isTwoLoose;
     p_ints emtfshower_isOneNominal;
+    p_ints emtfshower_region;
+    p_ints emtfshower_sector;
     p_ints l1mu_charge;
     p_ints l1mu_bx;
     p_ints l1mu_tpid;
@@ -736,6 +753,8 @@ namespace my {
       emtfshower_bx = new t_ints;
       emtfshower_isTwoLoose = new t_ints;
       emtfshower_isOneNominal = new t_ints;
+      emtfshower_region = new t_ints;
+      emtfshower_sector = new t_ints;
       l1mu_charge = new t_ints;
       l1mu_bx = new t_ints;
       l1mu_tpid = new t_ints;
@@ -762,6 +781,8 @@ namespace my {
       t->Branch("emtfshower_bx", &emtfshower_bx);
       t->Branch("emtfshower_isTwoLoose", &emtfshower_isTwoLoose);
       t->Branch("emtfshower_isOneNominal", &emtfshower_isOneNominal);
+      t->Branch("emtfshower_region", &emtfshower_region);
+      t->Branch("emtfshower_sector", &emtfshower_sector);
       t->Branch("l1mu_charge", &l1mu_charge);
       t->Branch("l1mu_bx", &l1mu_bx);
       t->Branch("l1mu_tpid", &l1mu_tpid);

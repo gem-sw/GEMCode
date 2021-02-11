@@ -224,6 +224,11 @@ mplct = {
 cscshower = {
     "int" : [
         "bx",
+        "region",
+        "station",
+        "ring",
+        "chamber",
+        "sector",
         "isLoose",
         "isNominal",
         "isTight"
@@ -241,7 +246,13 @@ emtfcand = {
 }
 
 emtfshower = {
-    "int" : ["bx","isTwoLoose","isOneNominal"]
+    "int" : [
+        "bx",
+        "isTwoLoose",
+        "isOneNominal",
+        "region",
+        "sector"
+    ]
 }
 
 l1mu = {

@@ -318,6 +318,11 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       if (!(*digiIt).isValid())
         continue;
 
+      cscTree.csc_shower_region->push_back(id.zendcap());
+      cscTree.csc_shower_station->push_back(id.station());
+      cscTree.csc_shower_ring->push_back(id.ring());
+      cscTree.csc_shower_chamber->push_back(id.chamber());
+      cscTree.csc_shower_sector->push_back(id.triggerSector());
       cscTree.csc_shower_bx->push_back(0);
       cscTree.csc_shower_isLoose->push_back(digiIt->isLoose());
       cscTree.csc_shower_isNominal->push_back(digiIt->isNominal());
