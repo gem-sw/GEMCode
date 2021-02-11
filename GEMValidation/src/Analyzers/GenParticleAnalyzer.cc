@@ -86,6 +86,7 @@ void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
     genTree.gen_charge->push_back(iGenParticle->charge());
     genTree.gen_pdgid->push_back(iGenParticle->pdgId());
     genTree.gen_tpid->push_back(tpidfound);
+
     // LLP decay (if applicable)
     const float vx(iGenParticle->daughter(0)->vx());
     const float vy(iGenParticle->daughter(0)->vy());
@@ -93,6 +94,7 @@ void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
     genTree.gen_vx->push_back(vx);
     genTree.gen_vy->push_back(vy);
     genTree.gen_vz->push_back(vz);
+
     // particle decays in the CSC system
     const double radius( std::sqrt(std::pow(vx, 2.0) + std::pow(vy, 2.0) ) );
     bool inAcceptance(false);

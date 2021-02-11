@@ -72,6 +72,7 @@ def addAnalysisRun3HST(process):
 
     useUnpacked = True
     if useUnpacked:
+        ana.gemStripDigi.matchToSimLink = False
         ana.gemStripDigi.inputTag = "muonGEMDigis"
         ana.muon.inputTag = cms.InputTag("gmtStage2Digis","Muon")
 

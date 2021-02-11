@@ -57,7 +57,7 @@ L1MuAnalyzer::L1MuAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCollector
     muonToken_ = iC.consumes<l1t::MuonBxCollection>(muon.getParameter<edm::InputTag>("inputTag"));
 
   if (runShower_)
-    showerToken_ = iC.consumes<l1t::MuonShowerBxCollection>(muon.getParameter<edm::InputTag>("inputTag"));
+    showerToken_ = iC.consumes<l1t::MuonShowerBxCollection>(muonShower.getParameter<edm::InputTag>("inputTag"));
 }
 
 void L1MuAnalyzer::setMatcher(const L1MuMatcher& match_sh)

@@ -7,7 +7,7 @@ import FWCore.ParameterSet.Config as cms
 
 from Configuration.Eras.Era_Run3_cff import Run3
 
-process = cms.Process('TEST',Run3)
+process = cms.Process('ReL1',Run3)
 
 # import of standard configurations
 process.load('Configuration.StandardSequences.Services_cff')
@@ -22,6 +22,7 @@ process.load('Configuration.StandardSequences.SimL1Emulator_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 process.load('GEMCode.GEMValidation.GEMCSCAnalyzer_cff')
+process.load('GEMCode.GEMValidation.MuonNtuplizer_cff')
 
 process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(1000),
@@ -85,6 +86,10 @@ process.FEVTDEBUGoutput = cms.OutputModule("PoolOutputModule",
     splitLevel = cms.untracked.int32(0)
 )
 
+process.TFileService = cms.Service("TFileService",
+    fileName = cms.string("out_ana_hst.root")
+)
+
 ## keep all CSC trigger versions
 process.FEVTDEBUGoutput.outputCommands.append('keep *_simCscTriggerPrimitiveDigis*_*_*')
 process.FEVTDEBUGoutput.outputCommands.append('keep *_simEmtfDigis*_*_*')
@@ -106,8 +111,26 @@ process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '
 from GEMCode.GEMValidation.cscTriggerCustoms import runOn110XMC
 process = runOn110XMC(process)
 
-from GEMCode.GEMValidation.cscTriggerCustoms import addAnalysisRun3
-process = addAnalysisRun3(process)
+# the analyzer configuration
+ana = process.MuonNtuplizer
+ana.verbose = 1
+ana.genParticle.pdgIds = cms.vint32(6000113)
+ana.genParticle.stableParticle = False
+ana.simTrack.minEta = 1.2
+ana.simTrack.maxEta = 2.4
+ana.simTrack.minPt = 2
+ana.gemStripDigi.matchDeltaStrip = 2
+ana.cscLCT.addGhostLCTs = cms.bool(True)
+ana.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+ana.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+ana.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+ana.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED","ReL1")
+
+useUnpacked = True
+if useUnpacked:
+    ana.gemStripDigi.matchToSimLink = False
+    ana.gemStripDigi.inputTag = "muonGEMDigis"
+    #ana.muon.inputTag = cms.InputTag("gmtStage2Digis","Muon")
 
 ## customize unpacker
 process.SimL1Emulator = cms.Sequence(process.SimL1TMuonTask)
@@ -115,7 +138,7 @@ process.SimL1Emulator = cms.Sequence(process.SimL1TMuonTask)
 # Path and EndPath definitions
 process.raw2digi_step = cms.Path(process.RawToDigi)
 process.L1simulation_step = cms.Path(process.SimL1Emulator)
-process.ana_step = cms.Path(process.GEMCSCAnalyzer)
+process.ana_step = cms.Path(process.MuonNtuplizer)
 process.endjob_step = cms.EndPath(process.endOfProcess)
 process.FEVTDEBUGoutput_step = cms.EndPath(process.FEVTDEBUGoutput)
 
