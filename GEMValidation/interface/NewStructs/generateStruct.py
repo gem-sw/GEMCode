@@ -122,10 +122,24 @@ gemcluster = {
     ]
 }
 
+csccomp = {
+    "int" : [
+        "time",
+        "hs",
+        "isodd",
+        "region",
+        "station",
+        "layer",
+        "ring",
+        "quality",
+        "chamber",
+        "tpid"],
+}
+
 cscstrip = {
     "int" : [
         "bx",
-        "keyhs",
+        "strip",
         "isodd",
         "region",
         "station",
@@ -304,6 +318,7 @@ gemDigiStruct.add(Object("gem_digi", gemstrip))
 
 cscDigiStruct = Struct("CSCDigiStruct")
 cscDigiStruct.add(Object("csc_strip", cscstrip))
+cscDigiStruct.add(Object("csc_comp", csccomp))
 cscDigiStruct.add(Object("csc_wire", cscwire))
 
 gemStubStruct = Struct("GEMStubStruct")

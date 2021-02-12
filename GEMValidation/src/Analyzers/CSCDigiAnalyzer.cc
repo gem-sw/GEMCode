@@ -29,8 +29,39 @@ void CSCDigiAnalyzer::setMatcher(const CSCDigiMatcher& match_sh)
   match_.reset(new CSCDigiMatcher(match_sh));
 }
 
-void CSCDigiAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es, const MatcherSuperManager& manager, my::TreeManager& tree)
+void CSCDigiAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& es, const MatcherSuperManager& manager, my::TreeManager& tree)
 {
+  iEvent.getByToken(comparatorDigiInput_, comparatorDigisH_);
+  iEvent.getByToken(wireDigiInput_, wireDigisH_);
+
+  // get the digi collections
+  const CSCComparatorDigiCollection& comps = *comparatorDigisH_.product();
+
+  auto& cscTree = tree.cscDigi();
+  auto& simTree = tree.simTrack();
+
+  int index;
+  for (auto detUnitIt = comps.begin(); detUnitIt != comps.end(); ++detUnitIt) {
+    const CSCDetId& id = (*detUnitIt).first;
+    const bool isodd = (id.chamber()%2 == 1);
+
+    // Loop over the digis of this DetUnit
+    const auto& range = (*detUnitIt).second;
+    for (auto digiIt = range.first; digiIt != range.second; ++digiIt) {
+
+      for (auto p : digiIt->getTimeBinsOn()) {
+        cscTree.csc_comp_time->push_back(p);
+        cscTree.csc_comp_hs->push_back(digiIt->getHalfStrip());
+        cscTree.csc_comp_isodd->push_back(isodd);
+        cscTree.csc_comp_region->push_back(id.zendcap());
+        cscTree.csc_comp_station->push_back(id.station());
+        cscTree.csc_comp_chamber->push_back(id.chamber());
+        cscTree.csc_comp_layer->push_back(id.layer());
+        index++;
+      }
+    }
+  }
+
 }
 
 void CSCDigiAnalyzer::analyze(TreeManager& tree)

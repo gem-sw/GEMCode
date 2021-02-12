@@ -349,7 +349,7 @@ namespace my {
   struct CSCDigiStruct {
 
     p_ints csc_strip_bx;
-    p_ints csc_strip_keyhs;
+    p_ints csc_strip_strip;
     p_ints csc_strip_isodd;
     p_ints csc_strip_region;
     p_ints csc_strip_station;
@@ -357,6 +357,16 @@ namespace my {
     p_ints csc_strip_quality;
     p_ints csc_strip_chamber;
     p_ints csc_strip_tpid;
+    p_ints csc_comp_time;
+    p_ints csc_comp_hs;
+    p_ints csc_comp_isodd;
+    p_ints csc_comp_region;
+    p_ints csc_comp_station;
+    p_ints csc_comp_layer;
+    p_ints csc_comp_ring;
+    p_ints csc_comp_quality;
+    p_ints csc_comp_chamber;
+    p_ints csc_comp_tpid;
     p_ints csc_wire_bx;
     p_ints csc_wire_keywg;
     p_ints csc_wire_isodd;
@@ -369,7 +379,7 @@ namespace my {
 
     void init() {
       csc_strip_bx = new t_ints;
-      csc_strip_keyhs = new t_ints;
+      csc_strip_strip = new t_ints;
       csc_strip_isodd = new t_ints;
       csc_strip_region = new t_ints;
       csc_strip_station = new t_ints;
@@ -377,6 +387,16 @@ namespace my {
       csc_strip_quality = new t_ints;
       csc_strip_chamber = new t_ints;
       csc_strip_tpid = new t_ints;
+      csc_comp_time = new t_ints;
+      csc_comp_hs = new t_ints;
+      csc_comp_isodd = new t_ints;
+      csc_comp_region = new t_ints;
+      csc_comp_station = new t_ints;
+      csc_comp_layer = new t_ints;
+      csc_comp_ring = new t_ints;
+      csc_comp_quality = new t_ints;
+      csc_comp_chamber = new t_ints;
+      csc_comp_tpid = new t_ints;
       csc_wire_bx = new t_ints;
       csc_wire_keywg = new t_ints;
       csc_wire_isodd = new t_ints;
@@ -390,7 +410,7 @@ namespace my {
 
     void book(TTree* t) {
       t->Branch("csc_strip_bx", &csc_strip_bx);
-      t->Branch("csc_strip_keyhs", &csc_strip_keyhs);
+      t->Branch("csc_strip_strip", &csc_strip_strip);
       t->Branch("csc_strip_isodd", &csc_strip_isodd);
       t->Branch("csc_strip_region", &csc_strip_region);
       t->Branch("csc_strip_station", &csc_strip_station);
@@ -398,6 +418,16 @@ namespace my {
       t->Branch("csc_strip_quality", &csc_strip_quality);
       t->Branch("csc_strip_chamber", &csc_strip_chamber);
       t->Branch("csc_strip_tpid", &csc_strip_tpid);
+      t->Branch("csc_comp_time", &csc_comp_time);
+      t->Branch("csc_comp_hs", &csc_comp_hs);
+      t->Branch("csc_comp_isodd", &csc_comp_isodd);
+      t->Branch("csc_comp_region", &csc_comp_region);
+      t->Branch("csc_comp_station", &csc_comp_station);
+      t->Branch("csc_comp_layer", &csc_comp_layer);
+      t->Branch("csc_comp_ring", &csc_comp_ring);
+      t->Branch("csc_comp_quality", &csc_comp_quality);
+      t->Branch("csc_comp_chamber", &csc_comp_chamber);
+      t->Branch("csc_comp_tpid", &csc_comp_tpid);
       t->Branch("csc_wire_bx", &csc_wire_bx);
       t->Branch("csc_wire_keywg", &csc_wire_keywg);
       t->Branch("csc_wire_isodd", &csc_wire_isodd);
