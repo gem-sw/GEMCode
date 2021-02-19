@@ -25,7 +25,7 @@ process.load('GEMCode.GEMValidation.GEMCSCAnalyzer_cff')
 process.load('GEMCode.GEMValidation.MuonNtuplizer_cff')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(1000),
+    input = cms.untracked.int32(1),
     output = cms.optional.untracked.allowed(cms.int32,cms.PSet)
 )
 
@@ -114,11 +114,15 @@ process = runOn110XMC(process)
 # the analyzer configuration
 ana = process.MuonNtuplizer
 ana.verbose = 1
-ana.genParticle.pdgIds = cms.vint32(6000113)
+ana.genParticle.pdgIds = cms.vint32(6000113, -6000113)
 ana.genParticle.stableParticle = False
 ana.simTrack.minEta = 1.2
 ana.simTrack.maxEta = 2.4
 ana.simTrack.minPt = 2
+ana.simTrack.verbose = 1
+ana.simTrack.pdgIds = cms.vint32(6000113, -6000113)
+ana.cscSimHit.simMuOnly = False
+ana.cscSimHit.discardEleHits = False
 ana.gemStripDigi.matchDeltaStrip = 2
 ana.cscLCT.addGhostLCTs = cms.bool(True)
 ana.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")

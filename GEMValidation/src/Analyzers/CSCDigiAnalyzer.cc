@@ -31,6 +31,7 @@ void CSCDigiAnalyzer::setMatcher(const CSCDigiMatcher& match_sh)
 
 void CSCDigiAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& es, const MatcherSuperManager& manager, my::TreeManager& tree)
 {
+  std::cout << "CSCDigiAnalyzer::analyze" << std::endl;
   iEvent.getByToken(comparatorDigiInput_, comparatorDigisH_);
   iEvent.getByToken(wireDigiInput_, wireDigisH_);
 
@@ -49,7 +50,26 @@ void CSCDigiAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& e
     const auto& range = (*detUnitIt).second;
     for (auto digiIt = range.first; digiIt != range.second; ++digiIt) {
 
+      int tpidfound = -1;
+      for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
+
+        // get the matcher
+        const auto& matcher = manager.matcher(tpid);
+
+        // stop processing when the first invalid matcher is found
+        if (matcher->isInValid()) break;
+
+        //   const auto& gemMatches = manager.matcher(tpid)->gemDigis()->digisInDetId(id.rawId());
+        //   for (const auto& gemMatch : gemMatches) {
+        //     // check if the same
+        //     if (*digiIt == gemMatch) {
+        //       tpidfound =  tpid;
+        //     }
+        //   }
+      }
+
       for (auto p : digiIt->getTimeBinsOn()) {
+        std::cout << "CSCDigiAnalyzer::timebin " << p << " " << digiIt->getHalfStrip() << std::endl;
         cscTree.csc_comp_time->push_back(p);
         cscTree.csc_comp_hs->push_back(digiIt->getHalfStrip());
         cscTree.csc_comp_isodd->push_back(isodd);
@@ -57,11 +77,14 @@ void CSCDigiAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& e
         cscTree.csc_comp_station->push_back(id.station());
         cscTree.csc_comp_chamber->push_back(id.chamber());
         cscTree.csc_comp_layer->push_back(id.layer());
+
+        // if (tpidfound != -1)
+        //   ((*simTree.sim_id_gem_dg)[tpidfound]).push_back(index);
+
         index++;
       }
     }
   }
-
 }
 
 void CSCDigiAnalyzer::analyze(TreeManager& tree)

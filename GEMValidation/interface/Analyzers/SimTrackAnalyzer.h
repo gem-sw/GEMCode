@@ -33,6 +33,7 @@ public:
   double simTrackMinPt_;
   double simTrackMinEta_;
   double simTrackMaxEta_;
+  std::vector<int> pdgIds_;
 };
 
 #endif

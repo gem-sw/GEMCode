@@ -18,8 +18,62 @@ void CSCSimHitAnalyzer::setMatcher(const CSCSimHitMatcher& match_sh)
   match_.reset(new CSCSimHitMatcher(match_sh));
 }
 
-void CSCSimHitAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es, const MatcherSuperManager& manager, my::TreeManager& tree)
+void CSCSimHitAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& es, const MatcherSuperManager& manager, my::TreeManager& tree)
 {
+  iEvent.getByToken(simHitInput_, simHitsH_);
+
+  // get the digi collections
+  const edm::PSimHitContainer& simhits = *simHitsH_.product();
+
+  auto& cscTree = tree.cscSimHit();
+  auto& simTree = tree.simTrack();
+
+  int index = 0;
+  // loop on all simhits
+  for (const auto& simhit : simhits) {
+    const CSCDetId& id(simhit.detUnitId());
+    const bool isodd = (id.chamber()%2 == 1);
+
+    if (verbose_) {
+      std::cout << "Analyzing CSC simhit "
+                << id << " " << simhit
+                << std::endl;
+    }
+
+    // check if matched to a tracking particle!
+    int tpidfound = -1;
+    for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
+
+      // get the matcher
+      const auto& matcher = manager.matcher(tpid);
+
+      // stop processing when the first invalid matcher is found
+      if (matcher->isInValid()) break;
+
+      // get the matched simhits for this simtrack (and child tracks)
+      const auto& matchedSimHits = matcher->cscSimHits();
+
+      for (const auto& matchedHit : matchedSimHits->simHits(0)) {
+        // check if simhit is the same
+        if (matchedHit.entryPoint() == simhit.entryPoint() ) {
+          tpidfound = tpid;
+        }
+      }
+    }
+    // std::cout << "CSCSimHitAnalyzer::simhit " << p << " " << simhit.localPosition() << std::endl;
+    // cscTree.csc_simhit_hs->push_back(digiIt->getHalfStrip());
+    cscTree.csc_sh_isodd->push_back(isodd);
+    cscTree.csc_sh_region->push_back(id.zendcap());
+    cscTree.csc_sh_station->push_back(id.station());
+    cscTree.csc_sh_ring->push_back(id.ring());
+    cscTree.csc_sh_chamber->push_back(id.chamber());
+    // cscTree.csc_sh_layer->push_back(id.layer());
+
+    if (tpidfound != -1)
+      ((*simTree.sim_id_csc_sh)[tpidfound]).push_back(index);
+
+    index++;
+  }
 }
 
 void CSCSimHitAnalyzer::analyze(TreeManager& tree)
