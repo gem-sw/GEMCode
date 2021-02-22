@@ -69,7 +69,7 @@ void CSCDigiAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& e
       }
 
       for (auto p : digiIt->getTimeBinsOn()) {
-        std::cout << "CSCDigiAnalyzer::timebin " << p << " " << digiIt->getHalfStrip() << std::endl;
+        std::cout << "CSCDigiAnalyzer::timebin " << id << " " << p << " " << digiIt->getHalfStrip() << std::endl;
         cscTree.csc_comp_time->push_back(p);
         cscTree.csc_comp_hs->push_back(digiIt->getHalfStrip());
         cscTree.csc_comp_isodd->push_back(isodd);

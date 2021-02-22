@@ -52,15 +52,17 @@ void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
     // require stable particle
     if (iGenParticle->status() != 1 and stableParticle_) continue;
 
+    // require muons
+    if (!std::count(pdgIds_.begin(), pdgIds_.end(), iGenParticle->pdgId())) continue;
+
+    std::cout << "Check gen particle " <<  iGenParticle->p4() << " " << iGenParticle->eta() << std::endl;
+
     // add a few more selections
     if (iGenParticle->pt() < 2) continue;
 
     // eta selection
-    if (iGenParticle->eta() < etaMin_) continue;
-    if (iGenParticle->eta() > etaMax_) continue;
-
-    // require muons
-    if (!std::count(pdgIds_.begin(), pdgIds_.end(), iGenParticle->pdgId())) continue;
+    if (std::abs(iGenParticle->eta()) < etaMin_) continue;
+    if (std::abs(iGenParticle->eta()) > etaMax_) continue;
 
     int tpidfound = -1;
     // check if it was matched to a simtrack
@@ -98,13 +100,17 @@ void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
     // particle decays in the CSC system
     const double radius( std::sqrt(std::pow(vx, 2.0) + std::pow(vy, 2.0) ) );
     bool inAcceptance(false);
-    if (std::abs(eta) > 0.9 &&
+    if (std::abs(eta) > 1.2 &&
         std::abs(eta) < 2.4 &&
         std::abs(vz) > 568. &&
         std::abs(vz) < 1100. &&
         radius < 695.5)
       inAcceptance = true;
+
     genTree.gen_cscaccept->push_back(inAcceptance);
+
+    if (inAcceptance)
+      std::cout << "Accept gen particle " <<  iGenParticle->p4() << " " << eta << std::endl;
 
     if (verbose_)
       std::cout << "tpidfound " << tpidfound << std::endl;
