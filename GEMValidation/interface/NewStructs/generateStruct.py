@@ -2,7 +2,7 @@
 
 ## gen particles
 gen = {
-    "float" : ["pt","pz","eta","phi","dxy","d0","z0","d0_prod","z0_prod","vx","vy","vz"],
+    "float" : ["pt","pz","eta","phi","dxy","d0","z0","d0_prod","z0_prod","vx","vy","vz","r"],
     "int" : ["charge","pdgid","tpid","cscaccept"]
 }
 
@@ -159,13 +159,13 @@ cscstrip = {
 
 cscwire = {
     "int" : [
-        "bx",
+        "time",
         "keywg",
         "isodd",
         "region",
         "station",
         "ring",
-        "quality",
+        "layer",
         "chamber",
         "tpid"],
 }

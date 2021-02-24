@@ -102,7 +102,18 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
 
   auto& cscTree = tree.cscStub();
   auto& simTree = tree.simTrack();
+  auto& genTree = tree.genParticle();
   const bool validTracks(simTree.sim_pt->size()>0);
+
+  bool oneLLP = false;
+
+  if (genTree.gen_tpid->size() > 0)
+    oneLLP = oneLLP or genTree.gen_cscaccept->at(0)==1;
+  if (genTree.gen_tpid->size() > 1)
+    oneLLP = oneLLP or genTree.gen_cscaccept->at(1)==1;
+
+  if (oneLLP)
+    std::cout << "CSCDigiAnalyzer::analyze" << std::endl;
 
   int index = 0;
   // CSC ALCTs
@@ -318,6 +329,11 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       if (!(*digiIt).isValid())
         continue;
 
+      if (verboseShower_) {
+        std::cout << ">>>Analyzing CSC Shower in " << id << std::endl;
+        if (!oneLLP)
+          std::cout << "Without LLP in acceptance" << std::endl;
+      }
       cscTree.csc_shower_region->push_back(id.zendcap());
       cscTree.csc_shower_station->push_back(id.station());
       cscTree.csc_shower_ring->push_back(id.ring());

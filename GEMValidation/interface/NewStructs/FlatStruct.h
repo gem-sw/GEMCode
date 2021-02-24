@@ -32,6 +32,7 @@ namespace my {
     p_floats gen_vx;
     p_floats gen_vy;
     p_floats gen_vz;
+    p_floats gen_r;
 
     void init() {
       gen_charge = new t_ints;
@@ -50,6 +51,7 @@ namespace my {
       gen_vx = new t_floats;
       gen_vy = new t_floats;
       gen_vz = new t_floats;
+      gen_r = new t_floats;
     }
 
     void book(TTree* t) {
@@ -69,6 +71,7 @@ namespace my {
       t->Branch("gen_vx", &gen_vx);
       t->Branch("gen_vy", &gen_vy);
       t->Branch("gen_vz", &gen_vz);
+      t->Branch("gen_r", &gen_r);
     }
   };
 
@@ -376,13 +379,13 @@ namespace my {
     p_ints csc_comp_quality;
     p_ints csc_comp_chamber;
     p_ints csc_comp_tpid;
-    p_ints csc_wire_bx;
+    p_ints csc_wire_time;
     p_ints csc_wire_keywg;
     p_ints csc_wire_isodd;
     p_ints csc_wire_region;
     p_ints csc_wire_station;
     p_ints csc_wire_ring;
-    p_ints csc_wire_quality;
+    p_ints csc_wire_layer;
     p_ints csc_wire_chamber;
     p_ints csc_wire_tpid;
 
@@ -406,13 +409,13 @@ namespace my {
       csc_comp_quality = new t_ints;
       csc_comp_chamber = new t_ints;
       csc_comp_tpid = new t_ints;
-      csc_wire_bx = new t_ints;
+      csc_wire_time = new t_ints;
       csc_wire_keywg = new t_ints;
       csc_wire_isodd = new t_ints;
       csc_wire_region = new t_ints;
       csc_wire_station = new t_ints;
       csc_wire_ring = new t_ints;
-      csc_wire_quality = new t_ints;
+      csc_wire_layer = new t_ints;
       csc_wire_chamber = new t_ints;
       csc_wire_tpid = new t_ints;
     }
@@ -437,13 +440,13 @@ namespace my {
       t->Branch("csc_comp_quality", &csc_comp_quality);
       t->Branch("csc_comp_chamber", &csc_comp_chamber);
       t->Branch("csc_comp_tpid", &csc_comp_tpid);
-      t->Branch("csc_wire_bx", &csc_wire_bx);
+      t->Branch("csc_wire_time", &csc_wire_time);
       t->Branch("csc_wire_keywg", &csc_wire_keywg);
       t->Branch("csc_wire_isodd", &csc_wire_isodd);
       t->Branch("csc_wire_region", &csc_wire_region);
       t->Branch("csc_wire_station", &csc_wire_station);
       t->Branch("csc_wire_ring", &csc_wire_ring);
-      t->Branch("csc_wire_quality", &csc_wire_quality);
+      t->Branch("csc_wire_layer", &csc_wire_layer);
       t->Branch("csc_wire_chamber", &csc_wire_chamber);
       t->Branch("csc_wire_tpid", &csc_wire_tpid);
     }
