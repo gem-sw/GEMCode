@@ -21,6 +21,7 @@ process.load('Configuration.StandardSequences.RawToDigi_cff')
 process.load('Configuration.StandardSequences.SimL1Emulator_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
+process.load('GEMCode.GEMValidation.GEMCSCAnalyzer_cff')
 
 process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(-1000),
@@ -112,21 +113,39 @@ process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '
 from GEMCode.GEMValidation.cscTriggerCustoms import addCSCTriggerRun3
 process = addCSCTriggerRun3(process)
 
+from GEMCode.GEMValidation.cscTriggerCustoms import addAnalysisRun3
+process = addAnalysisRun3( process)
+
+process.GEMCSCAnalyzer.gemStripDigi.verbose = 1
+process.GEMCSCAnalyzer.gemStripDigi.matchToSimLink = True
+process.GEMCSCAnalyzer.gemPadDigi.verbose = 1
+process.GEMCSCAnalyzer.gemPadCluster.verbose = 1
+process.GEMCSCAnalyzer.gemCoPadDigi.verbose = 1
+
 from GEMCode.GEMValidation.cscTriggerCustoms import runOn110XMC
-#process = runOn110XMC(process)
+process = runOn110XMC(process)
 
 # Path and EndPath definitions
 process.raw2digi_step = cms.Path(process.muonGEMDigis)
 process.L1simulation_step = cms.Path(process.SimL1Emulator)
+process.ana_step = cms.Path(
+    process.GEMCSCAnalyzer
+    #                            * process.GEMCSCAnalyzerRun3CCLUT
+)
 process.endjob_step = cms.EndPath(process.endOfProcess)
 process.FEVTDEBUGoutput_step = cms.EndPath(process.FEVTDEBUGoutput)
+
+process.TFileService = cms.Service("TFileService",
+    fileName = cms.string("out_ana_run3.root")
+)
 
 # Schedule definition
 process.schedule = cms.Schedule(
     #process.raw2digi_step,
     process.L1simulation_step,
+    process.ana_step,
     process.endjob_step
-    process.FEVTDEBUGoutput_step
+#    process.FEVTDEBUGoutput_step
 )
 from PhysicsTools.PatAlgos.tools.helpers import associatePatAlgosToolsTask
 associatePatAlgosToolsTask(process)
