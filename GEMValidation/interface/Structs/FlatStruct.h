@@ -19,6 +19,7 @@ namespace my {
     p_ints gen_charge;
     p_ints gen_pdgid;
     p_ints gen_tpid;
+    p_ints gen_cscaccept;
     p_floats gen_pt;
     p_floats gen_pz;
     p_floats gen_eta;
@@ -28,11 +29,16 @@ namespace my {
     p_floats gen_z0;
     p_floats gen_d0_prod;
     p_floats gen_z0_prod;
+    p_floats gen_vx;
+    p_floats gen_vy;
+    p_floats gen_vz;
+    p_floats gen_r;
 
     void init() {
       gen_charge = new t_ints;
       gen_pdgid = new t_ints;
       gen_tpid = new t_ints;
+      gen_cscaccept = new t_ints;
       gen_pt = new t_floats;
       gen_pz = new t_floats;
       gen_eta = new t_floats;
@@ -42,12 +48,17 @@ namespace my {
       gen_z0 = new t_floats;
       gen_d0_prod = new t_floats;
       gen_z0_prod = new t_floats;
+      gen_vx = new t_floats;
+      gen_vy = new t_floats;
+      gen_vz = new t_floats;
+      gen_r = new t_floats;
     }
 
     void book(TTree* t) {
       t->Branch("gen_charge", &gen_charge);
       t->Branch("gen_pdgid", &gen_pdgid);
       t->Branch("gen_tpid", &gen_tpid);
+      t->Branch("gen_cscaccept", &gen_cscaccept);
       t->Branch("gen_pt", &gen_pt);
       t->Branch("gen_pz", &gen_pz);
       t->Branch("gen_eta", &gen_eta);
@@ -57,6 +68,10 @@ namespace my {
       t->Branch("gen_z0", &gen_z0);
       t->Branch("gen_d0_prod", &gen_d0_prod);
       t->Branch("gen_z0_prod", &gen_z0_prod);
+      t->Branch("gen_vx", &gen_vx);
+      t->Branch("gen_vy", &gen_vy);
+      t->Branch("gen_vz", &gen_vz);
+      t->Branch("gen_r", &gen_r);
     }
   };
 
@@ -65,8 +80,6 @@ namespace my {
     p_ints sim_charge;
     p_ints sim_pdgid;
     p_ints sim_index;
-    p_ints sim_id_gem_sh;
-    p_ints sim_id_csc_sh;
     p_ints sim_id_gen;
     p_floats sim_pt;
     p_floats sim_px;
@@ -81,19 +94,24 @@ namespace my {
     p_floats sim_z0;
     p_floats sim_d0_prod;
     p_floats sim_z0_prod;
+    p_vints sim_id_gem_sh;
     p_vints sim_id_gem_dg;
     p_vints sim_id_gem_pad;
     p_vints sim_id_gem_copad;
     p_vints sim_id_gem_cluster;
+    p_vints sim_id_csc_sh;
     p_vints sim_id_csc_wire;
     p_vints sim_id_csc_strip;
     p_vints sim_id_csc_clct;
     p_vints sim_id_csc_alct;
     p_vints sim_id_csc_lct;
     p_vints sim_id_csc_mplct;
+    p_vints sim_id_csc_shower;
     p_vints sim_id_emtf_track;
     p_vints sim_id_emtf_cand;
+    p_vints sim_id_emtf_shower;
     p_vints sim_id_l1mu;
+    p_vints sim_id_l1mu_shower;
     p_vints sim_id_l1track;
     p_vints sim_id_l1trackmu;
 
@@ -101,8 +119,6 @@ namespace my {
       sim_charge = new t_ints;
       sim_pdgid = new t_ints;
       sim_index = new t_ints;
-      sim_id_gem_sh = new t_ints;
-      sim_id_csc_sh = new t_ints;
       sim_id_gen = new t_ints;
       sim_pt = new t_floats;
       sim_px = new t_floats;
@@ -117,19 +133,24 @@ namespace my {
       sim_z0 = new t_floats;
       sim_d0_prod = new t_floats;
       sim_z0_prod = new t_floats;
+      sim_id_gem_sh = new t_vints;
       sim_id_gem_dg = new t_vints;
       sim_id_gem_pad = new t_vints;
       sim_id_gem_copad = new t_vints;
       sim_id_gem_cluster = new t_vints;
+      sim_id_csc_sh = new t_vints;
       sim_id_csc_wire = new t_vints;
       sim_id_csc_strip = new t_vints;
       sim_id_csc_clct = new t_vints;
       sim_id_csc_alct = new t_vints;
       sim_id_csc_lct = new t_vints;
       sim_id_csc_mplct = new t_vints;
+      sim_id_csc_shower = new t_vints;
       sim_id_emtf_track = new t_vints;
       sim_id_emtf_cand = new t_vints;
+      sim_id_emtf_shower = new t_vints;
       sim_id_l1mu = new t_vints;
+      sim_id_l1mu_shower = new t_vints;
       sim_id_l1track = new t_vints;
       sim_id_l1trackmu = new t_vints;
     }
@@ -138,8 +159,6 @@ namespace my {
       t->Branch("sim_charge", &sim_charge);
       t->Branch("sim_pdgid", &sim_pdgid);
       t->Branch("sim_index", &sim_index);
-      t->Branch("sim_id_gem_sh", &sim_id_gem_sh);
-      t->Branch("sim_id_csc_sh", &sim_id_csc_sh);
       t->Branch("sim_id_gen", &sim_id_gen);
       t->Branch("sim_pt", &sim_pt);
       t->Branch("sim_px", &sim_px);
@@ -154,19 +173,24 @@ namespace my {
       t->Branch("sim_z0", &sim_z0);
       t->Branch("sim_d0_prod", &sim_d0_prod);
       t->Branch("sim_z0_prod", &sim_z0_prod);
+      t->Branch("sim_id_gem_sh", &sim_id_gem_sh);
       t->Branch("sim_id_gem_dg", &sim_id_gem_dg);
       t->Branch("sim_id_gem_pad", &sim_id_gem_pad);
       t->Branch("sim_id_gem_copad", &sim_id_gem_copad);
       t->Branch("sim_id_gem_cluster", &sim_id_gem_cluster);
+      t->Branch("sim_id_csc_sh", &sim_id_csc_sh);
       t->Branch("sim_id_csc_wire", &sim_id_csc_wire);
       t->Branch("sim_id_csc_strip", &sim_id_csc_strip);
       t->Branch("sim_id_csc_clct", &sim_id_csc_clct);
       t->Branch("sim_id_csc_alct", &sim_id_csc_alct);
       t->Branch("sim_id_csc_lct", &sim_id_csc_lct);
       t->Branch("sim_id_csc_mplct", &sim_id_csc_mplct);
+      t->Branch("sim_id_csc_shower", &sim_id_csc_shower);
       t->Branch("sim_id_emtf_track", &sim_id_emtf_track);
       t->Branch("sim_id_emtf_cand", &sim_id_emtf_cand);
+      t->Branch("sim_id_emtf_shower", &sim_id_emtf_shower);
       t->Branch("sim_id_l1mu", &sim_id_l1mu);
+      t->Branch("sim_id_l1mu_shower", &sim_id_l1mu_shower);
       t->Branch("sim_id_l1track", &sim_id_l1track);
       t->Branch("sim_id_l1trackmu", &sim_id_l1trackmu);
     }
@@ -337,7 +361,7 @@ namespace my {
   struct CSCDigiStruct {
 
     p_ints csc_strip_bx;
-    p_ints csc_strip_keyhs;
+    p_ints csc_strip_strip;
     p_ints csc_strip_isodd;
     p_ints csc_strip_region;
     p_ints csc_strip_station;
@@ -345,19 +369,29 @@ namespace my {
     p_ints csc_strip_quality;
     p_ints csc_strip_chamber;
     p_ints csc_strip_tpid;
-    p_ints csc_wire_bx;
+    p_ints csc_comp_time;
+    p_ints csc_comp_hs;
+    p_ints csc_comp_isodd;
+    p_ints csc_comp_region;
+    p_ints csc_comp_station;
+    p_ints csc_comp_layer;
+    p_ints csc_comp_ring;
+    p_ints csc_comp_quality;
+    p_ints csc_comp_chamber;
+    p_ints csc_comp_tpid;
+    p_ints csc_wire_time;
     p_ints csc_wire_keywg;
     p_ints csc_wire_isodd;
     p_ints csc_wire_region;
     p_ints csc_wire_station;
     p_ints csc_wire_ring;
-    p_ints csc_wire_quality;
+    p_ints csc_wire_layer;
     p_ints csc_wire_chamber;
     p_ints csc_wire_tpid;
 
     void init() {
       csc_strip_bx = new t_ints;
-      csc_strip_keyhs = new t_ints;
+      csc_strip_strip = new t_ints;
       csc_strip_isodd = new t_ints;
       csc_strip_region = new t_ints;
       csc_strip_station = new t_ints;
@@ -365,20 +399,30 @@ namespace my {
       csc_strip_quality = new t_ints;
       csc_strip_chamber = new t_ints;
       csc_strip_tpid = new t_ints;
-      csc_wire_bx = new t_ints;
+      csc_comp_time = new t_ints;
+      csc_comp_hs = new t_ints;
+      csc_comp_isodd = new t_ints;
+      csc_comp_region = new t_ints;
+      csc_comp_station = new t_ints;
+      csc_comp_layer = new t_ints;
+      csc_comp_ring = new t_ints;
+      csc_comp_quality = new t_ints;
+      csc_comp_chamber = new t_ints;
+      csc_comp_tpid = new t_ints;
+      csc_wire_time = new t_ints;
       csc_wire_keywg = new t_ints;
       csc_wire_isodd = new t_ints;
       csc_wire_region = new t_ints;
       csc_wire_station = new t_ints;
       csc_wire_ring = new t_ints;
-      csc_wire_quality = new t_ints;
+      csc_wire_layer = new t_ints;
       csc_wire_chamber = new t_ints;
       csc_wire_tpid = new t_ints;
     }
 
     void book(TTree* t) {
       t->Branch("csc_strip_bx", &csc_strip_bx);
-      t->Branch("csc_strip_keyhs", &csc_strip_keyhs);
+      t->Branch("csc_strip_strip", &csc_strip_strip);
       t->Branch("csc_strip_isodd", &csc_strip_isodd);
       t->Branch("csc_strip_region", &csc_strip_region);
       t->Branch("csc_strip_station", &csc_strip_station);
@@ -386,13 +430,23 @@ namespace my {
       t->Branch("csc_strip_quality", &csc_strip_quality);
       t->Branch("csc_strip_chamber", &csc_strip_chamber);
       t->Branch("csc_strip_tpid", &csc_strip_tpid);
-      t->Branch("csc_wire_bx", &csc_wire_bx);
+      t->Branch("csc_comp_time", &csc_comp_time);
+      t->Branch("csc_comp_hs", &csc_comp_hs);
+      t->Branch("csc_comp_isodd", &csc_comp_isodd);
+      t->Branch("csc_comp_region", &csc_comp_region);
+      t->Branch("csc_comp_station", &csc_comp_station);
+      t->Branch("csc_comp_layer", &csc_comp_layer);
+      t->Branch("csc_comp_ring", &csc_comp_ring);
+      t->Branch("csc_comp_quality", &csc_comp_quality);
+      t->Branch("csc_comp_chamber", &csc_comp_chamber);
+      t->Branch("csc_comp_tpid", &csc_comp_tpid);
+      t->Branch("csc_wire_time", &csc_wire_time);
       t->Branch("csc_wire_keywg", &csc_wire_keywg);
       t->Branch("csc_wire_isodd", &csc_wire_isodd);
       t->Branch("csc_wire_region", &csc_wire_region);
       t->Branch("csc_wire_station", &csc_wire_station);
       t->Branch("csc_wire_ring", &csc_wire_ring);
-      t->Branch("csc_wire_quality", &csc_wire_quality);
+      t->Branch("csc_wire_layer", &csc_wire_layer);
       t->Branch("csc_wire_chamber", &csc_wire_chamber);
       t->Branch("csc_wire_tpid", &csc_wire_tpid);
     }
@@ -562,6 +616,15 @@ namespace my {
     p_ints csc_mplct_pattern;
     p_ints csc_mplct_pattern_run3;
     p_ints csc_mplct_tpid;
+    p_ints csc_shower_bx;
+    p_ints csc_shower_region;
+    p_ints csc_shower_station;
+    p_ints csc_shower_ring;
+    p_ints csc_shower_chamber;
+    p_ints csc_shower_sector;
+    p_ints csc_shower_isLoose;
+    p_ints csc_shower_isNominal;
+    p_ints csc_shower_isTight;
 
     void init() {
       csc_alct_bx = new t_ints;
@@ -614,6 +677,15 @@ namespace my {
       csc_mplct_pattern = new t_ints;
       csc_mplct_pattern_run3 = new t_ints;
       csc_mplct_tpid = new t_ints;
+      csc_shower_bx = new t_ints;
+      csc_shower_region = new t_ints;
+      csc_shower_station = new t_ints;
+      csc_shower_ring = new t_ints;
+      csc_shower_chamber = new t_ints;
+      csc_shower_sector = new t_ints;
+      csc_shower_isLoose = new t_ints;
+      csc_shower_isNominal = new t_ints;
+      csc_shower_isTight = new t_ints;
     }
 
     void book(TTree* t) {
@@ -667,6 +739,15 @@ namespace my {
       t->Branch("csc_mplct_pattern", &csc_mplct_pattern);
       t->Branch("csc_mplct_pattern_run3", &csc_mplct_pattern_run3);
       t->Branch("csc_mplct_tpid", &csc_mplct_tpid);
+      t->Branch("csc_shower_bx", &csc_shower_bx);
+      t->Branch("csc_shower_region", &csc_shower_region);
+      t->Branch("csc_shower_station", &csc_shower_station);
+      t->Branch("csc_shower_ring", &csc_shower_ring);
+      t->Branch("csc_shower_chamber", &csc_shower_chamber);
+      t->Branch("csc_shower_sector", &csc_shower_sector);
+      t->Branch("csc_shower_isLoose", &csc_shower_isLoose);
+      t->Branch("csc_shower_isNominal", &csc_shower_isNominal);
+      t->Branch("csc_shower_isTight", &csc_shower_isTight);
     }
   };
 
@@ -684,12 +765,19 @@ namespace my {
     p_floats emtfcand_pt;
     p_floats emtfcand_eta;
     p_floats emtfcand_phi;
+    p_ints emtfshower_bx;
+    p_ints emtfshower_isTwoLoose;
+    p_ints emtfshower_isOneNominal;
+    p_ints emtfshower_region;
+    p_ints emtfshower_sector;
     p_ints l1mu_charge;
     p_ints l1mu_bx;
     p_ints l1mu_tpid;
     p_floats l1mu_pt;
     p_floats l1mu_eta;
     p_floats l1mu_phi;
+    p_ints l1mushower_bits;
+    p_ints l1mushower_bx;
 
     void init() {
       emtftrack_charge = new t_ints;
@@ -704,12 +792,19 @@ namespace my {
       emtfcand_pt = new t_floats;
       emtfcand_eta = new t_floats;
       emtfcand_phi = new t_floats;
+      emtfshower_bx = new t_ints;
+      emtfshower_isTwoLoose = new t_ints;
+      emtfshower_isOneNominal = new t_ints;
+      emtfshower_region = new t_ints;
+      emtfshower_sector = new t_ints;
       l1mu_charge = new t_ints;
       l1mu_bx = new t_ints;
       l1mu_tpid = new t_ints;
       l1mu_pt = new t_floats;
       l1mu_eta = new t_floats;
       l1mu_phi = new t_floats;
+      l1mushower_bits = new t_ints;
+      l1mushower_bx = new t_ints;
     }
 
     void book(TTree* t) {
@@ -725,12 +820,19 @@ namespace my {
       t->Branch("emtfcand_pt", &emtfcand_pt);
       t->Branch("emtfcand_eta", &emtfcand_eta);
       t->Branch("emtfcand_phi", &emtfcand_phi);
+      t->Branch("emtfshower_bx", &emtfshower_bx);
+      t->Branch("emtfshower_isTwoLoose", &emtfshower_isTwoLoose);
+      t->Branch("emtfshower_isOneNominal", &emtfshower_isOneNominal);
+      t->Branch("emtfshower_region", &emtfshower_region);
+      t->Branch("emtfshower_sector", &emtfshower_sector);
       t->Branch("l1mu_charge", &l1mu_charge);
       t->Branch("l1mu_bx", &l1mu_bx);
       t->Branch("l1mu_tpid", &l1mu_tpid);
       t->Branch("l1mu_pt", &l1mu_pt);
       t->Branch("l1mu_eta", &l1mu_eta);
       t->Branch("l1mu_phi", &l1mu_phi);
+      t->Branch("l1mushower_bits", &l1mushower_bits);
+      t->Branch("l1mushower_bx", &l1mushower_bx);
     }
   };
 

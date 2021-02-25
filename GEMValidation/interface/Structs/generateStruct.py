@@ -2,25 +2,33 @@
 
 ## gen particles
 gen = {
-    "float" : ["pt","pz","eta","phi","dxy","d0","z0","d0_prod","z0_prod"],
-    "int" : ["charge","pdgid","tpid"]
+    "float" : ["pt","pz","eta","phi","dxy","d0","z0","d0_prod","z0_prod","vx","vy","vz","r"],
+    "int" : ["charge","pdgid","tpid","cscaccept"]
 }
 
 sim = {
     "float" : ["pt","px","py","pz","eta","phi","vx","vy","vz","d0","z0","d0_prod","z0_prod"],
-    "int" : ["charge", "pdgid", "index", "id_gem_sh", "id_csc_sh", "id_gen"],
-    "vint": ["id_gem_dg",
+    "int" : ["charge", "pdgid", "index", "id_gen"],
+    "vint": ["id_gem_sh",
+             "id_gem_dg",
              "id_gem_pad",
              "id_gem_copad",
              "id_gem_cluster",
+             "id_csc_sh",
              "id_csc_wire",
              "id_csc_strip",
              "id_csc_clct",
              "id_csc_alct",
              "id_csc_lct",
              "id_csc_mplct",
-             "id_emtf_track", "id_emtf_cand",
-             "id_l1mu", "id_l1track", "id_l1trackmu"]
+             "id_csc_shower",
+             "id_emtf_track",
+             "id_emtf_cand",
+             "id_emtf_shower",
+             "id_l1mu",
+             "id_l1mu_shower",
+             "id_l1track",
+             "id_l1trackmu"]
 }
 
 gemsimhit = {
@@ -122,10 +130,24 @@ gemcluster = {
     ]
 }
 
+csccomp = {
+    "int" : [
+        "time",
+        "hs",
+        "isodd",
+        "region",
+        "station",
+        "layer",
+        "ring",
+        "quality",
+        "chamber",
+        "tpid"],
+}
+
 cscstrip = {
     "int" : [
         "bx",
-        "keyhs",
+        "strip",
         "isodd",
         "region",
         "station",
@@ -137,13 +159,13 @@ cscstrip = {
 
 cscwire = {
     "int" : [
-        "bx",
+        "time",
         "keywg",
         "isodd",
         "region",
         "station",
         "ring",
-        "quality",
+        "layer",
         "chamber",
         "tpid"],
 }
@@ -221,6 +243,20 @@ mplct = {
     ]
 }
 
+cscshower = {
+    "int" : [
+        "bx",
+        "region",
+        "station",
+        "ring",
+        "chamber",
+        "sector",
+        "isLoose",
+        "isNominal",
+        "isTight"
+    ]
+}
+
 emtftrack = {
     "float" : ["pt","eta","phi"],
     "int" : ["charge","bx","tpid"]
@@ -231,9 +267,23 @@ emtfcand = {
     "int" : ["charge","bx","tpid"]
 }
 
+emtfshower = {
+    "int" : [
+        "bx",
+        "isTwoLoose",
+        "isOneNominal",
+        "region",
+        "sector"
+    ]
+}
+
 l1mu = {
     "float" : ["pt","eta","phi"],
     "int" : ["charge","bx","tpid"]
+}
+
+l1mushower = {
+    "int" : ["bits","bx"]
 }
 
 l1track = {
@@ -276,6 +326,7 @@ gemDigiStruct.add(Object("gem_digi", gemstrip))
 
 cscDigiStruct = Struct("CSCDigiStruct")
 cscDigiStruct.add(Object("csc_strip", cscstrip))
+cscDigiStruct.add(Object("csc_comp", csccomp))
 cscDigiStruct.add(Object("csc_wire", cscwire))
 
 gemStubStruct = Struct("GEMStubStruct")
@@ -288,11 +339,14 @@ cscStubStruct.add(Object("csc_alct", alct))
 cscStubStruct.add(Object("csc_clct", clct))
 cscStubStruct.add(Object("csc_lct",  lct))
 cscStubStruct.add(Object("csc_mplct", mplct))
+cscStubStruct.add(Object("csc_shower",  cscshower))
 
 l1MuStruct = Struct("L1MuStruct")
 l1MuStruct.add(Object("emtftrack", emtftrack))
 l1MuStruct.add(Object("emtfcand", emtfcand))
+l1MuStruct.add(Object("emtfshower", emtfshower))
 l1MuStruct.add(Object("l1mu", l1mu))
+l1MuStruct.add(Object("l1mushower", l1mushower))
 
 l1TrackStruct = Struct("L1TrackStruct")
 l1TrackStruct.add(Object("l1track", l1track))
