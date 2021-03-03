@@ -36,7 +36,7 @@ void CSCSimHitAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup&
 
     if (verbose_) {
       std::cout << "Analyzing CSC simhit "
-                << id << " " << simhit
+                << id << " " << simhit << " PDGID " << simhit.particleType()
                 << std::endl;
     }
 

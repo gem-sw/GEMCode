@@ -46,19 +46,35 @@ void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
   auto& simTree = tree.simTrack();
   auto& genTree = tree.genParticle();
 
-  int index = 0;
   for(auto iGenParticle = genParticles.begin();  iGenParticle != genParticles.end();  ++iGenParticle) {
+
+    int index = int(iGenParticle - genParticles.begin());
 
     // require stable particle
     if (iGenParticle->status() != 1 and stableParticle_) continue;
 
-    // require muons
+    // require pdgId
     if (!std::count(pdgIds_.begin(), pdgIds_.end(), iGenParticle->pdgId())) continue;
-
-    std::cout << "Check gen particle " <<  iGenParticle->p4() << " " << iGenParticle->eta() << std::endl;
 
     // add a few more selections
     if (iGenParticle->pt() < 2) continue;
+
+    const float vx(iGenParticle->daughter(0)->vx());
+    const float vy(iGenParticle->daughter(0)->vy());
+    const float vz(iGenParticle->daughter(0)->vz());
+
+    // particle decays in the CSC system
+    const double radius( std::sqrt(std::pow(vx, 2.0) + std::pow(vy, 2.0) ) );
+
+    std::cout << "Check gen particle pt: " <<  iGenParticle->pt()
+              << "V: ("
+              << iGenParticle->daughter(0)->vx() << ", "
+              << iGenParticle->daughter(0)->vy() << ", "
+              << iGenParticle->daughter(0)->vz() << "), eta: "
+              << iGenParticle->eta() << " phi: "
+              << iGenParticle->phi() << " R: "
+              << radius << " Idx " << index << std::endl;
+
 
     // eta selection
     if (std::abs(iGenParticle->eta()) < etaMin_) continue;
@@ -90,34 +106,29 @@ void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
     genTree.gen_tpid->push_back(tpidfound);
 
     // LLP decay (if applicable)
-    const float vx(iGenParticle->daughter(0)->vx());
-    const float vy(iGenParticle->daughter(0)->vy());
-    const float vz(iGenParticle->daughter(0)->vz());
     genTree.gen_vx->push_back(vx);
     genTree.gen_vy->push_back(vy);
     genTree.gen_vz->push_back(vz);
+    genTree.gen_r->push_back(radius);
 
     // particle decays in the CSC system
-    const double radius( std::sqrt(std::pow(vx, 2.0) + std::pow(vy, 2.0) ) );
     bool inAcceptance(false);
-    if (std::abs(eta) > 1.2 &&
+    if (std::abs(eta) > 0.9 &&
         std::abs(eta) < 2.4 &&
         std::abs(vz) > 568. &&
         std::abs(vz) < 1100. &&
         radius < 695.5)
       inAcceptance = true;
 
-    genTree.gen_cscaccept->push_back(inAcceptance);
+    genTree.gen_llp_in_acceptance->push_back(inAcceptance);
 
     if (inAcceptance)
       std::cout << "Accept gen particle " <<  iGenParticle->p4() << " " << eta << std::endl;
 
-    if (verbose_)
-      std::cout << "tpidfound " << tpidfound << std::endl;
+    // if (verbose_)
+    //   std::cout << "tpidfound " << tpidfound << std::endl;
 
     if (tpidfound != -1)
       (*simTree.sim_id_gen)[tpidfound] = index;
-
-    index++;
   }
 }

@@ -5,9 +5,9 @@
 # with command line options: step2bis.py --filein file:step3.root --fileout file:step2bis.root --mc --eventcontent FEVTDEBUG --datatier GEN-SIM-DIGI-L1 --conditions auto:phase1_2021_realistic --step L1 --geometry DB:Extended --era Run3 --python_filename step2bis_L1.py --no_exec -n 10
 import FWCore.ParameterSet.Config as cms
 
-from Configuration.Eras.Era_Run3_cff import Run3
+from Configuration.Eras.Era_Run2_2018_cff import Run2_2018
 
-process = cms.Process('ReL1',Run3)
+process = cms.Process('ReL1',Run2_2018)
 
 # import of standard configurations
 process.load('Configuration.StandardSequences.Services_cff')
@@ -109,7 +109,7 @@ process.FEVTDEBUGoutput.outputCommands.append('drop *_g4SimHits_Hcal*_*')
 
 # Other statements
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '')
+process.GlobalTag = GlobalTag(process.GlobalTag, '103X_dataRun2_Prompt_v3', '')
 
 from GEMCode.GEMValidation.cscTriggerCustoms import runOn110XMC
 #process = runOn110XMC(process)
@@ -144,6 +144,9 @@ if useUnpacked:
     ana.gemStripDigi.inputTag = "muonGEMDigis"
     #ana.muon.inputTag = cms.InputTag("gmtStage2Digis","Muon")
 
+process.simCscTriggerPrimitiveDigis.CSCComparatorDigiProducer = "muonCSCDigis:MuonCSCComparatorDigi"
+process.simCscTriggerPrimitiveDigis.CSCWireDigiProducer = "muonCSCDigis:MuonCSCWireDigi"
+
 ## customize unpacker
 process.SimL1Emulator = cms.Sequence(process.SimL1TMuonTask)
 
@@ -156,7 +159,7 @@ process.FEVTDEBUGoutput_step = cms.EndPath(process.FEVTDEBUGoutput)
 
 # Schedule definition
 process.schedule = cms.Schedule(
-    #process.raw2digi_step,
+    process.raw2digi_step,
     process.L1simulation_step,
     process.ana_step,
     process.endjob_step

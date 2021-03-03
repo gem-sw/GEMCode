@@ -44,9 +44,9 @@ void CSCDigiAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& e
   bool oneLLP = false;
 
   if (genTree.gen_tpid->size() > 0)
-    oneLLP = oneLLP or genTree.gen_cscaccept->at(0)==1;
+    oneLLP = oneLLP or genTree.gen_llp_in_acceptance->at(0)==1;
   if (genTree.gen_tpid->size() > 1)
-    oneLLP = oneLLP or genTree.gen_cscaccept->at(1)==1;
+    oneLLP = oneLLP or genTree.gen_llp_in_acceptance->at(1)==1;
 
   if (oneLLP)
     std::cout << "CSCDigiAnalyzer::analyze" << std::endl;
@@ -80,7 +80,7 @@ void CSCDigiAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& e
 
       for (auto p : digiIt->getTimeBinsOn()) {
         //        if (oneLLP)
-        std::cout << "CSCDigiAnalyzer::timebin " << id << " " << p << " " << digiIt->getHalfStrip() << std::endl;
+        // std::cout << "CSCDigiAnalyzer::timebin " << id << " " << p << " " << digiIt->getHalfStrip() << std::endl;
         cscTree.csc_comp_time->push_back(p);
         cscTree.csc_comp_hs->push_back(digiIt->getHalfStrip());
         cscTree.csc_comp_isodd->push_back(isodd);

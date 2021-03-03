@@ -29,8 +29,7 @@ process.MessageLogger = cms.Service("MessageLogger",
 """
 process.source = cms.Source(
   "PoolSource",
-  fileNames = cms.untracked.vstring('file:step2bis.root'),
-#  fileNames = cms.untracked.vstring('/store/user/awarden/MiniBias/SingleMu_May2020_MC_step2/200512_202254/0000/step2_1.root')
+    fileNames = cms.untracked.vstring('file:/uscms_data/d3/dildick/work/HadronicShowerTrigger/CMSSW_11_3_0_pre3/src/TSG-Run3Winter20GS-00040.root'),
 )
 
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-100) )
@@ -62,6 +61,9 @@ process.GEMCSCAnalyzer = cms.EDAnalyzer(
 )
 
 ana = process.GEMCSCAnalyzer
+ana.genParticle.pdgIds = cms.vint32(6000113, -6000113)
+ana.genParticle.stableParticle = False
+ana.genParticle.verbose = 1
 ana.simTrack.minEta = 0.9
 ana.simTrack.maxEta = 2.4
 ana.simTrack.minPt = 3
@@ -77,6 +79,17 @@ ana.cscALCT.verbose = 0
 ana.cscCLCT.verbose = 0
 ana.cscLCT.verbose = 0
 ana.cscLCT.addGhostLCTs = cms.bool(True)
+
+'''
+## disable most
+ana.cscALCT.run = False
+ana.cscCLCT.run = False
+ana.cscLCT.run = False
+ana.cscMPLCT.run = False
+ana.emtfTrack.run = False
+ana.emtfCand.run = False
+ana.muon.run = False
+'''
 
 useUnpacked = True
 if useUnpacked:

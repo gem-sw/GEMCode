@@ -108,9 +108,9 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
   bool oneLLP = false;
 
   if (genTree.gen_tpid->size() > 0)
-    oneLLP = oneLLP or genTree.gen_cscaccept->at(0)==1;
+    oneLLP = oneLLP or genTree.gen_llp_in_acceptance->at(0)==1;
   if (genTree.gen_tpid->size() > 1)
-    oneLLP = oneLLP or genTree.gen_cscaccept->at(1)==1;
+    oneLLP = oneLLP or genTree.gen_llp_in_acceptance->at(1)==1;
 
   if (oneLLP)
     std::cout << "CSCDigiAnalyzer::analyze" << std::endl;
@@ -340,9 +340,9 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       cscTree.csc_shower_chamber->push_back(id.chamber());
       cscTree.csc_shower_sector->push_back(id.triggerSector());
       cscTree.csc_shower_bx->push_back(0);
-      cscTree.csc_shower_isLoose->push_back(digiIt->isLoose());
-      cscTree.csc_shower_isNominal->push_back(digiIt->isNominal());
-      cscTree.csc_shower_isTight->push_back(digiIt->isTight());
+      cscTree.csc_shower_isLoose->push_back(digiIt->isLooseInTime());
+      cscTree.csc_shower_isNominal->push_back(digiIt->isNominalInTime());
+      cscTree.csc_shower_isTight->push_back(digiIt->isTightInTime());
     }
   }
 }
