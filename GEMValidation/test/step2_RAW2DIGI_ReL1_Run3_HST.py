@@ -21,7 +21,6 @@ process.load('Configuration.StandardSequences.RawToDigi_cff')
 process.load('Configuration.StandardSequences.SimL1Emulator_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
-process.load('GEMCode.GEMValidation.GEMCSCAnalyzer_cff')
 process.load('GEMCode.GEMValidation.MuonNtuplizer_cff')
 
 process.maxEvents = cms.untracked.PSet(
@@ -33,11 +32,11 @@ process.maxEvents = cms.untracked.PSet(
 process.source = cms.Source(
     "PoolSource",
     fileNames = cms.untracked.vstring(
-        "file:/uscms_data/d3/dildick/work/HadronicShowerTrigger/CMSSW_11_3_0_pre3/src/TSG-Run3Winter20GS-00040.root",
-        "file:/uscms_data/d3/dildick/work/HadronicShowerTrigger/CMSSW_11_3_0_pre3/src/TSG-Run3Winter20GS-00040_2.root",
-        "file:/uscms_data/d3/dildick/work/HadronicShowerTrigger/CMSSW_11_3_0_pre3/src/TSG-Run3Winter20GS-00040_3.root",
+        #"file:/uscms_data/d3/dildick/work/HadronicShowerTrigger/CMSSW_11_3_0_pre3/src/TSG-Run3Winter20GS-00040.root",
+        #"file:/uscms_data/d3/dildick/work/HadronicShowerTrigger/CMSSW_11_3_0_pre3/src/TSG-Run3Winter20GS-00040_2.root",
+        #"file:/uscms_data/d3/dildick/work/HadronicShowerTrigger/CMSSW_11_3_0_pre3/src/TSG-Run3Winter20GS-00040_3.root",
         #"file:/uscms_data/d3/dildick/work/HadronicShowerTrigger/CMSSW_11_3_0_pre3/src/132B0128-FF59-DB4A-A3AD-AF4D8B4D21D2.root"
-        #"/store/mc/Run3Winter20DRPremixMiniAOD/HTo2LongLivedTo4b_MH-1000_MFF-450_CTau-100000mm_TuneCP5_14TeV_pythia8/GEN-SIM-RAW/110X_mcRun3_2021_realistic_v6-v2/10000/132B0128-FF59-DB4A-A3AD-AF4D8B4D21D2.root"
+        "/store/mc/Run3Winter20DRPremixMiniAOD/HTo2LongLivedTo4b_MH-1000_MFF-450_CTau-100000mm_TuneCP5_14TeV_pythia8/GEN-SIM-RAW/110X_mcRun3_2021_realistic_v6-v2/10000/132B0128-FF59-DB4A-A3AD-AF4D8B4D21D2.root"
     ),
     secondaryFileNames = cms.untracked.vstring(),
     duplicateCheckMode = cms.untracked.string('noDuplicateCheck')
@@ -112,7 +111,7 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '')
 
 from GEMCode.GEMValidation.cscTriggerCustoms import runOn110XMC
-#process = runOn110XMC(process)
+process = runOn110XMC(process)
 
 # the analyzer configuration
 ana = process.MuonNtuplizer
@@ -138,15 +137,14 @@ ana.cscLCT.addGhostLCTs = cms.bool(True)
 #ana.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED","ReL1")
 ana.cscShower.verbose = 1
 
-useUnpacked = False
+useUnpacked = True
 if useUnpacked:
     ana.gemStripDigi.matchToSimLink = False
     ana.gemStripDigi.inputTag = "muonGEMDigis"
-    #ana.muon.inputTag = cms.InputTag("gmtStage2Digis","Muon")
+    ana.muon.inputTag = cms.InputTag("gmtStage2Digis","Muon")
 
 ## customize unpacker
 process.SimL1Emulator = cms.Sequence(process.SimL1TMuonTask)
-
 process.simCscTriggerPrimitiveDigis.CSCComparatorDigiProducer = "muonCSCDigis:MuonCSCComparatorDigi"
 process.simCscTriggerPrimitiveDigis.CSCWireDigiProducer = "muonCSCDigis:MuonCSCWireDigi"
 

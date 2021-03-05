@@ -21,7 +21,6 @@ process.load('Configuration.StandardSequences.RawToDigi_cff')
 process.load('Configuration.StandardSequences.SimL1Emulator_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
-process.load('GEMCode.GEMValidation.GEMCSCAnalyzer_cff')
 process.load('GEMCode.GEMValidation.MuonNtuplizer_cff')
 
 process.maxEvents = cms.untracked.PSet(
@@ -136,7 +135,7 @@ ana.cscLCT.addGhostLCTs = cms.bool(True)
 #ana.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
 #ana.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
 #ana.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED","ReL1")
-ana.cscShower.verbose = 1
+ana.cscShower.verbose = 0
 
 useUnpacked = False
 if useUnpacked:
