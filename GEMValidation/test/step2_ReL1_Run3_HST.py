@@ -111,7 +111,7 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '')
 
 from GEMCode.GEMValidation.cscTriggerCustoms import runOn110XMC
-#process = runOn110XMC(process)
+process = runOn110XMC(process)
 
 # the analyzer configuration
 ana = process.MuonNtuplizer

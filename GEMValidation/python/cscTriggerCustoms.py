@@ -6,7 +6,7 @@ def runOn110XMC(process):
     process.GlobalTag.toGet = cms.VPSet(
         cms.PSet(record = cms.string("GEMeMapRcd"),
                  tag = cms.string("GEMeMapDummy"),
-                 connect = cms.string("sqlite_file:GEMeMapDummy.db")
+                 connect = cms.string("sqlite_file:GEMCode/GEMValidation/python/GEMeMapDummy.db")
              )
     )
     process.muonGEMDigis.useDBEMap = True
