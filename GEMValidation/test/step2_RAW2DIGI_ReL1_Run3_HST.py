@@ -144,11 +144,14 @@ if useUnpacked:
     ana.muon.inputTag = cms.InputTag("gmtStage2Digis","Muon")
 
 ## customize unpacker
-process.SimL1Emulator = cms.Sequence(process.SimL1TMuonTask)
 process.simCscTriggerPrimitiveDigis.CSCComparatorDigiProducer = "muonCSCDigis:MuonCSCComparatorDigi"
 process.simCscTriggerPrimitiveDigis.CSCWireDigiProducer = "muonCSCDigis:MuonCSCWireDigi"
 
 # Path and EndPath definitions
+process.SimL1Emulator = cms.Sequence(process.SimL1TMuonTask)
+from GEMCode.GEMValidation.cscTriggerCustoms import addShowerTriggers
+process = addShowerTriggers(process)
+
 process.raw2digi_step = cms.Path(process.RawToDigi)
 process.L1simulation_step = cms.Path(process.SimL1Emulator)
 process.ana_step = cms.Path(process.MuonNtuplizer)

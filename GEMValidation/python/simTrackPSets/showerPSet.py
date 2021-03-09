@@ -11,7 +11,7 @@ showerPSet = cms.PSet(
     emtfShower = cms.PSet(
         verbose = cms.int32(0),
         run = cms.bool(True),
-        inputTag = cms.InputTag("simEmtfDigis","EMTF"),
+        inputTag = cms.InputTag("simEmtfShowers","EMTF"),
         minBX = cms.int32(0),
         maxBX = cms.int32(0),
     ),

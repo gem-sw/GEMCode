@@ -51,7 +51,7 @@ L1MuAnalyzer::L1MuAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCollector
     emtfCandToken_ = iC.consumes<l1t::RegionalMuonCandBxCollection>(emtfCand.getParameter<edm::InputTag>("inputTag"));
 
   if (runEMTFShower_)
-    emtfShowerToken_ = iC.consumes<l1t::RegionalMuonShowerBxCollection>(emtfCand.getParameter<edm::InputTag>("inputTag"));
+    emtfShowerToken_ = iC.consumes<l1t::RegionalMuonShowerBxCollection>(emtfShower.getParameter<edm::InputTag>("inputTag"));
 
   if (runGMT_)
     muonToken_ = iC.consumes<l1t::MuonBxCollection>(muon.getParameter<edm::InputTag>("inputTag"));

@@ -36,6 +36,11 @@ def addCSCTriggerRun3(process):
 
     return process
 
+def addShowerTriggers(process):
+    process.SimL1Emulator += process.simEmtfShowers
+    process.SimL1Emulator += process.simGmtShowerDigis
+    return process
+
 def addAnalysisRun3(process):
 
     ana = process.GEMCSCAnalyzer
