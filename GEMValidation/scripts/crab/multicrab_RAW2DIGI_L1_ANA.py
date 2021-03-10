@@ -9,7 +9,7 @@ chosenSample = []
 
 ## make a choice
 if options.sampleChoice == 0:
-    chosenSample = central_signal
+    chosenSample = central_signal_test
 
 if options.sampleChoice == 1:
     chosenSample = private_signal
@@ -17,7 +17,7 @@ if options.sampleChoice == 1:
 if options.sampleChoice == 2:
     chosenSample = data
 
-jobString = '_L1_ANA_20210226_v2'
+jobString = '_ProtoL1_ANA_20210309_TEST'
 
 if __name__ == '__main__':
     from CRABAPI.RawCommand import crabCommand

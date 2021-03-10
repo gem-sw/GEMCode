@@ -213,3 +213,7 @@ private_signal = [
 data = [
     ZeroBias_Run2018D
 ]
+
+central_signal_test = [
+    HTo2LongLivedTo4b_MH_1000_MFF_450_CTau_100000mm,
+]
