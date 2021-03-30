@@ -45,6 +45,7 @@ if __name__ == '__main__':
         cconfig.General.requestName = sample[0] + jobString
         cconfig.JobType.pluginName = 'Analysis'
         cconfig.JobType.psetName = sample[3]
+        cconfig.JobType.pyCfgParams = ["runWithCrab=True"]
         cconfig.Site.storageSite = 'T3_US_FNALLPC'
         cconfig.Data.splitting = 'FileBased'
         cconfig.Data.unitsPerJob = 5

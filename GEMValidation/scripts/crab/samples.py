@@ -1,6 +1,7 @@
+import os
 crabInputDBSGlob = 'global'
 crabInputDBSUser = 'phys03'
-directory = '/uscms/home/dildick/nobackup/work/HadronicShowerTrigger/CMSSW_11_3_0_pre3/src/'
+directory = os.path.expandvars("$CMSSW_BASE/src/")
 subdirectory = 'GEMCode/GEMValidation/test/'
 cmsRunRAW =  directory + subdirectory + "step2_RAW2DIGI_ReL1_Run3_HST.py"
 cmsRunDIGI = directory + subdirectory + "step2_ReL1_Run3_HST.py"
@@ -215,5 +216,5 @@ data = [
 ]
 
 central_signal_test = [
-    HTo2LongLivedTo4b_MH_1000_MFF_450_CTau_100000mm,
+    HTo2LongLivedTo4b_MH_1000_MFF_450_CTau_10000mm,
 ]

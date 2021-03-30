@@ -6,8 +6,14 @@
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.Eras.Era_Run3_cff import Run3
+from FWCore.ParameterSet.VarParsing import VarParsing
+
+options = VarParsing('analysis')
+options.register("runWithCrab", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
+options.parseArguments()
 
 process = cms.Process('ReL1',Run3)
+print("Info: runWithCrab is set to {}".format(options.runWithCrab))
 
 # import of standard configurations
 process.load('Configuration.StandardSequences.Services_cff')
@@ -111,7 +117,7 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '')
 
 from GEMCode.GEMValidation.cscTriggerCustoms import runOn110XMC
-process = runOn110XMC(process)
+process = runOn110XMC(process, options.runWithCrab)
 
 # the analyzer configuration
 ana = process.MuonNtuplizer

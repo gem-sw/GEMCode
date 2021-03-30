@@ -2,12 +2,16 @@ import FWCore.ParameterSet.Config as cms
 from Configuration.Eras.Modifier_phase2_muon_cff import phase2_muon
 import os
 
-def runOn110XMC(process):
+def runOn110XMC(process, runWithCrab = False):
     # customize unpacker
+    path = os.path.expandvars("$CMSSW_BASE/src/GEMCode/GEMValidation/data/GEMeMapDummy.db")
+    if runWithCrab:
+        path = "../../data/GEMeMapDummy.db"
+    print("Info: Using path \"{}\".".format(path))
     process.GlobalTag.toGet = cms.VPSet(
         cms.PSet(record = cms.string("GEMeMapRcd"),
                  tag = cms.string("GEMeMapDummy"),
-                 connect = cms.string("sqlite_file:{}".format(os.path.expandvars("$CMSSW_BASE/src/GEMCode/GEMValidation/data/GEMeMapDummy.db")))
+                 connect = cms.string("sqlite_file:{}".format(path))
              )
     )
     process.muonGEMDigis.useDBEMap = True
