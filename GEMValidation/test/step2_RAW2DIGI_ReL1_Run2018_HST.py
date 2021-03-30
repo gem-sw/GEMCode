@@ -32,11 +32,7 @@ process.maxEvents = cms.untracked.PSet(
 process.source = cms.Source(
     "PoolSource",
     fileNames = cms.untracked.vstring(
-        "file:/uscms_data/d3/dildick/work/HadronicShowerTrigger/CMSSW_11_3_0_pre3/src/TSG-Run3Winter20GS-00040.root",
-        "file:/uscms_data/d3/dildick/work/HadronicShowerTrigger/CMSSW_11_3_0_pre3/src/TSG-Run3Winter20GS-00040_2.root",
-        "file:/uscms_data/d3/dildick/work/HadronicShowerTrigger/CMSSW_11_3_0_pre3/src/TSG-Run3Winter20GS-00040_3.root",
-        #"file:/uscms_data/d3/dildick/work/HadronicShowerTrigger/CMSSW_11_3_0_pre3/src/132B0128-FF59-DB4A-A3AD-AF4D8B4D21D2.root"
-        #"/store/mc/Run3Winter20DRPremixMiniAOD/HTo2LongLivedTo4b_MH-1000_MFF-450_CTau-100000mm_TuneCP5_14TeV_pythia8/GEN-SIM-RAW/110X_mcRun3_2021_realistic_v6-v2/10000/132B0128-FF59-DB4A-A3AD-AF4D8B4D21D2.root"
+        "/store/data/Run2018D/ZeroBias/RAW/v1/000/321/909/00000/B291651B-3CAB-E811-8596-02163E015DDC.root"
     ),
     secondaryFileNames = cms.untracked.vstring(),
     duplicateCheckMode = cms.untracked.string('noDuplicateCheck')

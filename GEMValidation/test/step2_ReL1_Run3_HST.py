@@ -24,7 +24,7 @@ process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 process.load('GEMCode.GEMValidation.MuonNtuplizer_cff')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(-100),
+    input = cms.untracked.int32(1000),
     output = cms.optional.untracked.allowed(cms.int32,cms.PSet)
 )
 
@@ -32,11 +32,7 @@ process.maxEvents = cms.untracked.PSet(
 process.source = cms.Source(
     "PoolSource",
     fileNames = cms.untracked.vstring(
-        "file:/uscms_data/d3/dildick/work/HadronicShowerTrigger/CMSSW_11_3_0_pre3/src/TSG-Run3Winter20GS-00040.root",
-        "file:/uscms_data/d3/dildick/work/HadronicShowerTrigger/CMSSW_11_3_0_pre3/src/TSG-Run3Winter20GS-00040_2.root",
-        "file:/uscms_data/d3/dildick/work/HadronicShowerTrigger/CMSSW_11_3_0_pre3/src/TSG-Run3Winter20GS-00040_3.root",
-        #"file:/uscms_data/d3/dildick/work/HadronicShowerTrigger/CMSSW_11_3_0_pre3/src/132B0128-FF59-DB4A-A3AD-AF4D8B4D21D2.root"
-        #"/store/mc/Run3Winter20DRPremixMiniAOD/HTo2LongLivedTo4b_MH-1000_MFF-450_CTau-100000mm_TuneCP5_14TeV_pythia8/GEN-SIM-RAW/110X_mcRun3_2021_realistic_v6-v2/10000/132B0128-FF59-DB4A-A3AD-AF4D8B4D21D2.root"
+        "/store/user/nimenend/HTo2LongLivedTo4q_MH_125_MFF_1_CTau_10000mm_TuneCP5_14TeV_pythia/HTo2LongLivedTo4q_MH_125_MFF_1_CTau_10000mm_TuneCP5_14TeV_pythia/200710_130547/0000/step2_1.root"
     ),
     secondaryFileNames = cms.untracked.vstring(),
     duplicateCheckMode = cms.untracked.string('noDuplicateCheck')
@@ -137,7 +133,7 @@ ana.cscLCT.addGhostLCTs = cms.bool(True)
 #ana.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED","ReL1")
 ana.cscShower.verbose = 0
 
-useUnpacked = False
+useUnpacked = True
 if useUnpacked:
     ana.gemStripDigi.matchToSimLink = False
     ana.gemStripDigi.inputTag = "muonGEMDigis"
@@ -155,7 +151,7 @@ process.FEVTDEBUGoutput_step = cms.EndPath(process.FEVTDEBUGoutput)
 
 # Schedule definition
 process.schedule = cms.Schedule(
-    #process.raw2digi_step,
+    process.raw2digi_step,
     process.L1simulation_step,
     process.ana_step,
     process.endjob_step

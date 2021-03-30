@@ -1,23 +1,40 @@
 from CRABClient.UserUtilities import config
 from samples import *
-from optparse import OptionParser
-parser = OptionParser()
-parser.add_option("-s", dest="sampleChoice",  type=int, default=0, help='0:central signal; 1: private signal; 2: data')
-(options,args) = parser.parse_args()
+import argparse
+from datetime import datetime
+import sys
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--sample", action="store", default = 0, help='0: central signal; 1: private signal; 2: data')
+parser.add_argument("--test", action="store_true", default=False, help='Test for central MC')
+parser.add_argument("--jobString", action="store", default="_ProtoL1_ANA", help='Test for central MC')
+parser.add_argument("--dryRun", action="store_true", default=False)
+args = parser.parse_args()
+
+if int(args.sample) !=0 and args.test:
+    sys.exit("Error: CRAB test only configured for private MC signal.")
+
+currentDateTime = datetime.now().strftime("%Y%m%d_%H%M%S")
+jobString = "{}_{}".format(args.jobString, currentDateTime)
 
 chosenSample = []
-
 ## make a choice
-if options.sampleChoice == 0:
-    chosenSample = central_signal_test
+if int(args.sample) == 0:
+    chosenSample = central_signal
+    if args.test:
+        chosenSample = central_signal_test
 
-if options.sampleChoice == 1:
+if int(args.sample) == 1:
     chosenSample = private_signal
 
-if options.sampleChoice == 2:
+if int(args.sample) == 2:
     chosenSample = data
 
-jobString = '_ProtoL1_ANA_20210309_TEST'
+if args.test:
+    jobString += "_TEST"
+
+if len(chosenSample) == 0:
+    sys.exit("Error: no sample was chosen.")
 
 if __name__ == '__main__':
     from CRABAPI.RawCommand import crabCommand
@@ -34,5 +51,7 @@ if __name__ == '__main__':
         cconfig.Data.outLFNDirBase = '/store/user/dildick/'
         cconfig.Data.inputDataset = sample[1]
         cconfig.Data.inputDBS = sample[2]
-        print cconfig
-        crabCommand('submit', config = cconfig)
+        if args.dryRun:
+            print cconfig
+        else:
+            crabCommand('submit', config = cconfig)
