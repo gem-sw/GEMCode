@@ -340,9 +340,12 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       cscTree.csc_shower_chamber->push_back(id.chamber());
       cscTree.csc_shower_sector->push_back(id.triggerSector());
       cscTree.csc_shower_bx->push_back(0);
-      cscTree.csc_shower_isLoose->push_back(digiIt->isLooseInTime());
-      cscTree.csc_shower_isNominal->push_back(digiIt->isNominalInTime());
-      cscTree.csc_shower_isTight->push_back(digiIt->isTightInTime());
+      cscTree.csc_shower_isLooseInTime->push_back(digiIt->isLooseInTime());
+      cscTree.csc_shower_isNominalInTime->push_back(digiIt->isNominalInTime());
+      cscTree.csc_shower_isTightInTime->push_back(digiIt->isTightInTime());
+      cscTree.csc_shower_isLooseOutTime->push_back(digiIt->isLooseOutTime());
+      cscTree.csc_shower_isNominalOutTime->push_back(digiIt->isNominalOutTime());
+      cscTree.csc_shower_isTightOutTime->push_back(digiIt->isTightOutTime());
     }
   }
 }

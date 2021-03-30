@@ -251,9 +251,12 @@ cscshower = {
         "ring",
         "chamber",
         "sector",
-        "isLoose",
-        "isNominal",
-        "isTight"
+        "isLooseInTime",
+        "isNominalInTime",
+        "isTightInTime",
+        "isLooseOutTime",
+        "isNominalOutTime",
+        "isTightOutTime",
     ]
 }
 
@@ -270,10 +273,12 @@ emtfcand = {
 emtfshower = {
     "int" : [
         "bx",
-        "isTwoLoose",
-        "isOneNominal",
         "region",
-        "sector"
+        "sector",
+        "isTwoLooseInTime",
+        "isOneNominalInTime",
+        "isTwoLooseOutTime",
+        "isOneNominalOutTime",
     ]
 }
 
@@ -283,7 +288,14 @@ l1mu = {
 }
 
 l1mushower = {
-    "int" : ["bits","bx"]
+    "int" : [
+        "bits",
+        "bx",
+        "isTwoLooseInTime",
+        "isOneNominalInTime",
+        "isTwoLooseOutTime",
+        "isOneNominalOutTime",
+    ]
 }
 
 l1track = {
