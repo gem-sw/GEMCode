@@ -23,6 +23,11 @@ def dropCaloDigis(process):
     return process
 
 def addCSCTriggerRun3(process):
+    ## Run-2 patterns without ILT
+    process.simCscTriggerPrimitiveDigisNoILT = process.simCscTriggerPrimitiveDigis.clone()
+    process.simCscTriggerPrimitiveDigisNoILT.commonParam.runME11Up = True
+    process.simEmtfDigisNoILT = process.simEmtfDigis.clone()
+
     ## Run-3 patterns with CCLUT
     process.simCscTriggerPrimitiveDigisRun3CCLUT = process.simCscTriggerPrimitiveDigis.clone()
     process.simCscTriggerPrimitiveDigisRun3CCLUT.commonParam.runCCLUT = True
@@ -32,14 +37,18 @@ def addCSCTriggerRun3(process):
         'simCscTriggerPrimitiveDigis','MPCSORTED',process._Process__name)
     process.simEmtfDigisRun3CCLUT.CSCInput = cms.InputTag(
         'simCscTriggerPrimitiveDigisRun3CCLUT','MPCSORTED',process._Process__name)
+    process.simEmtfDigisNoILT.CSCInput = cms.InputTag(
+        'simCscTriggerPrimitiveDigisNoILT','MPCSORTED',process._Process__name)
 
     ## redefine the L1-step
     process.SimL1Emulator = cms.Sequence(
         process.simMuonGEMPadDigis *
         process.simMuonGEMPadDigiClusters *
         process.simCscTriggerPrimitiveDigis *
+        process.simCscTriggerPrimitiveDigisNoILT *
         process.simCscTriggerPrimitiveDigisRun3CCLUT *
         process.simEmtfDigis *
+        process.simEmtfDigisNoILT *
         process.simEmtfDigisRun3CCLUT
     )
 
@@ -66,5 +75,13 @@ def addAnalysisRun3(process):
     anaCCLUT.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","","ReL1")
     anaCCLUT.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","MPCSORTED","ReL1")
     anaCCLUT.emtfTrack.inputTag = cms.InputTag("simEmtfDigisRun3CCLUT","","ReL1")
+
+    process.GEMCSCAnalyzerNoILT = process.GEMCSCAnalyzer.clone()
+    anaCCLUT = process.GEMCSCAnalyzerNoILT
+    anaCCLUT.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisNoILT","","ReL1")
+    anaCCLUT.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisNoILT","","ReL1")
+    anaCCLUT.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisNoILT","","ReL1")
+    anaCCLUT.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisNoILT","MPCSORTED","ReL1")
+    anaCCLUT.emtfTrack.inputTag = cms.InputTag("simEmtfDigisNoILT","","ReL1")
 
     return process
