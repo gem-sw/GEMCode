@@ -13,6 +13,15 @@ def runOn110XMC(process):
     process.simMuonGEMPadDigis.InputCollection = "muonGEMDigis"
     return process
 
+def dropCaloDigis(process):
+    process.pdigi_valid.remove(process.simEcalTriggerPrimitiveDigis)
+    process.pdigi_valid.remove(process.simEcalDigis)
+    process.pdigi_valid.remove(process.simEcalPreshowerDigis)
+    process.pdigi_valid.remove(process.simHcalTriggerPrimitiveDigis)
+    process.pdigi_valid.remove(process.simHcalDigis)
+    process.pdigi_valid.remove(process.simHcalTTPDigis)
+    return process
+
 def addCSCTriggerRun3(process):
     ## Run-3 patterns with CCLUT
     process.simCscTriggerPrimitiveDigisRun3CCLUT = process.simCscTriggerPrimitiveDigis.clone()
