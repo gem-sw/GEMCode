@@ -4,8 +4,12 @@
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v
 # with command line options: step2bis.py --filein file:step3.root --fileout file:step2bis.root --mc --eventcontent FEVTDEBUG --datatier GEN-SIM-DIGI-L1 --conditions auto:phase1_2021_realistic --step L1 --geometry DB:Extended --era Run3 --python_filename step2bis_L1.py --no_exec -n 10
 import FWCore.ParameterSet.Config as cms
-
+from FWCore.ParameterSet.VarParsing import VarParsing
 from Configuration.Eras.Era_Run3_cff import Run3
+
+options = VarParsing('analysis')
+options.register ("test", True, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
+options.parseArguments()
 
 process = cms.Process('ReL1',Run3)
 
@@ -22,25 +26,20 @@ process.load('Configuration.StandardSequences.SimL1Emulator_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
+nEvents = -1
+if options.test:
+    nEvents = 100
+
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(-1000),
+    input = cms.untracked.int32(nEvents),
     output = cms.optional.untracked.allowed(cms.int32,cms.PSet)
 )
 
 # Input source
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
-        #'file:FFC59020-EA48-1F41-B4B8-FF34C0E09D88.root'
-        '/store/relval/CMSSW_11_0_0_patch1/RelValZMM_14/GEN-SIM-DIGI-RAW/PU_110X_mcRun3_2021_realistic_v6-v1/20000/067CC83E-CD24-514F-9B19-8C6A0FE0A248.root',
-        '/store/relval/CMSSW_11_0_0_patch1/RelValZMM_14/GEN-SIM-DIGI-RAW/PU_110X_mcRun3_2021_realistic_v6-v1/20000/11889C40-9C6C-FB4B-BDD9-787A9E24DF2B.root',
-        '/store/relval/CMSSW_11_0_0_patch1/RelValZMM_14/GEN-SIM-DIGI-RAW/PU_110X_mcRun3_2021_realistic_v6-v1/20000/1772386A-B293-2343-BC00-CE43D2E4D7E0.root',
-        '/store/relval/CMSSW_11_0_0_patch1/RelValZMM_14/GEN-SIM-DIGI-RAW/PU_110X_mcRun3_2021_realistic_v6-v1/20000/1DD5298E-A413-9247-B6F5-90A1947D8470.root',
-        '/store/relval/CMSSW_11_0_0_patch1/RelValZMM_14/GEN-SIM-DIGI-RAW/PU_110X_mcRun3_2021_realistic_v6-v1/20000/43E5C33E-45F5-DB49-9D4B-972F36817A9C.root',
-        '/store/relval/CMSSW_11_0_0_patch1/RelValZMM_14/GEN-SIM-DIGI-RAW/PU_110X_mcRun3_2021_realistic_v6-v1/20000/4A35113F-0308-3C49-8834-A55D89D8FCC8.root',
-        '/store/relval/CMSSW_11_0_0_patch1/RelValZMM_14/GEN-SIM-DIGI-RAW/PU_110X_mcRun3_2021_realistic_v6-v1/20000/6050654C-1EBD-7642-8316-6FB05E1A45AD.root',
-        '/store/relval/CMSSW_11_0_0_patch1/RelValZMM_14/GEN-SIM-DIGI-RAW/PU_110X_mcRun3_2021_realistic_v6-v1/20000/89558BB3-16B4-6D45-AB29-BE5FDE8C42C1.root',
-        '/store/relval/CMSSW_11_0_0_patch1/RelValZMM_14/GEN-SIM-DIGI-RAW/PU_110X_mcRun3_2021_realistic_v6-v1/20000/8D70223E-5122-D340-AAC7-8599725CC327.root',
-        '/store/relval/CMSSW_11_0_0_patch1/RelValZMM_14/GEN-SIM-DIGI-RAW/PU_110X_mcRun3_2021_realistic_v6-v1/20000/93ED664A-EFE0-9E40-8F6E-0F535E50B009.root'
+        '/store/relval/CMSSW_11_3_0_pre5/RelValSingleMuPt10/GEN-SIM-DIGI-RAW/113X_mcRun3_2021_realistic_v7-v1/00000/e1f09711-5c3a-4f54-99e4-d628abba5729.root',
+        '/store/relval/CMSSW_11_3_0_pre5/RelValSingleMuPt10/GEN-SIM-DIGI-RAW/113X_mcRun3_2021_realistic_v7-v1/00000/e334818f-da40-4d02-a46d-7ccf1feb4725.root'
     ),
     secondaryFileNames = cms.untracked.vstring()
 )
@@ -125,7 +124,7 @@ process.FEVTDEBUGoutput_step = cms.EndPath(process.FEVTDEBUGoutput)
 process.schedule = cms.Schedule(
     #process.raw2digi_step,
     process.L1simulation_step,
-    process.endjob_step
+    process.endjob_step,
     process.FEVTDEBUGoutput_step
 )
 from PhysicsTools.PatAlgos.tools.helpers import associatePatAlgosToolsTask
