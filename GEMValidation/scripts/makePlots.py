@@ -4,6 +4,7 @@ import os
 from ROOT import TFile, TDirectory, TTree, gROOT
 from efficiency.plots import *
 from resolution.plots import *
+from occupancy.plots import *
 
 ## run quiet mode
 sys.argv.append( '-b' )

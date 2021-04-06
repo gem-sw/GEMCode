@@ -1,4 +1,4 @@
-from ROOT import gStyle, TH1F, TCanvas, TLegend, kRed, kBlue, TLatex, TEfficiency, SetOwnership
+from ROOT import gStyle, TH1F, TCanvas, TLegend, kRed, kBlue, TLatex, TEfficiency, SetOwnership, TH2F
 from cuts import *
 
 #_______________________________________________________________________________
@@ -50,6 +50,38 @@ def draw_1D(t, title, h_bins, to_draw, extra_cut, opt = "",
     num.SetMarkerStyle(marker_st)
     num.SetMarkerColor(color)
     num.SetMarkerSize(.5)
+
+    SetOwnership(num, False)
+    return num
+
+
+#_______________________________________________________________________________
+def draw_2D(t, title, h_bins, h_binsY, to_draw, extra_cut, opt = ""):
+
+    nBins  = int(h_bins[1:-1].split(',')[0])
+    minBin = float(h_bins[1:-1].split(',')[1])
+    maxBin = float(h_bins[1:-1].split(',')[2])
+
+    nBinsY  = int(h_binsY[1:-1].split(',')[0])
+    minBinY = float(h_binsY[1:-1].split(',')[1])
+    maxBinY = float(h_binsY[1:-1].split(',')[2])
+
+    num = TH2F("num", title, nBins, minBin, maxBin, nBinsY, minBinY, maxBinY)
+    t.Draw(to_draw + ">>num", extra_cut, opt)
+
+    SetOwnership(num, False)
+    return num
+
+
+#_______________________________________________________________________________
+def draw_2Dbis(t, title, h_bins, nBinsY, binsY, to_draw, extra_cut, opt = ""):
+
+    nBins  = int(h_bins[1:-1].split(',')[0])
+    minBin = float(h_bins[1:-1].split(',')[1])
+    maxBin = float(h_bins[1:-1].split(',')[2])
+
+    num = TH2F("num", title, nBins, minBin, maxBin, nBinsY, binsY)
+    t.Draw(to_draw + ">>num", extra_cut, opt)
 
     SetOwnership(num, False)
     return num

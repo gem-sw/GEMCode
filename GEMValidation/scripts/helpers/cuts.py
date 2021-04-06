@@ -4,68 +4,74 @@ from logic import ANDtwo, ORtwo, AND, OR
 
 nocut = TCut("")
 
-genpt = "GenParticle.pt"
-geneta = "GenParticle.eta"
-genphi = "GenParticle.phi"
+genpt = "genParticle.pt"
+geneta = "genParticle.eta"
+genphi = "genParticle.phi"
 
 ## cut on the generator pT
 def ok_pt(pt_min):
-    return TCut("GenParticle.pt > %f"%(pt_min))
+    return TCut("genParticle.pt > %f"%(pt_min))
 
 ## eta for a station
 def ok_eta(eta_min, eta_max):
-    ok_eta_min = TCut("TMath::Abs(GenParticle.eta) > %f"%(eta_min))
-    ok_eta_max = TCut("TMath::Abs(GenParticle.eta) < %f"%(eta_max))
+    ok_eta_min = TCut("TMath::Abs(genParticle.eta) > %f"%(eta_min))
+    ok_eta_max = TCut("TMath::Abs(genParticle.eta) < %f"%(eta_max))
     ok_eta = AND(ok_eta_min,ok_eta_max)
     return ok_eta
 
 def ok_phi(phi_min, phi_max):
-    ok_phi_min = TCut("GenParticle.phi > %f"%(phi_min))
-    ok_phi_max = TCut("GenParticle.phi < %f"%(phi_max))
+    ok_phi_min = TCut("genParticle.phi > %f"%(phi_min))
+    ok_phi_max = TCut("genParticle.phi < %f"%(phi_max))
     ok_phi = AND(ok_phi_min,ok_phi_max)
     return ok_phi
 
-## CSC simhits & digis
+## csc simhits & digis
 def ok_csc_sh(st):
-    return TCut("CSCSimHit.has_csc_sh_even[%d] || CSCSimHit.has_csc_sh_odd[%d]"%(st,st))
+    return TCut("cscSimHit.has_csc_sh_even[%d] || cscSimHit.has_csc_sh_odd[%d]"%(st,st))
 
 def ok_csc_strip(st):
-    return TCut("CSCDigi.has_csc_strips_even[%d] || CSCDigi.has_csc_strips_odd[%d]"%(st,st))
+    return TCut("cscDigi.has_csc_strips_even[%d] || cscDigi.has_csc_strips_odd[%d]"%(st,st))
 
 def ok_csc_wire(st):
-    return TCut("CSCDigi.has_csc_wires_even[%d] || CSCDigi.has_csc_wires_odd[%d]"%(st,st))
+    return TCut("cscDigi.has_csc_wires_even[%d] || cscDigi.has_csc_wires_odd[%d]"%(st,st))
 
 def ok_csc_digi(st):
     return AND(ok_csc_strip(st), ok_csc_wire(st))
 
-## CSC stub
+## csc stub
 def ok_csc_lct(st):
-    return TCut("CSCStub.has_lct_even[%d] || CSCStub.has_lct_odd[%d]"%(st,st))
+    return TCut("cscStub.has_lct_even[%d] || cscStub.has_lct_odd[%d]"%(st,st))
 
 def ok_csc_alct(st):
-    return TCut("CSCStub.has_alct_even[%d] || CSCStub.has_alct_odd[%d]"%(st,st))
+    return TCut("cscStub.has_alct_even[%d] || cscStub.has_alct_odd[%d]"%(st,st))
 
 def ok_csc_clct(st):
-    return TCut("CSCStub.has_clct_even[%d] || CSCStub.has_clct_odd[%d]"%(st,st))
+    return TCut("cscStub.has_clct_even[%d] || cscStub.has_clct_odd[%d]"%(st,st))
 
 def delta_ffhs_clct(st):
-    return "max(CSCStub.delta_ffhs_clct_even[%d], CSCStub.delta_ffhs_clct_odd[%d])"%(st,st)
+    return "max(cscStub.delta_ffhs_clct_even[%d], cscStub.delta_ffhs_clct_odd[%d])"%(st,st)
 
 def delta_fhs_clct(st):
-    return "max(CSCStub.delta_fhs_clct_even[%d], CSCStub.delta_fhs_clct_odd[%d])"%(st,st)
+    return "max(cscStub.delta_fhs_clct_even[%d], cscStub.delta_fhs_clct_odd[%d])"%(st,st)
 
 def delta_fqs_clct(st):
-    return "max(CSCStub.delta_fqs_clct_even[%d], CSCStub.delta_fqs_clct_odd[%d])"%(st,st)
+    return "max(cscStub.delta_fqs_clct_even[%d], cscStub.delta_fqs_clct_odd[%d])"%(st,st)
 
 def delta_fes_clct(st):
-    return "max(CSCStub.delta_fes_clct_even[%d], CSCStub.delta_fes_clct_odd[%d])"%(st,st)
+    return "max(cscStub.delta_fes_clct_even[%d], cscStub.delta_fes_clct_odd[%d])"%(st,st)
 
 def delta_bend_clct(st):
-    return "max(CSCStub.dslope_clct_odd[%d], CSCStub.dslope_clct_even[%d])"%(st,st)
+    return "max(cscStub.dslope_clct_odd[%d], cscStub.dslope_clct_even[%d])"%(st,st)
+
+def slope_clct(st, even):
+    if even:
+        return "cscStub.slope_clct_odd[%d]"%(st)
+    else:
+        return "cscStub.slope_clct_even[%d]"%(st)
 
 def ok_pattern(st, ipat):
-    c1 = TCut("CSCStub.pattern_clct_even[%d] >= %d"%(st,ipat))
-    c2 = TCut("CSCStub.pattern_clct_odd[%d] >= %d"%(st,ipat))
+    c1 = TCut("cscStub.pattern_clct_even[%d] >= %d"%(st,ipat))
+    c2 = TCut("cscStub.pattern_clct_odd[%d] >= %d"%(st,ipat))
     return OR(c1,c2)
 
 ok_me11 = ok_csc_lct(0)
