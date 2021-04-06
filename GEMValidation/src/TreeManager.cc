@@ -2,17 +2,17 @@
 
 void TreeManager::book() {
   edm::Service<TFileService> fs;
-  genParticleTree_ = fs->make<TTree>("GenParticle","GenParticle");
-  simTrackTree_ = fs->make<TTree>("SimTrack","SimTrack");
-  gemSimHitTree_ = fs->make<TTree>("GEMSimHit","GEMSimHit");
-  gemDigiTree_ = fs->make<TTree>("GEMDigi","GEMDigi");
-  gemStubTree_ = fs->make<TTree>("GEMStub","GEMStub");
-  cscSimHitTree_ = fs->make<TTree>("CSCSimHit","CSCSimHit");
-  cscDigiTree_ = fs->make<TTree>("CSCDigi","CSCDigi");
-  cscStubTree_ = fs->make<TTree>("CSCStub","CSCStub");
-  l1MuTree_ = fs->make<TTree>("L1Mu","L1Mu");
-  l1TrackTree_ = fs->make<TTree>("L1Track","L1Track");
-  recoTrackTree_ = fs->make<TTree>("RecoTrack","RecoTrack");
+  genParticleTree_ = fs->make<TTree>("genParticle","genParticle");
+  simTrackTree_ = fs->make<TTree>("simTrack","simTrack");
+  gemSimHitTree_ = fs->make<TTree>("gemSimHit","gemSimHit");
+  gemDigiTree_ = fs->make<TTree>("gemDigi","gemDigi");
+  gemStubTree_ = fs->make<TTree>("gemStub","gemStub");
+  cscSimHitTree_ = fs->make<TTree>("cscSimHit","cscSimHit");
+  cscDigiTree_ = fs->make<TTree>("cscDigi","cscDigi");
+  cscStubTree_ = fs->make<TTree>("cscStub","cscStub");
+  l1MuTree_ = fs->make<TTree>("l1Mu","l1Mu");
+  l1TrackTree_ = fs->make<TTree>("l1Track","l1Track");
+  recoTrackTree_ = fs->make<TTree>("recoTrack","recoTrack");
 
   genParticleSt_.book(genParticleTree_);
   simTrackSt_.book(simTrackTree_);

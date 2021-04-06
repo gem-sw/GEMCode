@@ -57,11 +57,12 @@ def addCSCTriggerRun3(process):
 def addAnalysisRun3(process):
 
     ana = process.GEMCSCAnalyzer
-    ana.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
-    ana.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
-    ana.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
-    ana.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED","ReL1")
-    ana.emtfTrack.inputTag = cms.InputTag("simEmtfDigis","","ReL1")
+    processName = "DIGI"
+    ana.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","",processName)
+    ana.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","",processName)
+    ana.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","",processName)
+    ana.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED",processName)
+    ana.emtfTrack.inputTag = cms.InputTag("simEmtfDigis","",processName)
 
     useUnpacked = False
     if useUnpacked:
@@ -70,18 +71,18 @@ def addAnalysisRun3(process):
 
     process.GEMCSCAnalyzerRun3CCLUT = process.GEMCSCAnalyzer.clone()
     anaCCLUT = process.GEMCSCAnalyzerRun3CCLUT
-    anaCCLUT.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","","ReL1")
-    anaCCLUT.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","","ReL1")
-    anaCCLUT.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","","ReL1")
-    anaCCLUT.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","MPCSORTED","ReL1")
-    anaCCLUT.emtfTrack.inputTag = cms.InputTag("simEmtfDigisRun3CCLUT","","ReL1")
+    anaCCLUT.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","",processName)
+    anaCCLUT.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","",processName)
+    anaCCLUT.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","",processName)
+    anaCCLUT.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","MPCSORTED",processName)
+    anaCCLUT.emtfTrack.inputTag = cms.InputTag("simEmtfDigisRun3CCLUT","",processName)
 
     process.GEMCSCAnalyzerNoILT = process.GEMCSCAnalyzer.clone()
     anaCCLUT = process.GEMCSCAnalyzerNoILT
-    anaCCLUT.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisNoILT","","ReL1")
-    anaCCLUT.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisNoILT","","ReL1")
-    anaCCLUT.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisNoILT","","ReL1")
-    anaCCLUT.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisNoILT","MPCSORTED","ReL1")
-    anaCCLUT.emtfTrack.inputTag = cms.InputTag("simEmtfDigisNoILT","","ReL1")
+    anaCCLUT.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisNoILT","",processName)
+    anaCCLUT.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisNoILT","",processName)
+    anaCCLUT.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisNoILT","",processName)
+    anaCCLUT.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisNoILT","MPCSORTED",processName)
+    anaCCLUT.emtfTrack.inputTag = cms.InputTag("simEmtfDigisNoILT","",processName)
 
     return process

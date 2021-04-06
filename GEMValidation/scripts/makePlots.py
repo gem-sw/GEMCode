@@ -20,9 +20,9 @@ class GEMCSCStubPlotter():
     self.targetDir = self.baseDir + self.analyzer + "/"
     self.file = TFile.Open(self.inputFile)
     self.dirAna = (self.file).Get(self.analyzer)
-    self.tree = self.dirAna.Get("SimTrack")
-    self.treeFriends = ["GenParticle", "CSCSimHit", "CSCDigi", "CSCStub",
-                        "GEMSimHit", "GEMDigi", "GEMStub", "L1Mu", "L1Track"]
+    self.tree = self.dirAna.Get("simTrack")
+    self.treeFriends = ["genParticle", "cscSimHit", "cscDigi", "cscStub",
+                        "gemSimHit", "gemDigi", "gemStub", "l1Mu", "l1Track"]
     for p in self.treeFriends:
       self.tree.AddFriend(self.dirAna.Get(p))
     self.yMin = 0.5
