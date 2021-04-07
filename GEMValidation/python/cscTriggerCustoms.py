@@ -24,33 +24,49 @@ def dropCaloDigis(process):
 
 def addCSCTriggerRun3(process):
     ## Run-2 patterns without ILT
-    process.simCscTriggerPrimitiveDigisNoILT = process.simCscTriggerPrimitiveDigis.clone()
-    process.simCscTriggerPrimitiveDigisNoILT.commonParam.runME11ILT = False
-    process.simCscTriggerPrimitiveDigisNoILT.commonParam.GEMPadDigiClusterProducer = cms.InputTag("")
-    process.simEmtfDigisNoILT = process.simEmtfDigis.clone()
-
-    ## Run-3 patterns with CCLUT
-    process.simCscTriggerPrimitiveDigisRun3CCLUT = process.simCscTriggerPrimitiveDigis.clone()
-    process.simCscTriggerPrimitiveDigisRun3CCLUT.commonParam.runCCLUT = True
-    process.simEmtfDigisRun3CCLUT = process.simEmtfDigis.clone()
-
+    process.simCscTriggerPrimitiveDigis.commonParam.runME11ILT = False
+    process.simCscTriggerPrimitiveDigis.commonParam.GEMPadDigiClusterProducer = cms.InputTag("")
     process.simEmtfDigis.CSCInput = cms.InputTag(
         'simCscTriggerPrimitiveDigis','MPCSORTED',process._Process__name)
+
+    ## Run-2 patterns with ILT
+    process.simCscTriggerPrimitiveDigisILT = process.simCscTriggerPrimitiveDigis.clone()
+    process.simCscTriggerPrimitiveDigisILT.commonParam.runME11ILT = True
+    process.simCscTriggerPrimitiveDigisILT.commonParam.GEMPadDigiClusterProducer = cms.InputTag("simMuonGEMPadDigiClusters")
+    process.simEmtfDigisILT = process.simEmtfDigis.clone()
+    process.simEmtfDigisILT.CSCInput = cms.InputTag(
+        'simCscTriggerPrimitiveDigisILT','MPCSORTED',process._Process__name)
+
+    ## Run-3 patterns with CCLUT, without ILT
+    process.simCscTriggerPrimitiveDigisRun3CCLUT = process.simCscTriggerPrimitiveDigis.clone()
+    process.simCscTriggerPrimitiveDigisRun3CCLUT.commonParam.runCCLUT = True
+    process.simCscTriggerPrimitiveDigisRun3CCLUT.commonParam.runME11ILT = False
+    process.simCscTriggerPrimitiveDigisRun3CCLUT.commonParam.GEMPadDigiClusterProducer = cms.InputTag("")
+    process.simEmtfDigisRun3CCLUT = process.simEmtfDigis.clone()
     process.simEmtfDigisRun3CCLUT.CSCInput = cms.InputTag(
         'simCscTriggerPrimitiveDigisRun3CCLUT','MPCSORTED',process._Process__name)
-    process.simEmtfDigisNoILT.CSCInput = cms.InputTag(
-        'simCscTriggerPrimitiveDigisNoILT','MPCSORTED',process._Process__name)
+
+    ## Run-3 patterns with CCLUT, with ILT
+    process.simCscTriggerPrimitiveDigisRun3CCLUTILT = process.simCscTriggerPrimitiveDigis.clone()
+    process.simCscTriggerPrimitiveDigisRun3CCLUTILT.commonParam.runCCLUT = True
+    process.simCscTriggerPrimitiveDigisRun3CCLUTILT.commonParam.runME11ILT = True
+    process.simCscTriggerPrimitiveDigisRun3CCLUTILT.commonParam.GEMPadDigiClusterProducer = cms.InputTag("simMuonGEMPadDigiClusters")
+    process.simEmtfDigisRun3CCLUTILT = process.simEmtfDigis.clone()
+    process.simEmtfDigisRun3CCLUTILT.CSCInput = cms.InputTag(
+        'simCscTriggerPrimitiveDigisRun3CCLUTILT','MPCSORTED',process._Process__name)
 
     ## redefine the L1-step
     process.SimL1Emulator = cms.Sequence(
         process.simMuonGEMPadDigis *
         process.simMuonGEMPadDigiClusters *
-        process.simCscTriggerPrimitiveDigisNoILT *
         process.simCscTriggerPrimitiveDigis *
+        process.simCscTriggerPrimitiveDigisILT *
         process.simCscTriggerPrimitiveDigisRun3CCLUT *
-        process.simEmtfDigisNoILT *
+        process.simCscTriggerPrimitiveDigisRun3CCLUTILT *
         process.simEmtfDigis *
+        process.simEmtfDigisILT *
         process.simEmtfDigisRun3CCLUT
+        process.simEmtfDigisRun3CCLUTILT
     )
 
     return process
