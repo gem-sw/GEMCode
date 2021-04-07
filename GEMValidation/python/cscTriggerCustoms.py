@@ -25,7 +25,8 @@ def dropCaloDigis(process):
 def addCSCTriggerRun3(process):
     ## Run-2 patterns without ILT
     process.simCscTriggerPrimitiveDigisNoILT = process.simCscTriggerPrimitiveDigis.clone()
-    process.simCscTriggerPrimitiveDigisNoILT.commonParam.runME11Up = True
+    process.simCscTriggerPrimitiveDigisNoILT.commonParam.runME11ILT = False
+    process.simCscTriggerPrimitiveDigisNoILT.commonParam.GEMPadDigiClusterProducer = cms.InputTag("")
     process.simEmtfDigisNoILT = process.simEmtfDigis.clone()
 
     ## Run-3 patterns with CCLUT
@@ -44,11 +45,11 @@ def addCSCTriggerRun3(process):
     process.SimL1Emulator = cms.Sequence(
         process.simMuonGEMPadDigis *
         process.simMuonGEMPadDigiClusters *
-        process.simCscTriggerPrimitiveDigis *
         process.simCscTriggerPrimitiveDigisNoILT *
+        process.simCscTriggerPrimitiveDigis *
         process.simCscTriggerPrimitiveDigisRun3CCLUT *
-        process.simEmtfDigis *
         process.simEmtfDigisNoILT *
+        process.simEmtfDigis *
         process.simEmtfDigisRun3CCLUT
     )
 
