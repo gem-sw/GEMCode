@@ -144,10 +144,13 @@ def CSCFloatSlope(plotter, even):
         iBinOption += 1
         ## change last one to 2.5 - captures the overflow
         binYOption[-1] = 2.5
-        print(binYOption)
+        if even:
+            print( binYOption)
 
         c = newCanvas2D()
         gPad.SetLogz()
+
+        toPlot1 = "%s:simTrack.pt"%(slope_clct(st, even))
 
         base = draw_2Dbis(plotter.tree, title, h_bins, 16, array('d',binYOption), toPlot1, "fabs(%s)<2.5"%(slope_clct(0, even)), "COLZ")
         base2 = draw_2Dbis(plotter.tree, title, h_bins, 16, array('d',binYOption), toPlot1, "fabs(%s)<2.5"%(slope_clct(3, even)), "COLZ")
@@ -157,7 +160,11 @@ def CSCFloatSlope(plotter, even):
         base2.GetYaxis().SetLabelSize(0.05)
         base2.GetXaxis().SetTitleSize(0.05)
         base2.GetYaxis().SetTitleSize(0.05)
-        print(calculateEntropy(base2))
+
+        if even:
+            print("& %.3f"%calculateEntropy(base2))
+        else:
+            print("& %.3f \\\\"%calculateEntropy(base2))
 
         CMS_lumi.CMS_lumi(c, iPeriod, iPos)
 
@@ -168,6 +175,44 @@ def CSCFloatSlope(plotter, even):
         else:
             c.Print("%sOcc_CSCCLCT_floatslope_odd_binOption%d_ME1%s"%(plotter.targetDir + subdirectory, iBinOption, plotter.ext))
 
+        del c, base, base2, csc
+
+
+def CSCFloatSlopeV2(plotter, even):
+
+    xTitle = "True muon pT [GeV]"
+    yTitle = "CLCT Slope [Half-strips/layer]"
+    title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
+
+    for st in range(0,len(cscStations)):
+
+        h_bins = "(50,0,50)"
+        nBins = int(h_bins[1:-1].split(',')[0])
+        minBin = float(h_bins[1:-1].split(',')[1])
+        maxBin = float(h_bins[1:-1].split(',')[2])
+
+        h_binsY = [0.0,0.01,0.031,0.062,0.103,0.154,0.216,0.288,0.371,0.463,0.566,0.679,0.803,0.937,1.081,1.235,2.5]
+
+        toPlot1 = "fabs(%s):simTrack.pt"%(slope_clct(st, even))
+
+        c = newCanvas2D()
+        gPad.SetLogz()
+        base = draw_2Dbis(plotter.tree, title, h_bins, 16, array('d',h_binsY), toPlot1, "fabs(%s)<2.5"%(slope_clct(st, even)), "COLZ")
+        base.GetXaxis().SetLabelSize(0.05)
+        base.GetYaxis().SetLabelSize(0.05)
+        base.GetXaxis().SetTitleSize(0.05)
+        base.GetYaxis().SetTitleSize(0.05)
+
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+
+        csc = drawCSCLabel(cscStations[st].label, 0.75,0.85,0.05)
+
+        if even:
+            c.Print("%sOcc_CSCCLCT_floatslope_even_final_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
+        else:
+            c.Print("%sOcc_CSCCLCT_floatslope_odd_final_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
+
+        del c, base, csc
 
 
 def CSCFloatSlope1D(plotter, even):
@@ -211,5 +256,9 @@ def CSCStub(plotter):
     #CLCTPattern(plotter)
     CSCFloatSlope(plotter,True)
     CSCFloatSlope(plotter,False)
-    CSCFloatSlope1D(plotter,False)
-    CSCFloatSlope1D(plotter,True)
+    CSCFloatSlopeV2(plotter,True)
+    CSCFloatSlopeV2(plotter,False)
+
+
+    #CSCFloatSlope1D(plotter,False)
+    #CSCFloatSlope1D(plotter,True)
