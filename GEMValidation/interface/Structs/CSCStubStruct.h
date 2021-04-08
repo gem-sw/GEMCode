@@ -26,6 +26,12 @@ namespace gem {
     int bx_alct_even[nStations];
     int bx_clct_even[nStations];
 
+    int bend_clct_odd[nStations];
+    int bend_clct_even[nStations];
+
+    int endcap_clct_odd[nStations];
+    int endcap_clct_even[nStations];
+
     int hs_clct_odd[nStations];
     int hs_clct_even[nStations];
 
@@ -212,6 +218,12 @@ namespace gem {
 
         bx_clct_odd[i] = -9;
         bx_clct_even[i] = -9;
+
+        endcap_clct_odd[i] = -9;
+        endcap_clct_even[i] = -9;
+
+        bend_clct_odd[i] = -9;
+        bend_clct_even[i] = -9;
         bx_alct_odd[i] = -9;
         bx_alct_even[i] = -9;
 
@@ -240,9 +252,14 @@ namespace gem {
       t->Branch("has_alct_even", has_alct_even, "has_alct_even[11]/O");
       t->Branch("has_lct_even", has_lct_even, "has_lct_even[11]/O");
 
-
       t->Branch("bx_clct_odd", bx_clct_odd, "bx_clct_odd[11]/I");
       t->Branch("bx_clct_even", bx_clct_even, "bx_clct_even[11]/I");
+
+      t->Branch("endcap_clct_odd", endcap_clct_odd, "endcap_clct_odd[11]/I");
+      t->Branch("endcap_clct_even", endcap_clct_even, "endcap_clct_even[11]/I");
+
+      t->Branch("bend_clct_odd", bend_clct_odd, "bend_clct_odd[11]/I");
+      t->Branch("bend_clct_even", bend_clct_even, "bend_clct_even[11]/I");
 
       t->Branch("pattern_clct_odd", pattern_clct_odd, "pattern_clct_odd[11]/I");
       t->Branch("pattern_clct_even", pattern_clct_even, "pattern_clct_even[11]/I");

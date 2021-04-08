@@ -78,7 +78,10 @@ ana.cscCLCT.verbose = 0
 ana.cscLCT.verbose = 0
 ana.cscLCT.addGhostLCTs = cms.bool(True)
 
-useUnpacked = True
+from GEMCode.GEMValidation.cscTriggerCustoms import addAnalysisRun3
+process = addAnalysisRun3(process)
+
+useUnpacked = False
 if useUnpacked:
     ana.gemStripDigi.inputTag = "muonGEMDigis"
     ana.muon.inputTag = cms.InputTag("gmtStage2Digis","Muon")
@@ -86,7 +89,9 @@ if useUnpacked:
 
 process.options = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 
-process.p = cms.Path(process.GEMCSCAnalyzer)
+process.p = cms.Path(
+    process.Analysis
+)
 
 ## messages
 print

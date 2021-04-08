@@ -65,9 +65,15 @@ def delta_bend_clct(st):
 
 def slope_clct(st, even):
     if even:
-        return "cscStub.slope_clct_odd[%d]"%(st)
-    else:
         return "cscStub.slope_clct_even[%d]"%(st)
+    else:
+        return "cscStub.slope_clct_odd[%d]"%(st)
+
+def slope_clct_bend(st, even):
+    if even:
+        return "(cscStub.slope_clct_even[%d] * cscStub.endcap_clct_even[%d])"%(st,st)
+    else:
+        return "(cscStub.slope_clct_odd[%d] * cscStub.endcap_clct_odd[%d])"%(st,st)
 
 def ok_pattern(st, ipat):
     c1 = TCut("cscStub.pattern_clct_even[%d] >= %d"%(st,ipat))

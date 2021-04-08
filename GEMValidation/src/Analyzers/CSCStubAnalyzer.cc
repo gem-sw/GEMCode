@@ -336,6 +336,8 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
         cscStubTree.quality_clct_odd[st] = clct.getQuality();
         cscStubTree.pattern_clct_odd[st] = clct.getPattern();
         cscStubTree.bx_clct_odd[st] = clct.getBX();
+        cscStubTree.bend_clct_odd[st] = clct.getBend();
+        cscStubTree.endcap_clct_odd[st] = id.zendcap();
         cscStubTree.hs_clct_odd[st] = clct.getKeyStrip();
         cscStubTree.qs_clct_odd[st] = clct.getKeyStrip(4);
         cscStubTree.es_clct_odd[st] = clct.getKeyStrip(8);
@@ -358,6 +360,8 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
         cscStubTree.quality_clct_even[st] = clct.getQuality();
         cscStubTree.pattern_clct_even[st] = clct.getPattern();
         cscStubTree.bx_clct_even[st] = clct.getBX();
+        cscStubTree.bend_clct_even[st] = clct.getBend();
+        cscStubTree.endcap_clct_even[st] = id.zendcap();
         cscStubTree.hs_clct_even[st] = clct.getKeyStrip();
         cscStubTree.qs_clct_even[st] = clct.getKeyStrip(4);
         cscStubTree.es_clct_even[st] = clct.getKeyStrip(8);
