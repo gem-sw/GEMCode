@@ -38,7 +38,11 @@ def dropNonMuonCollections(process):
         '*_simBmtfDigis_*_*',
         '*_simOmtfDigis_*_*',
         '*_*_*BMTF*_*',
-        '*_*_*OMTF*_*'
+        '*_*_*OMTF*_*',
+        ## uGT and HLT
+        '*_hltGtStage2ObjectMap_*_*',
+        '*_simGtStage2Digis_*_*',
+        '*_hltTriggerSummary*_*_*'
     ]
 
     for a in alist:
