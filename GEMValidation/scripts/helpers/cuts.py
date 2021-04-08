@@ -124,47 +124,47 @@ def ok_csc_lcts(n_min = 2):
 
 ## GEM simhit
 def ok_gem_sh(st):
-    return TCut("GEMSimHit.has_gem_sh_even[%d] || GEMSimHit.has_gem_sh_odd[%d]"%(st,st))
+    return TCut("gemSimHit.has_gem_sh_even[%d] || gemSimHit.has_gem_sh_odd[%d]"%(st,st))
 
 def ok_gem_sh2(st):
-    return TCut("GEMSimHit.has_gem_sh2_even[%d] || GEMSimHit.has_gem_sh2_odd[%d]"%(st,st))
+    return TCut("gemSimHit.has_gem_sh2_even[%d] || gemSimHit.has_gem_sh2_odd[%d]"%(st,st))
 
-## GEM digi
+## gem digi
 def ok_gem_dg(st):
-    return TCut("GEMDigi.has_gem_dg_even[%d] || GEMDigi.has_gem_dg_odd[%d]"%(st,st))
+    return TCut("gemDigi.has_gem_dg_even[%d] || gemDigi.has_gem_dg_odd[%d]"%(st,st))
 
 def ok_gem_dg2(st):
-    return TCut("GEMDigi.has_gem_dg2_even[%d] || GEMDigi.has_gem_dg2_odd[%d]"%(st,st))
+    return TCut("gemDigi.has_gem_dg2_even[%d] || gemDigi.has_gem_dg2_odd[%d]"%(st,st))
 
-## GEM stub
+## gem stub
 def ok_gem_pad(st):
-    return TCut("GEMStub.has_gem_pad_even[%d] || GEMStub.has_gem_pad_odd[%d]"%(st,st))
+    return TCut("gemStub.has_gem_pad_even[%d] || gemStub.has_gem_pad_odd[%d]"%(st,st))
 
 def ok_gem_pad2(st):
-    return TCut("GEMStub.has_gem_pad2_even[%d] || GEMStub.has_gem_pad2_odd[%d]"%(st,st))
+    return TCut("gemStub.has_gem_pad2_even[%d] || gemStub.has_gem_pad2_odd[%d]"%(st,st))
 
 def ok_gem_copad(st):
-    return TCut("GEMStub.has_gem_copad_even[%d] || GEMStub.has_gem_copad_odd[%d]"%(st,st))
+    return TCut("gemStub.has_gem_copad_even[%d] || gemStub.has_gem_copad_odd[%d]"%(st,st))
 
 def ok_gem_cluster(st):
-    return TCut("GEMStub.has_gem_cluster_even[%d] || GEMStub.has_gem_cluster_odd[%d]"%(st,st))
+    return TCut("gemStub.has_gem_cluster_even[%d] || gemStub.has_gem_cluster_odd[%d]"%(st,st))
 
 def dphi_pad1(st):
-    return "max(GEMStub.dphi_pad1_even[%d], GEMStub.dphi_pad1_odd[%d])"%(st,st)
+    return "max(gemStub.dphi_pad1_even[%d], gemStub.dphi_pad1_odd[%d])"%(st,st)
 
-## L1Mu
+## l1Mu
 def ok_emtf(pt):
-    return TCut("L1Mu.has_emtfTrack && L1Mu.emtf_pt > %f"%(pt))
+    return TCut("l1Mu.has_emtfTrack && l1Mu.emtf_pt > %f"%(pt))
 
 def ok_emtfcand():
-    return TCut("L1Mu.has_emtfRegCand")
+    return TCut("l1Mu.has_emtfRegCand")
 
 def ok_l1mu():
-    return TCut("L1Mu.has_gmtCand")
+    return TCut("l1Mu.has_gmtCand")
 
-## L1Track
+## l1Track
 def ok_l1track(pt):
-    return TCut("L1Track.has_L1Track && L1Track.L1Track_pt > %f"%(pt))
+    return TCut("l1Track.has_l1Track && l1Track.l1Track_pt > %f"%(pt))
 
 def ok_l1trackmuon(pt):
-    return TCut("L1Track.has_L1TrackMuon && L1Track.L1TrackMuon_pt > %f"%(pt))
+    return TCut("l1Track.has_l1TrackMuon && l1Track.l1TrackMuon_pt > %f"%(pt))

@@ -20,6 +20,8 @@ def dropCaloDigis(process):
     process.pdigi_valid.remove(process.simHcalTriggerPrimitiveDigis)
     process.pdigi_valid.remove(process.simHcalDigis)
     process.pdigi_valid.remove(process.simHcalTTPDigis)
+    ## don't need DT digis
+    process.pdigi_valid.remove(process.simMuonDTDigis)
     return process
 
 def addCSCTriggerRun3(process):
@@ -65,7 +67,7 @@ def addCSCTriggerRun3(process):
         process.simCscTriggerPrimitiveDigisRun3CCLUTILT *
         process.simEmtfDigis *
         process.simEmtfDigisILT *
-        process.simEmtfDigisRun3CCLUT
+        process.simEmtfDigisRun3CCLUT *
         process.simEmtfDigisRun3CCLUTILT
     )
 
@@ -101,5 +103,10 @@ def addAnalysisRun3(process):
     anaCCLUT.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisNoILT","",processName)
     anaCCLUT.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisNoILT","MPCSORTED",processName)
     anaCCLUT.emtfTrack.inputTag = cms.InputTag("simEmtfDigisNoILT","",processName)
+
+    process.Analysis = cms.Sequence(
+        process.GEMCSCAnalyzer *
+        process.GEMCSCAnalyzerRun3CCLUT
+    )
 
     return process
