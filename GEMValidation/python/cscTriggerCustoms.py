@@ -13,6 +13,12 @@ def runOn110XMC(process):
     process.simMuonGEMPadDigis.InputCollection = "muonGEMDigis"
     return process
 
+def runOn120XMC(process):
+    ## customize unpacker
+    process.muonGEMDigis.useDBEMap = True
+    process.simMuonGEMPadDigis.InputCollection = "muonGEMDigis"
+    return process
+
 def dropCaloDigis(process):
     process.pdigi_valid.remove(process.simEcalTriggerPrimitiveDigis)
     process.pdigi_valid.remove(process.simEcalDigis)
