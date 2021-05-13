@@ -1,5 +1,6 @@
 import FWCore.ParameterSet.Config as cms
 from Configuration.Eras.Modifier_phase2_muon_cff import phase2_muon
+import os
 
 def runOn110XMC(process, runWithCrab = False):
     # customize unpacker
