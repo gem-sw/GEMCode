@@ -1,4 +1,5 @@
 #include "GEMCode/GEMValidation/interface/AnalyzerManager.h"
+#include <iostream>
 
 AnalyzerManager::AnalyzerManager(const edm::ParameterSet& conf, edm::ConsumesCollector&& iC) {
   gent_.reset(new GenParticleAnalyzer(conf, std::move(iC)));
