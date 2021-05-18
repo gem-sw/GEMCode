@@ -202,3 +202,8 @@ RelValDisplacedMuPt2To10_PU25ns_110X_mcRun4_realistic_v3_2026D49PU200 = [
 '/store/relval/CMSSW_11_0_0/RelValDisplacedMuPt2To10/GEN-SIM-DIGI-RAW/PU25ns_110X_mcRun4_realistic_v3_2026D49PU200-v1/20000/F3A961BC-B9D7-BA4C-9F2F-9E3DD5AC1107.root',
 '/store/relval/CMSSW_11_0_0/RelValDisplacedMuPt2To10/GEN-SIM-DIGI-RAW/PU25ns_110X_mcRun4_realistic_v3_2026D49PU200-v1/20000/FBE58BFB-2915-BB47-BECA-CE83246A17FB.root'
 ]
+
+RelValSingleMuPt10_120X_mcRun3_realistic_v10_noPU = [
+    '/store/relval/CMSSW_12_0_0_pre1/RelValSingleMuPt10/GEN-SIM-DIGI-RAW/113X_mcRun3_2021_realistic_v10-v1/00000/975a2e15-dfa2-44e7-8198-5b5c00bd23c4.root',
+    '/store/relval/CMSSW_12_0_0_pre1/RelValSingleMuPt10/GEN-SIM-DIGI-RAW/113X_mcRun3_2021_realistic_v10-v1/00000/b8958a22-d87f-4557-94b0-b1cee3c46382.root'
+]
