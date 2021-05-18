@@ -87,7 +87,7 @@ def addCSCTriggerRun3(process):
 def addAnalysisRun3(process):
 
     ana = process.GEMCSCAnalyzer
-    processName = "DIGI"
+    processName = "ReL1"
     ana.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","",processName)
     ana.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","",processName)
     ana.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","",processName)
@@ -119,5 +119,7 @@ def addAnalysisRun3(process):
         process.GEMCSCAnalyzer *
         process.GEMCSCAnalyzerRun3CCLUT
     )
+    process.GEMCSCAnalyzer.useGEMs = cms.bool(False)
+    process.GEMCSCAnalyzerRun3CCLUT.useGEMs = cms.bool(False)
 
     return process

@@ -4,7 +4,7 @@ cmssw_compile:
     - cvmfs
   variables:
     CMS_PATH: /cvmfs/cms.cern.ch
-    CMSSW_RELEASE: CMSSW_11_3_0_pre5
+    CMSSW_RELEASE: CMSSW_12_0_0_pre1
   script:
     - shopt -s expand_aliases
     - set +u && source ${CMS_PATH}/cmsset_default.sh; set -u
@@ -19,10 +19,17 @@ cmssw_compile:
     # Important: run git cms-init with --upstream-only flag to not run into
     # problems with git config
     - git cms-init --upstream-only
-    - git cms-rebase-topic dildick:from-CMSSW_11_3_0_pre5-GEM-CSC-TaskForce-20210331
+    - git cms-rebase-topic dildick:from-CMSSW_12_0_0_pre1-GEM-CSC-taskforce-20210518
     - ls -h ${CI_PROJECT_DIR}
     - mkdir "${CMSSW_BASE}/src/GEMCode/"
     - cp -r "${CI_PROJECT_DIR}/GEMValidation" "${CMSSW_BASE}/src/GEMCode/"
     - ls -h ${CMSSW_BASE}/src/GEMCode/
     - ls -h ${CMSSW_BASE}/src/GEMCode/GEMValidation
+    - git cms-addpkg L1Trigger/CSCTriggerPrimitives
+    - git clone https://github.com/cms-data/L1Trigger-CSCTriggerPrimitives
+    - mkdir L1Trigger/CSCTriggerPrimitives/data
+    - cp -r L1Trigger-CSCTriggerPrimitives/CCLUT/ L1Trigger/CSCTriggerPrimitives/data
+    - cp -r L1Trigger-CSCTriggerPrimitives/GEMCSC L1Trigger/CSCTriggerPrimitives/data
+    - cp -r L1Trigger-CSCTriggerPrimitives/LCTCode L1Trigger/CSCTriggerPrimitives/data
+    - cp -r L1Trigger-CSCTriggerPrimitives/ME11 L1Trigger/CSCTriggerPrimitives/data
     - scram b -j 4
