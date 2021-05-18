@@ -11,7 +11,7 @@ AnalyzerManager::AnalyzerManager(const edm::ParameterSet& conf, edm::ConsumesCol
   cscdg_.reset(new CSCDigiAnalyzer(conf, std::move(iC)));
   cscstub_.reset(new CSCStubAnalyzer(conf, std::move(iC)));
   l1mu_.reset(new L1MuAnalyzer(conf, std::move(iC)));
-  l1track_.reset(new L1TrackAnalyzer(conf, std::move(iC)));
+  // l1track_.reset(new L1TrackAnalyzer(conf, std::move(iC)));
   // recotrack_.reset(new RecoTrackAnalyzer(conf));
 }
 
@@ -36,7 +36,7 @@ void AnalyzerManager::setMatcher(const MatcherManager& manager) {
   cscdg_->setMatcher(*manager.cscDigis());
   cscstub_->setMatcher(*manager.cscStubs());
   l1mu_->setMatcher(*manager.l1Muons());
-  l1track_->setMatcher(*manager.l1Tracks());
+  // l1track_->setMatcher(*manager.l1Tracks());
   // recotrack_->setMatcher(*manager.recoTracks());
 }
 
@@ -68,5 +68,5 @@ AnalyzerManager::analyze(TreeManager& tree, const SimTrack& t, const SimVertex& 
   cscdg_->analyze(tree);
   cscstub_->analyze(tree);
   l1mu_->analyze(tree);
-  l1track_->analyze(tree);
+  // l1track_->analyze(tree);
 }

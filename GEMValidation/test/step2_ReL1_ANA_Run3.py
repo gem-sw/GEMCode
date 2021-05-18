@@ -29,20 +29,11 @@ process.maxEvents = cms.untracked.PSet(
 )
 
 # Input source
+from GEMCode.GEMValidation.relValSamples import *
+inputFiles = RelValSingleMuPt10_120X_mcRun3_realistic_v10_noPU
+
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring(
-        #'file:FFC59020-EA48-1F41-B4B8-FF34C0E09D88.root'
-        '/store/relval/CMSSW_11_0_0_patch1/RelValZMM_14/GEN-SIM-DIGI-RAW/PU_110X_mcRun3_2021_realistic_v6-v1/20000/067CC83E-CD24-514F-9B19-8C6A0FE0A248.root',
-        '/store/relval/CMSSW_11_0_0_patch1/RelValZMM_14/GEN-SIM-DIGI-RAW/PU_110X_mcRun3_2021_realistic_v6-v1/20000/11889C40-9C6C-FB4B-BDD9-787A9E24DF2B.root',
-        '/store/relval/CMSSW_11_0_0_patch1/RelValZMM_14/GEN-SIM-DIGI-RAW/PU_110X_mcRun3_2021_realistic_v6-v1/20000/1772386A-B293-2343-BC00-CE43D2E4D7E0.root',
-        '/store/relval/CMSSW_11_0_0_patch1/RelValZMM_14/GEN-SIM-DIGI-RAW/PU_110X_mcRun3_2021_realistic_v6-v1/20000/1DD5298E-A413-9247-B6F5-90A1947D8470.root',
-        '/store/relval/CMSSW_11_0_0_patch1/RelValZMM_14/GEN-SIM-DIGI-RAW/PU_110X_mcRun3_2021_realistic_v6-v1/20000/43E5C33E-45F5-DB49-9D4B-972F36817A9C.root',
-        '/store/relval/CMSSW_11_0_0_patch1/RelValZMM_14/GEN-SIM-DIGI-RAW/PU_110X_mcRun3_2021_realistic_v6-v1/20000/4A35113F-0308-3C49-8834-A55D89D8FCC8.root',
-        '/store/relval/CMSSW_11_0_0_patch1/RelValZMM_14/GEN-SIM-DIGI-RAW/PU_110X_mcRun3_2021_realistic_v6-v1/20000/6050654C-1EBD-7642-8316-6FB05E1A45AD.root',
-        '/store/relval/CMSSW_11_0_0_patch1/RelValZMM_14/GEN-SIM-DIGI-RAW/PU_110X_mcRun3_2021_realistic_v6-v1/20000/89558BB3-16B4-6D45-AB29-BE5FDE8C42C1.root',
-        '/store/relval/CMSSW_11_0_0_patch1/RelValZMM_14/GEN-SIM-DIGI-RAW/PU_110X_mcRun3_2021_realistic_v6-v1/20000/8D70223E-5122-D340-AAC7-8599725CC327.root',
-        '/store/relval/CMSSW_11_0_0_patch1/RelValZMM_14/GEN-SIM-DIGI-RAW/PU_110X_mcRun3_2021_realistic_v6-v1/20000/93ED664A-EFE0-9E40-8F6E-0F535E50B009.root'
-    ),
+    fileNames = cms.untracked.vstring(*inputFiles),
     secondaryFileNames = cms.untracked.vstring()
 )
 
@@ -114,7 +105,7 @@ from GEMCode.GEMValidation.cscTriggerCustoms import addCSCTriggerRun3
 process = addCSCTriggerRun3(process)
 
 from GEMCode.GEMValidation.cscTriggerCustoms import addAnalysisRun3
-process = addAnalysisRun3( process)
+process = addAnalysisRun3(process)
 
 process.GEMCSCAnalyzer.gemStripDigi.verbose = 1
 process.GEMCSCAnalyzer.gemStripDigi.matchToSimLink = True
@@ -130,7 +121,7 @@ process.raw2digi_step = cms.Path(process.muonGEMDigis)
 process.L1simulation_step = cms.Path(process.SimL1Emulator)
 process.ana_step = cms.Path(
     process.GEMCSCAnalyzer
-    #                            * process.GEMCSCAnalyzerRun3CCLUT
+    * process.GEMCSCAnalyzerRun3CCLUT
 )
 process.endjob_step = cms.EndPath(process.endOfProcess)
 process.FEVTDEBUGoutput_step = cms.EndPath(process.FEVTDEBUGoutput)

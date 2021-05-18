@@ -12,6 +12,7 @@ GEMCSCAnalyzer = cms.EDAnalyzer(
     runL1 = cms.bool(True),
     runReco = cms.bool(False),
     verbose = cms.untracked.int32(0),
+    useGEMs = cms.bool(True),
     minNHitsChamberGEMSimHit = cms.int32(1),
     minNHitsChamberCSCSimHit = cms.int32(3),
     minNHitsChamberCSCDigi = cms.int32(4),
