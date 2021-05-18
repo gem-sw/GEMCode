@@ -4,8 +4,14 @@
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v
 # with command line options: step2bis.py --filein file:step3.root --fileout file:step2bis.root --mc --eventcontent FEVTDEBUG --datatier GEN-SIM-DIGI-L1 --conditions auto:phase1_2021_realistic --step L1 --geometry DB:Extended --era Run3 --python_filename step2bis_L1.py --no_exec -n 10
 import FWCore.ParameterSet.Config as cms
-
+from FWCore.ParameterSet.VarParsing import VarParsing
 from Configuration.Eras.Era_Run3_cff import Run3
+
+options = VarParsing('analysis')
+options.register ("test", True, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
+options.register ("runOnRaw", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
+options.register ("runAna", True, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
+options.parseArguments()
 
 process = cms.Process('ReL1',Run3)
 
@@ -23,8 +29,12 @@ process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 process.load('GEMCode.GEMValidation.GEMCSCAnalyzer_cff')
 
+nEvents = -1
+if options.test:
+    nEvents = 100
+
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(-1000),
+    input = cms.untracked.int32(nEvents),
     output = cms.optional.untracked.allowed(cms.int32,cms.PSet)
 )
 
@@ -114,7 +124,8 @@ process.GEMCSCAnalyzer.gemPadCluster.verbose = 1
 process.GEMCSCAnalyzer.gemCoPadDigi.verbose = 1
 
 from GEMCode.GEMValidation.cscTriggerCustoms import runOn110XMC
-process = runOn110XMC(process)
+if options.runOnRaw:
+    process = runOn110XMC(process)
 
 # Path and EndPath definitions
 process.raw2digi_step = cms.Path(process.muonGEMDigis)
@@ -131,13 +142,15 @@ process.TFileService = cms.Service("TFileService",
 )
 
 # Schedule definition
-process.schedule = cms.Schedule(
-    #process.raw2digi_step,
-    process.L1simulation_step,
-    process.ana_step,
-    process.endjob_step
-#    process.FEVTDEBUGoutput_step
-)
+process.schedule = cms.Schedule()
+if options.runOnRaw:
+    process.schedule.extend([process.raw2digi_step])
+process.schedule.extend([process.L1simulation_step])
+if options.runAna:
+    process.schedule.extend([process.ana_step])
+process.schedule.extend([process.endjob_step])
+#process.schedule.extend([process.FEVTDEBUGoutput_step])
+
 from PhysicsTools.PatAlgos.tools.helpers import associatePatAlgosToolsTask
 associatePatAlgosToolsTask(process)
 

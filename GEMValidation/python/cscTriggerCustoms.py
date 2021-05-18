@@ -119,7 +119,4 @@ def addAnalysisRun3(process):
         process.GEMCSCAnalyzer *
         process.GEMCSCAnalyzerRun3CCLUT
     )
-    process.GEMCSCAnalyzer.useGEMs = cms.bool(False)
-    process.GEMCSCAnalyzerRun3CCLUT.useGEMs = cms.bool(False)
-
     return process
