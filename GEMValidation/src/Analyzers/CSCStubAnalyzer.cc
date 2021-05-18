@@ -36,11 +36,11 @@ CSCStubAnalyzer::CSCStubAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCol
   patternConversionLUTFiles_ = conf.getParameter<std::vector<std::string>>("patternConversionLUTFiles");
 
   for (int i = 0; i < 5; ++i) {
-    lutpos_[i] = std::make_unique<CSCComparatorCodeLUT>(positionLUTFiles_[i]);
-    lutposfloat_[i] = std::make_unique<CSCComparatorCodeLUT>(positionFloatLUTFiles_[i]);
-    lutslope_[i] = std::make_unique<CSCComparatorCodeLUT>(slopeLUTFiles_[i]);
-    lutslopefloat_[i] = std::make_unique<CSCComparatorCodeLUT>(slopeFloatLUTFiles_[i]);
-    lutpatconv_[i] = std::make_unique<CSCComparatorCodeLUT>(patternConversionLUTFiles_[i]);
+    lutpos_[i] = std::make_unique<CSCLUTReader>(positionLUTFiles_[i]);
+    lutposfloat_[i] = std::make_unique<CSCLUTReader>(positionFloatLUTFiles_[i]);
+    lutslope_[i] = std::make_unique<CSCLUTReader>(slopeLUTFiles_[i]);
+    lutslopefloat_[i] = std::make_unique<CSCLUTReader>(slopeFloatLUTFiles_[i]);
+    lutpatconv_[i] = std::make_unique<CSCLUTReader>(patternConversionLUTFiles_[i]);
   }
 }
 
@@ -320,7 +320,7 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
 
     int deltaStrip = 0;
     if (id.station() == 1 and id.ring() == 4 and clct.getKeyStrip() > CSCConstants::MAX_HALF_STRIP_ME1B)
-      deltaStrip = CSCConstants::MAX_NUM_STRIPS_ME1B;
+      deltaStrip = CSCConstants::NUM_HALF_STRIPS_ME1B;
 
     float fpos = -9;
     if (clct.getCompCode() != -1) {

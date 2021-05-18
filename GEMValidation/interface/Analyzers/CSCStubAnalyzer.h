@@ -4,7 +4,7 @@
 #include "GEMCode/GEMValidation/interface/Helpers.h"
 #include "GEMCode/GEMValidation/interface/MatcherSuperManager.h"
 #include "GEMCode/GEMValidation/interface/TreeManager.h"
-#include "L1Trigger/CSCTriggerPrimitives/interface/CSCComparatorCodeLUT.h"
+#include "L1Trigger/CSCTriggerPrimitives/interface/CSCLUTReader.h"
 
 class CSCStubAnalyzer
 {
@@ -78,11 +78,11 @@ public:
   std::vector<std::string> patternConversionLUTFiles_;
 
   // unique pointers to the luts
-  std::array<std::unique_ptr<CSCComparatorCodeLUT>, 5> lutpos_;
-  std::array<std::unique_ptr<CSCComparatorCodeLUT>, 5> lutposfloat_;
-  std::array<std::unique_ptr<CSCComparatorCodeLUT>, 5> lutslope_;
-  std::array<std::unique_ptr<CSCComparatorCodeLUT>, 5> lutslopefloat_;
-  std::array<std::unique_ptr<CSCComparatorCodeLUT>, 5> lutpatconv_;
+  std::array<std::unique_ptr<CSCLUTReader>, 5> lutpos_;
+  std::array<std::unique_ptr<CSCLUTReader>, 5> lutposfloat_;
+  std::array<std::unique_ptr<CSCLUTReader>, 5> lutslope_;
+  std::array<std::unique_ptr<CSCLUTReader>, 5> lutslopefloat_;
+  std::array<std::unique_ptr<CSCLUTReader>, 5> lutpatconv_;
 };
 
 #endif
