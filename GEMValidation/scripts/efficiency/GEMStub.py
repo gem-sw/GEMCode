@@ -297,8 +297,8 @@ def GEMCoPadPhi(plotter):
         base.GetYaxis().SetLabelSize(0.05)
         base.GetXaxis().SetTitleSize(0.05)
         base.GetYaxis().SetTitleSize(0.05)
-        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
         base.Draw("")
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
 
         h1 = draw_geff(plotter.tree, title, h_bins, toPlot, ok_gem_sh2(st), ok_gem_copad(st), "same")
 
@@ -341,8 +341,8 @@ def GEMCoPadL(plotter):
         base.GetYaxis().SetLabelSize(0.05)
         base.GetXaxis().SetTitleSize(0.05)
         base.GetYaxis().SetTitleSize(0.05)
-        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
         base.Draw("")
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
 
         h1 = draw_geff(plotter.tree, title, h_bins, toPlot, ok_gem_sh2(st), ok_gem_copad(st), "same")
 
@@ -385,8 +385,8 @@ def GEMClusterEta(plotter):
         base.GetYaxis().SetLabelSize(0.05)
         base.GetXaxis().SetTitleSize(0.05)
         base.GetYaxis().SetTitleSize(0.05)
-        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
         base.Draw("")
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
 
         h1 = draw_geff(plotter.tree, title, h_bins, toPlot, ok_gem_sh(st), ok_gem_cluster(st), "same")
 
