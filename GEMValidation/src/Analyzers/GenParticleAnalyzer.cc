@@ -54,16 +54,16 @@ void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
     // require stable particle
     if (iGenParticle->status() != 1 and stableParticle_) continue;
 
-    std::cout << "Check gen particle pt: " <<  iGenParticle->pt()
-              << "V: ("
-              << iGenParticle->daughter(0)->vx() << ", "
-              << iGenParticle->daughter(0)->vy() << ", "
-              << iGenParticle->daughter(0)->vz() << "), eta: "
-              << iGenParticle->eta() << " phi: "
-              << iGenParticle->phi()
-              << " PDGID: " << iGenParticle->pdgId() << " "
-              << " Idx " << index
-              << std::endl;
+    // std::cout << "Check gen particle pt: " <<  iGenParticle->pt()
+    //           << "V: ("
+    //           << iGenParticle->daughter(0)->vx() << ", "
+    //           << iGenParticle->daughter(0)->vy() << ", "
+    //           << iGenParticle->daughter(0)->vz() << "), eta: "
+    //           << iGenParticle->eta() << " phi: "
+    //           << iGenParticle->phi()
+    //           << " PDGID: " << iGenParticle->pdgId() << " "
+    //           << " Idx " << index
+    //           << std::endl;
 
     // require pdgId
     if (!std::count(pdgIds_.begin(), pdgIds_.end(), iGenParticle->pdgId())) continue;
@@ -87,7 +87,6 @@ void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
               << iGenParticle->phi() << " R: " << radius
               << " PDGID: " << iGenParticle->pdgId() << " "
               << " Idx " << index << std::endl;
-
 
     // eta selection
     if (std::abs(iGenParticle->eta()) < etaMin_) continue;
@@ -138,10 +137,9 @@ void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
     if (inAcceptance)
       std::cout << "Accept gen particle " <<  iGenParticle->p4() << " " << eta << std::endl;
 
-    // if (verbose_)
-    //   std::cout << "tpidfound " << tpidfound << std::endl;
-
     if (tpidfound != -1)
+      if (verbose_)
+        std::cout << "tpidfound " << tpidfound << std::endl;
       (*simTree.sim_id_gen)[tpidfound] = index;
   }
 }
