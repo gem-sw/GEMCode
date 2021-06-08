@@ -26,7 +26,7 @@ process = cms.Process("ReL1", process_era)
 process.load('Configuration.StandardSequences.Services_cff')
 process.load('SimGeneral.HepPDTESSource.pythiapdt_cfi')
 process.load('FWCore.MessageService.MessageLogger_cfi')
-process.load('Configuration.EventContent.EventContent_cff')
+#process.load('Configuration.EventContent.EventContent_cff')
 process.load('SimGeneral.MixingModule.mixNoPU_cfi')
 process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 process.load('Configuration.StandardSequences.MagneticField_cff')
@@ -91,14 +91,15 @@ process.configurationMetadata = cms.untracked.PSet(
 
 # Output definition
 
-process.FEVTDEBUGoutput = cms.OutputModule("PoolOutputModule",
-    dataset = cms.untracked.PSet(
-        dataTier = cms.untracked.string('GEN-SIM-DIGI-L1'),
-        filterName = cms.untracked.string('')
-    ),
-    fileName = cms.untracked.string('file:step2bis_run3.root'),
-    outputCommands = process.FEVTDEBUGEventContent.outputCommands,
-    splitLevel = cms.untracked.int32(0)
+process.FEVTDEBUGoutput = cms.OutputModule(
+      "PoolOutputModule",
+      dataset = cms.untracked.PSet(
+            dataTier = cms.untracked.string('GEN-SIM-DIGI-L1'),
+            filterName = cms.untracked.string('')
+      ),
+      fileName = cms.untracked.string('file:step2bis_run3.root'),
+      outputCommands = cms.untracked.vstring('keep *'),
+      splitLevel = cms.untracked.int32(0)
 )
 
 process.TFileService = cms.Service("TFileService",

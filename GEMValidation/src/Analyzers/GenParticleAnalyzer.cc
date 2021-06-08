@@ -60,7 +60,7 @@ void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
               << iGenParticle->daughter(0)->vy() << ", "
               << iGenParticle->daughter(0)->vz() << "), eta: "
               << iGenParticle->eta() << " phi: "
-              << iGenParticle->phi() << " R: " << radius
+              << iGenParticle->phi()
               << " PDGID: " << iGenParticle->pdgId() << " "
               << " Idx " << index
               << std::endl;
