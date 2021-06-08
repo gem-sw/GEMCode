@@ -20,7 +20,7 @@ process_era = Run3
 if not options.run3:
       process_era = Run2_2018
 
-process = cms.Process("L1CSCTPG", process_era)
+process = cms.Process("ReL1", process_era)
 
 # import of standard configurations
 process.load('Configuration.StandardSequences.Services_cff')
@@ -124,7 +124,7 @@ ana.verbose = 1
 ana.genParticle.pdgIds = cms.vint32(6000113, -6000113)
 ana.genParticle.stableParticle = False
 ana.genParticle.verbose = 1
-ana.simTrack.minEta = 1.2
+ana.simTrack.minEta = 0.9
 ana.simTrack.maxEta = 2.4
 ana.simTrack.minPt = 5
 #ana.simTrack.verbose = 1
@@ -133,11 +133,13 @@ ana.cscSimHit.simMuOnly = False
 ana.cscSimHit.discardEleHits = False
 ana.gemStripDigi.matchDeltaStrip = 2
 ana.cscLCT.addGhostLCTs = cms.bool(True)
-#ana.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
-#ana.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
-#ana.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
-#ana.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED","ReL1")
-ana.cscShower.verbose = 0
+ana.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+ana.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+ana.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+ana.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED","ReL1")
+ana.cscShower.verbose = 1
+ana.emtfShower.verbose = 1
+ana.muonShower.verbose = 1
 
 if options.runOnRaw:
     ana.gemStripDigi.matchToSimLink = False

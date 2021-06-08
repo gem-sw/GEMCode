@@ -41,7 +41,7 @@ L1MuAnalyzer::L1MuAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCollector
   const auto& muonShower = conf.getParameter<edm::ParameterSet>("muonShower");
   minBXGMT_ = muonShower.getParameter<int>("minBX");
   maxBXGMT_ = muonShower.getParameter<int>("maxBX");
-  verboseGMT_ = muonShower.getParameter<int>("verbose");
+  verboseShower_ = muonShower.getParameter<int>("verbose");
   runGMT_ = muonShower.getParameter<bool>("run");
 
   if (runEMTFTrack_)
