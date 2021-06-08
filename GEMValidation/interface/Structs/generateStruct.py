@@ -3,7 +3,7 @@
 ## gen particles
 gen = {
     "float" : ["pt","pz","eta","phi","dxy","d0","z0","d0_prod","z0_prod","vx","vy","vz","r"],
-    "int" : ["charge","pdgid","tpid","cscaccept"]
+    "int" : ["charge","pdgid","tpid","llp_in_acceptance"]
 }
 
 sim = {
@@ -251,9 +251,12 @@ cscshower = {
         "ring",
         "chamber",
         "sector",
-        "isLoose",
-        "isNominal",
-        "isTight"
+        "isLooseInTime",
+        "isNominalInTime",
+        "isTightInTime",
+        "isLooseOutTime",
+        "isNominalOutTime",
+        "isTightOutTime",
     ]
 }
 
@@ -270,10 +273,12 @@ emtfcand = {
 emtfshower = {
     "int" : [
         "bx",
-        "isTwoLoose",
-        "isOneNominal",
         "region",
-        "sector"
+        "sector",
+        "isTwoLooseInTime",
+        "isOneNominalInTime",
+        "isTwoLooseOutTime",
+        "isOneNominalOutTime",
     ]
 }
 
@@ -283,7 +288,14 @@ l1mu = {
 }
 
 l1mushower = {
-    "int" : ["bits","bx"]
+    "int" : [
+        "bits",
+        "bx",
+        "isTwoLooseInTime",
+        "isOneNominalInTime",
+        "isTwoLooseOutTime",
+        "isOneNominalOutTime",
+    ]
 }
 
 l1track = {

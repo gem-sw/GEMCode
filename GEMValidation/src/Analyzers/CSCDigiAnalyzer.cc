@@ -40,6 +40,16 @@ void CSCDigiAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& e
 
   auto& cscTree = tree.cscDigi();
   auto& simTree = tree.simTrack();
+  auto& genTree = tree.genParticle();
+  bool oneLLP = false;
+
+  if (genTree.gen_tpid->size() > 0)
+    oneLLP = oneLLP or genTree.gen_llp_in_acceptance->at(0)==1;
+  if (genTree.gen_tpid->size() > 1)
+    oneLLP = oneLLP or genTree.gen_llp_in_acceptance->at(1)==1;
+
+  if (oneLLP)
+    std::cout << "CSCDigiAnalyzer::analyze" << std::endl;
 
   int index;
   for (auto detUnitIt = comps.begin(); detUnitIt != comps.end(); ++detUnitIt) {
@@ -85,6 +95,9 @@ void CSCDigiAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& e
       }
     }
   }
+
+  if (oneLLP)
+    std::cout << "CSCDigiAnalyzer::analyze" << std::endl;
 
   index = 0;
 

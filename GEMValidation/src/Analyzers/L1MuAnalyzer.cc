@@ -14,6 +14,12 @@ L1MuAnalyzer::L1MuAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCollector
   verboseEMTFCand_ = emtfCand.getParameter<int>("verbose");
   runEMTFCand_ = emtfCand.getParameter<bool>("run");
 
+  const auto& emtfShower = conf.getParameter<edm::ParameterSet>("emtfShower");
+  minBXEMTFShower_ = emtfShower.getParameter<int>("minBX");
+  maxBXEMTFShower_ = emtfShower.getParameter<int>("maxBX");
+  verboseEMTFShower_ = emtfShower.getParameter<int>("verbose");
+  runEMTFShower_ = emtfShower.getParameter<bool>("run");
+
   const auto& omtfCand = conf.getParameter<edm::ParameterSet>("omtfCand");
   minBXOMTFCand_ = omtfCand.getParameter<int>("minBX");
   maxBXOMTFCand_ = omtfCand.getParameter<int>("maxBX");
@@ -32,14 +38,26 @@ L1MuAnalyzer::L1MuAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCollector
   verboseGMT_ = muon.getParameter<int>("verbose");
   runGMT_ = muon.getParameter<bool>("run");
 
+  const auto& muonShower = conf.getParameter<edm::ParameterSet>("muonShower");
+  minBXGMT_ = muonShower.getParameter<int>("minBX");
+  maxBXGMT_ = muonShower.getParameter<int>("maxBX");
+  verboseGMT_ = muonShower.getParameter<int>("verbose");
+  runGMT_ = muonShower.getParameter<bool>("run");
+
   if (runEMTFTrack_)
     emtfTrackToken_ = iC.consumes<l1t::EMTFTrackCollection>(emtfTrack.getParameter<edm::InputTag>("inputTag"));
 
   if (runEMTFCand_)
     emtfCandToken_ = iC.consumes<l1t::RegionalMuonCandBxCollection>(emtfCand.getParameter<edm::InputTag>("inputTag"));
 
+  if (runEMTFShower_)
+    emtfShowerToken_ = iC.consumes<l1t::RegionalMuonShowerBxCollection>(emtfShower.getParameter<edm::InputTag>("inputTag"));
+
   if (runGMT_)
     muonToken_ = iC.consumes<l1t::MuonBxCollection>(muon.getParameter<edm::InputTag>("inputTag"));
+
+  if (runShower_)
+    showerToken_ = iC.consumes<l1t::MuonShowerBxCollection>(muonShower.getParameter<edm::InputTag>("inputTag"));
 }
 
 void L1MuAnalyzer::setMatcher(const L1MuMatcher& match_sh)
@@ -52,11 +70,15 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
   iEvent.getByToken(emtfTrackToken_, emtfTrackHandle_);
   iEvent.getByToken(emtfCandToken_, emtfCandHandle_);
+  iEvent.getByToken(emtfShowerToken_, emtfShowerHandle_);
   iEvent.getByToken(muonToken_, muonHandle_);
+  iEvent.getByToken(showerToken_, showerHandle_);
 
   const l1t::EMTFTrackCollection& emtfTracks = *emtfTrackHandle_.product();
   const l1t::RegionalMuonCandBxCollection& emtfCands = *emtfCandHandle_.product();
+  const l1t::RegionalMuonShowerBxCollection& emtfShowers = *emtfShowerHandle_.product();
   const l1t::MuonBxCollection& gmtCands = *muonHandle_.product();
+  const l1t::MuonShowerBxCollection& gmtShowers = *showerHandle_.product();
 
   auto& trkTree = tree.l1mu();
   auto& simTree = tree.simTrack();
@@ -208,6 +230,39 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       if (tpidfound != -1 and validTracks) {
         ((*simTree.sim_id_l1mu)[tpidfound]).push_back(index);
       }
+    }
+  }
+
+  if (verboseEMTFShower_)
+    std::cout << "Analyzing " << int(emtfShowers.end(0) - emtfShowers.begin(0)) << " EMTF showers" << std::endl;
+
+  for (int bx = emtfShowers.getFirstBX(); bx <= emtfShowers.getLastBX(); bx++ ){
+    if ( bx < minBXEMTFShower_ or bx > maxBXEMTFShower_) continue;
+    for (auto emtfShower = emtfShowers.begin(bx); emtfShower != emtfShowers.end(bx); ++emtfShower ){
+
+      trkTree.emtfshower_bx->push_back(0);
+      trkTree.emtfshower_region->push_back(emtfShower->endcap());
+      trkTree.emtfshower_sector->push_back(emtfShower->sector());
+      trkTree.emtfshower_isOneNominalInTime->push_back(emtfShower->isOneNominalInTime());
+      trkTree.emtfshower_isTwoLooseInTime->push_back(emtfShower->isTwoLooseInTime());
+      trkTree.emtfshower_isOneNominalOutTime->push_back(emtfShower->isOneNominalOutTime());
+      trkTree.emtfshower_isTwoLooseOutTime->push_back(emtfShower->isTwoLooseOutTime());
+    }
+  }
+
+  if (verboseShower_)
+    std::cout << "Analyzing " << int(gmtShowers.end(0) - gmtShowers.begin(0)) << " GMT shower" << std::endl;
+
+  for (int bx = gmtShowers.getFirstBX(); bx <= gmtShowers.getLastBX(); bx++ ){
+    if ( bx < minBXGMT_ or bx > maxBXGMT_) continue;
+    for (auto gmtShower = gmtShowers.begin(bx); gmtShower != gmtShowers.end(bx); ++gmtShower ){
+
+      trkTree.l1mushower_bx->push_back(0);
+      trkTree.l1mushower_bits->push_back(gmtShower->bits());
+      trkTree.l1mushower_isOneNominalInTime->push_back(gmtShower->isOneNominalInTime());
+      trkTree.l1mushower_isTwoLooseInTime->push_back(gmtShower->isTwoLooseInTime());
+      trkTree.l1mushower_isOneNominalOutTime->push_back(gmtShower->isOneNominalOutTime());
+      trkTree.l1mushower_isTwoLooseOutTime->push_back(gmtShower->isTwoLooseOutTime());
     }
   }
 }

@@ -5,6 +5,11 @@
 #include "GEMCode/GEMValidation/interface/MatcherManager.h"
 #include "GEMCode/GEMValidation/interface/new/TreeManager.h"
 
+// shower objects
+#include "DataFormats/CSCDigi/interface/CSCShowerDigiCollection.h"
+#include "DataFormats/L1TMuon/interface/RegionalMuonShower.h"
+#include "DataFormats/L1Trigger/interface/MuonShower.h"
+
 // container class with managers
 
 class MatcherSuperManager
@@ -38,6 +43,7 @@ private:
   double simTrackMinEta_;
   double simTrackMaxEta_;
   int verbose_;
+  std::vector<int> pdgIds_;
 };
 
 #endif

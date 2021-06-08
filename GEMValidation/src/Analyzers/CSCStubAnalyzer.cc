@@ -24,10 +24,16 @@ CSCStubAnalyzer::CSCStubAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCol
   maxBXMPLCT_ = cscMPLCT.getParameter<int>("maxBX");
   verboseMPLCT_ = cscMPLCT.getParameter<int>("verbose");
 
+  const auto& cscShower = conf.getParameter<edm::ParameterSet>("cscShower");
+  minBXShower_ = cscShower.getParameter<int>("minBX");
+  maxBXShower_ = cscShower.getParameter<int>("maxBX");
+  verboseShower_ = cscShower.getParameter<int>("verbose");
+
   clctToken_ = iC.consumes<CSCCLCTDigiCollection>(cscCLCT.getParameter<edm::InputTag>("inputTag"));
   alctToken_ = iC.consumes<CSCALCTDigiCollection>(cscALCT.getParameter<edm::InputTag>("inputTag"));
   lctToken_ = iC.consumes<CSCCorrelatedLCTDigiCollection>(cscLCT.getParameter<edm::InputTag>("inputTag"));
   mplctToken_ = iC.consumes<CSCCorrelatedLCTDigiCollection>(cscMPLCT.getParameter<edm::InputTag>("inputTag"));
+  showerToken_ = iC.consumes<CSCShowerDigiCollection>(cscShower.getParameter<edm::InputTag>("inputTag"));
 
   positionLUTFiles_ = conf.getParameter<std::vector<std::string>>("positionLUTFiles");
   positionFloatLUTFiles_ = conf.getParameter<std::vector<std::string>>("positionFloatLUTFiles");
@@ -86,15 +92,28 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
   iEvent.getByToken(alctToken_, alctsH_);
   iEvent.getByToken(lctToken_, lctsH_);
   iEvent.getByToken(mplctToken_, mplctsH_);
+  iEvent.getByToken(showerToken_, showersH_);
 
   const CSCCLCTDigiCollection& clcts = *clctsH_.product();
   const CSCALCTDigiCollection& alcts = *alctsH_.product();
   const CSCCorrelatedLCTDigiCollection& lcts = *lctsH_.product();
   const CSCCorrelatedLCTDigiCollection& mplcts = *mplctsH_.product();
+  const CSCShowerDigiCollection& showers = *showersH_.product();
 
   auto& cscTree = tree.cscStub();
   auto& simTree = tree.simTrack();
+  auto& genTree = tree.genParticle();
   const bool validTracks(simTree.sim_pt->size()>0);
+
+  bool oneLLP = false;
+
+  if (genTree.gen_tpid->size() > 0)
+    oneLLP = oneLLP or genTree.gen_llp_in_acceptance->at(0)==1;
+  if (genTree.gen_tpid->size() > 1)
+    oneLLP = oneLLP or genTree.gen_llp_in_acceptance->at(1)==1;
+
+  if (oneLLP)
+    std::cout << "CSCDigiAnalyzer::analyze" << std::endl;
 
   int index = 0;
   // CSC ALCTs
@@ -297,6 +316,36 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
         ((*simTree.sim_id_csc_mplct)[tpidfound]).push_back(index);
 
       index++;
+    }
+  }
+
+  // CSC Shower
+  for (auto detUnitIt = showers.begin(); detUnitIt != showers.end(); detUnitIt++) {
+    const CSCDetId& id = (*detUnitIt).first;
+    const bool isodd = (id.chamber()%2 == 1);
+    const auto& range = (*detUnitIt).second;
+    for (auto digiIt = range.first; digiIt != range.second; digiIt++) {
+
+      if (!(*digiIt).isValid())
+        continue;
+
+      if (verboseShower_) {
+        std::cout << ">>>Analyzing CSC Shower in " << id << std::endl;
+        if (!oneLLP)
+          std::cout << "Without LLP in acceptance" << std::endl;
+      }
+      cscTree.csc_shower_region->push_back(id.zendcap());
+      cscTree.csc_shower_station->push_back(id.station());
+      cscTree.csc_shower_ring->push_back(id.ring());
+      cscTree.csc_shower_chamber->push_back(id.chamber());
+      cscTree.csc_shower_sector->push_back(id.triggerSector());
+      cscTree.csc_shower_bx->push_back(0);
+      cscTree.csc_shower_isLooseInTime->push_back(digiIt->isLooseInTime());
+      cscTree.csc_shower_isNominalInTime->push_back(digiIt->isNominalInTime());
+      cscTree.csc_shower_isTightInTime->push_back(digiIt->isTightInTime());
+      cscTree.csc_shower_isLooseOutTime->push_back(digiIt->isLooseOutTime());
+      cscTree.csc_shower_isNominalOutTime->push_back(digiIt->isNominalOutTime());
+      cscTree.csc_shower_isTightOutTime->push_back(digiIt->isTightOutTime());
     }
   }
 }

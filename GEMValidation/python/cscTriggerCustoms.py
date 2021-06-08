@@ -84,6 +84,11 @@ def addCSCTriggerRun3(process):
 
     return process
 
+def addShowerTriggers(process):
+    process.SimL1Emulator += process.simEmtfShowers
+    process.SimL1Emulator += process.simGmtShowerDigis
+    return process
+
 def addAnalysisRun3(process):
 
     ana = process.GEMCSCAnalyzer
@@ -119,4 +124,22 @@ def addAnalysisRun3(process):
         process.GEMCSCAnalyzer *
         process.GEMCSCAnalyzerRun3CCLUT
     )
+    return process
+
+
+def addAnalysisRun3HST(process):
+
+    ana = process.GEMCSCAnalyzer
+    ana.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+    ana.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+    ana.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+    ana.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED","ReL1")
+    ana.emtfTrack.inputTag = cms.InputTag("simEmtfDigis","","ReL1")
+
+    useUnpacked = True
+    if useUnpacked:
+        ana.gemStripDigi.matchToSimLink = False
+        ana.gemStripDigi.inputTag = "muonGEMDigis"
+        ana.muon.inputTag = cms.InputTag("gmtStage2Digis","Muon")
+
     return process

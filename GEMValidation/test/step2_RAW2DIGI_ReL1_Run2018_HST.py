@@ -4,17 +4,10 @@
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v
 # with command line options: step2bis.py --filein file:step3.root --fileout file:step2bis.root --mc --eventcontent FEVTDEBUG --datatier GEN-SIM-DIGI-L1 --conditions auto:phase1_2021_realistic --step L1 --geometry DB:Extended --era Run3 --python_filename step2bis_L1.py --no_exec -n 10
 import FWCore.ParameterSet.Config as cms
-from FWCore.ParameterSet.VarParsing import VarParsing
-from Configuration.Eras.Era_Run3_cff import Run3
 
-options = VarParsing('analysis')
-options.register ("test", True, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
-options.register ("runOnRaw", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
-options.register ("runAna", True, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
-options.register ("crab", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
-options.parseArguments()
+from Configuration.Eras.Era_Run2_2018_cff import Run2_2018
 
-process = cms.Process('TEST',Run3)
+process = cms.Process('ReL1',Run2_2018)
 
 # import of standard configurations
 process.load('Configuration.StandardSequences.Services_cff')
@@ -28,24 +21,21 @@ process.load('Configuration.StandardSequences.RawToDigi_cff')
 process.load('Configuration.StandardSequences.SimL1Emulator_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
-process.load('GEMCode.GEMValidation.GEMCSCAnalyzer_cff')
-
-nEvents = -1
-if options.test:
-    nEvents = 100
+process.load('GEMCode.GEMValidation.MuonNtuplizer_cff')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(nEvents),
+    input = cms.untracked.int32(-100),
     output = cms.optional.untracked.allowed(cms.int32,cms.PSet)
 )
 
 # Input source
-from GEMCode.GEMValidation.relValSamples import *
-inputFiles = RelValSingleMuPt10_120X_mcRun3_realistic_v10_noPU
-
-process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring(*inputFiles),
-    secondaryFileNames = cms.untracked.vstring()
+process.source = cms.Source(
+    "PoolSource",
+    fileNames = cms.untracked.vstring(
+        "/store/data/Run2018D/ZeroBias/RAW/v1/000/321/909/00000/B291651B-3CAB-E811-8596-02163E015DDC.root"
+    ),
+    secondaryFileNames = cms.untracked.vstring(),
+    duplicateCheckMode = cms.untracked.string('noDuplicateCheck')
 )
 
 process.options = cms.untracked.PSet(
@@ -94,6 +84,10 @@ process.FEVTDEBUGoutput = cms.OutputModule("PoolOutputModule",
     splitLevel = cms.untracked.int32(0)
 )
 
+process.TFileService = cms.Service("TFileService",
+    fileName = cms.string("out_ana_hst.root")
+)
+
 ## keep all CSC trigger versions
 process.FEVTDEBUGoutput.outputCommands.append('keep *_simCscTriggerPrimitiveDigis*_*_*')
 process.FEVTDEBUGoutput.outputCommands.append('keep *_simEmtfDigis*_*_*')
@@ -110,48 +104,62 @@ process.FEVTDEBUGoutput.outputCommands.append('drop *_g4SimHits_Hcal*_*')
 
 # Other statements
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '')
-
-from GEMCode.GEMValidation.cscTriggerCustoms import addCSCTriggerRun3
-process = addCSCTriggerRun3(process)
-
-from GEMCode.GEMValidation.cscTriggerCustoms import addAnalysisRun3
-process = addAnalysisRun3(process)
-
-process.GEMCSCAnalyzer.gemStripDigi.verbose = 1
-process.GEMCSCAnalyzer.gemStripDigi.matchToSimLink = True
-process.GEMCSCAnalyzer.gemPadDigi.verbose = 1
-process.GEMCSCAnalyzer.gemPadCluster.verbose = 1
-process.GEMCSCAnalyzer.gemCoPadDigi.verbose = 1
+process.GlobalTag = GlobalTag(process.GlobalTag, '103X_dataRun2_Prompt_v3', '')
 
 from GEMCode.GEMValidation.cscTriggerCustoms import runOn110XMC
-if options.runOnRaw:
-    process = runOn110XMC(process)
+#process = runOn110XMC(process)
+
+# the analyzer configuration
+ana = process.MuonNtuplizer
+ana.verbose = 1
+ana.genParticle.pdgIds = cms.vint32(6000113, -6000113)
+ana.genParticle.stableParticle = False
+ana.genParticle.verbose = 1
+ana.simTrack.minEta = 1.2
+ana.simTrack.maxEta = 2.4
+ana.simTrack.minPt = 5
+#ana.simTrack.verbose = 1
+ana.simTrack.pdgIds = cms.vint32(6000113, -6000113)
+
+ana.cscSimHit.simMuOnly = False
+ana.cscSimHit.discardEleHits = False
+#ana.cscSimHit.verbose = 1
+
+ana.gemStripDigi.matchDeltaStrip = 2
+ana.cscLCT.addGhostLCTs = cms.bool(True)
+#ana.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+#ana.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+#ana.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+#ana.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED","ReL1")
+ana.cscShower.verbose = 1
+
+useUnpacked = False
+if useUnpacked:
+    ana.gemStripDigi.matchToSimLink = False
+    ana.gemStripDigi.inputTag = "muonGEMDigis"
+    #ana.muon.inputTag = cms.InputTag("gmtStage2Digis","Muon")
+
+process.simCscTriggerPrimitiveDigis.CSCComparatorDigiProducer = "muonCSCDigis:MuonCSCComparatorDigi"
+process.simCscTriggerPrimitiveDigis.CSCWireDigiProducer = "muonCSCDigis:MuonCSCWireDigi"
+
+## customize unpacker
+process.SimL1Emulator = cms.Sequence(process.SimL1TMuonTask)
 
 # Path and EndPath definitions
-process.raw2digi_step = cms.Path(process.muonGEMDigis)
+process.raw2digi_step = cms.Path(process.RawToDigi)
 process.L1simulation_step = cms.Path(process.SimL1Emulator)
-process.ana_step = cms.Path(
-    process.GEMCSCAnalyzer
-    * process.GEMCSCAnalyzerRun3CCLUT
-)
+process.ana_step = cms.Path(process.MuonNtuplizer)
 process.endjob_step = cms.EndPath(process.endOfProcess)
 process.FEVTDEBUGoutput_step = cms.EndPath(process.FEVTDEBUGoutput)
 
-process.TFileService = cms.Service("TFileService",
-    fileName = cms.string("out_ana_run3.root")
-)
-
 # Schedule definition
-process.schedule = cms.Schedule()
-if options.runOnRaw:
-    process.schedule.extend([process.raw2digi_step])
-process.schedule.extend([process.L1simulation_step])
-if options.runAna:
-    process.schedule.extend([process.ana_step])
-process.schedule.extend([process.endjob_step])
-#process.schedule.extend([process.FEVTDEBUGoutput_step])
-
+process.schedule = cms.Schedule(
+    process.raw2digi_step,
+    process.L1simulation_step,
+    process.ana_step,
+    process.endjob_step
+    #,process.FEVTDEBUGoutput_step
+)
 from PhysicsTools.PatAlgos.tools.helpers import associatePatAlgosToolsTask
 associatePatAlgosToolsTask(process)
 
