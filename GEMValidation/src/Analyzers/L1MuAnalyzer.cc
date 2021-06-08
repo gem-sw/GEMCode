@@ -245,8 +245,8 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       trkTree.emtfshower_sector->push_back(emtfShower->sector());
       trkTree.emtfshower_isOneNominalInTime->push_back(emtfShower->isOneNominalInTime());
       trkTree.emtfshower_isTwoLooseInTime->push_back(emtfShower->isTwoLooseInTime());
-      trkTree.emtfshower_isOneNominalOutTime->push_back(emtfShower->isOneNominalOutTime());
-      trkTree.emtfshower_isTwoLooseOutTime->push_back(emtfShower->isTwoLooseOutTime());
+      trkTree.emtfshower_isOneNominalOutOfTime->push_back(emtfShower->isOneNominalOutOfTime());
+      trkTree.emtfshower_isTwoLooseOutOfTime->push_back(emtfShower->isTwoLooseOutOfTime());
     }
   }
 
@@ -258,11 +258,10 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     for (auto gmtShower = gmtShowers.begin(bx); gmtShower != gmtShowers.end(bx); ++gmtShower ){
 
       trkTree.l1mushower_bx->push_back(0);
-      trkTree.l1mushower_bits->push_back(gmtShower->bits());
       trkTree.l1mushower_isOneNominalInTime->push_back(gmtShower->isOneNominalInTime());
       trkTree.l1mushower_isTwoLooseInTime->push_back(gmtShower->isTwoLooseInTime());
-      trkTree.l1mushower_isOneNominalOutTime->push_back(gmtShower->isOneNominalOutTime());
-      trkTree.l1mushower_isTwoLooseOutTime->push_back(gmtShower->isTwoLooseOutTime());
+      trkTree.l1mushower_isOneNominalOutOfTime->push_back(gmtShower->isOneNominalOutOfTime());
+      trkTree.l1mushower_isTwoLooseOutOfTime->push_back(gmtShower->isTwoLooseOutOfTime());
     }
   }
 }

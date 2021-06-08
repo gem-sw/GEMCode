@@ -625,9 +625,9 @@ namespace my {
     p_ints csc_shower_isLooseInTime;
     p_ints csc_shower_isNominalInTime;
     p_ints csc_shower_isTightInTime;
-    p_ints csc_shower_isLooseOutTime;
-    p_ints csc_shower_isNominalOutTime;
-    p_ints csc_shower_isTightOutTime;
+    p_ints csc_shower_isLooseOutOfTime;
+    p_ints csc_shower_isNominalOutOfTime;
+    p_ints csc_shower_isTightOutOfTime;
 
     void init() {
       csc_alct_bx = new t_ints;
@@ -689,9 +689,9 @@ namespace my {
       csc_shower_isLooseInTime = new t_ints;
       csc_shower_isNominalInTime = new t_ints;
       csc_shower_isTightInTime = new t_ints;
-      csc_shower_isLooseOutTime = new t_ints;
-      csc_shower_isNominalOutTime = new t_ints;
-      csc_shower_isTightOutTime = new t_ints;
+      csc_shower_isLooseOutOfTime = new t_ints;
+      csc_shower_isNominalOutOfTime = new t_ints;
+      csc_shower_isTightOutOfTime = new t_ints;
     }
 
     void book(TTree* t) {
@@ -754,9 +754,9 @@ namespace my {
       t->Branch("csc_shower_isLooseInTime", &csc_shower_isLooseInTime);
       t->Branch("csc_shower_isNominalInTime", &csc_shower_isNominalInTime);
       t->Branch("csc_shower_isTightInTime", &csc_shower_isTightInTime);
-      t->Branch("csc_shower_isLooseOutTime", &csc_shower_isLooseOutTime);
-      t->Branch("csc_shower_isNominalOutTime", &csc_shower_isNominalOutTime);
-      t->Branch("csc_shower_isTightOutTime", &csc_shower_isTightOutTime);
+      t->Branch("csc_shower_isLooseOutOfTime", &csc_shower_isLooseOutOfTime);
+      t->Branch("csc_shower_isNominalOutOfTime", &csc_shower_isNominalOutOfTime);
+      t->Branch("csc_shower_isTightOutOfTime", &csc_shower_isTightOutOfTime);
     }
   };
 
@@ -779,8 +779,8 @@ namespace my {
     p_ints emtfshower_sector;
     p_ints emtfshower_isTwoLooseInTime;
     p_ints emtfshower_isOneNominalInTime;
-    p_ints emtfshower_isTwoLooseOutTime;
-    p_ints emtfshower_isOneNominalOutTime;
+    p_ints emtfshower_isTwoLooseOutOfTime;
+    p_ints emtfshower_isOneNominalOutOfTime;
     p_ints l1mu_charge;
     p_ints l1mu_bx;
     p_ints l1mu_tpid;
@@ -791,8 +791,8 @@ namespace my {
     p_ints l1mushower_bx;
     p_ints l1mushower_isTwoLooseInTime;
     p_ints l1mushower_isOneNominalInTime;
-    p_ints l1mushower_isTwoLooseOutTime;
-    p_ints l1mushower_isOneNominalOutTime;
+    p_ints l1mushower_isTwoLooseOutOfTime;
+    p_ints l1mushower_isOneNominalOutOfTime;
 
     void init() {
       emtftrack_charge = new t_ints;
@@ -812,8 +812,8 @@ namespace my {
       emtfshower_sector = new t_ints;
       emtfshower_isTwoLooseInTime = new t_ints;
       emtfshower_isOneNominalInTime = new t_ints;
-      emtfshower_isTwoLooseOutTime = new t_ints;
-      emtfshower_isOneNominalOutTime = new t_ints;
+      emtfshower_isTwoLooseOutOfTime = new t_ints;
+      emtfshower_isOneNominalOutOfTime = new t_ints;
       l1mu_charge = new t_ints;
       l1mu_bx = new t_ints;
       l1mu_tpid = new t_ints;
@@ -824,8 +824,8 @@ namespace my {
       l1mushower_bx = new t_ints;
       l1mushower_isTwoLooseInTime = new t_ints;
       l1mushower_isOneNominalInTime = new t_ints;
-      l1mushower_isTwoLooseOutTime = new t_ints;
-      l1mushower_isOneNominalOutTime = new t_ints;
+      l1mushower_isTwoLooseOutOfTime = new t_ints;
+      l1mushower_isOneNominalOutOfTime = new t_ints;
     }
 
     void book(TTree* t) {
@@ -846,8 +846,8 @@ namespace my {
       t->Branch("emtfshower_sector", &emtfshower_sector);
       t->Branch("emtfshower_isTwoLooseInTime", &emtfshower_isTwoLooseInTime);
       t->Branch("emtfshower_isOneNominalInTime", &emtfshower_isOneNominalInTime);
-      t->Branch("emtfshower_isTwoLooseOutTime", &emtfshower_isTwoLooseOutTime);
-      t->Branch("emtfshower_isOneNominalOutTime", &emtfshower_isOneNominalOutTime);
+      t->Branch("emtfshower_isTwoLooseOutOfTime", &emtfshower_isTwoLooseOutOfTime);
+      t->Branch("emtfshower_isOneNominalOutOfTime", &emtfshower_isOneNominalOutOfTime);
       t->Branch("l1mu_charge", &l1mu_charge);
       t->Branch("l1mu_bx", &l1mu_bx);
       t->Branch("l1mu_tpid", &l1mu_tpid);
@@ -858,8 +858,8 @@ namespace my {
       t->Branch("l1mushower_bx", &l1mushower_bx);
       t->Branch("l1mushower_isTwoLooseInTime", &l1mushower_isTwoLooseInTime);
       t->Branch("l1mushower_isOneNominalInTime", &l1mushower_isOneNominalInTime);
-      t->Branch("l1mushower_isTwoLooseOutTime", &l1mushower_isTwoLooseOutTime);
-      t->Branch("l1mushower_isOneNominalOutTime", &l1mushower_isOneNominalOutTime);
+      t->Branch("l1mushower_isTwoLooseOutOfTime", &l1mushower_isTwoLooseOutOfTime);
+      t->Branch("l1mushower_isOneNominalOutOfTime", &l1mushower_isOneNominalOutOfTime);
     }
   };
 

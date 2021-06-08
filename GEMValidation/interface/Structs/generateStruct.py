@@ -254,9 +254,9 @@ cscshower = {
         "isLooseInTime",
         "isNominalInTime",
         "isTightInTime",
-        "isLooseOutTime",
-        "isNominalOutTime",
-        "isTightOutTime",
+        "isLooseOutOfTime",
+        "isNominalOutOfTime",
+        "isTightOutOfTime",
     ]
 }
 
@@ -277,8 +277,8 @@ emtfshower = {
         "sector",
         "isTwoLooseInTime",
         "isOneNominalInTime",
-        "isTwoLooseOutTime",
-        "isOneNominalOutTime",
+        "isTwoLooseOutOfTime",
+        "isOneNominalOutOfTime",
     ]
 }
 
@@ -293,8 +293,8 @@ l1mushower = {
         "bx",
         "isTwoLooseInTime",
         "isOneNominalInTime",
-        "isTwoLooseOutTime",
-        "isOneNominalOutTime",
+        "isTwoLooseOutOfTime",
+        "isOneNominalOutOfTime",
     ]
 }
 
