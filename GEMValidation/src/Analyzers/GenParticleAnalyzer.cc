@@ -53,6 +53,17 @@ void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
     // require stable particle
     if (iGenParticle->status() != 1 and stableParticle_) continue;
 
+    std::cout << "Check gen particle pt: " <<  iGenParticle->pt()
+              << "V: ("
+              << iGenParticle->daughter(0)->vx() << ", "
+              << iGenParticle->daughter(0)->vy() << ", "
+              << iGenParticle->daughter(0)->vz() << "), eta: "
+              << iGenParticle->eta() << " phi: "
+              << iGenParticle->phi() << " R: " << radius
+              << " PDGID: " << iGenParticle->pdgId() << " "
+              << " Idx " << index
+              << std::endl;
+
     // require pdgId
     if (!std::count(pdgIds_.begin(), pdgIds_.end(), iGenParticle->pdgId())) continue;
 
@@ -72,8 +83,9 @@ void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
               << iGenParticle->daughter(0)->vy() << ", "
               << iGenParticle->daughter(0)->vz() << "), eta: "
               << iGenParticle->eta() << " phi: "
-              << iGenParticle->phi() << " R: "
-              << radius << " Idx " << index << std::endl;
+              << iGenParticle->phi() << " R: " << radius
+              << " PDGID: " << iGenParticle->pdgId() << " "
+              << " Idx " << index << std::endl;
 
 
     // eta selection

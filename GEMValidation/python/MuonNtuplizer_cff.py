@@ -6,6 +6,7 @@ from GEMCode.GEMValidation.simTrackMatching_cfi import simTrackPSet
 MuonNtuplizer = cms.EDAnalyzer(
     "MuonNtuplizer",
     simTrackPSet,
+    useGEMs = cms.bool(True),
     runSim = cms.bool(True),
     runDigi = cms.bool(True),
     runStub = cms.bool(True),
