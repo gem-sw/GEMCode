@@ -54,17 +54,6 @@ void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
     // require stable particle
     if (iGenParticle->status() != 1 and stableParticle_) continue;
 
-    // std::cout << "Check gen particle pt: " <<  iGenParticle->pt()
-    //           << "V: ("
-    //           << iGenParticle->daughter(0)->vx() << ", "
-    //           << iGenParticle->daughter(0)->vy() << ", "
-    //           << iGenParticle->daughter(0)->vz() << "), eta: "
-    //           << iGenParticle->eta() << " phi: "
-    //           << iGenParticle->phi()
-    //           << " PDGID: " << iGenParticle->pdgId() << " "
-    //           << " Idx " << index
-    //           << std::endl;
-
     // require pdgId
     if (!std::count(pdgIds_.begin(), pdgIds_.end(), iGenParticle->pdgId())) continue;
 
@@ -74,23 +63,25 @@ void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
     const float vx(iGenParticle->daughter(0)->vx());
     const float vy(iGenParticle->daughter(0)->vy());
     const float vz(iGenParticle->daughter(0)->vz());
+    const float eta(iGenParticle->eta());
 
     // particle decays in the CSC system
     const double radius( std::sqrt(std::pow(vx, 2.0) + std::pow(vy, 2.0) ) );
 
-    std::cout << "Check gen particle pt: " <<  iGenParticle->pt()
-              << "V: ("
-              << iGenParticle->daughter(0)->vx() << ", "
-              << iGenParticle->daughter(0)->vy() << ", "
-              << iGenParticle->daughter(0)->vz() << "), eta: "
-              << iGenParticle->eta() << " phi: "
-              << iGenParticle->phi() << " R: " << radius
-              << " PDGID: " << iGenParticle->pdgId() << " "
-              << " Idx " << index << std::endl;
-
     // eta selection
-    if (std::abs(iGenParticle->eta()) < etaMin_) continue;
-    if (std::abs(iGenParticle->eta()) > etaMax_) continue;
+    if (std::abs(eta) < etaMin_) continue;
+    if (std::abs(eta) > etaMax_) continue;
+
+    if (verbose_)
+      std::cout << "Check gen particle pt: " <<  iGenParticle->pt()
+                << "V: ("
+                << iGenParticle->daughter(0)->vx() << ", "
+                << iGenParticle->daughter(0)->vy() << ", "
+                << iGenParticle->daughter(0)->vz() << "), eta: "
+                << eta << " phi: "
+                << iGenParticle->phi() << " R: " << radius
+                << " PDGID: " << iGenParticle->pdgId() << " "
+                << " Idx " << index << std::endl;
 
     int tpidfound = -1;
     // check if it was matched to a simtrack
@@ -108,7 +99,6 @@ void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
     }
 
     // genparticle properties
-    const float eta(iGenParticle->eta());
     genTree.gen_pt->push_back(iGenParticle->pt());
     genTree.gen_pz->push_back(iGenParticle->pz());
     genTree.gen_eta->push_back(eta);
@@ -137,9 +127,9 @@ void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
     if (inAcceptance)
       std::cout << "Accept gen particle " <<  iGenParticle->p4() << " " << eta << std::endl;
 
-    if (tpidfound != -1)
-      if (verbose_)
-        std::cout << "tpidfound " << tpidfound << std::endl;
+    // store the index of the particle that was matched to it
+    if (tpidfound != -1) {
       (*simTree.sim_id_gen)[tpidfound] = index;
+    }
   }
 }
