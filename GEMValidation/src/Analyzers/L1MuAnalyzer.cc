@@ -247,6 +247,13 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       trkTree.emtfshower_isTwoLooseInTime->push_back(emtfShower->isTwoLooseInTime());
       trkTree.emtfshower_isOneNominalOutOfTime->push_back(emtfShower->isOneNominalOutOfTime());
       trkTree.emtfshower_isTwoLooseOutOfTime->push_back(emtfShower->isTwoLooseOutOfTime());
+      if (verboseShower_)
+        std::cout << "\tShower data: "
+                  << " TwoLooseOOT: " << emtfShower->isTwoLooseOutOfTime()
+                  << " TwoLooseIT: " << emtfShower->isTwoLooseInTime()
+                  << " OneNominalOOT: " << emtfShower->isOneNominalOutOfTime()
+                  << " OneNominalIT: " << emtfShower->isOneNominalInTime()
+                  << std::endl;
     }
   }
 
@@ -262,6 +269,13 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       trkTree.l1mushower_isTwoLooseInTime->push_back(gmtShower->isTwoLooseInTime());
       trkTree.l1mushower_isOneNominalOutOfTime->push_back(gmtShower->isOneNominalOutOfTime());
       trkTree.l1mushower_isTwoLooseOutOfTime->push_back(gmtShower->isTwoLooseOutOfTime());
+      if (verboseShower_)
+        std::cout << "\tShower data: "
+                  << " TwoLooseOOT: " << gmtShower->isTwoLooseOutOfTime()
+                  << " TwoLooseIT: " << gmtShower->isTwoLooseInTime()
+                  << " OneNominalOOT: " << gmtShower->isOneNominalOutOfTime()
+                  << " OneNominalIT: " << gmtShower->isOneNominalInTime()
+                  << std::endl;
     }
   }
 }

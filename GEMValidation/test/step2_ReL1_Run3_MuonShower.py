@@ -9,7 +9,7 @@ from Configuration.Eras.Era_Run3_cff import Run3
 from Configuration.Eras.Era_Run2_2018_cff import Run2_2018
 
 options = VarParsing('analysis')
-options.register ("test", True, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
+options.register ("test", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
 options.register ("runOnRaw", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
 options.register ("runAna", True, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
 options.register ("run3", True, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
@@ -125,7 +125,7 @@ ana = process.MuonNtuplizer
 ana.verbose = 1
 ana.genParticle.pdgIds = cms.vint32(6000113, -6000113)
 ana.genParticle.stableParticle = False
-ana.genParticle.verbose = 1
+ana.genParticle.verbose = 0
 ana.simTrack.minEta = 0.9
 ana.simTrack.maxEta = 2.4
 ana.simTrack.minPt = 5

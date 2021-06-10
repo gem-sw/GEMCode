@@ -331,6 +331,15 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
 
       if (verboseShower_) {
         std::cout << ">>>Analyzing CSC Shower in " << id << std::endl;
+        std::cout << "\tShower data: "
+                  << " LooseOOT: " << digiIt->isLooseOutOfTime()
+                  << " LooseIT: " << digiIt->isLooseInTime()
+                  << " NominalOOT: " << digiIt->isNominalOutOfTime()
+                  << " NominalIT: " << digiIt->isNominalInTime()
+                  << " TightOOT: " << digiIt->isTightOutOfTime()
+                  << " TightIT: " << digiIt->isTightInTime()
+                  << std::endl;
+
         if (!oneLLP)
           std::cout << "Without LLP in acceptance" << std::endl;
       }
