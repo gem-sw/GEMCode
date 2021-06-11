@@ -112,9 +112,6 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
   if (genTree.gen_tpid->size() > 1)
     oneLLP = oneLLP or genTree.gen_llp_in_acceptance->at(1)==1;
 
-  if (oneLLP)
-    std::cout << "CSCDigiAnalyzer::analyze" << std::endl;
-
   int index = 0;
   // CSC ALCTs
   for (auto detUnitIt = alcts.begin(); detUnitIt != alcts.end(); detUnitIt++) {

@@ -38,7 +38,6 @@ void GenParticleAnalyzer::analyze(TreeManager& tree)
 
 void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, my::TreeManager& tree)
 {
-  std::cout << "GenParticleAnalyzer::analyze" << std::endl;
   iEvent.getByToken(inputToken_, genParticlesHandle_);
 
   // fetch the collection
