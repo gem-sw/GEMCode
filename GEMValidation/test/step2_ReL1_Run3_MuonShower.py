@@ -123,14 +123,14 @@ process = dropNonMuonCollections(process)
 # the analyzer configuration
 ana = process.MuonNtuplizer
 ana.verbose = 1
-ana.genParticle.pdgIds = cms.vint32(6000113, -6000113)
+ana.genParticle.pdgIds = cms.vint32(6000113, -6000113, 9000006, -9000006, 9000007, -9000007)
 ana.genParticle.stableParticle = False
 ana.genParticle.verbose = 0
 ana.simTrack.minEta = 0.9
 ana.simTrack.maxEta = 2.4
 ana.simTrack.minPt = 5
 #ana.simTrack.verbose = 1
-ana.simTrack.pdgIds = cms.vint32(6000113, -6000113)
+ana.simTrack.pdgIds = cms.vint32(6000113, -6000113, 9000006, -9000006, 9000007, -9000007)
 ana.cscSimHit.simMuOnly = False
 ana.cscSimHit.discardEleHits = False
 ana.gemStripDigi.matchDeltaStrip = 2
