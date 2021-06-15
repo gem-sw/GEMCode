@@ -6,7 +6,7 @@ def runOn110XMC(process, runWithCrab = False):
     # customize unpacker
     path = os.path.expandvars("$CMSSW_BASE/src/GEMCode/GEMValidation/data/GEMeMapDummy.db")
     if runWithCrab:
-        path = "../../data/GEMeMapDummy.db"
+        path = "../data/GEMeMapDummy.db"
     print("Info: Using path \"{}\".".format(path))
     process.GlobalTag.toGet = cms.VPSet(
         cms.PSet(record = cms.string("GEMeMapRcd"),
