@@ -18,6 +18,12 @@ def runOn110XMC(process, runWithCrab = False):
     process.simMuonGEMPadDigis.InputCollection = "muonGEMDigis"
     return process
 
+def runOn110XMC_IgnoreIncorrectGEMDB(process, runWithCrab = False):
+    # customize unpacker
+    process.muonGEMDigis.useDBEMap = True
+    process.simMuonGEMPadDigis.InputCollection = "muonGEMDigis"
+    return process
+
 def runOn120XMC(process):
     ## customize unpacker
     process.muonGEMDigis.useDBEMap = True

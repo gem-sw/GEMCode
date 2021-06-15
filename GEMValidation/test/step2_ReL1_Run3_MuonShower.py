@@ -113,9 +113,9 @@ process.TFileService = cms.Service("TFileService",
 from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '')
 
-from GEMCode.GEMValidation.cscTriggerCustoms import runOn110XMC
+from GEMCode.GEMValidation.cscTriggerCustoms import runOn110XMC, runOn110XMC_IgnoreIncorrectGEMDB
 if options.runOnRaw:
-    process = runOn110XMC(process, options.crab)
+    process = runOn110XMC_IgnoreIncorrectGEMDB(process, options.crab)
 
 from GEMCode.GEMValidation.sampleProductionCustoms import dropNonMuonCollections
 process = dropNonMuonCollections(process)
