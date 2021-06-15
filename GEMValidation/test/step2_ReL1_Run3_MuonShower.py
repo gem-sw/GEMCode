@@ -13,7 +13,7 @@ options.register ("test", False, VarParsing.multiplicity.singleton, VarParsing.v
 options.register ("runOnRaw", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
 options.register ("runAna", True, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
 options.register ("run3", True, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
-options.register ("crab", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
+options.register ("runWithCrab", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
 options.parseArguments()
 
 process_era = Run3
@@ -115,7 +115,7 @@ process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '
 
 from GEMCode.GEMValidation.cscTriggerCustoms import runOn110XMC
 if options.runOnRaw:
-    process = runOn110XMC(process)
+    process = runOn110XMC(process, options.runWithCrab)
 
 from GEMCode.GEMValidation.sampleProductionCustoms import dropNonMuonCollections
 process = dropNonMuonCollections(process)
