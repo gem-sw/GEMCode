@@ -4,6 +4,11 @@
 
 CSCStubAnalyzer::CSCStubAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCollector&& iC)
 {
+  const auto& cscPreCLCT = conf.getParameter<edm::ParameterSet>("cscPreCLCT");
+  minBXPreCLCT_ = cscPreCLCT.getParameter<int>("minBX");
+  maxBXPreCLCT_ = cscPreCLCT.getParameter<int>("maxBX");
+  verbosePreCLCT_ = cscPreCLCT.getParameter<int>("verbose");
+
   const auto& cscCLCT = conf.getParameter<edm::ParameterSet>("cscCLCT");
   minBXCLCT_ = cscCLCT.getParameter<int>("minBX");
   maxBXCLCT_ = cscCLCT.getParameter<int>("maxBX");
@@ -29,6 +34,7 @@ CSCStubAnalyzer::CSCStubAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCol
   maxBXShower_ = cscShower.getParameter<int>("maxBX");
   verboseShower_ = cscShower.getParameter<int>("verbose");
 
+  preclctToken_ = iC.consumes<CSCCLCTPreTriggerDigiCollection>(cscPreCLCT.getParameter<edm::InputTag>("inputTag"));
   clctToken_ = iC.consumes<CSCCLCTDigiCollection>(cscCLCT.getParameter<edm::InputTag>("inputTag"));
   alctToken_ = iC.consumes<CSCALCTDigiCollection>(cscALCT.getParameter<edm::InputTag>("inputTag"));
   lctToken_ = iC.consumes<CSCCorrelatedLCTDigiCollection>(cscLCT.getParameter<edm::InputTag>("inputTag"));
@@ -88,12 +94,14 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
     std::cout << "+++ Info: GEM geometry is unavailable. +++\n";
   }
 
+  iEvent.getByToken(preclctToken_, preclctsH_);
   iEvent.getByToken(clctToken_, clctsH_);
   iEvent.getByToken(alctToken_, alctsH_);
   iEvent.getByToken(lctToken_, lctsH_);
   iEvent.getByToken(mplctToken_, mplctsH_);
   iEvent.getByToken(showerToken_, showersH_);
 
+  const CSCCLCTPreTriggerDigiCollection& preclcts = *preclctsH_.product();
   const CSCCLCTDigiCollection& clcts = *clctsH_.product();
   const CSCALCTDigiCollection& alcts = *alctsH_.product();
   const CSCCorrelatedLCTDigiCollection& lcts = *lctsH_.product();
@@ -160,6 +168,31 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
   }
 
   index = 0;
+  // CSC PreCLCTs
+  for (auto detUnitIt = preclcts.begin(); detUnitIt != preclcts.end(); detUnitIt++) {
+    const CSCDetId& id = (*detUnitIt).first;
+    const bool isodd = (id.chamber()%2 == 1);
+    const auto& range = (*detUnitIt).second;
+    for (auto digiIt = range.first; digiIt != range.second; digiIt++) {
+
+      if (!(*digiIt).isValid())
+        continue;
+
+      cscTree.csc_preclct_hs->push_back(digiIt->getKeyStrip());
+      cscTree.csc_preclct_pattern->push_back(digiIt->getPattern());
+
+      cscTree.csc_preclct_bx->push_back(digiIt->getBX());
+      cscTree.csc_preclct_quality->push_back(digiIt->getQuality());
+      cscTree.csc_preclct_isodd->push_back(isodd);
+      cscTree.csc_preclct_region->push_back(id.zendcap());
+      cscTree.csc_preclct_station->push_back(id.station());
+      cscTree.csc_preclct_ring->push_back(id.ring());
+      cscTree.csc_preclct_chamber->push_back(id.chamber());
+
+      index++;
+    }
+  }
+
   // CSC CLCTs
   for (auto detUnitIt = clcts.begin(); detUnitIt != clcts.end(); detUnitIt++) {
     const CSCDetId& id = (*detUnitIt).first;

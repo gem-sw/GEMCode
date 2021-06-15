@@ -17,6 +17,7 @@ sim = {
              "id_csc_sh",
              "id_csc_wire",
              "id_csc_strip",
+             "id_csc_preclct",
              "id_csc_clct",
              "id_csc_alct",
              "id_csc_lct",
@@ -185,6 +186,25 @@ alct = {
     ]
 }
 
+preclct = {
+    "int" : [
+        "bx",
+        "hs",
+        "qs",
+        "es",
+        "isodd",
+        "region",
+        "station",
+        "ring",
+        "chamber",
+        "quality",
+        "pattern",
+        "pattern_run3",
+        "tpid",
+
+    ]
+}
+
 clct = {
     "int" : [
         "bx",
@@ -348,6 +368,7 @@ gemStubStruct.add(Object("gem_cluster", gemcluster))
 
 cscStubStruct = Struct("CSCStubStruct")
 cscStubStruct.add(Object("csc_alct", alct))
+cscStubStruct.add(Object("csc_preclct", preclct))
 cscStubStruct.add(Object("csc_clct", clct))
 cscStubStruct.add(Object("csc_lct",  lct))
 cscStubStruct.add(Object("csc_mplct", mplct))
