@@ -9,18 +9,20 @@ RPCDigiMatcher::RPCDigiMatcher(const edm::ParameterSet& pset, edm::ConsumesColle
   maxRPCDigi_ = rpcDigi.getParameter<int>("maxBX");
   matchDeltaStrip_ = rpcDigi.getParameter<int>("matchDeltaStrip");
   verboseDigi_ = rpcDigi.getParameter<int>("verbose");
-
+  run_ = rpcDigi.getParameter<bool>("run");
   // make a new simhits matcher
   muonSimHitMatcher_.reset(new RPCSimHitMatcher(pset, std::move(iC)));
 
-  rpcDigiToken_ = iC.consumes<RPCDigiCollection>(rpcDigi.getParameter<edm::InputTag>("inputTag"));
+  if (run_)
+    rpcDigiToken_ = iC.consumes<RPCDigiCollection>(rpcDigi.getParameter<edm::InputTag>("inputTag"));
 }
 
 void RPCDigiMatcher::init(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
   muonSimHitMatcher_->init(iEvent, iSetup);
 
-  iEvent.getByToken(rpcDigiToken_, rpcDigisH_);
+  if (run_)
+    iEvent.getByToken(rpcDigiToken_, rpcDigisH_);
 
   iSetup.get<MuonGeometryRecord>().get(rpc_geom_);
   if (rpc_geom_.isValid()) {
@@ -34,14 +36,16 @@ void RPCDigiMatcher::init(const edm::Event& iEvent, const edm::EventSetup& iSetu
 /// do the matching
 void RPCDigiMatcher::match(const SimTrack& t, const SimVertex& v)
 {
-  // match simhits first
-  muonSimHitMatcher_->match(t,v);
+  if (run_) {
+    // match simhits first
+    muonSimHitMatcher_->match(t,v);
 
-  // get the digi collections
-  const RPCDigiCollection& rpcDigis = *rpcDigisH_.product();
+    // get the digi collections
+    const RPCDigiCollection& rpcDigis = *rpcDigisH_.product();
 
-  // now match the digis
-  matchDigisToSimTrack(rpcDigis);
+    // now match the digis
+    matchDigisToSimTrack(rpcDigis);
+  }
 }
 
 
