@@ -158,7 +158,12 @@ process.SimL1Emulator = cms.Sequence(process.SimL1TMuonTask)
 
 # Path and EndPath definitions
 process.raw2digi_step = cms.Path(process.RawToDigi)
-process.L1simulation_step = cms.Path(process.simMuonGEMPadDigis * process.simMuonGEMPadDigiClusters * process.simCscTriggerPrimitiveDigis * process.simEmtfShowers * process.simGmtShowerDigis)
+process.simCscTriggerPrimitiveDigis.runME11ILT = False
+process.L1simulation_step = cms.Path(
+      process.simCscTriggerPrimitiveDigis *
+      process.simEmtfShowers *
+      process.simGmtShowerDigis
+)
 process.ana_step = cms.Path(process.MuonNtuplizer)
 process.endjob_step = cms.EndPath(process.endOfProcess)
 process.FEVTDEBUGoutput_step = cms.EndPath(process.FEVTDEBUGoutput)
