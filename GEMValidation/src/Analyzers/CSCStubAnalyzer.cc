@@ -158,6 +158,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       cscTree.csc_alct_ring->push_back(id.ring());
       cscTree.csc_alct_chamber->push_back(id.chamber());
       cscTree.csc_alct_tpid->push_back(tpidfound);
+      cscTree.csc_alct_sector->push_back(id.triggerSector());
 
       if (tpidfound != -1 and validTracks) {
         ((*simTree.sim_id_csc_alct)[tpidfound]).push_back(index);
@@ -188,6 +189,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       cscTree.csc_preclct_station->push_back(id.station());
       cscTree.csc_preclct_ring->push_back(id.ring());
       cscTree.csc_preclct_chamber->push_back(id.chamber());
+      cscTree.csc_preclct_sector->push_back(id.triggerSector());
 
       index++;
     }
@@ -235,6 +237,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       cscTree.csc_clct_ring->push_back(id.ring());
       cscTree.csc_clct_chamber->push_back(id.chamber());
       cscTree.csc_clct_tpid->push_back(tpidfound);
+      cscTree.csc_clct_sector->push_back(id.triggerSector());
 
       if (tpidfound != -1 and validTracks)
         ((*simTree.sim_id_csc_clct)[tpidfound]).push_back(index);
@@ -287,6 +290,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       cscTree.csc_lct_ring->push_back(id.ring());
       cscTree.csc_lct_chamber->push_back(id.chamber());
       cscTree.csc_lct_tpid->push_back(tpidfound);
+      cscTree.csc_lct_sector->push_back(id.triggerSector());
 
       if (tpidfound != -1 and validTracks)
         ((*simTree.sim_id_csc_lct)[tpidfound]).push_back(index);
@@ -341,6 +345,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       cscTree.csc_mplct_ring->push_back(id.ring());
       cscTree.csc_mplct_chamber->push_back(id.chamber());
       cscTree.csc_mplct_tpid->push_back(tpidfound);
+      cscTree.csc_mplct_sector->push_back(id.triggerSector());
 
       if (tpidfound != -1 and validTracks)
         ((*simTree.sim_id_csc_mplct)[tpidfound]).push_back(index);

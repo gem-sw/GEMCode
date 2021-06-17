@@ -575,6 +575,7 @@ namespace my {
     p_ints csc_alct_region;
     p_ints csc_alct_station;
     p_ints csc_alct_ring;
+    p_ints csc_alct_sector;
     p_ints csc_alct_chamber;
     p_ints csc_alct_quality;
     p_ints csc_alct_tpid;
@@ -586,6 +587,7 @@ namespace my {
     p_ints csc_preclct_region;
     p_ints csc_preclct_station;
     p_ints csc_preclct_ring;
+    p_ints csc_preclct_sector;
     p_ints csc_preclct_chamber;
     p_ints csc_preclct_quality;
     p_ints csc_preclct_pattern;
@@ -599,6 +601,7 @@ namespace my {
     p_ints csc_clct_region;
     p_ints csc_clct_station;
     p_ints csc_clct_ring;
+    p_ints csc_clct_sector;
     p_ints csc_clct_chamber;
     p_ints csc_clct_quality;
     p_ints csc_clct_pattern;
@@ -613,6 +616,7 @@ namespace my {
     p_ints csc_lct_region;
     p_ints csc_lct_station;
     p_ints csc_lct_ring;
+    p_ints csc_lct_sector;
     p_ints csc_lct_chamber;
     p_ints csc_lct_quality;
     p_ints csc_lct_pattern;
@@ -627,6 +631,7 @@ namespace my {
     p_ints csc_mplct_region;
     p_ints csc_mplct_station;
     p_ints csc_mplct_ring;
+    p_ints csc_mplct_sector;
     p_ints csc_mplct_chamber;
     p_ints csc_mplct_quality;
     p_ints csc_mplct_pattern;
@@ -652,6 +657,7 @@ namespace my {
       csc_alct_region = new t_ints;
       csc_alct_station = new t_ints;
       csc_alct_ring = new t_ints;
+      csc_alct_sector = new t_ints;
       csc_alct_chamber = new t_ints;
       csc_alct_quality = new t_ints;
       csc_alct_tpid = new t_ints;
@@ -663,6 +669,7 @@ namespace my {
       csc_preclct_region = new t_ints;
       csc_preclct_station = new t_ints;
       csc_preclct_ring = new t_ints;
+      csc_preclct_sector = new t_ints;
       csc_preclct_chamber = new t_ints;
       csc_preclct_quality = new t_ints;
       csc_preclct_pattern = new t_ints;
@@ -676,6 +683,7 @@ namespace my {
       csc_clct_region = new t_ints;
       csc_clct_station = new t_ints;
       csc_clct_ring = new t_ints;
+      csc_clct_sector = new t_ints;
       csc_clct_chamber = new t_ints;
       csc_clct_quality = new t_ints;
       csc_clct_pattern = new t_ints;
@@ -690,6 +698,7 @@ namespace my {
       csc_lct_region = new t_ints;
       csc_lct_station = new t_ints;
       csc_lct_ring = new t_ints;
+      csc_lct_sector = new t_ints;
       csc_lct_chamber = new t_ints;
       csc_lct_quality = new t_ints;
       csc_lct_pattern = new t_ints;
@@ -704,6 +713,7 @@ namespace my {
       csc_mplct_region = new t_ints;
       csc_mplct_station = new t_ints;
       csc_mplct_ring = new t_ints;
+      csc_mplct_sector = new t_ints;
       csc_mplct_chamber = new t_ints;
       csc_mplct_quality = new t_ints;
       csc_mplct_pattern = new t_ints;
@@ -730,6 +740,7 @@ namespace my {
       t->Branch("csc_alct_region", &csc_alct_region);
       t->Branch("csc_alct_station", &csc_alct_station);
       t->Branch("csc_alct_ring", &csc_alct_ring);
+      t->Branch("csc_alct_sector", &csc_alct_sector);
       t->Branch("csc_alct_chamber", &csc_alct_chamber);
       t->Branch("csc_alct_quality", &csc_alct_quality);
       t->Branch("csc_alct_tpid", &csc_alct_tpid);
@@ -741,6 +752,7 @@ namespace my {
       t->Branch("csc_preclct_region", &csc_preclct_region);
       t->Branch("csc_preclct_station", &csc_preclct_station);
       t->Branch("csc_preclct_ring", &csc_preclct_ring);
+      t->Branch("csc_preclct_sector", &csc_preclct_sector);
       t->Branch("csc_preclct_chamber", &csc_preclct_chamber);
       t->Branch("csc_preclct_quality", &csc_preclct_quality);
       t->Branch("csc_preclct_pattern", &csc_preclct_pattern);
@@ -754,6 +766,7 @@ namespace my {
       t->Branch("csc_clct_region", &csc_clct_region);
       t->Branch("csc_clct_station", &csc_clct_station);
       t->Branch("csc_clct_ring", &csc_clct_ring);
+      t->Branch("csc_clct_sector", &csc_clct_sector);
       t->Branch("csc_clct_chamber", &csc_clct_chamber);
       t->Branch("csc_clct_quality", &csc_clct_quality);
       t->Branch("csc_clct_pattern", &csc_clct_pattern);
@@ -768,6 +781,7 @@ namespace my {
       t->Branch("csc_lct_region", &csc_lct_region);
       t->Branch("csc_lct_station", &csc_lct_station);
       t->Branch("csc_lct_ring", &csc_lct_ring);
+      t->Branch("csc_lct_sector", &csc_lct_sector);
       t->Branch("csc_lct_chamber", &csc_lct_chamber);
       t->Branch("csc_lct_quality", &csc_lct_quality);
       t->Branch("csc_lct_pattern", &csc_lct_pattern);
@@ -782,6 +796,7 @@ namespace my {
       t->Branch("csc_mplct_region", &csc_mplct_region);
       t->Branch("csc_mplct_station", &csc_mplct_station);
       t->Branch("csc_mplct_ring", &csc_mplct_ring);
+      t->Branch("csc_mplct_sector", &csc_mplct_sector);
       t->Branch("csc_mplct_chamber", &csc_mplct_chamber);
       t->Branch("csc_mplct_quality", &csc_mplct_quality);
       t->Branch("csc_mplct_pattern", &csc_mplct_pattern);
