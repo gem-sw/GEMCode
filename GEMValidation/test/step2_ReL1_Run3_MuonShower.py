@@ -10,6 +10,7 @@ from Configuration.Eras.Era_Run2_2018_cff import Run2_2018
 
 options = VarParsing('analysis')
 options.register ("test", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
+options.register ("runOnData", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
 options.register ("runOnRaw", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
 options.register ("runAna", True, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
 options.register ("run3", True, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
@@ -111,7 +112,10 @@ process.TFileService = cms.Service("TFileService",
 
 # Other statements
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '')
+if options.runOnData:
+      process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run2_data', '')
+else:
+      process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '')
 
 from GEMCode.GEMValidation.cscTriggerCustoms import runOn110XMC, runOn110XMC_IgnoreIncorrectGEMDB
 if options.runOnRaw:
@@ -153,7 +157,7 @@ process.SimL1Emulator = cms.Sequence(process.SimL1TMuonTask)
 
 # Path and EndPath definitions
 process.raw2digi_step = cms.Path(process.RawToDigi)
-process.L1simulation_step = cms.Path(process.SimL1Emulator)
+process.L1simulation_step = cms.Path(process.simMuonGEMPadDigis * process.simMuonGEMPadDigiClusters * process.simCscTriggerPrimitiveDigis * process.simEmtfShowers * process.simGmtShowerDigis)
 process.ana_step = cms.Path(process.MuonNtuplizer)
 process.endjob_step = cms.EndPath(process.endOfProcess)
 process.FEVTDEBUGoutput_step = cms.EndPath(process.FEVTDEBUGoutput)

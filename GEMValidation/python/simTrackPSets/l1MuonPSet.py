@@ -3,7 +3,7 @@ import FWCore.ParameterSet.Config as cms
 l1MuonPSet = cms.PSet(
     emtfTrack = cms.PSet(
         verbose = cms.int32(0),
-        run = cms.bool(True),
+        run = cms.bool(False),
         inputTag = cms.InputTag("simEmtfDigis"),
         minBX = cms.int32(0),
         maxBX = cms.int32(0),
@@ -11,7 +11,7 @@ l1MuonPSet = cms.PSet(
     ),
     emtfCand = cms.PSet(
         verbose = cms.int32(0),
-        run = cms.bool(True),
+        run = cms.bool(False),
         inputTag = cms.InputTag("simEmtfDigis","EMTF"),
         minBX = cms.int32(0),
         maxBX = cms.int32(0),
@@ -35,7 +35,7 @@ l1MuonPSet = cms.PSet(
     ),
     muon = cms.PSet(
         verbose = cms.int32(0),
-        run = cms.bool(True),
+        run = cms.bool(False),
         inputTag = cms.InputTag("simGmtStage2Digis"),
         minBX = cms.int32(0),
         maxBX = cms.int32(0),
