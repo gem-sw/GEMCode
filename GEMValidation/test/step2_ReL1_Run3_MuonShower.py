@@ -157,7 +157,7 @@ process.SimL1Emulator = cms.Sequence(process.SimL1TMuonTask)
 
 # Path and EndPath definitions
 process.raw2digi_step = cms.Path(process.RawToDigi)
-process.simCscTriggerPrimitiveDigis.runME11ILT = False
+process.simCscTriggerPrimitiveDigis.runME11ILT = cms.bool(False)
 process.L1simulation_step = cms.Path(
       process.simCscTriggerPrimitiveDigis *
       process.simEmtfShowers *
