@@ -51,6 +51,8 @@ class AnalyzerManager
   std::unique_ptr<L1MuAnalyzer> l1mu_;
   std::unique_ptr<L1TrackAnalyzer> l1track_;
   std::unique_ptr<RecoTrackAnalyzer> recotrack_;
+  bool runSim_;
+  bool useGEM_;
 };
 
 #endif

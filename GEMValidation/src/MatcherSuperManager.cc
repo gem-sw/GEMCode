@@ -4,7 +4,7 @@
 MatcherSuperManager::MatcherSuperManager(const edm::ParameterSet& conf, edm::ConsumesCollector&& iC)
 {
   verbose_ = conf.getParameter<int>("verbose") + 1;
-
+  runSim_ = conf.getParameter<bool>("runSim");
   const auto& simVertex = conf.getParameter<edm::ParameterSet>("simVertex");
   simVertexInput_ = iC.consumes<edm::SimVertexContainer>(simVertex.getParameter<edm::InputTag>("inputTag"));
 
@@ -33,6 +33,8 @@ void MatcherSuperManager::init() {
 }
 
 void MatcherSuperManager::match(const edm::Event& ev, const edm::EventSetup& eventSetup) {
+
+  if (!runSim_) return;
 
   edm::Handle<edm::SimTrackContainer> sim_tracks;
   ev.getByToken(simTrackInput_, sim_tracks);

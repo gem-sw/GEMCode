@@ -43,6 +43,7 @@ private:
   double simTrackMinEta_;
   double simTrackMaxEta_;
   int verbose_;
+  bool runSim_;
   std::vector<int> pdgIds_;
 };
 

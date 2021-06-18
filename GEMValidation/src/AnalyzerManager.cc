@@ -11,6 +11,8 @@ AnalyzerManager::AnalyzerManager(const edm::ParameterSet& conf, edm::ConsumesCol
   cscdg_.reset(new CSCDigiAnalyzer(conf, std::move(iC)));
   cscstub_.reset(new CSCStubAnalyzer(conf, std::move(iC)));
   l1mu_.reset(new L1MuAnalyzer(conf, std::move(iC)));
+  runSim_ = conf.getParameter<bool>("runSim");
+  useGEM_ = conf.getParameter<bool>("useGEMs");
   // l1track_.reset(new L1TrackAnalyzer(conf, std::move(iC)));
   // recotrack_.reset(new RecoTrackAnalyzer(conf));
 }
@@ -44,12 +46,18 @@ void AnalyzerManager::analyze(const edm::Event& ev,
                               const edm::EventSetup& es,
                               const MatcherSuperManager& manager,
                               my::TreeManager& tree) {
-  simt_->analyze(ev, es, tree);
-  gent_->analyze(ev, es, manager, tree);
-  gemsh_->analyze(ev, es, manager, tree);
-  gemdg_->analyze(ev, es, manager, tree);
-  gemstub_->analyze(ev, es, manager, tree);
-  cscsh_->analyze(ev, es, manager, tree);
+  if (runSim_) {
+    simt_->analyze(ev, es, tree);
+    gent_->analyze(ev, es, manager, tree);
+    if (useGEM_) {
+      gemsh_->analyze(ev, es, manager, tree);
+    }
+    cscsh_->analyze(ev, es, manager, tree);
+  }
+  if (useGEM_) {
+    gemdg_->analyze(ev, es, manager, tree);
+    gemstub_->analyze(ev, es, manager, tree);
+  }
   cscdg_->analyze(ev, es, manager, tree);
   cscstub_->analyze(ev, es, manager, tree);
   l1mu_->analyze(ev, es, manager, tree);

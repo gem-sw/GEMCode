@@ -127,6 +127,9 @@ process = dropNonMuonCollections(process)
 # the analyzer configuration
 ana = process.MuonNtuplizer
 ana.verbose = 1
+if options.runOnData:
+      ana.runSim = False
+      ana.useGEMs = False
 ana.genParticle.pdgIds = cms.vint32(6000113, -6000113, 9000006, -9000006, 9000007, -9000007)
 ana.genParticle.stableParticle = False
 ana.genParticle.verbose = 0
@@ -148,9 +151,14 @@ ana.emtfShower.verbose = 1
 ana.muonShower.verbose = 1
 
 if options.runOnRaw:
-    ana.gemStripDigi.matchToSimLink = False
-    ana.gemStripDigi.inputTag = "muonGEMDigis"
-    #ana.muon.inputTag = cms.InputTag("gmtStage2Digis","Muon")
+      process.simCscTriggerPrimitiveDigis.CSCComparatorDigiProducer = "muonCSCDigis:MuonCSCComparatorDigi"
+      process.simCscTriggerPrimitiveDigis.CSCWireDigiProducer = "muonCSCDigis:MuonCSCWireDigi"
+      ana.gemStripDigi.matchToSimLink = False
+      ana.gemStripDigi.inputTag = "muonGEMDigis"
+      ana.cscStripDigi.inputTag = "muonCSCDigis:MuonCSCStripDigi"
+      ana.cscWireDigi.inputTag = "muonCSCDigis:MuonCSCWireDigi"
+      ana.cscComparatorDigi.inputTag = "muonCSCDigis:MuonCSCComparatorDigi"
+      #ana.muon.inputTag = cms.InputTag("gmtStage2Digis","Muon")
 
 ## customize unpacker
 process.SimL1Emulator = cms.Sequence(process.SimL1TMuonTask)
