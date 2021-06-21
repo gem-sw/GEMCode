@@ -39,6 +39,10 @@ public:
   bool verboseCluster_;
   bool verboseCoPad_;
 
+  bool runPad_;
+  bool runCluster_;
+  bool runCoPad_;
+
   std::pair<GEMPadDigi, GlobalPoint>
   bestPad(const GEMDetId& id,
           const GEMPadDigiContainer& digis) const;
