@@ -6,6 +6,7 @@ GEMDigiAnalyzer::GEMDigiAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCol
   minBXDigi_ = gemDigi.getParameter<int>("minBX");
   maxBXDigi_ = gemDigi.getParameter<int>("maxBX");
   verboseDigi_ = gemDigi.getParameter<int>("verbose");
+  runDigi_ = gemDigi.getParameter<bool>("run");
 
   gemDigiToken_ = iC.consumes<GEMDigiCollection>(gemDigi.getParameter<edm::InputTag>("inputTag"));
 }
@@ -17,6 +18,8 @@ void GEMDigiAnalyzer::setMatcher(const GEMDigiMatcher& match_sh)
 
 void GEMDigiAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, my::TreeManager& tree)
 {
+  if (!runDigi_) return;
+
   iEvent.getByToken(gemDigiToken_, gemDigisH_);
 
   iSetup.get<MuonGeometryRecord>().get(gem_geom_);
