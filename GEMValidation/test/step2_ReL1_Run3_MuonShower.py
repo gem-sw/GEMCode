@@ -141,6 +141,13 @@ ana.simTrack.pdgIds = cms.vint32(6000113, -6000113, 9000006, -9000006, 9000007, 
 ana.cscSimHit.simMuOnly = False
 ana.cscSimHit.discardEleHits = False
 ana.gemStripDigi.matchDeltaStrip = 2
+ana.gemStripDigi.matchToSimLink = False
+
+ana.gemStripDigi.run = False
+ana.gemPadDigi.run = False
+ana.gemPadCluster.run = False
+ana.gemCoPadDigi.run = False
+
 ana.cscLCT.addGhostLCTs = cms.bool(True)
 ana.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
 ana.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
@@ -149,11 +156,12 @@ ana.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED","
 ana.cscShower.verbose = 1
 ana.emtfShower.verbose = 1
 ana.muonShower.verbose = 1
+## turn off GEM
+
 
 if options.runOnRaw:
       process.simCscTriggerPrimitiveDigis.CSCComparatorDigiProducer = "muonCSCDigis:MuonCSCComparatorDigi"
       process.simCscTriggerPrimitiveDigis.CSCWireDigiProducer = "muonCSCDigis:MuonCSCWireDigi"
-      ana.gemStripDigi.matchToSimLink = False
       ana.gemStripDigi.inputTag = "muonGEMDigis"
       ana.cscStripDigi.inputTag = "muonCSCDigis:MuonCSCStripDigi"
       ana.cscWireDigi.inputTag = "muonCSCDigis:MuonCSCWireDigi"
@@ -169,7 +177,7 @@ if not options.run3:
       process.raw2digi_step = cms.Path(process.muonCSCDigis)
 
 
-process.simCscTriggerPrimitiveDigis.runME11ILT = cms.bool(False)
+process.simCscTriggerPrimitiveDigis.commonParam.runME11ILT =False
 process.L1simulation_step = cms.Path(
       process.simCscTriggerPrimitiveDigis *
       process.simEmtfShowers *
