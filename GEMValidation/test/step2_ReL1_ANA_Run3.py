@@ -8,7 +8,7 @@ from FWCore.ParameterSet.VarParsing import VarParsing
 from Configuration.Eras.Era_Run3_cff import Run3
 
 options = VarParsing('analysis')
-options.register ("test", True, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
+options.register ("test", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
 options.register ("runOnRaw", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
 options.register ("runAna", True, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
 options.parseArguments()
