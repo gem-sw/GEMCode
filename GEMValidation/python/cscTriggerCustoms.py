@@ -44,6 +44,7 @@ def addCSCTriggerRun3(process):
 
     ## Run-2 patterns with ILT
     process.simCscTriggerPrimitiveDigisILT = process.simCscTriggerPrimitiveDigis.clone()
+    process.simCscTriggerPrimitiveDigisILT.commonParam.runCCLUT = False
     process.simCscTriggerPrimitiveDigisILT.commonParam.runME11ILT = True
     process.simCscTriggerPrimitiveDigisILT.commonParam.GEMPadDigiClusterProducer = cms.InputTag("simMuonGEMPadDigiClusters")
     process.simEmtfDigisILT = process.simEmtfDigis.clone()
