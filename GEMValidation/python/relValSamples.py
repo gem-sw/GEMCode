@@ -218,3 +218,16 @@ RelValSingleMuFlatPt2To100_113X_mcRun4_realistic_v2_2026D76noPU_CMSSW_11_3_0_pre
 '/store/relval/CMSSW_11_3_0_pre6/RelValSingleMuFlatPt2To100/GEN-SIM-DIGI-RAW/113X_mcRun4_realistic_v6_2026D76noPU-v1/10000/fe1e05ce-aeb8-4938-a7a8-3cf648896470.root',
 '/store/relval/CMSSW_11_3_0_pre6/RelValSingleMuFlatPt2To100/GEN-SIM-DIGI-RAW/113X_mcRun4_realistic_v6_2026D76noPU-v1/10000/fed7e00d-9711-4c87-a33e-70ed38d77a4c.root',
 ]
+
+
+RelValSingleMuPt10_120X_mcRun4_realistic_v7_noPU_CMSSW_11_3_0 = [
+'/store/relval/CMSSW_11_3_0/RelValSingleMuPt10/GEN-SIM-DIGI-RAW/113X_mcRun4_realistic_v7_2026D76noPU-v1/00000/0c66fccb-ba60-40be-a63c-0ef830ff4673.root',
+'/store/relval/CMSSW_11_3_0/RelValSingleMuPt10/GEN-SIM-DIGI-RAW/113X_mcRun4_realistic_v7_2026D76noPU-v1/00000/33d47d7f-3f01-49a5-b1ec-856ae04941f6.root',
+'/store/relval/CMSSW_11_3_0/RelValSingleMuPt10/GEN-SIM-DIGI-RAW/113X_mcRun4_realistic_v7_2026D76noPU-v1/00000/356460bb-9be3-4045-9ea1-7682f39ece8a.root',
+'/store/relval/CMSSW_11_3_0/RelValSingleMuPt10/GEN-SIM-DIGI-RAW/113X_mcRun4_realistic_v7_2026D76noPU-v1/00000/41efa23b-4599-4cd8-8955-88ab951693fb.root',
+'/store/relval/CMSSW_11_3_0/RelValSingleMuPt10/GEN-SIM-DIGI-RAW/113X_mcRun4_realistic_v7_2026D76noPU-v1/00000/882877dd-e1d0-4c0d-9893-584af0489e0b.root',
+'/store/relval/CMSSW_11_3_0/RelValSingleMuPt10/GEN-SIM-DIGI-RAW/113X_mcRun4_realistic_v7_2026D76noPU-v1/00000/940aa7a6-bc56-4134-b138-c7c19b252d0f.root',
+'/store/relval/CMSSW_11_3_0/RelValSingleMuPt10/GEN-SIM-DIGI-RAW/113X_mcRun4_realistic_v7_2026D76noPU-v1/00000/9dce5178-fcf0-4967-b327-eb22300cbeff.root',
+'/store/relval/CMSSW_11_3_0/RelValSingleMuPt10/GEN-SIM-DIGI-RAW/113X_mcRun4_realistic_v7_2026D76noPU-v1/00000/b0119573-2357-4fea-b283-36fe80443218.root',
+'/store/relval/CMSSW_11_3_0/RelValSingleMuPt10/GEN-SIM-DIGI-RAW/113X_mcRun4_realistic_v7_2026D76noPU-v1/00000/cea7cead-f113-4b4b-ad28-40ef82bcea05.root',
+]

@@ -286,10 +286,10 @@ def CSCPosResolutionComparison(plotter, plotter2):
     h2.Draw("histsame")
     h3.Draw("histsame")
 
-    print h11.GetMean(), h11.GetMeanError()
-    print h1.GetMean(), h1.GetMeanError()
-    print h2.GetMean(), h2.GetMeanError()
-    print h2.GetMean(), h3.GetMeanError()
+    print(h11.GetMean(), h11.GetMeanError())
+    print(h1.GetMean(), h1.GetMeanError())
+    print(h2.GetMean(), h2.GetMeanError())
+    print(h2.GetMean(), h3.GetMeanError())
 
     leg = TLegend(0.15,0.6,.45,0.9, "", "brNDC");
     leg.SetBorderSize(0)
@@ -340,9 +340,9 @@ def CSCBendResolutionComparison(plotter, plotter2):
 
         h11 = draw_1D(plotter.tree, title, h_bins, toPlot1, "", "same", kBlack)
         h1 = draw_1D(plotter2.tree, title, h_bins, toPlot1, "", "same", kBlue)
-        print h11.GetEntries(), h1.GetEntries()
-        print h11.GetBinContent(0), h1.GetBinContent(0)
-        print h11.GetBinContent(101), h1.GetBinContent(101)
+        print(h11.GetEntries(), h1.GetEntries())
+        print(h11.GetBinContent(0), h1.GetBinContent(0))
+        print(h11.GetBinContent(101), h1.GetBinContent(101))
         h11total.append(h11)
         h1total.append(h1)
 
@@ -399,8 +399,8 @@ def CSCBendResolutionComparison(plotter, plotter2):
     h11.Draw("histsame")
     h1.Draw("histsame")
 
-    print h11.GetMean(), h11.GetMeanError()
-    print h1.GetMean(), h1.GetMeanError()
+    print(h11.GetMean(), h11.GetMeanError())
+    print(h1.GetMean(), h1.GetMeanError())
 
     leg = TLegend(0.15,0.6,.45,0.9, "", "brNDC");
     leg.SetBorderSize(0)
