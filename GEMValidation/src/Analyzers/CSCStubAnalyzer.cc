@@ -28,20 +28,6 @@ CSCStubAnalyzer::CSCStubAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCol
   alctToken_ = iC.consumes<CSCALCTDigiCollection>(cscALCT.getParameter<edm::InputTag>("inputTag"));
   lctToken_ = iC.consumes<CSCCorrelatedLCTDigiCollection>(cscLCT.getParameter<edm::InputTag>("inputTag"));
   mplctToken_ = iC.consumes<CSCCorrelatedLCTDigiCollection>(cscMPLCT.getParameter<edm::InputTag>("inputTag"));
-
-  positionLUTFiles_ = conf.getParameter<std::vector<std::string>>("positionLUTFiles");
-  positionFloatLUTFiles_ = conf.getParameter<std::vector<std::string>>("positionFloatLUTFiles");
-  slopeLUTFiles_ = conf.getParameter<std::vector<std::string>>("slopeLUTFiles");
-  slopeFloatLUTFiles_ = conf.getParameter<std::vector<std::string>>("slopeFloatLUTFiles");
-  patternConversionLUTFiles_ = conf.getParameter<std::vector<std::string>>("patternConversionLUTFiles");
-
-  for (int i = 0; i < 5; ++i) {
-    lutpos_[i] = std::make_unique<CSCLUTReader>(positionLUTFiles_[i]);
-    lutposfloat_[i] = std::make_unique<CSCLUTReader>(positionFloatLUTFiles_[i]);
-    lutslope_[i] = std::make_unique<CSCLUTReader>(slopeLUTFiles_[i]);
-    lutslopefloat_[i] = std::make_unique<CSCLUTReader>(slopeFloatLUTFiles_[i]);
-    lutpatconv_[i] = std::make_unique<CSCLUTReader>(patternConversionLUTFiles_[i]);
-  }
 }
 
 void CSCStubAnalyzer::init(const edm::Event& iEvent, const edm::EventSetup& iSetup)
@@ -323,12 +309,6 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
       deltaStrip = CSCConstants::NUM_HALF_STRIPS_ME1B;
 
     float fpos = -9;
-    if (clct.getCompCode() != -1) {
-      fpos = clct.getKeyStrip() + lutposfloat_[clct.getRun3Pattern()]->lookup(clct.getCompCode());
-      // std::cout << "fpos " << fpos / 2. << " "
-      //           << tree.cscSimHit().strip_csc_sh_odd[st] + deltaStrip << " "
-      //           << tree.cscSimHit().strip_csc_sh_even[st] + deltaStrip << std::endl;
-    }
 
     auto fill = [clct, odd, slopeStrip, tree, deltaStrip, id, fpos](gem::CSCStubStruct& cscStubTree, int st) mutable {
       if (odd) {
