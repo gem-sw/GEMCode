@@ -51,8 +51,8 @@ process.maxEvents = cms.untracked.PSet(
 process.source = cms.Source(
       "PoolSource",
       fileNames = cms.untracked.vstring(
-            "file:/uscms/home/menendez/nobackup/Trigger/Data/28BC606A-86A3-E811-A897-02163E00B16E.root"
-            #"file:/uscms/home/dildick/nobackup/work/LLPStudiesWithSergoEtAL/CMSSW_12_0_0_pre2/src/132B0128-FF59-DB4A-A3AD-AF4D8B4D21D2.root"
+            #"file:/uscms/home/menendez/nobackup/Trigger/Data/28BC606A-86A3-E811-A897-02163E00B16E.root"
+            "file:/uscms/home/dildick/nobackup/work/LLPStudiesWithSergoEtAL/CMSSW_12_0_0_pre2/src/132B0128-FF59-DB4A-A3AD-AF4D8B4D21D2.root"
             #"/store/user/nimenend/HTo2LongLivedTo4q_MH_125_MFF_1_CTau_10000mm_TuneCP5_14TeV_pythia/HTo2LongLivedTo4q_MH_125_MFF_1_CTau_10000mm_TuneCP5_14TeV_pythia/200710_130547/0000/step2_1.root"
     ),
     secondaryFileNames = cms.untracked.vstring(),
@@ -160,19 +160,6 @@ ana.emtfShower.verbose = 1
 ana.muonShower.verbose = 1
 ## turn off GEM
 
-process.MuonNtuplizerCath = process.MuonNtuplizer.clone()
-anaCath = process.MuonNtuplizerCath
-anaCath.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisCath","","ReL1")
-anaCath.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisCath","","ReL1")
-anaCath.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisCath","","ReL1")
-anaCath.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisCath","MPCSORTED","ReL1")
-process.MuonNtuplizerAnod = process.MuonNtuplizer.clone()
-anaAnod = process.MuonNtuplizerAnod
-anaAnod.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisAnod","","ReL1")
-anaAnod.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisAnod","","ReL1")
-anaAnod.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisAnod","","ReL1")
-anaAnod.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisAnod","MPCSORTED","ReL1")
-
 if options.runOnRaw:
       process.simCscTriggerPrimitiveDigis.CSCComparatorDigiProducer = "muonCSCDigis:MuonCSCComparatorDigi"
       process.simCscTriggerPrimitiveDigis.CSCWireDigiProducer = "muonCSCDigis:MuonCSCWireDigi"
@@ -185,6 +172,25 @@ if options.runOnRaw:
       ana.cscWireDigi.inputTag = "muonCSCDigis:MuonCSCWireDigi"
       ana.cscComparatorDigi.inputTag = "muonCSCDigis:MuonCSCComparatorDigi"
       #ana.muon.inputTag = cms.InputTag("gmtStage2Digis","Muon")
+
+process.MuonNtuplizerCath = process.MuonNtuplizer.clone()
+anaCath = process.MuonNtuplizerCath
+anaCath.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisCath","","ReL1")
+anaCath.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisCath","","ReL1")
+anaCath.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisCath","","ReL1")
+anaCath.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisCath","MPCSORTED","ReL1")
+anaCath.cscShower.inputTag = "simCscTriggerPrimitiveDigisCath"
+anaCath.emtfShower.inputTag = "simEmtfDigisCath:EMTF"
+anaCath.muonShower.inputTag = "simGmtShowerDigisCath"
+process.MuonNtuplizerAnod = process.MuonNtuplizer.clone()
+anaAnod = process.MuonNtuplizerAnod
+anaAnod.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisAnod","","ReL1")
+anaAnod.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisAnod","","ReL1")
+anaAnod.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisAnod","","ReL1")
+anaAnod.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisAnod","MPCSORTED","ReL1")
+anaAnod.cscShower.inputTag = "simCscTriggerPrimitiveDigisAnod"
+anaAnod.emtfShower.inputTag = "simEmtfDigisAnod:EMTF"
+anaAnod.muonShower.inputTag = "simGmtShowerDigisAnod"
 
 ## customize unpacker
 process.SimL1Emulator = cms.Sequence(process.SimL1TMuonTask)
