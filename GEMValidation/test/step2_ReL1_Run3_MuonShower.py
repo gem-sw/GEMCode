@@ -15,6 +15,7 @@ options.register ("runOnRaw", False, VarParsing.multiplicity.singleton, VarParsi
 options.register ("runAna", True, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
 options.register ("run3", True, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
 options.register ("crab", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
+options.register ("ShowerSource", 0, VarParsing.multiplicity.singleton, VarParsing.varType.int)
 options.parseArguments()
 
 process_era = Run3
@@ -179,6 +180,7 @@ if not options.run3:
 
 
 process.simCscTriggerPrimitiveDigis.commonParam.runME11ILT =False
+process.simCscTriggerPrimitiveDigis.showerParam.source =options.ShowerSource
 process.L1simulation_step = cms.Path(
       process.simCscTriggerPrimitiveDigis *
       process.simEmtfShowers *
