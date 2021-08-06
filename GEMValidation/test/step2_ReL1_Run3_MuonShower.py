@@ -160,10 +160,26 @@ ana.emtfShower.verbose = 1
 ana.muonShower.verbose = 1
 ## turn off GEM
 
+process.MuonNtuplizerCath = process.MuonNtuplizer.clone()
+anaCath = process.MuonNtuplizerCath
+anaCath.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisCath","","ReL1")
+anaCath.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisCath","","ReL1")
+anaCath.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisCath","","ReL1")
+anaCath.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisCath","MPCSORTED","ReL1")
+process.MuonNtuplizerAnod = process.MuonNtuplizer.clone()
+anaAnod = process.MuonNtuplizerAnod
+anaAnod.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisAnod","","ReL1")
+anaAnod.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisAnod","","ReL1")
+anaAnod.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisAnod","","ReL1")
+anaAnod.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisAnod","MPCSORTED","ReL1")
 
 if options.runOnRaw:
       process.simCscTriggerPrimitiveDigis.CSCComparatorDigiProducer = "muonCSCDigis:MuonCSCComparatorDigi"
       process.simCscTriggerPrimitiveDigis.CSCWireDigiProducer = "muonCSCDigis:MuonCSCWireDigi"
+      #process.simCscTriggerPrimitiveDigisCath.CSCComparatorDigiProducer = "muonCSCDigis:MuonCSCComparatorDigi"
+      #process.simCscTriggerPrimitiveDigisCath.CSCWireDigiProducer = "muonCSCDigis:MuonCSCWireDigi"
+      #process.simCscTriggerPrimitiveDigisAnod.CSCComparatorDigiProducer = "muonCSCDigis:MuonCSCComparatorDigi"
+      #process.simCscTriggerPrimitiveDigisAnod.CSCWireDigiProducer = "muonCSCDigis:MuonCSCWireDigi"
       ana.gemStripDigi.inputTag = "muonGEMDigis"
       ana.cscStripDigi.inputTag = "muonCSCDigis:MuonCSCStripDigi"
       ana.cscWireDigi.inputTag = "muonCSCDigis:MuonCSCWireDigi"
@@ -209,6 +225,8 @@ process.L1simulation_step = cms.Path(
       process.simGmtShowerDigisAnod
 )
 process.ana_step = cms.Path(process.MuonNtuplizer)
+process.ana_step_cath = cms.Path(process.MuonNtuplizerCath)
+process.ana_step_anod = cms.Path(process.MuonNtuplizerAnod)
 process.endjob_step = cms.EndPath(process.endOfProcess)
 process.FEVTDEBUGoutput_step = cms.EndPath(process.FEVTDEBUGoutput)
 
@@ -224,6 +242,9 @@ process.schedule.extend([process.L1simulation_step])
 ## analysis
 if options.runAna:
     process.schedule.extend([process.ana_step])
+    process.schedule.extend([process.ana_step_cath])
+    process.schedule.extend([process.ana_step_anod])
+
 
 ## endjob
 process.schedule.extend([process.endjob_step])
