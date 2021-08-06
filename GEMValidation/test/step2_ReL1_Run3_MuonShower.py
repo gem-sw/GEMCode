@@ -180,11 +180,33 @@ if not options.run3:
 
 
 process.simCscTriggerPrimitiveDigis.commonParam.runME11ILT =False
-process.simCscTriggerPrimitiveDigis.showerParam.source =options.ShowerSource
+process.simCscTriggerPrimitiveDigisCath = process.simCscTriggerPrimitiveDigis.clone()
+process.simCscTriggerPrimitiveDigisAnod = process.simCscTriggerPrimitiveDigis.clone()
+process.simCscTriggerPrimitiveDigis.showerParam.source =2
+process.simCscTriggerPrimitiveDigisCath.showerParam.source =0
+process.simCscTriggerPrimitiveDigisAnod.showerParam.source =1
+process.simEmtfShowersCath = process.simEmtfShowers.clone()
+process.simEmtfShowersCath.CSCShowerInput = cms.InputTag(
+	'simCscTriggerPrimitiveDigisCath')#,'MPCSORCTED',process._Process__name)
+process.simEmtfShowersAnod = process.simEmtfShowers.clone()
+process.simEmtfShowersAnod.CSCShowerInput = cms.InputTag(
+	'simCscTriggerPrimitiveDigisAnod')#,'MPCSORCTED',process._Process__name)
+process.simGmtShowerDigisCath = process.simGmtShowerDigis.clone()
+process.simGmtShowerDigisCath.showerInput = cms.InputTag(
+	'simEmtfShowersCath','EMTF')#,'MPCSORCTED'),process._Process__name)
+process.simGmtShowerDigisAnod = process.simGmtShowerDigis.clone()
+process.simGmtShowerDigisAnod.showerInput = cms.InputTag(
+	'simEmtfShowersAnod','EMTF')#,'MPCSORCTED',process._Process__name)
 process.L1simulation_step = cms.Path(
       process.simCscTriggerPrimitiveDigis *
+      process.simCscTriggerPrimitiveDigisCath *
+      process.simCscTriggerPrimitiveDigisAnod *
       process.simEmtfShowers *
-      process.simGmtShowerDigis
+      process.simEmtfShowersCath *
+      process.simEmtfShowersAnod *
+      process.simGmtShowerDigis *
+      process.simGmtShowerDigisCath *
+      process.simGmtShowerDigisAnod
 )
 process.ana_step = cms.Path(process.MuonNtuplizer)
 process.endjob_step = cms.EndPath(process.endOfProcess)
