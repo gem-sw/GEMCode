@@ -32,6 +32,10 @@ public:
 
   int verbose_;
   bool run_;
+  std::vector<int> pdgIds_;
+  bool stableParticle_;
+  float etaMin_;
+  float etaMax_;
 };
 
 #endif

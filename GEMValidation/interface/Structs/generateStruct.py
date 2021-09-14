@@ -3,7 +3,7 @@
 ## gen particles
 gen = {
     "float" : ["pt","pz","eta","phi","dxy","d0","z0","d0_prod","z0_prod","vx","vy","vz","r"],
-    "int" : ["charge","pdgid","tpid","cscaccept"]
+    "int" : ["charge","pdgid","tpid","llp_in_acceptance"]
 }
 
 sim = {
@@ -17,6 +17,7 @@ sim = {
              "id_csc_sh",
              "id_csc_wire",
              "id_csc_strip",
+             "id_csc_preclct",
              "id_csc_clct",
              "id_csc_alct",
              "id_csc_lct",
@@ -178,8 +179,29 @@ alct = {
         "region",
         "station",
         "ring",
+        "sector",
         "chamber",
         "quality",
+        "tpid",
+
+    ]
+}
+
+preclct = {
+    "int" : [
+        "bx",
+        "hs",
+        "qs",
+        "es",
+        "isodd",
+        "region",
+        "station",
+        "ring",
+        "sector",
+        "chamber",
+        "quality",
+        "pattern",
+        "pattern_run3",
         "tpid",
 
     ]
@@ -195,6 +217,7 @@ clct = {
         "region",
         "station",
         "ring",
+        "sector",
         "chamber",
         "quality",
         "pattern",
@@ -215,6 +238,7 @@ lct = {
         "region",
         "station",
         "ring",
+        "sector",
         "chamber",
         "quality",
         "pattern",
@@ -235,6 +259,7 @@ mplct = {
         "region",
         "station",
         "ring",
+        "sector",
         "chamber",
         "quality",
         "pattern",
@@ -251,9 +276,12 @@ cscshower = {
         "ring",
         "chamber",
         "sector",
-        "isLoose",
-        "isNominal",
-        "isTight"
+        "isLooseInTime",
+        "isNominalInTime",
+        "isTightInTime",
+        "isLooseOutOfTime",
+        "isNominalOutOfTime",
+        "isTightOutOfTime",
     ]
 }
 
@@ -270,10 +298,12 @@ emtfcand = {
 emtfshower = {
     "int" : [
         "bx",
-        "isTwoLoose",
-        "isOneNominal",
         "region",
-        "sector"
+        "sector",
+        "isTwoLooseInTime",
+        "isOneNominalInTime",
+        "isTwoLooseOutOfTime",
+        "isOneNominalOutOfTime",
     ]
 }
 
@@ -283,7 +313,14 @@ l1mu = {
 }
 
 l1mushower = {
-    "int" : ["bits","bx"]
+    "int" : [
+        "bits",
+        "bx",
+        "isTwoLooseInTime",
+        "isOneNominalInTime",
+        "isTwoLooseOutOfTime",
+        "isOneNominalOutOfTime",
+    ]
 }
 
 l1track = {
@@ -336,6 +373,7 @@ gemStubStruct.add(Object("gem_cluster", gemcluster))
 
 cscStubStruct = Struct("CSCStubStruct")
 cscStubStruct.add(Object("csc_alct", alct))
+cscStubStruct.add(Object("csc_preclct", preclct))
 cscStubStruct.add(Object("csc_clct", clct))
 cscStubStruct.add(Object("csc_lct",  lct))
 cscStubStruct.add(Object("csc_mplct", mplct))

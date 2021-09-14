@@ -40,6 +40,7 @@ void CSCDigiAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& e
 
   auto& cscTree = tree.cscDigi();
   auto& simTree = tree.simTrack();
+  auto& genTree = tree.genParticle();
 
   int index;
   for (auto detUnitIt = comps.begin(); detUnitIt != comps.end(); ++detUnitIt) {

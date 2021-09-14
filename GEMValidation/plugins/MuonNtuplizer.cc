@@ -21,6 +21,8 @@ private:
   std::unique_ptr<my::TreeManager> tree_;
   std::unique_ptr<MatcherSuperManager> matcher_;
   std::unique_ptr<AnalyzerManager> analyzer_;
+
+  bool runSim_;
 };
 
 MuonNtuplizer::MuonNtuplizer(const edm::ParameterSet& ps) {
@@ -32,6 +34,8 @@ MuonNtuplizer::MuonNtuplizer(const edm::ParameterSet& ps) {
 
   // reset the analyzers
   analyzer_.reset(new AnalyzerManager(ps, consumesCollector()));
+
+  runSim_ = ps.getParameter<bool>("runSim");
 }
 
 void MuonNtuplizer::analyze(const edm::Event& ev, const edm::EventSetup& es) {
@@ -39,8 +43,10 @@ void MuonNtuplizer::analyze(const edm::Event& ev, const edm::EventSetup& es) {
   tree_->init();
 
   // match the tracks
-  matcher_->init();
-  matcher_->match(ev, es);
+  if (runSim_) {
+    matcher_->init();
+    matcher_->match(ev, es);
+  }
 
   // analyze the track objects
   analyzer_->analyze(ev, es, *matcher_, *tree_);

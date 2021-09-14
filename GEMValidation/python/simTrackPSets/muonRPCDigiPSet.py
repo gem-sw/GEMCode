@@ -7,5 +7,6 @@ muonRPCDigiPSet = cms.PSet(
         minBX = cms.int32(-1),
         maxBX = cms.int32(1),
         matchDeltaStrip = cms.int32(1),
+        run = cms.bool(False)
     ),
 )

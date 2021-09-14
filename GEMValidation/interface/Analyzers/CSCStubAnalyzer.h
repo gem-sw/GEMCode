@@ -4,6 +4,7 @@
 #include "GEMCode/GEMValidation/interface/Helpers.h"
 #include "GEMCode/GEMValidation/interface/MatcherSuperManager.h"
 #include "GEMCode/GEMValidation/interface/TreeManager.h"
+#include "DataFormats/CSCDigi/interface/CSCCLCTPreTriggerDigiCollection.h"
 
 class CSCStubAnalyzer
 {
@@ -25,25 +26,33 @@ public:
 
  private:
 
+  edm::EDGetTokenT<CSCCLCTPreTriggerDigiCollection> preclctToken_;
   edm::EDGetTokenT<CSCCLCTDigiCollection> clctToken_;
   edm::EDGetTokenT<CSCALCTDigiCollection> alctToken_;
   edm::EDGetTokenT<CSCCorrelatedLCTDigiCollection> lctToken_;
   edm::EDGetTokenT<CSCCorrelatedLCTDigiCollection> mplctToken_;
+  edm::EDGetTokenT<CSCShowerDigiCollection> showerToken_;
 
+  edm::Handle<CSCCLCTPreTriggerDigiCollection> preclctsH_;
   edm::Handle<CSCCLCTDigiCollection> clctsH_;
   edm::Handle<CSCALCTDigiCollection> alctsH_;
   edm::Handle<CSCCorrelatedLCTDigiCollection> lctsH_;
   edm::Handle<CSCCorrelatedLCTDigiCollection> mplctsH_;
+  edm::Handle<CSCShowerDigiCollection> showersH_;
 
   bool verboseALCT_;
+  bool verbosePreCLCT_;
   bool verboseCLCT_;
   bool verboseLCT_;
   bool verboseMPLCT_;
+  bool verboseShower_;
 
+  int minBXPreCLCT_, maxBXPreCLCT_;
   int minBXCLCT_, maxBXCLCT_;
   int minBXALCT_, maxBXALCT_;
   int minBXLCT_, maxBXLCT_;
   int minBXMPLCT_, maxBXMPLCT_;
+  int minBXShower_, maxBXShower_;
 
   // best here means "closest in phi"
   std::pair<GEMDigi, GlobalPoint>

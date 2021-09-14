@@ -32,6 +32,18 @@ L1MuAnalyzer::L1MuAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCollector
   verboseGMT_ = muon.getParameter<int>("verbose");
   runGMT_ = muon.getParameter<bool>("run");
 
+  const auto& emtfShower = conf.getParameter<edm::ParameterSet>("emtfShower");
+  minBXEMTFShower_ = emtfShower.getParameter<int>("minBX");
+  maxBXEMTFShower_ = emtfShower.getParameter<int>("maxBX");
+  verboseEMTFShower_ = emtfShower.getParameter<int>("verbose");
+  runEMTFShower_ = emtfShower.getParameter<bool>("run");
+
+  const auto& muonShower = conf.getParameter<edm::ParameterSet>("muonShower");
+  minBXGMT_ = muonShower.getParameter<int>("minBX");
+  maxBXGMT_ = muonShower.getParameter<int>("maxBX");
+  verboseShower_ = muonShower.getParameter<int>("verbose");
+  runShower_ = muonShower.getParameter<bool>("run");
+
   if (runEMTFTrack_)
     emtfTrackToken_ = iC.consumes<l1t::EMTFTrackCollection>(emtfTrack.getParameter<edm::InputTag>("inputTag"));
 
@@ -40,6 +52,12 @@ L1MuAnalyzer::L1MuAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCollector
 
   if (runGMT_)
     muonToken_ = iC.consumes<l1t::MuonBxCollection>(muon.getParameter<edm::InputTag>("inputTag"));
+
+  if (runEMTFShower_)
+    emtfShowerToken_ = iC.consumes<l1t::RegionalMuonShowerBxCollection>(emtfShower.getParameter<edm::InputTag>("inputTag"));
+
+  if (runShower_)
+    showerToken_ = iC.consumes<l1t::MuonShowerBxCollection>(muonShower.getParameter<edm::InputTag>("inputTag"));
 }
 
 void L1MuAnalyzer::setMatcher(const L1MuMatcher& match_sh)
@@ -50,163 +68,227 @@ void L1MuAnalyzer::setMatcher(const L1MuMatcher& match_sh)
 void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup,
                            const MatcherSuperManager& manager, my::TreeManager& tree) {
 
-  iEvent.getByToken(emtfTrackToken_, emtfTrackHandle_);
-  iEvent.getByToken(emtfCandToken_, emtfCandHandle_);
-  iEvent.getByToken(muonToken_, muonHandle_);
-
-  const l1t::EMTFTrackCollection& emtfTracks = *emtfTrackHandle_.product();
-  const l1t::RegionalMuonCandBxCollection& emtfCands = *emtfCandHandle_.product();
-  const l1t::MuonBxCollection& gmtCands = *muonHandle_.product();
-
   auto& trkTree = tree.l1mu();
   auto& simTree = tree.simTrack();
   const bool validTracks(simTree.sim_pt->size()>0);
 
-  if (verboseEMTFTrack_)
-    std::cout << "Analyzing " << emtfTracks.size() << " EMTF tracks" << std::endl;
-
-  int index = 0;
-  for (const auto& trk : emtfTracks) {
-
-    int bx = trk.BX();
-    if ( bx < minBXEMTFTrack_ or bx > maxBXEMTFTrack_) continue;
-
-    const gem::EMTFTrack& gemtrk(trk);
-
+  if (runEMTFTrack_) {
+    iEvent.getByToken(emtfTrackToken_, emtfTrackHandle_);
+    const l1t::EMTFTrackCollection& emtfTracks = *emtfTrackHandle_.product();
     if (verboseEMTFTrack_)
-      std::cout << gemtrk << std::endl;
+      std::cout << "Analyzing " << emtfTracks.size() << " EMTF tracks" << std::endl;
 
-    int tpidfound = -1;
-    // check if it was matched to a simtrack
-    for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
+    int index = 0;
+    for (const auto& trk : emtfTracks) {
 
-      // get the matcher
-      const auto& matcher = manager.matcher(tpid);
+      int bx = trk.BX();
+      if ( bx < minBXEMTFTrack_ or bx > maxBXEMTFTrack_) continue;
 
-      index++;
+      const gem::EMTFTrack& gemtrk(trk);
 
-      const auto& trackMatch = matcher->l1Muons()->emtfTrack();
-      if (trackMatch) {
+      if (verboseEMTFTrack_)
+        std::cout << gemtrk << std::endl;
 
-        if (verboseEMTFTrack_)
-          std::cout << "Candidate match " << *trackMatch
-                    << std::endl;
+      int tpidfound = -1;
+      // check if it was matched to a simtrack
+      for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
 
-        //check if the same
-        if (gemtrk == *trackMatch) {
-          tpidfound = tpid;
+        // get the matcher
+        const auto& matcher = manager.matcher(tpid);
+
+        index++;
+
+        const auto& trackMatch = matcher->l1Muons()->emtfTrack();
+        if (trackMatch) {
+
           if (verboseEMTFTrack_)
-            std::cout << "...matched! With index " << tpidfound << std::endl;
-          break;
-        }
-      }
-    }
-    trkTree.emtftrack_pt->push_back(gemtrk.pt());
-    trkTree.emtftrack_eta->push_back(gemtrk.eta());
-    trkTree.emtftrack_phi->push_back(gemtrk.phi());
-    trkTree.emtftrack_charge->push_back(gemtrk.charge());
-    trkTree.emtftrack_bx->push_back(gemtrk.bx());
-    trkTree.emtftrack_tpid->push_back(tpidfound);
-
-    if (tpidfound != -1 and validTracks) {
-      ((*simTree.sim_id_emtf_track)[tpidfound]).push_back(index);
-    }
-  }
-
-  if (verboseEMTFCand_)
-    std::cout << "Analyzing " << int(emtfCands.end(0) - emtfCands.begin(0)) << " EMTF cands" << std::endl;
-
-  index = 0;
-  for (int bx = emtfCands.getFirstBX(); bx <= emtfCands.getLastBX(); bx++ ){
-    if ( bx < minBXEMTFCand_ or bx > maxBXEMTFCand_) continue;
-    for (auto emtfCand = emtfCands.begin(bx); emtfCand != emtfCands.end(bx); ++emtfCand ){
-
-      const gem::EMTFCand& gemtrk(*emtfCand);
-
-      if (verboseEMTFCand_)
-        std::cout << gemtrk << std::endl;
-
-      int tpidfound = -1;
-      // check if it was matched to a simtrack
-      for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
-
-        // get the matcher
-        const auto& matcher = manager.matcher(tpid);
-
-        const auto& trackMatch = matcher->l1Muons()->emtfCand();
-        if (trackMatch) {
-
-          if (verboseEMTFCand_)
             std::cout << "Candidate match " << *trackMatch
                       << std::endl;
 
           //check if the same
           if (gemtrk == *trackMatch) {
             tpidfound = tpid;
+            if (verboseEMTFTrack_)
+              std::cout << "...matched! With index " << tpidfound << std::endl;
+            break;
+          }
+        }
+      }
+      trkTree.emtftrack_pt->push_back(gemtrk.pt());
+      trkTree.emtftrack_eta->push_back(gemtrk.eta());
+      trkTree.emtftrack_phi->push_back(gemtrk.phi());
+      trkTree.emtftrack_charge->push_back(gemtrk.charge());
+      trkTree.emtftrack_bx->push_back(gemtrk.bx());
+      trkTree.emtftrack_tpid->push_back(tpidfound);
+
+      if (tpidfound != -1 and validTracks) {
+        ((*simTree.sim_id_emtf_track)[tpidfound]).push_back(index);
+      }
+    }
+
+  }
+
+  if (runEMTFCand_) {
+    iEvent.getByToken(emtfCandToken_, emtfCandHandle_);
+    const l1t::RegionalMuonCandBxCollection& emtfCands = *emtfCandHandle_.product();
+
+    if (verboseEMTFCand_)
+      std::cout << "Analyzing " << int(emtfCands.end(0) - emtfCands.begin(0)) << " EMTF cands" << std::endl;
+
+    int index = 0;
+    for (int bx = emtfCands.getFirstBX(); bx <= emtfCands.getLastBX(); bx++ ){
+      if ( bx < minBXEMTFCand_ or bx > maxBXEMTFCand_) continue;
+      for (auto emtfCand = emtfCands.begin(bx); emtfCand != emtfCands.end(bx); ++emtfCand ){
+
+        const gem::EMTFCand& gemtrk(*emtfCand);
+
+        if (verboseEMTFCand_)
+          std::cout << gemtrk << std::endl;
+
+        int tpidfound = -1;
+        // check if it was matched to a simtrack
+        for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
+
+          // get the matcher
+          const auto& matcher = manager.matcher(tpid);
+
+          const auto& trackMatch = matcher->l1Muons()->emtfCand();
+          if (trackMatch) {
+
             if (verboseEMTFCand_)
-              std::cout << "...matched! With index " << tpidfound << std::endl;
-            break;
+              std::cout << "Candidate match " << *trackMatch
+                        << std::endl;
+
+            //check if the same
+            if (gemtrk == *trackMatch) {
+              tpidfound = tpid;
+              if (verboseEMTFCand_)
+                std::cout << "...matched! With index " << tpidfound << std::endl;
+              break;
+            }
           }
         }
-      }
-      trkTree.emtfcand_pt->push_back(gemtrk.pt());
-      trkTree.emtfcand_eta->push_back(gemtrk.eta());
-      trkTree.emtfcand_phi->push_back(gemtrk.phi());
-      trkTree.emtfcand_charge->push_back(gemtrk.charge());
-      trkTree.emtfcand_bx->push_back(gemtrk.bx());
-      trkTree.emtfcand_tpid->push_back(tpidfound);
+        trkTree.emtfcand_pt->push_back(gemtrk.pt());
+        trkTree.emtfcand_eta->push_back(gemtrk.eta());
+        trkTree.emtfcand_phi->push_back(gemtrk.phi());
+        trkTree.emtfcand_charge->push_back(gemtrk.charge());
+        trkTree.emtfcand_bx->push_back(gemtrk.bx());
+        trkTree.emtfcand_tpid->push_back(tpidfound);
 
-      if (tpidfound != -1 and validTracks) {
-        ((*simTree.sim_id_emtf_cand)[tpidfound]).push_back(index);
+        if (tpidfound != -1 and validTracks) {
+          ((*simTree.sim_id_emtf_cand)[tpidfound]).push_back(index);
+        }
       }
     }
   }
 
-  if (verboseGMT_)
-    std::cout << "Analyzing " << int(gmtCands.end(0) - gmtCands.begin(0)) << " GMT cands" << std::endl;
+  if (runGMT_) {
+    iEvent.getByToken(muonToken_, muonHandle_);
+    const l1t::MuonBxCollection& gmtCands = *muonHandle_.product();
 
-  index = 0;
-  for (int bx = gmtCands.getFirstBX(); bx <= gmtCands.getLastBX(); bx++ ){
-    if ( bx < minBXGMT_ or bx > maxBXGMT_) continue;
-    for (auto emtfCand = gmtCands.begin(bx); emtfCand != gmtCands.end(bx); ++emtfCand ){
+    if (verboseGMT_)
+      std::cout << "Analyzing " << int(gmtCands.end(0) - gmtCands.begin(0)) << " GMT cands" << std::endl;
 
-      const gem::EMTFCand& gemtrk(*emtfCand);
+    int index = 0;
+    for (int bx = gmtCands.getFirstBX(); bx <= gmtCands.getLastBX(); bx++ ){
+      if ( bx < minBXGMT_ or bx > maxBXGMT_) continue;
+      for (auto emtfCand = gmtCands.begin(bx); emtfCand != gmtCands.end(bx); ++emtfCand ){
 
-      if (verboseGMT_)
-        std::cout << gemtrk << std::endl;
+        const gem::EMTFCand& gemtrk(*emtfCand);
 
-      int tpidfound = -1;
-      // check if it was matched to a simtrack
-      for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
+        if (verboseGMT_)
+          std::cout << gemtrk << std::endl;
 
-        // get the matcher
-        const auto& matcher = manager.matcher(tpid);
+        int tpidfound = -1;
+        // check if it was matched to a simtrack
+        for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
 
-        const auto& trackMatch = matcher->l1Muons()->muon();
-        if (trackMatch) {
+          // get the matcher
+          const auto& matcher = manager.matcher(tpid);
 
-          if (verboseGMT_)
-            std::cout << "Candidate match " << *trackMatch
-                      << std::endl;
+          const auto& trackMatch = matcher->l1Muons()->muon();
+          if (trackMatch) {
 
-          //check if the same
-          if (gemtrk == *trackMatch) {
-            tpidfound = tpid;
             if (verboseGMT_)
-              std::cout << "...matched! With index " << tpidfound << std::endl;
-            break;
+              std::cout << "Candidate match " << *trackMatch
+                        << std::endl;
+
+            //check if the same
+            if (gemtrk == *trackMatch) {
+              tpidfound = tpid;
+              if (verboseGMT_)
+                std::cout << "...matched! With index " << tpidfound << std::endl;
+              break;
+            }
           }
         }
-      }
-      trkTree.l1mu_pt->push_back(gemtrk.pt());
-      trkTree.l1mu_eta->push_back(gemtrk.eta());
-      trkTree.l1mu_phi->push_back(gemtrk.phi());
-      trkTree.l1mu_charge->push_back(gemtrk.charge());
-      trkTree.l1mu_bx->push_back(gemtrk.bx());
-      trkTree.l1mu_tpid->push_back(tpidfound);
+        trkTree.l1mu_pt->push_back(gemtrk.pt());
+        trkTree.l1mu_eta->push_back(gemtrk.eta());
+        trkTree.l1mu_phi->push_back(gemtrk.phi());
+        trkTree.l1mu_charge->push_back(gemtrk.charge());
+        trkTree.l1mu_bx->push_back(gemtrk.bx());
+        trkTree.l1mu_tpid->push_back(tpidfound);
 
-      if (tpidfound != -1 and validTracks) {
-        ((*simTree.sim_id_l1mu)[tpidfound]).push_back(index);
+        if (tpidfound != -1 and validTracks) {
+          ((*simTree.sim_id_l1mu)[tpidfound]).push_back(index);
+        }
+      }
+    }
+  }
+
+  if (runEMTFShower_) {
+    iEvent.getByToken(emtfShowerToken_, emtfShowerHandle_);
+    const l1t::RegionalMuonShowerBxCollection& emtfShowers = *emtfShowerHandle_.product();
+
+    if (verboseEMTFShower_)
+      std::cout << "Analyzing " << int(emtfShowers.end(0) - emtfShowers.begin(0)) << " EMTF showers" << std::endl;
+
+    for (int bx = emtfShowers.getFirstBX(); bx <= emtfShowers.getLastBX(); bx++ ){
+      if ( bx < minBXEMTFShower_ or bx > maxBXEMTFShower_) continue;
+      for (auto emtfShower = emtfShowers.begin(bx); emtfShower != emtfShowers.end(bx); ++emtfShower ){
+
+        trkTree.emtfshower_bx->push_back(0);
+        trkTree.emtfshower_region->push_back(emtfShower->endcap());
+        trkTree.emtfshower_sector->push_back(emtfShower->sector());
+        trkTree.emtfshower_isOneNominalInTime->push_back(emtfShower->isOneNominalInTime());
+        trkTree.emtfshower_isTwoLooseInTime->push_back(emtfShower->isTwoLooseInTime());
+        trkTree.emtfshower_isOneNominalOutOfTime->push_back(emtfShower->isOneNominalOutOfTime());
+        trkTree.emtfshower_isTwoLooseOutOfTime->push_back(emtfShower->isTwoLooseOutOfTime());
+        if (verboseEMTFShower_)
+          std::cout << "\tShower data: "
+                    << " TwoLooseOOT: " << emtfShower->isTwoLooseOutOfTime()
+                    << " TwoLooseIT: " << emtfShower->isTwoLooseInTime()
+                    << " OneNominalOOT: " << emtfShower->isOneNominalOutOfTime()
+                    << " OneNominalIT: " << emtfShower->isOneNominalInTime()
+                    << std::endl;
+      }
+    }
+
+  }
+
+  if (runShower_) {
+    iEvent.getByToken(showerToken_, showerHandle_);
+    const l1t::MuonShowerBxCollection& gmtShowers = *showerHandle_.product();
+
+    if (verboseShower_)
+      std::cout << "Analyzing " << int(gmtShowers.end(0) - gmtShowers.begin(0)) << " GMT shower" << std::endl;
+
+    for (int bx = gmtShowers.getFirstBX(); bx <= gmtShowers.getLastBX(); bx++ ){
+      if ( bx < minBXGMT_ or bx > maxBXGMT_) continue;
+      for (auto gmtShower = gmtShowers.begin(bx); gmtShower != gmtShowers.end(bx); ++gmtShower ){
+
+        trkTree.l1mushower_bx->push_back(0);
+        trkTree.l1mushower_isOneNominalInTime->push_back(gmtShower->isOneNominalInTime());
+        trkTree.l1mushower_isTwoLooseInTime->push_back(gmtShower->isTwoLooseInTime());
+        trkTree.l1mushower_isOneNominalOutOfTime->push_back(gmtShower->isOneNominalOutOfTime());
+        trkTree.l1mushower_isTwoLooseOutOfTime->push_back(gmtShower->isTwoLooseOutOfTime());
+        if (verboseShower_)
+          std::cout << "\tShower data: "
+                    << " TwoLooseOOT: " << gmtShower->isTwoLooseOutOfTime()
+                    << " TwoLooseIT: " << gmtShower->isTwoLooseInTime()
+                    << " OneNominalOOT: " << gmtShower->isOneNominalOutOfTime()
+                    << " OneNominalIT: " << gmtShower->isOneNominalInTime()
+                    << std::endl;
       }
     }
   }

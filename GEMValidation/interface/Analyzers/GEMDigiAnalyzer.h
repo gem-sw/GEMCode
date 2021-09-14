@@ -37,6 +37,7 @@ public:
 
   int minBXDigi_, maxBXDigi_;
   bool verboseDigi_;
+  bool runDigi_;
 };
 
 #endif

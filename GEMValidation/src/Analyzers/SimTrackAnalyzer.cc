@@ -10,6 +10,7 @@ SimTrackAnalyzer::SimTrackAnalyzer(const edm::ParameterSet& conf, edm::ConsumesC
   simTrackMinPt_ = simTrack.getParameter<double>("minPt");
   simTrackMinEta_ = simTrack.getParameter<double>("minEta");
   simTrackMaxEta_ = simTrack.getParameter<double>("maxEta");
+  pdgIds_ = simTrack.getParameter<std::vector<int> >("pdgIds");
 }
 
 void SimTrackAnalyzer::init()
@@ -99,8 +100,8 @@ bool SimTrackAnalyzer::isSimTrackGood(const SimTrack& t) {
     return false;
   if (t.noGenpart())
     return false;
-  // only muons
-  if (std::abs(t.type()) != 13)
+  // require pdgid match
+  if (!std::count(pdgIds_.begin(), pdgIds_.end(), t.type()))
     return false;
   // pt selection
   if (t.momentum().pt() < simTrackMinPt_)

@@ -4,6 +4,11 @@
 
 CSCStubAnalyzer::CSCStubAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCollector&& iC)
 {
+  const auto& cscPreCLCT = conf.getParameter<edm::ParameterSet>("cscPreCLCT");
+  minBXPreCLCT_ = cscPreCLCT.getParameter<int>("minBX");
+  maxBXPreCLCT_ = cscPreCLCT.getParameter<int>("maxBX");
+  verbosePreCLCT_ = cscPreCLCT.getParameter<int>("verbose");
+
   const auto& cscCLCT = conf.getParameter<edm::ParameterSet>("cscCLCT");
   minBXCLCT_ = cscCLCT.getParameter<int>("minBX");
   maxBXCLCT_ = cscCLCT.getParameter<int>("maxBX");
@@ -24,10 +29,17 @@ CSCStubAnalyzer::CSCStubAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCol
   maxBXMPLCT_ = cscMPLCT.getParameter<int>("maxBX");
   verboseMPLCT_ = cscMPLCT.getParameter<int>("verbose");
 
+  const auto& cscShower = conf.getParameter<edm::ParameterSet>("cscShower");
+  minBXShower_ = cscShower.getParameter<int>("minBX");
+  maxBXShower_ = cscShower.getParameter<int>("maxBX");
+  verboseShower_ = cscShower.getParameter<int>("verbose");
+
+  preclctToken_ = iC.consumes<CSCCLCTPreTriggerDigiCollection>(cscPreCLCT.getParameter<edm::InputTag>("inputTag"));
   clctToken_ = iC.consumes<CSCCLCTDigiCollection>(cscCLCT.getParameter<edm::InputTag>("inputTag"));
   alctToken_ = iC.consumes<CSCALCTDigiCollection>(cscALCT.getParameter<edm::InputTag>("inputTag"));
   lctToken_ = iC.consumes<CSCCorrelatedLCTDigiCollection>(cscLCT.getParameter<edm::InputTag>("inputTag"));
   mplctToken_ = iC.consumes<CSCCorrelatedLCTDigiCollection>(cscMPLCT.getParameter<edm::InputTag>("inputTag"));
+  showerToken_ = iC.consumes<CSCShowerDigiCollection>(cscShower.getParameter<edm::InputTag>("inputTag"));
 }
 
 void CSCStubAnalyzer::init(const edm::Event& iEvent, const edm::EventSetup& iSetup)
@@ -68,19 +80,31 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
     std::cout << "+++ Info: GEM geometry is unavailable. +++\n";
   }
 
+  iEvent.getByToken(preclctToken_, preclctsH_);
   iEvent.getByToken(clctToken_, clctsH_);
   iEvent.getByToken(alctToken_, alctsH_);
   iEvent.getByToken(lctToken_, lctsH_);
   iEvent.getByToken(mplctToken_, mplctsH_);
+  iEvent.getByToken(showerToken_, showersH_);
 
+  const CSCCLCTPreTriggerDigiCollection& preclcts = *preclctsH_.product();
   const CSCCLCTDigiCollection& clcts = *clctsH_.product();
   const CSCALCTDigiCollection& alcts = *alctsH_.product();
   const CSCCorrelatedLCTDigiCollection& lcts = *lctsH_.product();
   const CSCCorrelatedLCTDigiCollection& mplcts = *mplctsH_.product();
+  const CSCShowerDigiCollection& showers = *showersH_.product();
 
   auto& cscTree = tree.cscStub();
   auto& simTree = tree.simTrack();
+  auto& genTree = tree.genParticle();
   const bool validTracks(simTree.sim_pt->size()>0);
+
+  bool oneLLP = false;
+
+  if (genTree.gen_tpid->size() > 0)
+    oneLLP = oneLLP or genTree.gen_llp_in_acceptance->at(0)==1;
+  if (genTree.gen_tpid->size() > 1)
+    oneLLP = oneLLP or genTree.gen_llp_in_acceptance->at(1)==1;
 
   int index = 0;
   // CSC ALCTs
@@ -120,6 +144,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       cscTree.csc_alct_ring->push_back(id.ring());
       cscTree.csc_alct_chamber->push_back(id.chamber());
       cscTree.csc_alct_tpid->push_back(tpidfound);
+      cscTree.csc_alct_sector->push_back(id.triggerSector());
 
       if (tpidfound != -1 and validTracks) {
         ((*simTree.sim_id_csc_alct)[tpidfound]).push_back(index);
@@ -130,6 +155,32 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
   }
 
   index = 0;
+  // CSC PreCLCTs
+  for (auto detUnitIt = preclcts.begin(); detUnitIt != preclcts.end(); detUnitIt++) {
+    const CSCDetId& id = (*detUnitIt).first;
+    const bool isodd = (id.chamber()%2 == 1);
+    const auto& range = (*detUnitIt).second;
+    for (auto digiIt = range.first; digiIt != range.second; digiIt++) {
+
+      if (!(*digiIt).isValid())
+        continue;
+
+      cscTree.csc_preclct_hs->push_back(digiIt->getKeyStrip());
+      cscTree.csc_preclct_pattern->push_back(digiIt->getPattern());
+
+      cscTree.csc_preclct_bx->push_back(digiIt->getBX());
+      cscTree.csc_preclct_quality->push_back(digiIt->getQuality());
+      cscTree.csc_preclct_isodd->push_back(isodd);
+      cscTree.csc_preclct_region->push_back(id.zendcap());
+      cscTree.csc_preclct_station->push_back(id.station());
+      cscTree.csc_preclct_ring->push_back(id.ring());
+      cscTree.csc_preclct_chamber->push_back(id.chamber());
+      cscTree.csc_preclct_sector->push_back(id.triggerSector());
+
+      index++;
+    }
+  }
+
   // CSC CLCTs
   for (auto detUnitIt = clcts.begin(); detUnitIt != clcts.end(); detUnitIt++) {
     const CSCDetId& id = (*detUnitIt).first;
@@ -172,6 +223,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       cscTree.csc_clct_ring->push_back(id.ring());
       cscTree.csc_clct_chamber->push_back(id.chamber());
       cscTree.csc_clct_tpid->push_back(tpidfound);
+      cscTree.csc_clct_sector->push_back(id.triggerSector());
 
       if (tpidfound != -1 and validTracks)
         ((*simTree.sim_id_csc_clct)[tpidfound]).push_back(index);
@@ -224,6 +276,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       cscTree.csc_lct_ring->push_back(id.ring());
       cscTree.csc_lct_chamber->push_back(id.chamber());
       cscTree.csc_lct_tpid->push_back(tpidfound);
+      cscTree.csc_lct_sector->push_back(id.triggerSector());
 
       if (tpidfound != -1 and validTracks)
         ((*simTree.sim_id_csc_lct)[tpidfound]).push_back(index);
@@ -278,11 +331,51 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       cscTree.csc_mplct_ring->push_back(id.ring());
       cscTree.csc_mplct_chamber->push_back(id.chamber());
       cscTree.csc_mplct_tpid->push_back(tpidfound);
+      cscTree.csc_mplct_sector->push_back(id.triggerSector());
 
       if (tpidfound != -1 and validTracks)
         ((*simTree.sim_id_csc_mplct)[tpidfound]).push_back(index);
 
       index++;
+    }
+  }
+
+  // CSC Shower
+  for (auto detUnitIt = showers.begin(); detUnitIt != showers.end(); detUnitIt++) {
+    const CSCDetId& id = (*detUnitIt).first;
+    const bool isodd = (id.chamber()%2 == 1);
+    const auto& range = (*detUnitIt).second;
+    for (auto digiIt = range.first; digiIt != range.second; digiIt++) {
+
+      if (!(*digiIt).isValid())
+        continue;
+
+      if (verboseShower_) {
+        std::cout << ">>>Analyzing CSC Shower in " << id << std::endl;
+        std::cout << "\tShower data: "
+                  << " LooseOOT: " << digiIt->isLooseOutOfTime()
+                  << " LooseIT: " << digiIt->isLooseInTime()
+                  << " NominalOOT: " << digiIt->isNominalOutOfTime()
+                  << " NominalIT: " << digiIt->isNominalInTime()
+                  << " TightOOT: " << digiIt->isTightOutOfTime()
+                  << " TightIT: " << digiIt->isTightInTime()
+                  << std::endl;
+
+        if (!oneLLP)
+          std::cout << "Without LLP in acceptance" << std::endl;
+      }
+      cscTree.csc_shower_region->push_back(id.zendcap());
+      cscTree.csc_shower_station->push_back(id.station());
+      cscTree.csc_shower_ring->push_back(id.ring());
+      cscTree.csc_shower_chamber->push_back(id.chamber());
+      cscTree.csc_shower_sector->push_back(id.triggerSector());
+      cscTree.csc_shower_bx->push_back(0);
+      cscTree.csc_shower_isLooseInTime->push_back(digiIt->isLooseInTime());
+      cscTree.csc_shower_isNominalInTime->push_back(digiIt->isNominalInTime());
+      cscTree.csc_shower_isTightInTime->push_back(digiIt->isTightInTime());
+      cscTree.csc_shower_isLooseOutOfTime->push_back(digiIt->isLooseOutOfTime());
+      cscTree.csc_shower_isNominalOutOfTime->push_back(digiIt->isNominalOutOfTime());
+      cscTree.csc_shower_isTightOutOfTime->push_back(digiIt->isTightOutOfTime());
     }
   }
 }

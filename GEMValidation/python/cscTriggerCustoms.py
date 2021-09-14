@@ -6,7 +6,7 @@ def runOn110XMC(process, runWithCrab = False):
     # customize unpacker
     path = os.path.expandvars("$CMSSW_BASE/src/GEMCode/GEMValidation/data/GEMeMapDummy.db")
     if runWithCrab:
-        path = "../../data/GEMeMapDummy.db"
+        path = "../data/GEMeMapDummy.db"
     print("Info: Using path \"{}\".".format(path))
     process.GlobalTag.toGet = cms.VPSet(
         cms.PSet(record = cms.string("GEMeMapRcd"),
@@ -14,6 +14,12 @@ def runOn110XMC(process, runWithCrab = False):
                  connect = cms.string("sqlite_file:{}".format(path))
              )
     )
+    process.muonGEMDigis.useDBEMap = True
+    process.simMuonGEMPadDigis.InputCollection = "muonGEMDigis"
+    return process
+
+def runOn110XMC_IgnoreIncorrectGEMDB(process, runWithCrab = False):
+    # customize unpacker
     process.muonGEMDigis.useDBEMap = True
     process.simMuonGEMPadDigis.InputCollection = "muonGEMDigis"
     return process
@@ -86,6 +92,11 @@ def addCSCTriggerRun3(process):
         process.simEmtfDigisRun3CCLUTILT
     )
 
+    return process
+
+def addShowerTriggers(process):
+    process.SimL1Emulator += process.simEmtfShowers
+    process.SimL1Emulator += process.simGmtShowerDigis
     return process
 
 def addAnalysisRun3(process):
@@ -166,4 +177,22 @@ def addMuonNtuplizerRun3(process):
         process.MuonNtuplizer *
         process.MuonNtuplizerILT
     )
+    return process
+
+
+def addAnalysisRun3HST(process):
+
+    ana = process.GEMCSCAnalyzer
+    ana.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+    ana.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+    ana.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+    ana.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED","ReL1")
+    ana.emtfTrack.inputTag = cms.InputTag("simEmtfDigis","","ReL1")
+
+    useUnpacked = True
+    if useUnpacked:
+        ana.gemStripDigi.matchToSimLink = False
+        ana.gemStripDigi.inputTag = "muonGEMDigis"
+        ana.muon.inputTag = cms.InputTag("gmtStage2Digis","Muon")
+
     return process

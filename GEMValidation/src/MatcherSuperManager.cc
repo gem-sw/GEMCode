@@ -4,7 +4,7 @@
 MatcherSuperManager::MatcherSuperManager(const edm::ParameterSet& conf, edm::ConsumesCollector&& iC)
 {
   verbose_ = conf.getParameter<int>("verbose") + 1;
-
+  runSim_ = conf.getParameter<bool>("runSim");
   const auto& simVertex = conf.getParameter<edm::ParameterSet>("simVertex");
   simVertexInput_ = iC.consumes<edm::SimVertexContainer>(simVertex.getParameter<edm::InputTag>("inputTag"));
 
@@ -14,6 +14,7 @@ MatcherSuperManager::MatcherSuperManager(const edm::ParameterSet& conf, edm::Con
   simTrackMinEta_ = simTrack.getParameter<double>("minEta");
   simTrackMaxEta_ = simTrack.getParameter<double>("maxEta");
   simTrackVerbose_ = simTrack.getParameter<int>("verbose");
+  pdgIds_ = simTrack.getParameter<std::vector<int> >("pdgIds");
 
   for (unsigned i = 0; i < MAX_PARTICLES; i++) {
     // make a new matcher (1 particle to many objects)
@@ -32,6 +33,8 @@ void MatcherSuperManager::init() {
 }
 
 void MatcherSuperManager::match(const edm::Event& ev, const edm::EventSetup& eventSetup) {
+
+  if (!runSim_) return;
 
   edm::Handle<edm::SimTrackContainer> sim_tracks;
   ev.getByToken(simTrackInput_, sim_tracks);
@@ -89,8 +92,8 @@ bool MatcherSuperManager::isSimTrackGood(const SimTrack& t) {
     return false;
   if (t.noGenpart())
     return false;
-  // only muons
-  if (std::abs(t.type()) != 13)
+  // require pdgid match
+  if (!std::count(pdgIds_.begin(), pdgIds_.end(), t.type()))
     return false;
   // pt selection
   if (t.momentum().pt() < simTrackMinPt_)

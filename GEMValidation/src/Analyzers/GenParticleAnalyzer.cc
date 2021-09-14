@@ -1,10 +1,15 @@
 #include "GEMCode/GEMValidation/interface/Analyzers/GenParticleAnalyzer.h"
+#include <algorithm>
 
 GenParticleAnalyzer::GenParticleAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCollector&& iC)
 {
   const auto& gen = conf.getParameter<edm::ParameterSet>("genParticle");
   verbose_ = gen.getParameter<int>("verbose");
   run_ = gen.getParameter<bool>("run");
+  pdgIds_ = gen.getParameter<std::vector<int> >("pdgIds");
+  stableParticle_ = gen.getParameter<bool>("stableParticle");
+  etaMin_ = gen.getParameter<double>("etaMin");
+  etaMax_ = gen.getParameter<double>("etaMax");
 
   inputToken_ = iC.consumes<reco::GenParticleCollection>(gen.getParameter<edm::InputTag>("inputTag"));
 }
@@ -41,18 +46,41 @@ void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
   auto& simTree = tree.simTrack();
   auto& genTree = tree.genParticle();
 
-  int index = 0;
   for(auto iGenParticle = genParticles.begin();  iGenParticle != genParticles.end();  ++iGenParticle) {
 
+    int index = int(iGenParticle - genParticles.begin());
+
     // require stable particle
-    if (iGenParticle->status() != 1) continue;
+    if (iGenParticle->status() != 1 and stableParticle_) continue;
+
+    // require pdgId
+    if (!std::count(pdgIds_.begin(), pdgIds_.end(), iGenParticle->pdgId())) continue;
 
     // add a few more selections
     if (iGenParticle->pt() < 2) continue;
-    if (std::abs(iGenParticle->eta()) > 2.4) continue;
 
-    // require muons
-    if (std::abs(iGenParticle->pdgId()) != 13) continue;
+    const float vx(iGenParticle->daughter(0)->vx());
+    const float vy(iGenParticle->daughter(0)->vy());
+    const float vz(iGenParticle->daughter(0)->vz());
+    const float eta(iGenParticle->eta());
+
+    // particle decays in the CSC system
+    const double radius( std::sqrt(std::pow(vx, 2.0) + std::pow(vy, 2.0) ) );
+
+    // eta selection
+    if (std::abs(eta) < etaMin_) continue;
+    if (std::abs(eta) > etaMax_) continue;
+
+    if (verbose_)
+      std::cout << "Check gen particle pt: " <<  iGenParticle->pt()
+                << "V: ("
+                << iGenParticle->daughter(0)->vx() << ", "
+                << iGenParticle->daughter(0)->vy() << ", "
+                << iGenParticle->daughter(0)->vz() << "), eta: "
+                << eta << " phi: "
+                << iGenParticle->phi() << " R: " << radius
+                << " PDGID: " << iGenParticle->pdgId() << " "
+                << " Idx " << index << std::endl;
 
     int tpidfound = -1;
     // check if it was matched to a simtrack
@@ -72,17 +100,35 @@ void GenParticleAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
     // genparticle properties
     genTree.gen_pt->push_back(iGenParticle->pt());
     genTree.gen_pz->push_back(iGenParticle->pz());
-    genTree.gen_eta->push_back(iGenParticle->eta());
+    genTree.gen_eta->push_back(eta);
     genTree.gen_phi->push_back(iGenParticle->phi());
     genTree.gen_charge->push_back(iGenParticle->charge());
     genTree.gen_pdgid->push_back(iGenParticle->pdgId());
     genTree.gen_tpid->push_back(tpidfound);
-    if (verbose_)
-      std::cout << "tpidfound " << tpidfound << std::endl;
 
-    if (tpidfound != -1)
+    // LLP decay (if applicable)
+    genTree.gen_vx->push_back(vx);
+    genTree.gen_vy->push_back(vy);
+    genTree.gen_vz->push_back(vz);
+    genTree.gen_r->push_back(radius);
+
+    // particle decays in the CSC system
+    bool inAcceptance(false);
+    if (std::abs(eta) > 0.9 &&
+        std::abs(eta) < 2.4 &&
+        std::abs(vz) > 568. &&
+        std::abs(vz) < 1100. &&
+        radius < 695.5)
+      inAcceptance = true;
+
+    genTree.gen_llp_in_acceptance->push_back(inAcceptance);
+
+    if (inAcceptance)
+      std::cout << "Accept gen particle " <<  iGenParticle->p4() << " " << eta << std::endl;
+
+    // store the index of the particle that was matched to it
+    if (tpidfound != -1) {
       (*simTree.sim_id_gen)[tpidfound] = index;
-
-    index++;
+    }
   }
 }

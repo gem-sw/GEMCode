@@ -6,6 +6,7 @@ GEMDigiAnalyzer::GEMDigiAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCol
   minBXDigi_ = gemDigi.getParameter<int>("minBX");
   maxBXDigi_ = gemDigi.getParameter<int>("maxBX");
   verboseDigi_ = gemDigi.getParameter<int>("verbose");
+  runDigi_ = gemDigi.getParameter<bool>("run");
 
   gemDigiToken_ = iC.consumes<GEMDigiCollection>(gemDigi.getParameter<edm::InputTag>("inputTag"));
 }
@@ -17,11 +18,13 @@ void GEMDigiAnalyzer::setMatcher(const GEMDigiMatcher& match_sh)
 
 void GEMDigiAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, my::TreeManager& tree)
 {
+  if (!runDigi_) return;
+
   iEvent.getByToken(gemDigiToken_, gemDigisH_);
 
   iSetup.get<MuonGeometryRecord>().get(gem_geom_);
   if (gem_geom_.isValid()) {
-  gemGeometry_ = &*gem_geom_;
+    gemGeometry_ = &*gem_geom_;
   } else {
     std::cout << "+++ Info: GEM geometry is unavailable. +++\n";
   }
@@ -53,7 +56,7 @@ void GEMDigiAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
         // stop processing when the first invalid matcher is found
         if (matcher->isInValid()) break;
 
-        const auto& gemMatches = manager.matcher(tpid)->gemDigis()->digisInDetId(id.rawId());
+        const auto& gemMatches = matcher->gemDigis()->digisInDetId(id.rawId());
         for (const auto& gemMatch : gemMatches) {
           // check if the same
           if (*digiIt == gemMatch) {

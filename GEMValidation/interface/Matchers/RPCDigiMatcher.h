@@ -76,6 +76,7 @@ private:
   int minRPCDigi_, maxRPCDigi_;
   int matchDeltaStrip_;
   bool verboseDigi_;
+  bool run_;
 
   std::map<unsigned int, RPCDigiContainer> detid_to_digis_;
   std::map<unsigned int, RPCDigiContainer> chamber_to_digis_;
