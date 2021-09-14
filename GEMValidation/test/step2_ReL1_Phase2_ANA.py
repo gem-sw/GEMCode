@@ -129,8 +129,7 @@ process = addAnalysisRun3(process)
 # Path and EndPath definitions
 process.raw2digi_step = cms.Path(process.RawToDigi)
 process.L1simulation_step = cms.Path(process.SimL1Emulator)
-process.ana_step = cms.Path(process.GEMCSCAnalyzer *
-                            process.GEMCSCAnalyzerRun3CCLUT)
+process.ana_step = cms.Path(process.Analysis)
 process.endjob_step = cms.EndPath(process.endOfProcess)
 process.FEVTDEBUGoutput_step = cms.EndPath(process.FEVTDEBUGoutput)
 

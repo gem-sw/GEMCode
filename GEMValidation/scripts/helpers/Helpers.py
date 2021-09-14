@@ -1,5 +1,5 @@
 from ROOT import gStyle, TH1F, TCanvas, TLegend, kRed, kBlue, TLatex, TEfficiency, SetOwnership, TH2F
-from cuts import *
+from helpers.cuts import AND
 
 #_______________________________________________________________________________
 def drawCSCLabel(title, x=0.17, y=0.35, font_size=0.):
@@ -109,16 +109,16 @@ def draw_geff(t, title, h_bins, to_draw, den_cut, extra_num_cut,
 
     debug = False
     if debug:
-        print "Denominator cut", den_cut, den.GetEntries()
-        print "Numerator cut", num_cut, num.GetEntries()
+        print("Denominator cut", den_cut, den.GetEntries())
+        print("Numerator cut", num_cut, num.GetEntries())
 
     ## check if the number of passed entries larger than total entries
     doConsistencyCheck = False
     if doConsistencyCheck:
         for i in range(0,nBins):
-            print i, num.GetBinContent(i), den.GetBinContent(i)
+            print(i, num.GetBinContent(i), den.GetBinContent(i))
             if num.GetBinContent(i) > den.GetBinContent(i):
-                print ">>>Error: passed entries > total entries"
+                print(">>>Error: passed entries > total entries")
 
     eff = TEfficiency(num, den)
 
