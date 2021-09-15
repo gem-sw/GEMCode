@@ -13,6 +13,7 @@ process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 process.load('TrackPropagation.SteppingHelixPropagator.SteppingHelixPropagatorOpposite_cfi')
 process.load('TrackPropagation.SteppingHelixPropagator.SteppingHelixPropagatorAlong_cfi')
+process.load('Configuration.StandardSequences.SimL1Emulator_cff')
 process.load('GEMCode.GEMValidation.MuonNtuplizer_cff')
 
 process.source = cms.Source(
@@ -29,6 +30,9 @@ process.TFileService = cms.Service("TFileService",
 ## global tag for upgrade studies
 from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '')
+
+from GEMCode.GEMValidation.cscTriggerCustoms import addCSCTriggerRun3
+process = addCSCTriggerRun3(process)
 
 # the analyzer configuration
 ana = process.MuonNtuplizer
@@ -48,8 +52,17 @@ if useUnpacked:
     ana.gemStripDigi.inputTag = "muonGEMDigis"
     ana.muon.inputTag = cms.InputTag("gmtStage2Digis","Muon")
 
+process.MuonNtuplizerRun3CCLUT = process.MuonNtuplizer.clone()
+process.MuonNtuplizerRun3CCLUT.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","",process._Process__name)
+process.MuonNtuplizerRun3CCLUT.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","",process._Process__name)
+process.MuonNtuplizerRun3CCLUT.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","",process._Process__name)
+process.MuonNtuplizerRun3CCLUT.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","MPCSORTED",process._Process__name)
+
 process.options = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 
+process.L1simulation_step = cms.Path(process.SimL1Emulator)
 process.p = cms.Path(
-    process.MuonNtuplizer
+    process.SimL1Emulator *
+    process.MuonNtuplizer *
+    process.MuonNtuplizerRun3CCLUT
 )

@@ -99,10 +99,9 @@ def addShowerTriggers(process):
     process.SimL1Emulator += process.simGmtShowerDigis
     return process
 
-def addAnalysisRun3(process):
+def addAnalysisRun3(process, processName = "ReL1"):
 
     ana = process.GEMCSCAnalyzer
-    processName = "ReL1"
     ana.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","",processName)
     ana.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","",processName)
     ana.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","",processName)
