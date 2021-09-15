@@ -25,6 +25,10 @@ MuonNtuplizer.simTrack.maxEta = 2.4
 MuonNtuplizer.simTrack.minPt = 3
 MuonNtuplizer.gemStripDigi.matchDeltaStrip = 2
 MuonNtuplizer.cscLCT.addGhostLCTs = cms.bool(True)
+MuonNtuplizer.gemStripDigi.run = cms.bool(True)
+MuonNtuplizer.gemPadDigi.run = cms.bool(True)
+MuonNtuplizer.gemPadCluster.run = cms.bool(True)
+MuonNtuplizer.gemCoPadDigi.run = cms.bool(True)
 
 phase2_muon.toModify(MuonNtuplizer, l1Track = dict(run = cms.bool(False) ) )
 phase2_muon.toModify(MuonNtuplizer, l1TkMuon = dict(run = cms.bool(False) ) )

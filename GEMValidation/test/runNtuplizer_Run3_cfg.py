@@ -7,7 +7,7 @@ process = cms.Process('ANA',Run3)
 process.load('Configuration.StandardSequences.Services_cff')
 process.load('FWCore.MessageService.MessageLogger_cfi')
 process.load('Configuration.EventContent.EventContent_cff')
-|process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
+process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 process.load('Configuration.StandardSequences.MagneticField_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
@@ -17,13 +17,13 @@ process.load('GEMCode.GEMValidation.MuonNtuplizer_cff')
 
 process.source = cms.Source(
   "PoolSource",
-  fileNames = cms.untracked.vstring('file:step2bis_run3.root'),
+  fileNames = cms.untracked.vstring('file:step2.root'),
 )
 
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-100) )
 
 process.TFileService = cms.Service("TFileService",
-    fileName = cms.string("out_ana_phase2.ntuple.root")
+    fileName = cms.string("out_ana.root")
 )
 
 ## global tag for upgrade studies
@@ -38,37 +38,17 @@ ana.simTrack.minPt = 2
 ana.verbose = 1
 ana.gemStripDigi.matchDeltaStrip = 2
 ana.cscLCT.addGhostLCTs = cms.bool(True)
-
-ana.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
-ana.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
-ana.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
-ana.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED","ReL1")
+#ana.genParticle.pdgIds = cms.vint32(13, -13)
+ana.simTrack.pdgIds = cms.vint32(13, -13)
+ana.runSim = False
 
 useUnpacked = False
 if useUnpacked:
     ana.gemStripDigi.inputTag = "muonGEMDigis"
     ana.muon.inputTag = cms.InputTag("gmtStage2Digis","Muon")
 
-process.MuonNtuplizerRun3CCLUT = process.MuonNtuplizer.clone()
-process.MuonNtuplizerRun3CCLUT.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","","ReL1")
-process.MuonNtuplizerRun3CCLUT.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","","ReL1")
-process.MuonNtuplizerRun3CCLUT.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","","ReL1")
-process.MuonNtuplizerRun3CCLUT.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","MPCSORTED","ReL1")
-
 process.options = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 
 process.p = cms.Path(
-    process.MuonNtuplizer *
-    process.MuonNtuplizerRun3CCLUT
+    process.MuonNtuplizer
 )
-
-## messages
-print
-#print 'Input files:'
-print '----------------------------------------'
-print process.source.fileNames
-print
-print 'Output file:'
-print '----------------------------------------'
-print process.TFileService.fileName
-print
