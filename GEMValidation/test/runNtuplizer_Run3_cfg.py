@@ -32,6 +32,7 @@ process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '
 
 # the analyzer configuration
 ana = process.MuonNtuplizer
+ana.genParticle.run = False
 ana.simTrack.minEta = 0.9
 ana.simTrack.maxEta = 2.4
 ana.simTrack.minPt = 2
