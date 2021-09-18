@@ -399,7 +399,7 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
 
     int deltaStrip = 0;
     if (id.station() == 1 and id.ring() == 4 and clct.getKeyStrip() > CSCConstants::MAX_HALF_STRIP_ME1B)
-      deltaStrip = CSCConstants::NUM_HALF_STRIPS_ME1B;
+      deltaStrip = CSCConstants::NUM_STRIPS_ME1B;
 
     float fpos = -9;
 
