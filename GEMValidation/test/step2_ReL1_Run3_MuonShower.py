@@ -180,7 +180,7 @@ anaCath.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisCath","","Re
 anaCath.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisCath","","ReL1")
 anaCath.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisCath","MPCSORTED","ReL1")
 anaCath.cscShower.inputTag = "simCscTriggerPrimitiveDigisCath"
-anaCath.emtfShower.inputTag = "simEmtfDigisCath:EMTF"
+anaCath.emtfShower.inputTag = cms.InputTag("simEmtfShowersCath","EMTF")
 anaCath.muonShower.inputTag = "simGmtShowerDigisCath"
 process.MuonNtuplizerAnod = process.MuonNtuplizer.clone()
 anaAnod = process.MuonNtuplizerAnod
@@ -189,7 +189,7 @@ anaAnod.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisAnod","","Re
 anaAnod.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisAnod","","ReL1")
 anaAnod.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisAnod","MPCSORTED","ReL1")
 anaAnod.cscShower.inputTag = "simCscTriggerPrimitiveDigisAnod"
-anaAnod.emtfShower.inputTag = "simEmtfDigisAnod:EMTF"
+anaAnod.emtfShower.inputTag = "simEmtfShowersAnod:EMTF"
 anaAnod.muonShower.inputTag = "simGmtShowerDigisAnod"
 
 ## customize unpacker
@@ -209,16 +209,16 @@ process.simCscTriggerPrimitiveDigisCath.showerParam.source =0
 process.simCscTriggerPrimitiveDigisAnod.showerParam.source =1
 process.simEmtfShowersCath = process.simEmtfShowers.clone()
 process.simEmtfShowersCath.CSCShowerInput = cms.InputTag(
-	'simCscTriggerPrimitiveDigisCath')#,'MPCSORCTED',process._Process__name)
+	'simCscTriggerPrimitiveDigisCath')
 process.simEmtfShowersAnod = process.simEmtfShowers.clone()
 process.simEmtfShowersAnod.CSCShowerInput = cms.InputTag(
-	'simCscTriggerPrimitiveDigisAnod')#,'MPCSORCTED',process._Process__name)
+	'simCscTriggerPrimitiveDigisAnod')
 process.simGmtShowerDigisCath = process.simGmtShowerDigis.clone()
 process.simGmtShowerDigisCath.showerInput = cms.InputTag(
-	'simEmtfShowersCath','EMTF')#,'MPCSORCTED'),process._Process__name)
+	'simEmtfShowersCath','EMTF')
 process.simGmtShowerDigisAnod = process.simGmtShowerDigis.clone()
 process.simGmtShowerDigisAnod.showerInput = cms.InputTag(
-	'simEmtfShowersAnod','EMTF')#,'MPCSORCTED',process._Process__name)
+	'simEmtfShowersAnod','EMTF')
 process.L1simulation_step = cms.Path(
       process.simCscTriggerPrimitiveDigis *
       process.simCscTriggerPrimitiveDigisCath *
