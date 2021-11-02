@@ -23,6 +23,7 @@ GEMCSCAnalyzer = cms.EDAnalyzer(
 GEMCSCAnalyzer.simTrack.minEta = 0.9
 GEMCSCAnalyzer.simTrack.maxEta = 2.4
 GEMCSCAnalyzer.simTrack.minPt = 3
+GEMCSCAnalyzer.simTrack.pdgIds = cms.vint32(13,-13),
 GEMCSCAnalyzer.gemSimHit.verbose = 0
 GEMCSCAnalyzer.gemStripDigi.verbose = 0
 GEMCSCAnalyzer.gemStripDigi.matchDeltaStrip = 2
