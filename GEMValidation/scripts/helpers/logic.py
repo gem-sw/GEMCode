@@ -22,7 +22,7 @@ def AND(*arg):
     """AND of any number of TCuts in PyROOT"""
     length = len(arg)
     if length == 0:
-        print "ERROR: invalid number of arguments"
+        print("ERROR: invalid number of arguments")
         return
     if length == 1:
         return arg[0]
@@ -39,7 +39,7 @@ def OR(*arg):
     """OR of any number of TCuts in PyROOT"""
     length = len(arg)
     if length == 0:
-        print "ERROR: invalid number of arguments"
+        print("ERROR: invalid number of arguments")
         return
     if length == 1:
         return arg[0]

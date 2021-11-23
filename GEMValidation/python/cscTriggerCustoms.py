@@ -44,13 +44,17 @@ def dropCaloDigis(process):
 def addCSCTriggerRun3(process):
     ## Run-2 patterns without ILT
     process.simCscTriggerPrimitiveDigis.commonParam.runME11ILT = False
+    process.simCscTriggerPrimitiveDigis.commonParam.runME21ILT = False
+    process.simCscTriggerPrimitiveDigis.commonParam.runCCLUT = False
     process.simCscTriggerPrimitiveDigis.commonParam.GEMPadDigiClusterProducer = cms.InputTag("")
     process.simEmtfDigis.CSCInput = cms.InputTag(
         'simCscTriggerPrimitiveDigis','MPCSORTED',process._Process__name)
 
     ## Run-2 patterns with ILT
     process.simCscTriggerPrimitiveDigisILT = process.simCscTriggerPrimitiveDigis.clone()
+    process.simCscTriggerPrimitiveDigisILT.commonParam.runCCLUT = False
     process.simCscTriggerPrimitiveDigisILT.commonParam.runME11ILT = True
+    process.simCscTriggerPrimitiveDigisILT.commonParam.runME21ILT = False
     process.simCscTriggerPrimitiveDigisILT.commonParam.GEMPadDigiClusterProducer = cms.InputTag("simMuonGEMPadDigiClusters")
     process.simEmtfDigisILT = process.simEmtfDigis.clone()
     process.simEmtfDigisILT.CSCInput = cms.InputTag(
@@ -105,6 +109,16 @@ def addAnalysisRun3(process):
     ana.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED",processName)
     ana.emtfTrack.inputTag = cms.InputTag("simEmtfDigis","",processName)
 
+    process.GEMCSCAnalyzerILT = process.GEMCSCAnalyzer.clone()
+    ana = process.GEMCSCAnalyzerILT
+    processName = "ReL1"
+    ana.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisILT","",processName)
+    ana.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisILT","",processName)
+    ana.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisILT","",processName)
+    ana.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisILT","MPCSORTED",processName)
+    ana.emtfTrack.inputTag = cms.InputTag("simEmtfDigisILT","",processName)
+    ana.gemCoPadDigi.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisILT","",processName)
+
     useUnpacked = False
     if useUnpacked:
         ana.gemStripDigi.inputTag = "muonGEMDigis"
@@ -127,8 +141,41 @@ def addAnalysisRun3(process):
     anaCCLUT.emtfTrack.inputTag = cms.InputTag("simEmtfDigisNoILT","",processName)
 
     process.Analysis = cms.Sequence(
-        process.GEMCSCAnalyzer *
-        process.GEMCSCAnalyzerRun3CCLUT
+        #process.GEMCSCAnalyzer *
+        process.GEMCSCAnalyzerILT
+        #        process.GEMCSCAnalyzerRun3CCLUT
+    )
+    return process
+
+def addMuonNtuplizerRun3(process):
+
+    # the analyzer configuration
+    ana = process.MuonNtuplizer
+    ana.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+    ana.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+    ana.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","","ReL1")
+    ana.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigis","MPCSORTED","ReL1")
+
+    process.MuonNtuplizerILT = process.MuonNtuplizer.clone()
+    ana = process.MuonNtuplizerILT
+    processName = "ReL1"
+    ana.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisILT","",processName)
+    ana.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisILT","",processName)
+    ana.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisILT","",processName)
+    ana.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisILT","MPCSORTED",processName)
+    ana.emtfTrack.inputTag = cms.InputTag("simEmtfDigisILT","",processName)
+    ana.gemCoPadDigi.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisILT","",processName)
+
+    process.MuonNtuplizerRun3CCLUT = process.MuonNtuplizer.clone()
+    ana = process.MuonNtuplizerRun3CCLUT
+    ana.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","","ReL1")
+    ana.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","","ReL1")
+    ana.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","","ReL1")
+    ana.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisRun3CCLUT","MPCSORTED","ReL1")
+
+    process.Analysis = cms.Sequence(
+        process.MuonNtuplizer *
+        process.MuonNtuplizerILT
     )
     return process
 
