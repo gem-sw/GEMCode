@@ -2,6 +2,7 @@
 #include <iostream>
 
 AnalyzerManager::AnalyzerManager(const edm::ParameterSet& conf, edm::ConsumesCollector&& iC) {
+  event_.reset(new EventAnalyzer(conf, std::move(iC)));
   gent_.reset(new GenParticleAnalyzer(conf, std::move(iC)));
   simt_.reset(new SimTrackAnalyzer(conf, std::move(iC)));
   gemsh_.reset(new GEMSimHitAnalyzer(conf, std::move(iC)));
@@ -46,6 +47,7 @@ void AnalyzerManager::analyze(const edm::Event& ev,
                               const edm::EventSetup& es,
                               const MatcherSuperManager& manager,
                               my::TreeManager& tree) {
+  event_->analyze(ev, es, tree);
   if (runSim_) {
     simt_->analyze(ev, es, tree);
     gent_->analyze(ev, es, manager, tree);

@@ -14,6 +14,34 @@ typedef t_vints* p_vints;
 
 namespace my {
 
+  struct EventStruct {
+
+    p_ints event_run;
+    p_ints event_lumi;
+    p_ints event_event;
+    p_ints event_bx;
+    p_ints event_orbit;
+    p_ints event_time;
+
+    void init() {
+      event_run = new t_ints;
+      event_lumi = new t_ints;
+      event_event = new t_ints;
+      event_bx = new t_ints;
+      event_orbit = new t_ints;
+      event_time = new t_ints;
+    }
+
+    void book(TTree* t) {
+      t->Branch("event_run", &event_run);
+      t->Branch("event_lumi", &event_lumi);
+      t->Branch("event_event", &event_event);
+      t->Branch("event_bx", &event_bx);
+      t->Branch("event_orbit", &event_orbit);
+      t->Branch("event_time", &event_time);
+    }
+  };
+
   struct GenParticleStruct {
 
     p_ints gen_charge;
