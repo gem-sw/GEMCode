@@ -30,7 +30,7 @@ class TreeManager
 
   void fill();
 
-  my::EventStruct& event() { return event_; }
+  my::EventStruct& event() { return eventSt_; }
   my::GenParticleStruct& genParticle() { return genParticleSt_; }
   my::SimTrackStruct& simTrack() { return simTrackSt_; }
   my::GEMSimHitStruct& gemSimHit() { return gemSimHitSt_; }
@@ -48,7 +48,7 @@ class TreeManager
 
  private:
 
-  my::EventStruct event_;
+  my::EventStruct eventSt_;
   my::GenParticleStruct genParticleSt_;
   my::SimTrackStruct simTrackSt_;
   my::GEMSimHitStruct gemSimHitSt_;
