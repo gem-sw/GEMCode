@@ -3,6 +3,7 @@
 void my::TreeManager::book() {
   edm::Service<TFileService> fs;
   flatTree_ = fs->make<TTree>("FlatTree","FlatTree");
+  eventSt_.book(flatTree_);
   genParticleSt_.book(flatTree_);
   simTrackSt_.book(flatTree_);
   gemSimHitSt_.book(flatTree_);
@@ -18,6 +19,7 @@ void my::TreeManager::book() {
 
 /// initialize
 void my::TreeManager::init() {
+  eventSt_.init();
   genParticleSt_.init();
   simTrackSt_.init();
   gemSimHitSt_.init();
