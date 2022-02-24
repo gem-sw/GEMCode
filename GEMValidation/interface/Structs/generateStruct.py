@@ -2,7 +2,8 @@
 
 ## event
 event = {
-    "int" : ["run","lumi","event","bx","orbit","time"]
+    "int" : ["run","lumi","bx","orbit","time"]
+    "unsigned long long" : ["event"]
 }
 
 ## gen particles

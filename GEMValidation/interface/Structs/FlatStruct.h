@@ -11,6 +11,8 @@ typedef std::vector<int> t_ints;
 typedef t_ints* p_ints;
 typedef std::vector<t_ints> t_vints;
 typedef t_vints* p_vints;
+typedef std::vector<unsigned long long> t_longs;
+typedef t_longs* p_longs;
 
 namespace my {
 
@@ -18,7 +20,7 @@ namespace my {
 
     p_ints event_run;
     p_ints event_lumi;
-    p_ints event_event;
+    p_longs event_event;
     p_ints event_bx;
     p_ints event_orbit;
     p_ints event_time;
@@ -26,7 +28,7 @@ namespace my {
     void init() {
       event_run = new t_ints;
       event_lumi = new t_ints;
-      event_event = new t_ints;
+      event_event = new t_longs;
       event_bx = new t_ints;
       event_orbit = new t_ints;
       event_time = new t_ints;
