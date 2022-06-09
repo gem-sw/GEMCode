@@ -23,6 +23,8 @@ GEMStubAnalyzer::GEMStubAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCol
   gemPadToken_ = iC.consumes<GEMPadDigiCollection>(gemPad.getParameter<edm::InputTag>("inputTag"));
   gemClusterToken_ = iC.consumes<GEMPadDigiClusterCollection>(gemCluster.getParameter<edm::InputTag>("inputTag"));
   gemCoPadToken_ = iC.consumes<GEMCoPadDigiCollection>(gemCoPad.getParameter<edm::InputTag>("inputTag"));
+
+  gemToken_ = iC.esConsumes<GEMGeometry, MuonGeometryRecord>();
 }
 
 void GEMStubAnalyzer::setMatcher(const GEMDigiMatcher& match_sh)
@@ -32,12 +34,13 @@ void GEMStubAnalyzer::setMatcher(const GEMDigiMatcher& match_sh)
 
 void GEMStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, my::TreeManager& tree)
 {
-  iSetup.get<MuonGeometryRecord>().get(gem_geom_);
-  if (gem_geom_.isValid()) {
-    gemGeometry_ = &*gem_geom_;
-  } else {
-    std::cout << "+++ Info: GEM geometry is unavailable. +++\n";
-  }
+  //iSetup.get<MuonGeometryRecord>().get(gem_geom_);
+  //if (gem_geom_.isValid()) {
+  //  gemGeometry_ = &*gem_geom_;
+  //} else {
+  //  std::cout << "+++ Info: GEM geometry is unavailable. +++\n";
+  //}
+  gemGeometry_ =  &iSetup.getData(gemToken_);
 
   // get the digi collections
   auto& gemTree = tree.gemStub();

@@ -15,6 +15,8 @@ RPCRecHitMatcher::RPCRecHitMatcher(const edm::ParameterSet& pset, edm::ConsumesC
   rpcDigiMatcher_.reset(new RPCDigiMatcher(pset, std::move(iC)));
 
   recHitToken_ = iC.consumes<RPCRecHitCollection>(recHit.getParameter<edm::InputTag>("inputTag"));
+
+  rpcToken_ = iC.esConsumes<RPCGeometry, MuonGeometryRecord>();
 }
 
 void RPCRecHitMatcher::init(const edm::Event& iEvent, const edm::EventSetup& iSetup)
@@ -23,12 +25,13 @@ void RPCRecHitMatcher::init(const edm::Event& iEvent, const edm::EventSetup& iSe
 
   iEvent.getByToken(recHitToken_, recHitH_);
 
-  iSetup.get<MuonGeometryRecord>().get(rpc_geom_);
-  if (rpc_geom_.isValid()) {
-    rpcGeometry_ = &*rpc_geom_;
-  } else {
-    std::cout << "+++ Info: RPC geometry is unavailable. +++\n";
-  }
+  //iSetup.get<MuonGeometryRecord>().get(rpc_geom_);
+  //if (rpc_geom_.isValid()) {
+  //  rpcGeometry_ = &*rpc_geom_;
+  //} else {
+  //  std::cout << "+++ Info: RPC geometry is unavailable. +++\n";
+  //}
+  rpcGeometry_ = &iSetup.getData(rpcToken_);
 }
 
 /// do the matching

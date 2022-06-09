@@ -69,7 +69,8 @@ private:
 
   std::shared_ptr<DTSimHitMatcher> muonSimHitMatcher_;
 
-  edm::ESHandle<DTGeometry> dt_geom_;
+  //edm::ESHandle<DTGeometry> dt_geom_;
+  edm::ESGetToken<DTGeometry, MuonGeometryRecord> dtToken_;
   const DTGeometry* dtGeometry_;
 
   std::set<unsigned int> selectDetIds(const std::map<unsigned int, DTDigiContainer>&, int) const;

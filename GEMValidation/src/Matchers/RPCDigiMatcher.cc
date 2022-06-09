@@ -15,6 +15,7 @@ RPCDigiMatcher::RPCDigiMatcher(const edm::ParameterSet& pset, edm::ConsumesColle
 
   if (run_)
     rpcDigiToken_ = iC.consumes<RPCDigiCollection>(rpcDigi.getParameter<edm::InputTag>("inputTag"));
+  rpcToken_ = iC.esConsumes<RPCGeometry, MuonGeometryRecord>();
 }
 
 void RPCDigiMatcher::init(const edm::Event& iEvent, const edm::EventSetup& iSetup)
@@ -24,13 +25,14 @@ void RPCDigiMatcher::init(const edm::Event& iEvent, const edm::EventSetup& iSetu
   if (run_)
     iEvent.getByToken(rpcDigiToken_, rpcDigisH_);
 
-  iSetup.get<MuonGeometryRecord>().get(rpc_geom_);
-  if (rpc_geom_.isValid()) {
-    rpcGeometry_ = &*rpc_geom_;
-  } else {
-    edm::LogWarning("RPCDigiMatcher")
-        << "+++ Info: RPC geometry is unavailable. +++\n";
-  }
+  //iSetup.get<MuonGeometryRecord>().get(rpc_geom_);
+  //if (rpc_geom_.isValid()) {
+  //  rpcGeometry_ = &*rpc_geom_;
+  //} else {
+  //  edm::LogWarning("RPCDigiMatcher")
+  //      << "+++ Info: RPC geometry is unavailable. +++\n";
+  //}
+  rpcGeometry_ = &iSetup.getData(rpcToken_);
 }
 
 /// do the matching

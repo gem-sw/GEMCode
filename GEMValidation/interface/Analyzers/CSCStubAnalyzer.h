@@ -16,10 +16,15 @@ public:
   // destructor
   ~CSCStubAnalyzer() {}
 
-  void init(const edm::Event& iEvent, const edm::EventSetup& iSetup);
+ void init(const edm::Event& iEvent, const edm::EventSetup& iSetup);
 
   void setMatcher(const CSCStubMatcher& match_sh);
-
+//    virtual void beginJob();
+//      virtual void beginRun(const edm::Run&,   const edm::EventSetup&);
+//        virtual void analyze (const edm::Event&, const edm::EventSetup&);
+//	  virtual void endRun  (const edm::Run&,   const edm::EventSetup&);
+//	    virtual void endJob  ();
+//
   // initialize the event
   void analyze(const edm::Event& ev, const edm::EventSetup& es, const MatcherSuperManager& manager, my::TreeManager& tree);
   void analyze(TreeManager& tree);
@@ -70,8 +75,10 @@ public:
                    const GEMCoPadDigiContainer& gem_digis,
                    const GlobalPoint& csc_gp) const;
 
-  edm::ESHandle<CSCGeometry> csc_geom_;
-  edm::ESHandle<GEMGeometry> gem_geom_;
+  //edm::ESHandle<CSCGeometry> csc_geom_;
+  //edm::ESHandle<GEMGeometry> gem_geom_;
+  edm::ESGetToken<CSCGeometry, MuonGeometryRecord> cscToken_;
+  edm::ESGetToken<GEMGeometry, MuonGeometryRecord> gemToken_;
 
   const CSCGeometry* cscGeometry_;
   const GEMGeometry* gemGeometry_;

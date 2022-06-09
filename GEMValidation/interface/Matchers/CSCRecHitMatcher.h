@@ -91,7 +91,8 @@ private:
   edm::Handle<CSCRecHit2DCollection> cscRecHit2DH_;
   edm::Handle<CSCSegmentCollection> cscSegmentH_;
 
-  edm::ESHandle<CSCGeometry> csc_geom_;
+  //edm::ESHandle<CSCGeometry> csc_geom_;
+  edm::ESGetToken<CSCGeometry, MuonGeometryRecord> cscToken_;
   const CSCGeometry* cscGeometry_;
 
   void matchCSCRecHit2DsToSimTrack(const CSCRecHit2DCollection&);

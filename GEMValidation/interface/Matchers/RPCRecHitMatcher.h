@@ -86,7 +86,8 @@ private:
   edm::EDGetTokenT<RPCRecHitCollection> recHitToken_;
   edm::Handle<RPCRecHitCollection> recHitH_;
 
-  edm::ESHandle<RPCGeometry> rpc_geom_;
+  //edm::ESHandle<RPCGeometry> rpc_geom_;
+  edm::ESGetToken<RPCGeometry, MuonGeometryRecord> rpcToken_;
   const RPCGeometry* rpcGeometry_;
 
   int minBX_, maxBX_;

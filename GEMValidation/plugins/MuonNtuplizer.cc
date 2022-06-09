@@ -15,6 +15,8 @@ public:
 
   ~MuonNtuplizer() {}
 
+  virtual void beginJob();
+  virtual void endJob();
   virtual void analyze(const edm::Event&, const edm::EventSetup&);
 
 private:
@@ -36,6 +38,15 @@ MuonNtuplizer::MuonNtuplizer(const edm::ParameterSet& ps) {
   analyzer_.reset(new AnalyzerManager(ps, consumesCollector()));
 
   runSim_ = ps.getParameter<bool>("runSim");
+}
+
+void MuonNtuplizer::beginJob(){
+    tree_->book();
+}
+
+void MuonNtuplizer::endJob()
+{
+    std::cerr << "NtupleMaker::endJob" << endl;
 }
 
 void MuonNtuplizer::analyze(const edm::Event& ev, const edm::EventSetup& es) {

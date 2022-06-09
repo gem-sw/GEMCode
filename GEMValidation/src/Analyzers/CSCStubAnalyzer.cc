@@ -40,23 +40,28 @@ CSCStubAnalyzer::CSCStubAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCol
   lctToken_ = iC.consumes<CSCCorrelatedLCTDigiCollection>(cscLCT.getParameter<edm::InputTag>("inputTag"));
   mplctToken_ = iC.consumes<CSCCorrelatedLCTDigiCollection>(cscMPLCT.getParameter<edm::InputTag>("inputTag"));
   showerToken_ = iC.consumes<CSCShowerDigiCollection>(cscShower.getParameter<edm::InputTag>("inputTag"));
+
+  cscToken_ = iC.esConsumes<CSCGeometry, MuonGeometryRecord>();
+  gemToken_ = iC.esConsumes<GEMGeometry, MuonGeometryRecord>();
 }
 
 void CSCStubAnalyzer::init(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
-  iSetup.get<MuonGeometryRecord>().get(csc_geom_);
-  if (csc_geom_.isValid()) {
-  cscGeometry_ = &*csc_geom_;
-  } else {
-    std::cout << "+++ Info: CSC geometry is unavailable. +++\n";
-  }
+  //iSetup.get<MuonGeometryRecord>().get(csc_geom_);
+  //if (csc_geom_.isValid()) {
+  //cscGeometry_ = &*csc_geom_;
+  //} else {
+  //  std::cout << "+++ Info: CSC geometry is unavailable. +++\n";
+  //}
+  cscGeometry_ = &iSetup.getData(cscToken_);
 
-  iSetup.get<MuonGeometryRecord>().get(gem_geom_);
-  if (gem_geom_.isValid()) {
-  gemGeometry_ = &*gem_geom_;
-  } else {
-    std::cout << "+++ Info: GEM geometry is unavailable. +++\n";
-  }
+  //iSetup.get<MuonGeometryRecord>().get(gem_geom_);
+  //if (gem_geom_.isValid()) {
+  //gemGeometry_ = &*gem_geom_;
+  //} else {
+  //  std::cout << "+++ Info: GEM geometry is unavailable. +++\n";
+  //}
+  gemGeometry_ = &iSetup.getData(gemToken_);
 }
 
 void CSCStubAnalyzer::setMatcher(const CSCStubMatcher& match_sh)
@@ -66,20 +71,22 @@ void CSCStubAnalyzer::setMatcher(const CSCStubMatcher& match_sh)
 
 void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, my::TreeManager& tree)
 {
-  iSetup.get<MuonGeometryRecord>().get(csc_geom_);
-  if (csc_geom_.isValid()) {
-  cscGeometry_ = &*csc_geom_;
-  } else {
-    std::cout << "+++ Info: CSC geometry is unavailable. +++\n";
-  }
+  //iSetup.get<MuonGeometryRecord>().get(csc_geom_);
+  //if (csc_geom_.isValid()) {
+  //cscGeometry_ = &*csc_geom_;
+  //} else {
+  //  std::cout << "+++ Info: CSC geometry is unavailable. +++\n";
+  //}
 
-  iSetup.get<MuonGeometryRecord>().get(gem_geom_);
-  if (gem_geom_.isValid()) {
-  gemGeometry_ = &*gem_geom_;
-  } else {
-    std::cout << "+++ Info: GEM geometry is unavailable. +++\n";
-  }
+  //iSetup.get<MuonGeometryRecord>().get(gem_geom_);
+  //if (gem_geom_.isValid()) {
+  //gemGeometry_ = &*gem_geom_;
+  //} else {
+  //  std::cout << "+++ Info: GEM geometry is unavailable. +++\n";
+  //}
 
+  cscGeometry_ = &iSetup.getData(cscToken_);
+  gemGeometry_ = &iSetup.getData(gemToken_);
   iEvent.getByToken(preclctToken_, preclctsH_);
   iEvent.getByToken(clctToken_, clctsH_);
   iEvent.getByToken(alctToken_, alctsH_);

@@ -24,6 +24,8 @@ ME0RecHitMatcher::ME0RecHitMatcher(const edm::ParameterSet& pset, edm::ConsumesC
 
   me0RecHitToken_ = iC.consumes<ME0RecHitCollection>(me0RecHit.getParameter<edm::InputTag>("inputTag"));
   me0SegmentToken_ = iC.consumes<ME0SegmentCollection>(me0Segment.getParameter<edm::InputTag>("inputTag"));
+
+  me0Token_ = iC.esConsumes<ME0Geometry, MuonGeometryRecord>();
 }
 
 
@@ -34,13 +36,14 @@ void ME0RecHitMatcher::init(const edm::Event& iEvent, const edm::EventSetup& iSe
   iEvent.getByToken(me0RecHitToken_, me0RecHitH_);
   iEvent.getByToken(me0SegmentToken_, me0SegmentH_);
 
-  iSetup.get<MuonGeometryRecord>().get(me0_geom_);
-  if (me0_geom_.isValid()) {
-    me0Geometry_ = &*me0_geom_;
-  } else {
-    edm::LogWarning("ME0RecHitMatcher")
-        << "+++ Info: ME0 geometry is unavailable. +++\n";
-  }
+  //iSetup.get<MuonGeometryRecord>().get(me0_geom_);
+  //if (me0_geom_.isValid()) {
+  //  me0Geometry_ = &*me0_geom_;
+  //} else {
+  //  edm::LogWarning("ME0RecHitMatcher")
+  //      << "+++ Info: ME0 geometry is unavailable. +++\n";
+  //}
+  me0Geometry_ = &iSetup.getData(me0Token_);
 }
 
 /// do the matching

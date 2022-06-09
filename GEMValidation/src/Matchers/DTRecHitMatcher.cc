@@ -25,6 +25,8 @@ DTRecHitMatcher::DTRecHitMatcher(const edm::ParameterSet& pset, edm::ConsumesCol
   dtRecHit1DPairToken_ = iC.consumes<DTRecHitCollection>(dtRecHit1DPair.getParameter<edm::InputTag>("inputTag"));
   dtRecSegment2DToken_ = iC.consumes<DTRecSegment2DCollection>(dtRecSegment2D.getParameter<edm::InputTag>("inputTag"));
   dtRecSegment4DToken_ = iC.consumes<DTRecSegment4DCollection>(dtRecSegment4D.getParameter<edm::InputTag>("inputTag"));
+
+  dtToken_ = iC.esConsumes<DTGeometry, MuonGeometryRecord>();
 }
 
 void DTRecHitMatcher::init(const edm::Event& iEvent, const edm::EventSetup& iSetup)
@@ -35,12 +37,13 @@ void DTRecHitMatcher::init(const edm::Event& iEvent, const edm::EventSetup& iSet
   iEvent.getByToken(dtRecSegment2DToken_, dtRecSegment2DH_);
   iEvent.getByToken(dtRecSegment4DToken_, dtRecSegment4DH_);
 
-  iSetup.get<MuonGeometryRecord>().get(dt_geom_);
-  if (dt_geom_.isValid()) {
-    dtGeometry_ = &*dt_geom_;
-  } else {
-    std::cout << "+++ Info: DT geometry is unavailable. +++\n";
-  }
+  //iSetup.get<MuonGeometryRecord>().get(dt_geom_);
+  //if (dt_geom_.isValid()) {
+  //  dtGeometry_ = &*dt_geom_;
+  //} else {
+  //  std::cout << "+++ Info: DT geometry is unavailable. +++\n";
+  //}
+  dtGeometry_ = &iSetup.getData(dtToken_);
 }
 
 /// do the matching

@@ -9,6 +9,8 @@ GEMDigiAnalyzer::GEMDigiAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCol
   runDigi_ = gemDigi.getParameter<bool>("run");
 
   gemDigiToken_ = iC.consumes<GEMDigiCollection>(gemDigi.getParameter<edm::InputTag>("inputTag"));
+
+  gemToken_ = iC.esConsumes<GEMGeometry, MuonGeometryRecord>();
 }
 
 void GEMDigiAnalyzer::setMatcher(const GEMDigiMatcher& match_sh)
@@ -22,12 +24,13 @@ void GEMDigiAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
 
   iEvent.getByToken(gemDigiToken_, gemDigisH_);
 
-  iSetup.get<MuonGeometryRecord>().get(gem_geom_);
-  if (gem_geom_.isValid()) {
-    gemGeometry_ = &*gem_geom_;
-  } else {
-    std::cout << "+++ Info: GEM geometry is unavailable. +++\n";
-  }
+  //iSetup.get<MuonGeometryRecord>().get(gem_geom_);
+  //if (gem_geom_.isValid()) {
+  //  gemGeometry_ = &*gem_geom_;
+  //} else {
+  //  std::cout << "+++ Info: GEM geometry is unavailable. +++\n";
+  //}
+  gemGeometry_ = &iSetup.getData(gemToken_);
 
   // get the digi collections
   const GEMDigiCollection& gemDigis = *gemDigisH_.product();

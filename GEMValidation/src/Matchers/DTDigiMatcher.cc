@@ -15,6 +15,8 @@ DTDigiMatcher::DTDigiMatcher(const edm::ParameterSet& pset, edm::ConsumesCollect
   muonSimHitMatcher_.reset(new DTSimHitMatcher(pset, std::move(iC)));
 
   dtWireToken_ = iC.consumes<DTDigiCollection>(dtWire.getParameter<edm::InputTag>("inputTag"));
+
+  dtToken_ = iC.esConsumes<DTGeometry, MuonGeometryRecord>();
 }
 
 void DTDigiMatcher::init(const edm::Event& iEvent, const edm::EventSetup& iSetup)
@@ -23,12 +25,14 @@ void DTDigiMatcher::init(const edm::Event& iEvent, const edm::EventSetup& iSetup
 
   iEvent.getByToken(dtWireToken_, dtWiresH_);
 
-  iSetup.get<MuonGeometryRecord>().get(dt_geom_);
-  if (dt_geom_.isValid()) {
-    dtGeometry_ = &*dt_geom_;
-  } else {
-    std::cout << "+++ Info: DT geometry is unavailable. +++\n";
-  }
+  //iSetup.get<MuonGeometryRecord>().get(dt_geom_);
+  //if (dt_geom_.isValid()) {
+  //  dtGeometry_ = &*dt_geom_;
+  //} else {
+  //  std::cout << "+++ Info: DT geometry is unavailable. +++\n";
+  //}
+
+  dtGeometry_ = &iSetup.getData(dtToken_);
 }
 
 /// do the matching

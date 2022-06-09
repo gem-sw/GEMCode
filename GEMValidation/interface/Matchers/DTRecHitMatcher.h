@@ -105,7 +105,8 @@ private:
   edm::Handle<DTRecSegment2DCollection> dtRecSegment2DH_;
   edm::Handle<DTRecSegment4DCollection> dtRecSegment4DH_;
 
-  edm::ESHandle<DTGeometry> dt_geom_;
+  //edm::ESHandle<DTGeometry> dt_geom_;
+  edm::ESGetToken<DTGeometry, MuonGeometryRecord> dtToken_;
   const DTGeometry* dtGeometry_;
 
   void matchDTRecHit1DPairsToSimTrack(const DTRecHitCollection&);

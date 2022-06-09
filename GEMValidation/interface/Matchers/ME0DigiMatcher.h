@@ -96,7 +96,8 @@ private:
 
   std::shared_ptr<ME0SimHitMatcher> muonSimHitMatcher_;
 
-  edm::ESHandle<ME0Geometry> me0_geom_;
+  //edm::ESHandle<ME0Geometry> me0_geom_;
+  edm::ESGetToken<ME0Geometry, MuonGeometryRecord> me0Token_;
   const ME0Geometry* me0Geometry_;
 
   template <class T>

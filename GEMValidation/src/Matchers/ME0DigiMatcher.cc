@@ -21,6 +21,8 @@ ME0DigiMatcher::ME0DigiMatcher(const edm::ParameterSet& pset, edm::ConsumesColle
 
   me0DigiToken_ = iC.consumes<ME0DigiCollection>(me0Digi.getParameter<edm::InputTag>("inputTag"));
   me0PadToken_ = iC.consumes<ME0PadDigiCollection>(me0Pad.getParameter<edm::InputTag>("inputTag"));
+
+  me0Token_ = iC.esConsumes<ME0Geometry, MuonGeometryRecord>();
 }
 
 void ME0DigiMatcher::init(const edm::Event& iEvent, const edm::EventSetup& iSetup) {
@@ -29,12 +31,13 @@ void ME0DigiMatcher::init(const edm::Event& iEvent, const edm::EventSetup& iSetu
   iEvent.getByToken(me0DigiToken_, me0DigisH_);
   iEvent.getByToken(me0PadToken_, me0PadsH_);
 
-  iSetup.get<MuonGeometryRecord>().get(me0_geom_);
-  if (me0_geom_.isValid()) {
-    me0Geometry_ = &*me0_geom_;
-  } else {
-    std::cout << "+++ Info: ME0 geometry is unavailable. +++\n";
-  }
+  //iSetup.get<MuonGeometryRecord>().get(me0_geom_);
+  //if (me0_geom_.isValid()) {
+  //  me0Geometry_ = &*me0_geom_;
+  //} else {
+  //  std::cout << "+++ Info: ME0 geometry is unavailable. +++\n";
+  //}
+  me0Geometry_ = &iSetup.getData(me0Token_); 
 }
 
 /// do the matching

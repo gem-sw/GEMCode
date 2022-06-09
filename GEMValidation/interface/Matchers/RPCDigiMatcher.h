@@ -67,7 +67,8 @@ private:
 
   std::shared_ptr<RPCSimHitMatcher> muonSimHitMatcher_;
 
-  edm::ESHandle<RPCGeometry> rpc_geom_;
+  //edm::ESHandle<RPCGeometry> rpc_geom_;
+  edm::ESGetToken<RPCGeometry, MuonGeometryRecord> rpcToken_;
   const RPCGeometry* rpcGeometry_;
 
   template <class T>
