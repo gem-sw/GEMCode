@@ -248,8 +248,8 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       for (auto emtfShower = emtfShowers.begin(bx); emtfShower != emtfShowers.end(bx); ++emtfShower ){
 
         trkTree.emtfshower_bx->push_back(0);
-        trkTree.emtfshower_region->push_back(emtfShower->endcap());
-        trkTree.emtfshower_sector->push_back(emtfShower->sector());
+        //trkTree.emtfshower_region->push_back(emtfShower->endcap());
+        //trkTree.emtfshower_sector->push_back(emtfShower->sector());
         trkTree.emtfshower_isOneNominalInTime->push_back(emtfShower->isOneNominalInTime());
         trkTree.emtfshower_isTwoLooseInTime->push_back(emtfShower->isTwoLooseInTime());
         trkTree.emtfshower_isOneNominalOutOfTime->push_back(emtfShower->isOneNominalOutOfTime());
