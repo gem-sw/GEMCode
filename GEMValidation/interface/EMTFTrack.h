@@ -50,9 +50,15 @@ class EMTFTrack
   int quality() const {return quality_;}
   int bx() const {return bx_;}
 
+  int deltaphi(unsigned int index) {return deltaphi_[index]; }
+  int deltatheta(unsigned int index) {return deltatheta_[index]; }
+  int lctslope(unsigned int index ) {return lctslope_[index]; }
+  int lctpattern(unsigned int index) {return lctpattern_[index]; }
+
   void setDR(double dr) { dr_ = dr; }
 
  private:
+  //https://github.com/cms-sw/cmssw/blob/master/DataFormats/L1TMuon/interface/EMTFTrack.h#L24
   l1t::EMTFTrack emtfTrack_;
   l1t::EMTFHitCollection emtfHits_;
   int charge_;
@@ -63,6 +69,11 @@ class EMTFTrack
   double dr_;
   int quality_;
   int bx_;
+  int mode_;
+  int deltaphi_[6];
+  int deltatheta_[6];
+  int lctslope_[4];
+  int lctpattern_[4];
 };
 
 

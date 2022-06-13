@@ -312,6 +312,27 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     tree.l1mu().nstubs = emtfTrack->nStubs();
     tree.l1mu().deltaR = emtfTrack->dR();
     tree.l1mu().chargesign = emtfTrack->charge();
+    tree.l1mu().quality = emtfTrack->quality();
+    tree.l1mu().deltaphi12 = emtfTrack->deltaphi(0); 
+    tree.l1mu().deltaphi13 = emtfTrack->deltaphi(1); 
+    tree.l1mu().deltaphi14 = emtfTrack->deltaphi(2); 
+    tree.l1mu().deltaphi23 = emtfTrack->deltaphi(3); 
+    tree.l1mu().deltaphi24 = emtfTrack->deltaphi(4); 
+    tree.l1mu().deltaphi34 = emtfTrack->deltaphi(5); 
+    tree.l1mu().deltatheta12 = emtfTrack->deltatheta(0); 
+    tree.l1mu().deltatheta13 = emtfTrack->deltatheta(1); 
+    tree.l1mu().deltatheta14 = emtfTrack->deltatheta(2); 
+    tree.l1mu().deltatheta23 = emtfTrack->deltatheta(3); 
+    tree.l1mu().deltatheta24 = emtfTrack->deltatheta(4); 
+    tree.l1mu().deltatheta34 = emtfTrack->deltatheta(5); 
+    tree.l1mu().lctslope1 = emtfTrack->lctslope(0); 
+    tree.l1mu().lctslope2 = emtfTrack->lctslope(1); 
+    tree.l1mu().lctslope3 = emtfTrack->lctslope(2); 
+    tree.l1mu().lctslope4 = emtfTrack->lctslope(3); 
+    tree.l1mu().lctpattern1 = emtfTrack->lctpattern(0); 
+    tree.l1mu().lctpattern2 = emtfTrack->lctpattern(1); 
+    tree.l1mu().lctpattern3 = emtfTrack->lctpattern(2); 
+    tree.l1mu().lctpattern4 = emtfTrack->lctpattern(3); 
   }
 
   if (muon != nullptr) {

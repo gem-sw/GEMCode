@@ -39,8 +39,8 @@ void CSCDigiAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& e
   const CSCWireDigiCollection& wires = *wireDigisH_.product();
 
   auto& cscTree = tree.cscDigi();
-  auto& simTree = tree.simTrack();
-  auto& genTree = tree.genParticle();
+  //auto& simTree = tree.simTrack();
+  //auto& genTree = tree.genParticle();
 
   int index;
   for (auto detUnitIt = comps.begin(); detUnitIt != comps.end(); ++detUnitIt) {
@@ -51,7 +51,7 @@ void CSCDigiAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& e
     const auto& range = (*detUnitIt).second;
     for (auto digiIt = range.first; digiIt != range.second; ++digiIt) {
 
-      int tpidfound = -1;
+      //int tpidfound = -1;
       for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
 
         // get the matcher
@@ -97,7 +97,7 @@ void CSCDigiAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& e
     const auto& range = (*detUnitIt).second;
     for (auto digiIt = range.first; digiIt != range.second; ++digiIt) {
 
-      int tpidfound = -1;
+      //int tpidfound = -1;
       for (int tpid = 0; tpid < MAX_PARTICLES; tpid++) {
 
         // get the matcher

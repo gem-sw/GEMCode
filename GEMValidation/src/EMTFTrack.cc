@@ -12,6 +12,31 @@ gem::EMTFTrack::EMTFTrack(const l1t::EMTFTrack& t)
   quality_ = t.GMT_quality();
   bx_ = t.BX();
   dr_ = 10.0;
+  mode_ = t.Mode();
+  //https://github.com/cms-sw/cmssw/blob/master/DataFormats/L1TMuon/interface/EMTFTrack.h#L24
+  deltaphi_[0] = t.PtLUT().sign_ph[0] ? (-1)*t.PtLUT().delta_ph[0] : t.PtLUT().delta_ph[0];
+  deltaphi_[1] = t.PtLUT().sign_ph[1] ? (-1)*t.PtLUT().delta_ph[1] : t.PtLUT().delta_ph[1];
+  deltaphi_[2] = t.PtLUT().sign_ph[2] ? (-1)*t.PtLUT().delta_ph[2] : t.PtLUT().delta_ph[2];
+  deltaphi_[3] = t.PtLUT().sign_ph[3] ? (-1)*t.PtLUT().delta_ph[3] : t.PtLUT().delta_ph[3];
+  deltaphi_[4] = t.PtLUT().sign_ph[4] ? (-1)*t.PtLUT().delta_ph[4] : t.PtLUT().delta_ph[4];
+  deltaphi_[5] = t.PtLUT().sign_ph[5] ? (-1)*t.PtLUT().delta_ph[5] : t.PtLUT().delta_ph[5];
+
+  deltatheta_[0] = t.PtLUT().sign_th[0] ? (-1)*t.PtLUT().delta_th[0] : (-1)*t.PtLUT().delta_th[0];
+  deltatheta_[1] = t.PtLUT().sign_th[1] ? (-1)*t.PtLUT().delta_th[1] : (-1)*t.PtLUT().delta_th[1];
+  deltatheta_[2] = t.PtLUT().sign_th[2] ? (-1)*t.PtLUT().delta_th[2] : (-1)*t.PtLUT().delta_th[2];
+  deltatheta_[3] = t.PtLUT().sign_th[3] ? (-1)*t.PtLUT().delta_th[3] : (-1)*t.PtLUT().delta_th[3];
+  deltatheta_[4] = t.PtLUT().sign_th[4] ? (-1)*t.PtLUT().delta_th[4] : (-1)*t.PtLUT().delta_th[4];
+  deltatheta_[5] = t.PtLUT().sign_th[5] ? (-1)*t.PtLUT().delta_th[5] : (-1)*t.PtLUT().delta_th[5];
+
+  lctpattern_[0] = t.PtLUT().cpattern[0];
+  lctpattern_[1] = t.PtLUT().cpattern[1];
+  lctpattern_[2] = t.PtLUT().cpattern[2];
+  lctpattern_[3] = t.PtLUT().cpattern[3];
+
+  lctslope_[0]  = t.PtLUT().csign[0] ? (-1)*t.PtLUT().slope[0] : t.PtLUT().slope[0];
+  lctslope_[1]  = t.PtLUT().csign[1] ? (-1)*t.PtLUT().slope[1] : t.PtLUT().slope[1];
+  lctslope_[2]  = t.PtLUT().csign[2] ? (-1)*t.PtLUT().slope[2] : t.PtLUT().slope[2];
+  lctslope_[3]  = t.PtLUT().csign[3] ? (-1)*t.PtLUT().slope[0] : t.PtLUT().slope[3];
 }
 
 gem::EMTFTrack::EMTFTrack(const gem::EMTFTrack& rhs)
