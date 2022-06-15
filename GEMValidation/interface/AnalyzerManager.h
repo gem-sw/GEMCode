@@ -3,6 +3,7 @@
 
 #include "GEMCode/GEMValidation/interface/MatcherSuperManager.h"
 #include "GEMCode/GEMValidation/interface/new/TreeManager.h"
+#include "GEMCode/GEMValidation/interface/Analyzers/EventAnalyzer.h"
 #include "GEMCode/GEMValidation/interface/Analyzers/GenParticleAnalyzer.h"
 #include "GEMCode/GEMValidation/interface/Analyzers/SimTrackAnalyzer.h"
 #include "GEMCode/GEMValidation/interface/Analyzers/GEMSimHitAnalyzer.h"
@@ -37,6 +38,7 @@ class AnalyzerManager
  private:
 
   // analyzers
+  std::unique_ptr<EventAnalyzer> event_;
   std::unique_ptr<GenParticleAnalyzer> gent_;
   std::unique_ptr<SimTrackAnalyzer> simt_;
   std::unique_ptr<GEMSimHitAnalyzer> gemsh_;

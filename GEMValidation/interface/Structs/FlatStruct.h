@@ -11,8 +11,38 @@ typedef std::vector<int> t_ints;
 typedef t_ints* p_ints;
 typedef std::vector<t_ints> t_vints;
 typedef t_vints* p_vints;
+typedef std::vector<unsigned long long> t_longs;
+typedef t_longs* p_longs;
 
 namespace my {
+
+  struct EventStruct {
+
+    p_ints event_run;
+    p_ints event_lumi;
+    p_longs event_event;
+    p_ints event_bx;
+    p_ints event_orbit;
+    p_ints event_time;
+
+    void init() {
+      event_run = new t_ints;
+      event_lumi = new t_ints;
+      event_event = new t_longs;
+      event_bx = new t_ints;
+      event_orbit = new t_ints;
+      event_time = new t_ints;
+    }
+
+    void book(TTree* t) {
+      t->Branch("event_run", &event_run);
+      t->Branch("event_lumi", &event_lumi);
+      t->Branch("event_event", &event_event);
+      t->Branch("event_bx", &event_bx);
+      t->Branch("event_orbit", &event_orbit);
+      t->Branch("event_time", &event_time);
+    }
+  };
 
   struct GenParticleStruct {
 

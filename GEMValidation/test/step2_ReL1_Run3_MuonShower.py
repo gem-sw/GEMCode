@@ -15,6 +15,7 @@ options.register ("runOnRaw", False, VarParsing.multiplicity.singleton, VarParsi
 options.register ("runAna", True, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
 options.register ("run3", True, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
 options.register ("crab", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
+options.register ("ShowerSource", 0, VarParsing.multiplicity.singleton, VarParsing.varType.int)
 options.parseArguments()
 
 process_era = Run3
@@ -50,7 +51,9 @@ process.maxEvents = cms.untracked.PSet(
 process.source = cms.Source(
       "PoolSource",
       fileNames = cms.untracked.vstring(
-            "file:/uscms/home/dildick/nobackup/work/LLPStudiesWithSergoEtAL/CMSSW_12_0_0_pre2/src/132B0128-FF59-DB4A-A3AD-AF4D8B4D21D2.root"
+            #"file:/uscms/home/menendez/nobackup/Trigger/Data/28BC606A-86A3-E811-A897-02163E00B16E.root"
+            #"file:/uscms/home/dildick/nobackup/work/LLPStudiesWithSergoEtAL/CMSSW_12_0_0_pre2/src/132B0128-FF59-DB4A-A3AD-AF4D8B4D21D2.root"
+            "file:/eos/uscms/store/data/Run2018D/EphemeralZeroBias2/RAW/v1/000/320/673/00000/06B5F1BD-5695-E811-B52D-FA163EADBDBF.root"
             #"/store/user/nimenend/HTo2LongLivedTo4q_MH_125_MFF_1_CTau_10000mm_TuneCP5_14TeV_pythia/HTo2LongLivedTo4q_MH_125_MFF_1_CTau_10000mm_TuneCP5_14TeV_pythia/200710_130547/0000/step2_1.root"
     ),
     secondaryFileNames = cms.untracked.vstring(),
@@ -158,15 +161,37 @@ ana.emtfShower.verbose = 1
 ana.muonShower.verbose = 1
 ## turn off GEM
 
-
 if options.runOnRaw:
       process.simCscTriggerPrimitiveDigis.CSCComparatorDigiProducer = "muonCSCDigis:MuonCSCComparatorDigi"
       process.simCscTriggerPrimitiveDigis.CSCWireDigiProducer = "muonCSCDigis:MuonCSCWireDigi"
+      #process.simCscTriggerPrimitiveDigisCath.CSCComparatorDigiProducer = "muonCSCDigis:MuonCSCComparatorDigi"
+      #process.simCscTriggerPrimitiveDigisCath.CSCWireDigiProducer = "muonCSCDigis:MuonCSCWireDigi"
+      #process.simCscTriggerPrimitiveDigisAnod.CSCComparatorDigiProducer = "muonCSCDigis:MuonCSCComparatorDigi"
+      #process.simCscTriggerPrimitiveDigisAnod.CSCWireDigiProducer = "muonCSCDigis:MuonCSCWireDigi"
       ana.gemStripDigi.inputTag = "muonGEMDigis"
       ana.cscStripDigi.inputTag = "muonCSCDigis:MuonCSCStripDigi"
       ana.cscWireDigi.inputTag = "muonCSCDigis:MuonCSCWireDigi"
       ana.cscComparatorDigi.inputTag = "muonCSCDigis:MuonCSCComparatorDigi"
       #ana.muon.inputTag = cms.InputTag("gmtStage2Digis","Muon")
+
+process.MuonNtuplizerCath = process.MuonNtuplizer.clone()
+anaCath = process.MuonNtuplizerCath
+anaCath.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisCath","","ReL1")
+anaCath.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisCath","","ReL1")
+anaCath.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisCath","","ReL1")
+anaCath.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisCath","MPCSORTED","ReL1")
+anaCath.cscShower.inputTag = "simCscTriggerPrimitiveDigisCath"
+anaCath.emtfShower.inputTag = cms.InputTag("simEmtfShowersCath","EMTF")
+anaCath.muonShower.inputTag = "simGmtShowerDigisCath"
+process.MuonNtuplizerAnod = process.MuonNtuplizer.clone()
+anaAnod = process.MuonNtuplizerAnod
+anaAnod.cscALCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisAnod","","ReL1")
+anaAnod.cscCLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisAnod","","ReL1")
+anaAnod.cscLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisAnod","","ReL1")
+anaAnod.cscMPLCT.inputTag = cms.InputTag("simCscTriggerPrimitiveDigisAnod","MPCSORTED","ReL1")
+anaAnod.cscShower.inputTag = "simCscTriggerPrimitiveDigisAnod"
+anaAnod.emtfShower.inputTag = "simEmtfShowersAnod:EMTF"
+anaAnod.muonShower.inputTag = "simGmtShowerDigisAnod"
 
 ## customize unpacker
 process.SimL1Emulator = cms.Sequence(process.SimL1TMuonTask)
@@ -178,12 +203,37 @@ if not options.run3:
 
 
 process.simCscTriggerPrimitiveDigis.commonParam.runME11ILT =False
+process.simCscTriggerPrimitiveDigisCath = process.simCscTriggerPrimitiveDigis.clone()
+process.simCscTriggerPrimitiveDigisAnod = process.simCscTriggerPrimitiveDigis.clone()
+process.simCscTriggerPrimitiveDigis.showerParam.source =2
+process.simCscTriggerPrimitiveDigisCath.showerParam.source =0
+process.simCscTriggerPrimitiveDigisAnod.showerParam.source =1
+process.simEmtfShowersCath = process.simEmtfShowers.clone()
+process.simEmtfShowersCath.CSCShowerInput = cms.InputTag(
+	'simCscTriggerPrimitiveDigisCath')
+process.simEmtfShowersAnod = process.simEmtfShowers.clone()
+process.simEmtfShowersAnod.CSCShowerInput = cms.InputTag(
+	'simCscTriggerPrimitiveDigisAnod')
+process.simGmtShowerDigisCath = process.simGmtShowerDigis.clone()
+process.simGmtShowerDigisCath.showerInput = cms.InputTag(
+	'simEmtfShowersCath','EMTF')
+process.simGmtShowerDigisAnod = process.simGmtShowerDigis.clone()
+process.simGmtShowerDigisAnod.showerInput = cms.InputTag(
+	'simEmtfShowersAnod','EMTF')
 process.L1simulation_step = cms.Path(
       process.simCscTriggerPrimitiveDigis *
+      process.simCscTriggerPrimitiveDigisCath *
+      process.simCscTriggerPrimitiveDigisAnod *
       process.simEmtfShowers *
-      process.simGmtShowerDigis
+      process.simEmtfShowersCath *
+      process.simEmtfShowersAnod *
+      process.simGmtShowerDigis *
+      process.simGmtShowerDigisCath *
+      process.simGmtShowerDigisAnod
 )
 process.ana_step = cms.Path(process.MuonNtuplizer)
+process.ana_step_cath = cms.Path(process.MuonNtuplizerCath)
+process.ana_step_anod = cms.Path(process.MuonNtuplizerAnod)
 process.endjob_step = cms.EndPath(process.endOfProcess)
 process.FEVTDEBUGoutput_step = cms.EndPath(process.FEVTDEBUGoutput)
 
@@ -199,6 +249,9 @@ process.schedule.extend([process.L1simulation_step])
 ## analysis
 if options.runAna:
     process.schedule.extend([process.ana_step])
+    process.schedule.extend([process.ana_step_cath])
+    process.schedule.extend([process.ana_step_anod])
+
 
 ## endjob
 process.schedule.extend([process.endjob_step])

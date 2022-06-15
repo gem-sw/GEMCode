@@ -1,5 +1,11 @@
 #!/usr/bin/python
 
+## event
+event = {
+    "int" : ["run","lumi","bx","orbit","time"]
+    "unsigned long long" : ["event"]
+}
+
 ## gen particles
 gen = {
     "float" : ["pt","pz","eta","phi","dxy","d0","z0","d0_prod","z0_prod","vx","vy","vz","r"],
@@ -346,6 +352,9 @@ class Object():
         self.prefix = prefix
         self.obj_array = obj_array
 
+eventStruct = Struct("EventStruct")
+eventStruct.add(Object("event", event))
+
 genGenParticleStruct = Struct("GenParticleStruct")
 genGenParticleStruct.add(Object("gen", gen))
 
@@ -391,6 +400,7 @@ l1TrackStruct.add(Object("l1track", l1track))
 l1TrackStruct.add(Object("l1trackmuon", l1trackmuon))
 
 structs = [
+    eventStruct,
     genGenParticleStruct,
     simTrackStruct,
     gemSimHitStruct,
