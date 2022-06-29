@@ -55,6 +55,8 @@ namespace gem {
 
     int pattern_clct_odd[nStations];
     int pattern_clct_even[nStations];
+    int run3pattern_clct_odd[nStations];
+    int run3pattern_clct_even[nStations];
 
     int wg_lct_odd[nStations];
     int wg_lct_even[nStations];
@@ -90,6 +92,8 @@ namespace gem {
     float perp_lct_odd[nStations];
     float perp_lct_even[nStations];
 
+    int run3slope_clct_odd[nStations];
+    int run3slope_clct_even[nStations];
     // bending resolution
     float slope_clct_odd[nStations];
     float slope_clct_even[nStations];
@@ -229,6 +233,9 @@ namespace gem {
 
         lct_type[i] = -1;
 
+        run3slope_clct_odd[i] = -99;
+        run3slope_clct_even[i] = -99;
+
         dslope_clct_odd[i] = -9;
         dslope_clct_even[i] = -9;
 
@@ -240,6 +247,9 @@ namespace gem {
 
         pattern_clct_odd[i] = -9;
         pattern_clct_even[i] = -9;
+
+        run3pattern_clct_odd[i] = -9;
+        run3pattern_clct_even[i] = -9;
       }
     };
 
@@ -263,6 +273,9 @@ namespace gem {
 
       t->Branch("pattern_clct_odd", pattern_clct_odd, "pattern_clct_odd[11]/I");
       t->Branch("pattern_clct_even", pattern_clct_even, "pattern_clct_even[11]/I");
+      t->Branch("run3pattern_clct_odd",  run3pattern_clct_odd,  "run3pattern_clct_odd[11]/I");
+      t->Branch("run3pattern_clct_even", run3pattern_clct_even, "run3pattern_clct_even[11]/I");
+
 
       t->Branch("quality_clct_odd", quality_clct_odd, "quality_clct_odd[11]/I");
       t->Branch("quality_clct_even", quality_clct_even, "quality_clct_even[11]/I");
@@ -351,6 +364,8 @@ namespace gem {
 
       t->Branch("lct_type", lct_type, "lct_type[11]/I");
 
+      t->Branch("run3slope_clct_odd",  run3slope_clct_odd,  "run3slope_clct_odd[11]/I");
+      t->Branch("run3slope_clct_even", run3slope_clct_even, "run3slope_clct_even[11]/I");
       t->Branch("dslope_clct_odd", dslope_clct_odd, "dslope_clct_odd[11]/F");
       t->Branch("dslope_clct_even", dslope_clct_even, "dslope_clct_even[11]/F");
 

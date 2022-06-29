@@ -19,9 +19,9 @@ namespace gem {
     UInt_t nstubs;
     //UInt_t deltaphi12, deltaphi23;
     bool hasME1, hasME2, hasME3, hasME4;
-    Char_t chamberME1, chamberME2;  //bit1: odd, bit2: even
-    Int_t ME1_ring, ME2_ring;
-    Int_t ME1_hs, ME2_hs, ME1_wg, ME2_wg;
+    //Char_t chamberME1, chamberME2;  //bit1: odd, bit2: even
+    //Int_t ME1_ring, ME2_ring;
+    //Int_t ME1_hs, ME2_hs, ME1_wg, ME2_wg;
     float dphiGE11, dphiGE21;
     //bool passGE11, passGE21;
     //bool passGE11_pt5, passGE11_pt7, passGE11_pt10, passGE11_pt15, passGE11_pt20, passGE11_pt30, passGE11_pt40;
@@ -31,6 +31,7 @@ namespace gem {
     float lctdphi12;
 
     bool allstubs_matched_TF;
+    int nstubs_matched_TF;
 
     int mode;
     int quality;
@@ -55,6 +56,50 @@ namespace gem {
     int lctpattern3;
     int lctpattern4;
 
+    bool  cscstub_st1_matched;
+    bool  cscstub_st1_found;
+    int   cscstub_st1_wire;
+    float cscstub_st1_halfstrip;
+    int   cscstub_st1_pattern;
+    int   cscstub_st1_ring;
+    int   emtfhit_st1_wire;
+    float emtfhit_st1_halfstrip;
+    int   emtfhit_st1_pattern;
+    int   emtfhit_st1_ring;
+
+    bool  cscstub_st2_matched;
+    bool  cscstub_st2_found;
+    int   cscstub_st2_wire;
+    float cscstub_st2_halfstrip;
+    int   cscstub_st2_pattern;
+    int   cscstub_st2_ring;
+    int   emtfhit_st2_wire;
+    float emtfhit_st2_halfstrip;
+    int   emtfhit_st2_pattern;
+    int   emtfhit_st2_ring;
+
+    bool  cscstub_st3_matched;
+    bool  cscstub_st3_found;
+    int   cscstub_st3_wire;
+    float cscstub_st3_halfstrip;
+    int   cscstub_st3_pattern;
+    int   cscstub_st3_ring;
+    int   emtfhit_st3_wire;
+    float emtfhit_st3_halfstrip;
+    int   emtfhit_st3_pattern;
+    int   emtfhit_st3_ring;
+
+    bool  cscstub_st4_matched;
+    bool  cscstub_st4_found;
+    int   cscstub_st4_wire;
+    float cscstub_st4_halfstrip;
+    int   cscstub_st4_pattern;
+    int   cscstub_st4_ring;
+    int   emtfhit_st4_wire;
+    float emtfhit_st4_halfstrip;
+    int   emtfhit_st4_pattern;
+    int   emtfhit_st4_ring;
+
     //L1Mu
     float bestdRGmtCand;
     float L1Mu_pt, L1Mu_eta, L1Mu_phi, L1Mu_quality, L1Mu_bx;
@@ -70,10 +115,10 @@ namespace gem {
       emtf_pt = -1;
       emtf_eta = -9;
       emtf_phi = -9;
-      ME1_hs = -1;
-      ME1_wg = -1;
-      ME2_hs = -1;
-      ME2_wg = -1;
+      //ME1_hs = -1;
+      //ME1_wg = -1;
+      //ME2_hs = -1;
+      //ME2_wg = -1;
       chargesign =99;
       rank = 0;
       deltaphi12 = 0;
@@ -82,10 +127,10 @@ namespace gem {
       hasME2 = false;
       hasME3 = false;
       hasME4 = false;
-      ME1_ring = -1;
-      ME2_ring = -1;
-      chamberME1 = 0;
-      chamberME2 = 0;
+      //ME1_ring = -1;
+      //ME2_ring = -1;
+      //chamberME1 = 0;
+      //chamberME2 = 0;
       dphiGE11 = -99.0;
       dphiGE21 = -99.0;
       //passGE11 = false;
@@ -131,7 +176,50 @@ namespace gem {
       lctpattern3 = -99999;
       lctpattern4 = -99999;
 
+
+      cscstub_st1_matched  = false;
+      cscstub_st1_found    = false;
+      cscstub_st1_wire     = -9999;
+      cscstub_st1_halfstrip= -9999.0;
+      cscstub_st1_pattern  = -9999;
+      cscstub_st1_ring     = -1;
+      emtfhit_st1_wire     = -9999;
+      emtfhit_st1_halfstrip= -9999.0;
+      emtfhit_st1_pattern  = -9999;
+      emtfhit_st1_ring     = -1;
+      cscstub_st2_matched  = false;
+      cscstub_st2_found    = false;
+      cscstub_st2_wire     = -9999;
+      cscstub_st2_halfstrip= -9999.0;
+      cscstub_st2_pattern  = -9999;
+      cscstub_st2_ring     = -1;
+      emtfhit_st2_wire     = -9999;
+      emtfhit_st2_halfstrip= -9999.0;
+      emtfhit_st2_pattern  = -9999;
+      emtfhit_st2_ring     = -1;
+      cscstub_st3_matched  = false;
+      cscstub_st3_found    = false;
+      cscstub_st3_wire     = -9999;
+      cscstub_st3_halfstrip= -9999.0;
+      cscstub_st3_pattern  = -9999;
+      cscstub_st3_ring     = -1;
+      emtfhit_st3_wire     = -9999;
+      emtfhit_st3_halfstrip= -9999.0;
+      emtfhit_st3_pattern  = -9999;
+      emtfhit_st3_ring     = -1;
+      cscstub_st3_matched  = false;
+      cscstub_st4_found    = false;
+      cscstub_st4_wire     = -9999;
+      cscstub_st4_halfstrip= -9999.0;
+      cscstub_st4_pattern  = -9999;
+      cscstub_st4_ring     = -1;
+      emtfhit_st4_wire     = -9999;
+      emtfhit_st4_halfstrip= -9999.0;
+      emtfhit_st4_pattern  = -9999;
+      emtfhit_st4_ring     = -1;
+
       allstubs_matched_TF = false;
+      nstubs_matched_TF = -1;
 
       bestdRGmtCand = 99;
       L1Mu_pt = -99;
@@ -159,14 +247,14 @@ namespace gem {
       t->Branch("hasME2",&hasME2);
       t->Branch("hasME3",&hasME3);
       t->Branch("hasME4",&hasME4);
-      t->Branch("ME1_ring",&ME1_ring);
-      t->Branch("ME2_ring",&ME2_ring);
-      t->Branch("chamberME1",&chamberME1);
-      t->Branch("chamberME2",&chamberME2);
-      t->Branch("ME1_hs",&ME1_hs);
-      t->Branch("ME1_wg",&ME1_wg);
-      t->Branch("ME2_hs",&ME2_hs);
-      t->Branch("ME2_wg",&ME2_wg);
+      //t->Branch("ME1_ring",&ME1_ring);
+      //t->Branch("ME2_ring",&ME2_ring);
+      //t->Branch("chamberME1",&chamberME1);
+      //t->Branch("chamberME2",&chamberME2);
+      //t->Branch("ME1_hs",&ME1_hs);
+      //t->Branch("ME1_wg",&ME1_wg);
+      //t->Branch("ME2_hs",&ME2_hs);
+      //t->Branch("ME2_wg",&ME2_wg);
       t->Branch("dphiGE11",&dphiGE11);
       t->Branch("dphiGE21",&dphiGE21);
       //t->Branch("passGE11",&passGE11);
@@ -214,6 +302,51 @@ namespace gem {
       t->Branch("lctpattern3",&lctpattern3);
       t->Branch("lctpattern4",&lctpattern4);
 
+      t->Branch("cscstub_st1_matched",   &cscstub_st1_matched);
+      t->Branch("cscstub_st1_found",     &cscstub_st1_found);
+      t->Branch("cscstub_st1_wire",      &cscstub_st1_wire);
+      t->Branch("cscstub_st1_halfstrip", &cscstub_st1_halfstrip);
+      t->Branch("cscstub_st1_pattern",   &cscstub_st1_pattern);
+      t->Branch("cscstub_st1_ring",      &cscstub_st1_ring);
+      t->Branch("emtfhit_st1_wire",      &emtfhit_st1_wire);
+      t->Branch("emtfhit_st1_halfstrip", &emtfhit_st1_halfstrip);
+      t->Branch("emtfhit_st1_pattern",   &emtfhit_st1_pattern);
+      t->Branch("emtfhit_st1_ring",      &emtfhit_st1_ring);
+
+      t->Branch("cscstub_st2_matched",   &cscstub_st2_matched);
+      t->Branch("cscstub_st2_found",     &cscstub_st2_found);
+      t->Branch("cscstub_st2_wire",      &cscstub_st2_wire);
+      t->Branch("cscstub_st2_halfstrip", &cscstub_st2_halfstrip);
+      t->Branch("cscstub_st2_pattern",   &cscstub_st2_pattern);
+      t->Branch("cscstub_st2_ring",      &cscstub_st2_ring);
+      t->Branch("emtfhit_st2_wire",      &emtfhit_st2_wire);
+      t->Branch("emtfhit_st2_halfstrip", &emtfhit_st2_halfstrip);
+      t->Branch("emtfhit_st2_pattern",   &emtfhit_st2_pattern);
+      t->Branch("emtfhit_st2_ring",      &emtfhit_st2_ring);
+
+      t->Branch("cscstub_st3_matched",   &cscstub_st3_matched);
+      t->Branch("cscstub_st3_found",     &cscstub_st3_found);
+      t->Branch("cscstub_st3_wire",      &cscstub_st3_wire);
+      t->Branch("cscstub_st3_halfstrip", &cscstub_st3_halfstrip);
+      t->Branch("cscstub_st3_pattern",   &cscstub_st3_pattern);
+      t->Branch("cscstub_st3_ring",      &cscstub_st3_ring);
+      t->Branch("emtfhit_st3_wire",      &emtfhit_st3_wire);
+      t->Branch("emtfhit_st3_halfstrip", &emtfhit_st3_halfstrip);
+      t->Branch("emtfhit_st3_pattern",   &emtfhit_st3_pattern);
+      t->Branch("emtfhit_st3_ring",      &emtfhit_st3_ring);
+
+      t->Branch("cscstub_st4_matched",   &cscstub_st4_matched);
+      t->Branch("cscstub_st4_found",     &cscstub_st4_found);
+      t->Branch("cscstub_st4_wire",      &cscstub_st4_wire);
+      t->Branch("cscstub_st4_halfstrip", &cscstub_st4_halfstrip);
+      t->Branch("cscstub_st4_pattern",   &cscstub_st4_pattern);
+      t->Branch("cscstub_st4_ring",      &cscstub_st4_ring);
+      t->Branch("emtfhit_st4_wire",      &emtfhit_st4_wire);
+      t->Branch("emtfhit_st4_halfstrip", &emtfhit_st4_halfstrip);
+      t->Branch("emtfhit_st4_pattern",   &emtfhit_st4_pattern);
+      t->Branch("emtfhit_st4_ring",      &emtfhit_st4_ring);
+
+      t->Branch("nstubs_matched_TF",&nstubs_matched_TF);
       t->Branch("allstubs_matched_TF",&allstubs_matched_TF);
 
       t->Branch("bestdRGmtCand", &bestdRGmtCand);

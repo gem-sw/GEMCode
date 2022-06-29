@@ -131,6 +131,7 @@ L1MuMatcher::matchEmtfTrackToSimTrack(const SimTrack& simtrack, const l1t::EMTFT
             std::cout <<"...is matched" << std::endl;
           mindREMTFTrack = dR;
           emtfTrack_.reset(new gem::EMTFTrack(trk));
+          emtfTrack_->setDR(dR);
           mindREMTFTrack = dR;
         }
       }
@@ -150,7 +151,7 @@ void L1MuMatcher::matchRegionalMuonCandToSimTrack(const l1t::RegionalMuonCandBxC
   if (verboseRegMuCand_)
     std::cout << "Matched EMTF track "<< track_pt << " " << track_eta << " " << track_phi << std::endl;
 
-  float mindPtRel = 0.5;
+  //float mindPtRel = 0.5;
   float mindRRegMuCand = 1;
 
   for (int bx = regMuCands.getFirstBX(); bx <= regMuCands.getLastBX(); bx++ ){
@@ -195,7 +196,7 @@ void L1MuMatcher::matchGMTToSimTrack(const BXVector<l1t::Muon>& gmtCands)
   if (verboseGMT_)
     std::cout << "Matched regional muon " << cand_pt << " " << cand_eta << " " << cand_phi << std::endl;
 
-  float mindPtRel = 1;
+  //float mindPtRel = 1;
   float mindRGMT = 1;
 
   for (int bx = gmtCands.getFirstBX(); bx <= gmtCands.getLastBX(); bx++ ){

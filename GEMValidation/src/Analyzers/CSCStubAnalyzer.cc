@@ -403,6 +403,7 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
     // in half-strips per layer
     const float slopeHalfStrip(clct.getFractionalSlope());
     const float slopeStrip(slopeHalfStrip / 2.);
+    const int run3Slope = clct.isRun3() ? clct.getSlope() : convertRun2PIDToRun3Slope(clct.getPattern());
 
     int deltaStrip = 0;
     if (id.station() == 1 and id.ring() == 4 and clct.getKeyStrip() > CSCConstants::MAX_HALF_STRIP_ME1B)
@@ -410,11 +411,14 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
 
     float fpos = -9;
 
-    auto fill = [clct, odd, slopeStrip, tree, deltaStrip, id, fpos](gem::CSCStubStruct& cscStubTree, int st) mutable {
+    auto fill = [clct, odd, slopeStrip, tree, deltaStrip, id, fpos, run3Slope](gem::CSCStubStruct& cscStubTree, int st) mutable {
       if (odd) {
         cscStubTree.has_clct_odd[st] = true;
         cscStubTree.quality_clct_odd[st] = clct.getQuality();
         cscStubTree.pattern_clct_odd[st] = clct.getPattern();
+        cscStubTree.run3pattern_clct_odd[st] = clct.isRun3() ? clct.getRun3Pattern() : -9;
+        //cscStubTree.run3slope_clct_odd[st]  =  clct.isRun3() ? clct.getSlope() : convertRun2PIDToRun3Slope(clct.getPattern());
+        cscStubTree.run3slope_clct_odd[st]  =  run3Slope; 
         cscStubTree.bx_clct_odd[st] = clct.getBX();
         cscStubTree.bend_clct_odd[st] = clct.getBend();
         cscStubTree.endcap_clct_odd[st] = id.zendcap();
@@ -439,6 +443,9 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
         cscStubTree.has_clct_even[st] = true;
         cscStubTree.quality_clct_even[st] = clct.getQuality();
         cscStubTree.pattern_clct_even[st] = clct.getPattern();
+        cscStubTree.run3pattern_clct_even[st] = clct.isRun3() ? clct.getRun3Pattern() : -9;
+        //cscStubTree.run3slope_clct_even[st]  =  clct.isRun3() ? clct.getSlope() : convertRun2PIDToRun3Slope(clct.getPattern());
+        cscStubTree.run3slope_clct_even[st]  =  run3Slope; 
         cscStubTree.bx_clct_even[st] = clct.getBX();
         cscStubTree.bend_clct_even[st] = clct.getBend();
         cscStubTree.endcap_clct_even[st] = id.zendcap();

@@ -29,6 +29,13 @@ public:
   void analyze(const edm::Event& ev, const edm::EventSetup& es, const MatcherSuperManager& manager, my::TreeManager& tree);
   void analyze(TreeManager& tree);
 
+  //convert Run2 pattern into Run3 slope
+  int convertRun2PIDToRun3Slope(int run2pid) {
+    int lut[11] = {-1, -1, 12, 12, 9, 9, 6, 6, 3, 3, 0};
+    int run3slope = (run2pid > 0 and run2pid <= 10) ? lut[run2pid] : -99;
+    return run3slope; 
+  }
+
  private:
 
   edm::EDGetTokenT<CSCCLCTPreTriggerDigiCollection> preclctToken_;
