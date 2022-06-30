@@ -300,19 +300,30 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   const auto& muon = match_->muon();
 
   if (emtfTrack != nullptr) {
-    int nMatchingStubs = 0;
+    unsigned int nMatchingStubs = 0;
     bool stubMatched[4] = {false, false, false, false};
     const auto& cscStubMatcher_ = match_->cscStubMatcher();
     for (const auto& stub : *emtfTrack->emtfHits()){
       if (not stub.Is_CSC()) continue;
       const CSCCorrelatedLCTDigi& csc_stub = stub.CreateCSCCorrelatedLCTDigi();
-      const CSCDetId& csc_id = stub.CSC_DetId();
+      const CSCDetId& csc_id1 = stub.CSC_DetId();
+      const CSCDetId& csc_id = CSCDetId(csc_id1.endcap(), csc_id1.station(), csc_id1.ring()==4 ? 1 : csc_id1.ring(), 
+       csc_id1.chamber(), 0);
+      int stub_halfstrip = csc_id1.ring() == 4 ? csc_stub.getStrip()+128 : csc_stub.getStrip();
+      //if (csc_id1.ring() == 4) std::cout <<"EMTFhit in ring4 " << csc_id1 <<" "<< csc_stub << std::endl;
       for (const auto& sim_stub: cscStubMatcher_->lctsInChamber(csc_id.rawId())){
-        if (csc_stub == sim_stub) {
+        bool matched = sim_stub.isValid() == csc_stub.isValid() && sim_stub.getQuality() == csc_stub.getQuality() 
+        && sim_stub.getPattern() == csc_stub.getPattern() && sim_stub.getStrip() == stub_halfstrip 
+        && sim_stub.getKeyWG() == csc_stub.getKeyWG() && sim_stub.getBend() == csc_stub.getBend() 
+        && sim_stub.getBX() == csc_stub.getBX();
+        if (matched) {
           if (not stubMatched[csc_id.station() - 1])
               nMatchingStubs++;
           stubMatched[csc_id.station() - 1] = true;
         }
+        //else {
+        //  std::cout <<"NOT matched in CSCid "<< csc_id <<" emtfhit "<< csc_stub <<" simstub "<< sim_stub << std::endl;
+        //}
       }
       const auto& lct = cscStubMatcher_->bestLctInChamber(csc_id);
       switch (csc_id.station()){
@@ -320,52 +331,52 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           tree.l1mu().emtfhit_st1_ring = csc_id.ring();
           tree.l1mu().emtfhit_st1_pattern = csc_stub.getPattern();
           tree.l1mu().emtfhit_st1_wire = csc_stub.getKeyWG();
-          tree.l1mu().emtfhit_st1_halfstrip = csc_stub.getFractionalStrip();
+          tree.l1mu().emtfhit_st1_halfstrip = stub_halfstrip;
         if (lct.isValid()){
           tree.l1mu().cscstub_st1_found = true;
           tree.l1mu().cscstub_st1_ring = csc_id.ring();
           tree.l1mu().cscstub_st1_pattern = lct.getPattern();
           tree.l1mu().cscstub_st1_wire = lct.getKeyWG();
-          tree.l1mu().cscstub_st1_halfstrip = lct.getFractionalStrip();
+          tree.l1mu().cscstub_st1_halfstrip = lct.getStrip();
         }
         break;
         case 2:
           tree.l1mu().emtfhit_st2_ring = csc_id.ring();
           tree.l1mu().emtfhit_st2_pattern = csc_stub.getPattern();
-          tree.l1mu().emtfhit_st2_wire = csc_stub.getKeyWG();
-          tree.l1mu().emtfhit_st2_halfstrip = csc_stub.getFractionalStrip();
+          tree.l1mu().emtfhit_st2_wire =  csc_stub.getKeyWG();
+          tree.l1mu().emtfhit_st2_halfstrip =  csc_stub.getStrip();
         if (lct.isValid()){
           tree.l1mu().cscstub_st2_found = true;
           tree.l1mu().cscstub_st2_ring = csc_id.ring();
           tree.l1mu().cscstub_st2_pattern = lct.getPattern();
           tree.l1mu().cscstub_st2_wire = lct.getKeyWG();
-          tree.l1mu().cscstub_st2_halfstrip = lct.getFractionalStrip();
+          tree.l1mu().cscstub_st2_halfstrip = lct.getStrip();
         }
         break;
         case 3:
           tree.l1mu().emtfhit_st3_ring = csc_id.ring();
-          tree.l1mu().emtfhit_st3_pattern = csc_stub.getPattern();
-          tree.l1mu().emtfhit_st3_wire = csc_stub.getKeyWG();
-          tree.l1mu().emtfhit_st3_halfstrip = csc_stub.getFractionalStrip();
+          tree.l1mu().emtfhit_st3_pattern =  csc_stub.getPattern();
+          tree.l1mu().emtfhit_st3_wire =  csc_stub.getKeyWG();
+          tree.l1mu().emtfhit_st3_halfstrip =  csc_stub.getStrip();
         if (lct.isValid()){
           tree.l1mu().cscstub_st3_found = true;
           tree.l1mu().cscstub_st3_ring = csc_id.ring();
           tree.l1mu().cscstub_st3_pattern = lct.getPattern();
           tree.l1mu().cscstub_st3_wire = lct.getKeyWG();
-          tree.l1mu().cscstub_st3_halfstrip = lct.getFractionalStrip();
+          tree.l1mu().cscstub_st3_halfstrip = lct.getStrip();
         }
         break;
         case 4:
           tree.l1mu().emtfhit_st4_ring = csc_id.ring();
-          tree.l1mu().emtfhit_st4_pattern = csc_stub.getPattern();
-          tree.l1mu().emtfhit_st4_wire = csc_stub.getKeyWG();
-          tree.l1mu().emtfhit_st4_halfstrip = csc_stub.getFractionalStrip();
+          tree.l1mu().emtfhit_st4_pattern =  csc_stub.getPattern();
+          tree.l1mu().emtfhit_st4_wire =  csc_stub.getKeyWG();
+          tree.l1mu().emtfhit_st4_halfstrip =  csc_stub.getStrip();
         if (lct.isValid()){
           tree.l1mu().cscstub_st4_found = true;
           tree.l1mu().cscstub_st4_ring = csc_id.ring();
           tree.l1mu().cscstub_st4_pattern = lct.getPattern();
           tree.l1mu().cscstub_st4_wire = lct.getKeyWG();
-          tree.l1mu().cscstub_st4_halfstrip = lct.getFractionalStrip();
+          tree.l1mu().cscstub_st4_halfstrip = lct.getStrip();
         }
         break;
         default: std::cout<<"Error!! station from CSC id is > 4 "<<csc_id << std::endl; 
@@ -376,6 +387,7 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     tree.l1mu().cscstub_st3_matched = stubMatched[2];
     tree.l1mu().cscstub_st4_matched = stubMatched[3];
     tree.l1mu().nstubs_matched_TF   = nMatchingStubs;
+    tree.l1mu().allstubs_matched_TF = nMatchingStubs == emtfTrack->nStubs();
     tree.l1mu().has_emtfTrack = 1;
     tree.l1mu().emtf_pt = emtfTrack->pt();
     tree.l1mu().emtf_eta = emtfTrack->eta();
