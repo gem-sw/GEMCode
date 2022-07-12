@@ -54,6 +54,7 @@ class EMTFTrack
   int deltatheta(unsigned int index) {return deltatheta_[index]; }
   int lctslope(unsigned int index ) {return lctslope_[index]; }
   int lctpattern(unsigned int index) {return lctpattern_[index]; }
+  int mode() {return mode_; }
 
   void setDR(double dr) { dr_ = dr; }
 

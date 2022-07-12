@@ -401,6 +401,7 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     tree.l1mu().deltaR = emtfTrack->dR();
     tree.l1mu().chargesign = emtfTrack->charge();
     tree.l1mu().quality = emtfTrack->quality();
+    tree.l1mu().mode    = emtfTrack->mode();
     tree.l1mu().deltaphi12 = emtfTrack->deltaphi(0); 
     tree.l1mu().deltaphi13 = emtfTrack->deltaphi(1); 
     tree.l1mu().deltaphi14 = emtfTrack->deltaphi(2); 
