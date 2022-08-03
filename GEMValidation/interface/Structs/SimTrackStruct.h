@@ -7,12 +7,19 @@ namespace gem {
 
   struct SimTrackStruct {
     // old code
+    int run, ievent, time, bx, lumi, orbit;
     float pt, eta, phi, pz, px, py, vx, vy, vz;
     int charge;
     int endcap;
     int pdgid;
 
     void init() {
+      run = 0;
+      ievent = 0;
+      time = 0;
+      bx = 0;
+      lumi = 0;
+      orbit = 0;
       pt = 0.;
       phi = 0.;
       eta = -9.;
@@ -29,6 +36,12 @@ namespace gem {
     };
 
     void book(TTree* t) {
+      t->Branch("run", &run);
+      t->Branch("ievent", &ievent);
+      t->Branch("time", &time);
+      t->Branch("bx", &bx);
+      t->Branch("lumi", &lumi);
+      t->Branch("orbit", &orbit);
       t->Branch("pt", &pt);
       t->Branch("px", &pz);
       t->Branch("py", &pz);

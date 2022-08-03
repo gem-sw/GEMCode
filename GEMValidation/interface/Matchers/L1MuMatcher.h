@@ -30,6 +30,7 @@ class L1MuMatcher
   std::shared_ptr<gem::EMTFTrack> emtfTrack() const { return emtfTrack_; }
   std::shared_ptr<gem::EMTFCand> emtfCand() const { return emtfCand_; }
   std::shared_ptr<gem::EMTFCand> muon() const { return muon_; }
+  std::shared_ptr<l1t::RegionalMuonShower> emtfShower() const { return emtfShower_; }
 
   std::shared_ptr<CSCStubMatcher> cscStubMatcher() { return cscStubMatcher_; }
   void setCSCStubMatcher(std::shared_ptr<CSCStubMatcher> s) {cscStubMatcher_ = s;}
@@ -41,14 +42,17 @@ class L1MuMatcher
   void matchEmtfTrackToSimTrack(const SimTrack& t, const l1t::EMTFTrackCollection&);
   void matchRegionalMuonCandToSimTrack(const l1t::RegionalMuonCandBxCollection&);
   void matchGMTToSimTrack(const l1t::MuonBxCollection&);
+  void matchEmtfShowerToSimTrack(const SimTrack& t, const l1t::RegionalMuonShowerBxCollection& emtfShowers);
 
   edm::EDGetTokenT<l1t::EMTFTrackCollection> emtfTrackToken_;
   edm::EDGetTokenT<l1t::RegionalMuonCandBxCollection> emtfCandToken_;
   edm::EDGetTokenT<l1t::MuonBxCollection> muonToken_;
+  edm::EDGetTokenT<l1t::RegionalMuonShowerBxCollection> emtfShowerToken_;
 
   edm::Handle<l1t::EMTFTrackCollection> emtfTrackHandle_;
   edm::Handle<l1t::RegionalMuonCandBxCollection> emtfCandHandle_;
   edm::Handle<l1t::MuonBxCollection> muonHandle_;
+  edm::Handle<l1t::RegionalMuonShowerBxCollection> emtfShowerHandle_;
 
   std::shared_ptr<CSCStubMatcher> cscStubMatcher_;
 
@@ -67,9 +71,19 @@ class L1MuMatcher
   double deltaRGMT_;
   bool runGMT_;
 
+  int minBXEMTFShower_, maxBXEMTFShower_;
+  int verboseEMTFShower_;
+  bool runEMTFShower_;
+
+  int minBXShower_, maxBXShower_;
+  int verboseShower_;
+  bool runShower_;
+
   std::shared_ptr<gem::EMTFTrack> emtfTrack_;
   std::shared_ptr<gem::EMTFCand> emtfCand_;
   std::shared_ptr<gem::EMTFCand> muon_;
+
+  std::shared_ptr<l1t::RegionalMuonShower> emtfShower_;
 };
 
 #endif

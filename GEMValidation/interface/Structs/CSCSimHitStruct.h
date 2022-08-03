@@ -20,6 +20,11 @@ namespace gem {
     int chamber_sh_odd[nStations];
     int chamber_sh_even[nStations];
 
+    int nstrips_sh_odd[nStations];
+    int nstrips_sh_even[nStations];
+    int nwires_sh_odd[nStations];
+    int nwires_sh_even[nStations];
+
     // floats
 
     float dphi_sh_even[nStations];
@@ -68,6 +73,12 @@ namespace gem {
         chamber_sh_odd[i] = -1;
         chamber_sh_even[i] = -1;
 
+        nstrips_sh_odd[i] = 0;
+        nstrips_sh_even[i] = 0;
+        nwires_sh_odd[i] = 0;
+        nwires_sh_even[i] = 0;
+
+
         nlayers_csc_sh_odd[i] = -1;
         nlayers_csc_sh_even[i] = -1;
 
@@ -98,6 +109,11 @@ namespace gem {
 
       t->Branch("chamber_sh_odd", chamber_sh_odd, "chamber_sh_odd[11]/I");
       t->Branch("chamber_sh_even", chamber_sh_even, "chamber_sh_even[11]/I");
+
+      t->Branch("nstrips_sh_odd",  nstrips_sh_odd,  "nstrips_sh_odd[11]/I");
+      t->Branch("nstrips_sh_even", nstrips_sh_even, "nstrips_sh_even[11]/I");
+      t->Branch("nwires_sh_odd",  nwires_sh_odd,  "nwires_sh_odd[11]/I");
+      t->Branch("nwires_sh_even", nwires_sh_even, "nwires_sh_even[11]/I");
 
       t->Branch("nlayers_csc_sh_odd", nlayers_csc_sh_odd, "nlayers_csc_sh_odd[11]/I");
       t->Branch("nlayers_csc_sh_even", nlayers_csc_sh_even, "nlayers_csc_sh_even[11]/I");

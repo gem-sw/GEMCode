@@ -863,7 +863,7 @@ namespace my {
     p_floats emtfcand_phi;
     p_ints emtfshower_bx;
     p_ints emtfshower_region;
-    p_ints emtfshower_sector;
+    p_ints emtfshower_processor;
     p_ints emtfshower_isTwoLooseInTime;
     p_ints emtfshower_isOneNominalInTime;
     p_ints emtfshower_isTwoLooseOutOfTime;
@@ -896,7 +896,7 @@ namespace my {
       emtfcand_phi = new t_floats;
       emtfshower_bx = new t_ints;
       emtfshower_region = new t_ints;
-      emtfshower_sector = new t_ints;
+      emtfshower_processor = new t_ints;
       emtfshower_isTwoLooseInTime = new t_ints;
       emtfshower_isOneNominalInTime = new t_ints;
       emtfshower_isTwoLooseOutOfTime = new t_ints;
@@ -930,7 +930,7 @@ namespace my {
       t->Branch("emtfcand_phi", &emtfcand_phi);
       t->Branch("emtfshower_bx", &emtfshower_bx);
       t->Branch("emtfshower_region", &emtfshower_region);
-      t->Branch("emtfshower_sector", &emtfshower_sector);
+      t->Branch("emtfshower_processor", &emtfshower_processor);
       t->Branch("emtfshower_isTwoLooseInTime", &emtfshower_isTwoLooseInTime);
       t->Branch("emtfshower_isOneNominalInTime", &emtfshower_isOneNominalInTime);
       t->Branch("emtfshower_isTwoLooseOutOfTime", &emtfshower_isTwoLooseOutOfTime);

@@ -31,6 +31,13 @@ namespace gem {
     int chamber_dg_odd[nStations];
     int chamber_dg_even[nStations];
 
+    int nwires_dg_odd[nStations];
+    int nwires_dg_even[nStations];
+    int nstrips_dg_odd[nStations];
+    int nstrips_dg_even[nStations];
+    int ncomparators_dg_even[nStations];
+    int ncomparators_dg_odd[nStations];
+
     Int_t wiregroup_odd[nStations];
     Int_t wiregroup_even[nStations];
 
@@ -60,6 +67,13 @@ namespace gem {
 
         halfstrip_odd[i] = -1;
         halfstrip_even[i] = -1;
+
+        nwires_dg_odd[i] = 0;
+        nwires_dg_even[i] = 0;
+        nstrips_dg_even[i] = 0;
+        nstrips_dg_odd[i] = 0;
+        ncomparators_dg_odd[i] = 0;
+        ncomparators_dg_even[i] = 0;
       }
     };
 
@@ -73,6 +87,12 @@ namespace gem {
 
       t->Branch("chamber_dg_odd", chamber_dg_odd, "chamber_dg_odd[11]/I");
       t->Branch("chamber_dg_even", chamber_dg_even, "chamber_dg_even[11]/I");
+      t->Branch("nwires_dg_odd",    nwires_dg_odd,   "nwires_dg_odd[11]/I");
+      t->Branch("nwires_dg_even",    nwires_dg_even,   "nwires_dg_even[11]/I");
+      t->Branch("nstrips_dg_odd",   nstrips_dg_odd,  "nstrips_dg_odd[11]/I");
+      t->Branch("nstrips_dg_even",   nstrips_dg_even,  "nstrips_dg_even[11]/I");
+      t->Branch("ncomparators_dg_even",    ncomparators_dg_even,   "ncomparators_dg_even[11]/I");
+      t->Branch("ncomparators_dg_odd",    ncomparators_dg_odd,   "ncomparators_dg_odd[11]/I");
 
       t->Branch("nlayers_wg_dg_odd", nlayers_wg_dg_odd, "nlayers_wg_dg_odd[11]/I");
       t->Branch("nlayers_wg_dg_even", nlayers_wg_dg_even, "nlayers_wg_dg_even[11]/I");

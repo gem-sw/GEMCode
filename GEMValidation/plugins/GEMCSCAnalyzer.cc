@@ -26,7 +26,7 @@ public:
   virtual void analyze(const edm::Event&, const edm::EventSetup&);
 
 private:
-  void analyze(const SimTrack& t, const SimVertex& v);
+  void analyze(const SimTrack& t, const SimVertex& v, const edm::Event& ev);
   bool isSimTrackGood(const SimTrack& t);
 
   edm::EDGetTokenT<edm::SimVertexContainer> simVertexInput_;
@@ -37,6 +37,7 @@ private:
   double simTrackMinEta_;
   double simTrackMaxEta_;
   int verbose_;
+  int iev_;
 
   std::unique_ptr<TreeManager> tree_;
   std::unique_ptr<MatcherManager> matcher_;
@@ -64,6 +65,8 @@ GEMCSCAnalyzer::GEMCSCAnalyzer(const edm::ParameterSet& ps) :
 
   // define new analyzers
   analyzer_.reset(new AnalyzerManager(ps, consumesCollector()));
+
+  iev_ = 0;
 }
 
 void GEMCSCAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es) {
@@ -81,7 +84,7 @@ void GEMCSCAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es) {
   const edm::SimVertexContainer& sim_vert = *sim_vertices.product();
 
   if (verbose_) {
-    std::cout << "Total number of SimTrack in this event: " << sim_track.size() << std::endl;
+    std::cout <<"iev "<< iev_ << " Total number of SimTrack in this event: " << sim_track.size() << std::endl;
   }
 
   edm::SimTrackContainer sim_track_selected;
@@ -103,13 +106,13 @@ void GEMCSCAnalyzer::analyze(const edm::Event& ev, const edm::EventSetup& es) {
                 << ", Q = " << t.charge()
                 << ", PDGiD =  " << t.type() << std::endl;
     }
-    analyze(t, sim_vert[t.vertIndex()]);
+    analyze(t, sim_vert[t.vertIndex()], ev);
   }
-
+  iev_++;
   // analyzer_->analyze(ev, es, tree_);
 }
 
-void GEMCSCAnalyzer::analyze(const SimTrack& track, const SimVertex& vertex)
+void GEMCSCAnalyzer::analyze(const SimTrack& track, const SimVertex& vertex, const edm::Event& ev)
 {
   // reset all structs
   tree_->init();
@@ -121,7 +124,7 @@ void GEMCSCAnalyzer::analyze(const SimTrack& track, const SimVertex& vertex)
   analyzer_->setMatcher(*matcher_);
 
   // analyze the track
-  analyzer_->analyze(*tree_, track, vertex);
+  analyzer_->analyze(*tree_, track, vertex, ev);
 
   // fill all trees
   tree_->fill();

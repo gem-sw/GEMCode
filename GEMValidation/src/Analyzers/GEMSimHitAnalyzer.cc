@@ -26,7 +26,7 @@ void GEMSimHitAnalyzer::analyze(TreeManager& tree)
 
     const auto& gem_simhits = match_->hitsInSuperChamber(d);
     const auto& gem_simhits_gp = match_->simHitsMeanPosition(gem_simhits);
-    const auto& gem_simhits_gv = match_->simHitsMeanMomentum(gem_simhits);
+    //const auto& gem_simhits_gv = match_->simHitsMeanMomentum(gem_simhits);
 
     if (gem_simhits.size() > 0) {
       const float mean_strip(match_->simHitsMeanStrip(match_->hitsInChamber(d)));

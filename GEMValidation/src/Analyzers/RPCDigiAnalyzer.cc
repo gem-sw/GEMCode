@@ -17,7 +17,7 @@ void RPCDigiAnalyzer::analyze(TreeManager& tree)
     const int st = id.station();
 
     //meanstrip in rpc
-    const auto& rpcdigis = match_->digisInDetId(id);
+    //const auto& rpcdigis = match_->digisInDetId(id);
     const int rpc_medianstrip =0;//(match_->median(rpcdigis));
 
     // convert sector and subsector to chamber

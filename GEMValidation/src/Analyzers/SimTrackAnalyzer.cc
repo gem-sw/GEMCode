@@ -17,8 +17,15 @@ void SimTrackAnalyzer::init()
 {
 }
 
-void SimTrackAnalyzer::analyze(TreeManager& tree, const SimTrack& t, const SimVertex& v)
+void SimTrackAnalyzer::analyze(TreeManager& tree, const SimTrack& t, const SimVertex& v, const edm::Event& ev)
 {
+  //event information for tracking
+  tree.simTrack().run = ev.id().run();
+  tree.simTrack().ievent = ev.id().event();
+  tree.simTrack().time = ev.time().value();
+  tree.simTrack().bx = ev.bunchCrossing();
+  tree.simTrack().lumi = ev.luminosityBlock();
+  tree.simTrack().orbit = ev.orbitNumber();
   // simtrack properties
   tree.simTrack().pt = t.momentum().pt();
   tree.simTrack().px = t.momentum().px();

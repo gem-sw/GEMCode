@@ -23,7 +23,7 @@ public:
   bool isSimTrackGood(const SimTrack& t);
 
   // initialize the event
-  void analyze(TreeManager& tree, const SimTrack& t, const SimVertex& v);
+  void analyze(TreeManager& tree, const SimTrack& t, const SimVertex& v, const edm::Event& ev);
   void analyze(const edm::Event& ev, const edm::EventSetup& es, my::TreeManager&);
 
  private:

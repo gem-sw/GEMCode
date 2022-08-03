@@ -28,9 +28,23 @@ L1MuMatcher::L1MuMatcher(const edm::ParameterSet& ps, edm::ConsumesCollector&& i
   deltaRGMT_ = muon.getParameter<double>("deltaR");
   runGMT_ = muon.getParameter<bool>("run");
 
+  const auto& emtfShower = ps.getParameter<edm::ParameterSet>("emtfShower");
+  minBXEMTFShower_ = emtfShower.getParameter<int>("minBX");
+  maxBXEMTFShower_ = emtfShower.getParameter<int>("maxBX");
+  verboseEMTFShower_ = emtfShower.getParameter<int>("verbose");
+  runEMTFShower_ = emtfShower.getParameter<bool>("run");
+
+  //const auto& muonShower = conf.getParameter<edm::ParameterSet>("muonShower");
+  //minBXGMT_ = muonShower.getParameter<int>("minBX");
+  //maxBXGMT_ = muonShower.getParameter<int>("maxBX");
+  //verboseShower_ = muonShower.getParameter<int>("verbose");
+  //runShower_ = muonShower.getParameter<bool>("run");
+
   emtfTrackToken_ = iC.consumes<l1t::EMTFTrackCollection>(emtfTrack.getParameter<edm::InputTag>("inputTag"));
   emtfCandToken_ = iC.consumes<l1t::RegionalMuonCandBxCollection>(emtfCand.getParameter<edm::InputTag>("inputTag"));
   muonToken_ = iC.consumes<l1t::MuonBxCollection>(muon.getParameter<edm::InputTag>("inputTag"));
+  emtfShowerToken_ = iC.consumes<l1t::RegionalMuonShowerBxCollection>(emtfShower.getParameter<edm::InputTag>("inputTag"));
+  //showerToken_ = iC.consumes<l1t::MuonShowerBxCollection>(muonShower.getParameter<edm::InputTag>("inputTag"));
 }
 
 void L1MuMatcher::init(const edm::Event& iEvent, const edm::EventSetup& iSetup)
@@ -40,6 +54,8 @@ void L1MuMatcher::init(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   iEvent.getByToken(emtfTrackToken_, emtfTrackHandle_);
   iEvent.getByToken(emtfCandToken_, emtfCandHandle_);
   iEvent.getByToken(muonToken_, muonHandle_);
+  iEvent.getByToken(emtfShowerToken_, emtfShowerHandle_);
+  //iEvent.getByToken(showerToken_, muonShowerHandle_);
 }
 
 void
@@ -48,6 +64,7 @@ L1MuMatcher::clear()
   emtfTrack_ = nullptr;
   emtfCand_ = nullptr;
   muon_ = nullptr;
+  emtfShower_ = nullptr;
 }
 
 
@@ -66,6 +83,10 @@ void L1MuMatcher::match(const SimTrack& t, const SimVertex& v)
 
   if (runGMT_)
     matchGMTToSimTrack(*muonHandle_.product());
+
+  if(runEMTFShower_)
+    matchEmtfShowerToSimTrack(t, *emtfShowerHandle_.product());
+
 }
 
 void
@@ -129,7 +150,6 @@ L1MuMatcher::matchEmtfTrackToSimTrack(const SimTrack& simtrack, const l1t::EMTFT
         if (dR < mindREMTFTrack){
           if (verboseEMTFTrack_)
             std::cout <<"...is matched" << std::endl;
-          mindREMTFTrack = dR;
           emtfTrack_.reset(new gem::EMTFTrack(trk));
           emtfTrack_->setDR(dR);
           mindREMTFTrack = dR;
@@ -227,4 +247,42 @@ void L1MuMatcher::matchGMTToSimTrack(const BXVector<l1t::Muon>& gmtCands)
       }
     }
   }
+}
+
+void  L1MuMatcher::matchEmtfShowerToSimTrack(const SimTrack& simtrack, const l1t::RegionalMuonShowerBxCollection& emtfShowers){
+  float simEta = simtrack.momentum().eta();
+  unsigned emtfshower_type = 0;
+  emtfShower_ = nullptr; 
+  if (verboseEMTFShower_)
+    std::cout << "Analyzing " << int(emtfShowers.end(0) - emtfShowers.begin(0)) << " EMTF showers" << std::endl;
+
+  for (int bx = emtfShowers.getFirstBX(); bx <= emtfShowers.getLastBX(); bx++ ){
+    if ( bx < minBXEMTFShower_ or bx > maxBXEMTFShower_) continue;
+    for (auto emtfShower = emtfShowers.begin(bx); emtfShower != emtfShowers.end(bx); ++emtfShower ){
+
+      if (not emtfShower->isValid()) continue;
+      if (not ((simEta < 0 and emtfShower->trackFinderType() == l1t::tftype::emtf_neg) or (simEta>0 and emtfShower->trackFinderType() == l1t::tftype::emtf_pos)))
+        continue;
+      unsigned showerType = 0;
+      if (emtfShower->isOneNominalInTime()) showerType = 1;
+      else if (emtfShower->isOneTightInTime()) showerType = 2;
+      else if (emtfShower->isTwoLooseInTime()) showerType = 3;
+      if (showerType > emtfshower_type){
+        emtfShower_.reset(new l1t::RegionalMuonShower(*emtfShower));
+        emtfshower_type = showerType;
+      }
+      
+      if (verboseEMTFShower_)
+        std::cout << "\tShower data: "
+                  << " TFtype: " << emtfShower->trackFinderType()
+                  << " TwoLooseOOT: " << emtfShower->isTwoLooseOutOfTime()
+                  << " TwoLooseIT: " << emtfShower->isTwoLooseInTime()
+                  << " OneNominalOOT: " << emtfShower->isOneNominalOutOfTime()
+                  << " OneNominalIT: " << emtfShower->isOneNominalInTime()
+                  << " SimEta "<< simEta <<" matched! "
+                  << std::endl;
+    }
+  }
+
+
 }

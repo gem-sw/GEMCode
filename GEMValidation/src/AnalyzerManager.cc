@@ -68,9 +68,9 @@ void AnalyzerManager::analyze(const edm::Event& ev,
 
 
 void
-AnalyzerManager::analyze(TreeManager& tree, const SimTrack& t, const SimVertex& v) {
+AnalyzerManager::analyze(TreeManager& tree, const SimTrack& t, const SimVertex& v, const edm::Event& ev) {
   gent_->analyze(tree);
-  simt_->analyze(tree, t, v);
+  simt_->analyze(tree, t, v, ev);
   gemsh_->analyze(tree);
   gemdg_->analyze(tree);
   gemstub_->analyze(tree);

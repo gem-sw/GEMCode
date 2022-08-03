@@ -6,6 +6,7 @@ from Validation.MuonCSCDigis.muonCSCDigiPSet import muonCSCDigiPSet
 from Validation.MuonCSCDigis.muonCSCStubPSet import muonCSCStubPSet
 from Validation.MuonGEMDigis.muonGEMDigiPSet import muonGEMDigiPSet
 from Validation.MuonGEMRecHits.muonGEMRecHitPSet import gemRecHit
+#from L1Trigger.CSCTriggerPrimitives.params.showerParams import showerPSet as cmsswshowerPSet 
 
 CMSSWPSets = cms.PSet(
     muonSimHitMatcherPSet,
@@ -29,6 +30,7 @@ from GEMCode.GEMValidation.simTrackPSets.dtRecHitPSet import dtRecHitPSet
 from GEMCode.GEMValidation.simTrackPSets.recoTrackPSet import recoTrackPSet
 from GEMCode.GEMValidation.simTrackPSets.cclutPSet import cclutPSet
 from GEMCode.GEMValidation.simTrackPSets.showerPSet import showerPSet
+from GEMCode.GEMValidation.simTrackPSets.showerParams import showerPSet  as cmsswshowerPSet
 
 GEMCodePSet = cms.PSet(
     genParticlePSet,
@@ -43,6 +45,7 @@ GEMCodePSet = cms.PSet(
     dtRecHitPSet,
     recoTrackPSet,
     cclutPSet,
+    cmsswshowerPSet,
     showerPSet
 )
 

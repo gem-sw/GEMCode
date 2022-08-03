@@ -69,6 +69,12 @@ public:
   int verboseShower_;
   bool runShower_;
 
+  //showers for each chamber
+  std::vector<unsigned> anodeThresholds_;
+  unsigned anodeMinLayers_;
+  std::vector<unsigned> cathodeThresholds_;
+  unsigned cathodeMinLayers_;
+
   std::unique_ptr<L1MuMatcher> match_;
 };
 

@@ -62,6 +62,7 @@ void CSCStubAnalyzer::init(const edm::Event& iEvent, const edm::EventSetup& iSet
   //  std::cout << "+++ Info: GEM geometry is unavailable. +++\n";
   //}
   gemGeometry_ = &iSetup.getData(gemToken_);
+  iEvent.getByToken(showerToken_, showersH_);
 }
 
 void CSCStubAnalyzer::setMatcher(const CSCStubMatcher& match_sh)
@@ -71,19 +72,6 @@ void CSCStubAnalyzer::setMatcher(const CSCStubMatcher& match_sh)
 
 void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup, const MatcherSuperManager& manager, my::TreeManager& tree)
 {
-  //iSetup.get<MuonGeometryRecord>().get(csc_geom_);
-  //if (csc_geom_.isValid()) {
-  //cscGeometry_ = &*csc_geom_;
-  //} else {
-  //  std::cout << "+++ Info: CSC geometry is unavailable. +++\n";
-  //}
-
-  //iSetup.get<MuonGeometryRecord>().get(gem_geom_);
-  //if (gem_geom_.isValid()) {
-  //gemGeometry_ = &*gem_geom_;
-  //} else {
-  //  std::cout << "+++ Info: GEM geometry is unavailable. +++\n";
-  //}
 
   cscGeometry_ = &iSetup.getData(cscToken_);
   gemGeometry_ = &iSetup.getData(gemToken_);
@@ -350,7 +338,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
   // CSC Shower
   for (auto detUnitIt = showers.begin(); detUnitIt != showers.end(); detUnitIt++) {
     const CSCDetId& id = (*detUnitIt).first;
-    const bool isodd = (id.chamber()%2 == 1);
+    //const bool isodd = (id.chamber()%2 == 1);
     const auto& range = (*detUnitIt).second;
     for (auto digiIt = range.first; digiIt != range.second; digiIt++) {
 
@@ -390,6 +378,7 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
 void CSCStubAnalyzer::analyze(TreeManager& tree)
 {
   // CSC CLCTs
+  const CSCShowerDigiCollection& showers = *showersH_.product();
   for(const auto& d: match_->chamberIdsCLCT(0)) {
     CSCDetId id(d);
 
@@ -591,6 +580,30 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
       tree.gemStub().dphi_lct_copad_even[gemstation]
         = reco::deltaPhi(float(tree.gemStub().phi_copad_even[st]),
                          float(tree.cscStub().phi_lct_even[gemstation]));
+    }
+  }
+
+  // CSC Shower
+  for (auto detUnitIt = showers.begin(); detUnitIt != showers.end(); detUnitIt++) {
+    const CSCDetId& id = (*detUnitIt).first;
+    //const bool isodd = (id.chamber()%2 == 1);
+    const auto& range = (*detUnitIt).second;
+    for (auto digiIt = range.first; digiIt != range.second; digiIt++) {
+
+      if (!(*digiIt).isValid())
+        continue;
+
+      if (verboseShower_) {
+        std::cout << ">>>Analyzing CSC Shower in " << id << std::endl;
+        std::cout << "\tShower data: "
+                  << " LooseOOT: " << digiIt->isLooseOutOfTime()
+                  << " LooseIT: " << digiIt->isLooseInTime()
+                  << " NominalOOT: " << digiIt->isNominalOutOfTime()
+                  << " NominalIT: " << digiIt->isNominalInTime()
+                  << " TightOOT: " << digiIt->isTightOutOfTime()
+                  << " TightIT: " << digiIt->isTightInTime()
+                  << std::endl;
+      }
     }
   }
 }

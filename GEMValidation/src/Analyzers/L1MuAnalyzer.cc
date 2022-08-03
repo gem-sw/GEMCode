@@ -44,6 +44,16 @@ L1MuAnalyzer::L1MuAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCollector
   verboseShower_ = muonShower.getParameter<int>("verbose");
   runShower_ = muonShower.getParameter<bool>("run");
 
+// Shower Pset from cmssw/L1Trigger/CSCTriggerPrimitives/python/params/showerParams.py 
+  const auto& anodeShower = conf.getParameter<edm::ParameterSet>("anodeShower");
+  anodeThresholds_ = anodeShower.getParameter<std::vector<unsigned>>("showerThresholds");
+  anodeMinLayers_ = anodeShower.getParameter<unsigned>("minLayersCentralTBin");
+  const auto& cathodeShower = conf.getParameter<edm::ParameterSet>("cathodeShower");
+  cathodeThresholds_ = cathodeShower.getParameter<std::vector<unsigned>>("showerThresholds");
+  cathodeMinLayers_ = cathodeShower.getParameter<unsigned>("minLayersCentralTBin");
+
+
+
   if (runEMTFTrack_)
     emtfTrackToken_ = iC.consumes<l1t::EMTFTrackCollection>(emtfTrack.getParameter<edm::InputTag>("inputTag"));
 
@@ -238,6 +248,7 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
   if (runEMTFShower_) {
     iEvent.getByToken(emtfShowerToken_, emtfShowerHandle_);
+    //DataFormats/​L1TMuon/​interface/​RegionalMuonShower.h
     const l1t::RegionalMuonShowerBxCollection& emtfShowers = *emtfShowerHandle_.product();
 
     if (verboseEMTFShower_)
@@ -247,15 +258,22 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       if ( bx < minBXEMTFShower_ or bx > maxBXEMTFShower_) continue;
       for (auto emtfShower = emtfShowers.begin(bx); emtfShower != emtfShowers.end(bx); ++emtfShower ){
 
+        if (not emtfShower->isValid()) continue;
+        // enum tftype { bmtf, omtf_neg, omtf_pos, emtf_neg, emtf_pos };
+        if (not (emtfShower->trackFinderType() == l1t::tftype::emtf_neg or emtfShower->trackFinderType() == l1t::tftype::emtf_pos))
+          continue;
+
         trkTree.emtfshower_bx->push_back(0);
-        //trkTree.emtfshower_region->push_back(emtfShower->endcap());
-        //trkTree.emtfshower_sector->push_back(emtfShower->sector());
+        //1= positive endcap, 0=negative endcap
+        trkTree.emtfshower_region->push_back(emtfShower->trackFinderType() == l1t::tftype::emtf_pos);
+        trkTree.emtfshower_processor->push_back(emtfShower->processor());
         trkTree.emtfshower_isOneNominalInTime->push_back(emtfShower->isOneNominalInTime());
         trkTree.emtfshower_isTwoLooseInTime->push_back(emtfShower->isTwoLooseInTime());
         trkTree.emtfshower_isOneNominalOutOfTime->push_back(emtfShower->isOneNominalOutOfTime());
         trkTree.emtfshower_isTwoLooseOutOfTime->push_back(emtfShower->isTwoLooseOutOfTime());
         if (verboseEMTFShower_)
           std::cout << "\tShower data: "
+                    << " TFtype: " << emtfShower->trackFinderType()
                     << " TwoLooseOOT: " << emtfShower->isTwoLooseOutOfTime()
                     << " TwoLooseIT: " << emtfShower->isTwoLooseInTime()
                     << " OneNominalOOT: " << emtfShower->isOneNominalOutOfTime()
@@ -298,46 +316,107 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   {
   const auto& emtfTrack = match_->emtfTrack();
   const auto& muon = match_->muon();
+  const auto& emtfShower  = match_->emtfShower();
 
   if (emtfTrack != nullptr) {
     unsigned int nMatchingStubs = 0;
+    unsigned int nMatchingbestStubs = 0;
     bool stubMatched[4] = {false, false, false, false};
+    bool beststubMatched[4] = {false, false, false, false};
     const auto& cscStubMatcher_ = match_->cscStubMatcher();
+    //stub created by EMTF hit has following conventions:
+    //stub from ME1a would have halfstrip from 0-96 and with ring number = 4
+    //however, LCT from ME1A would have halfstrip from 128-223 with ring number = 1
     for (const auto& stub : *emtfTrack->emtfHits()){
       if (not stub.Is_CSC()) continue;
       const CSCCorrelatedLCTDigi& csc_stub = stub.CreateCSCCorrelatedLCTDigi();
       const CSCDetId& csc_id1 = stub.CSC_DetId();
+      uint16_t emtfhit_halfstrip = csc_id1.ring() == 4 ? csc_stub.getStrip()+128 : csc_stub.getStrip();
       const CSCDetId& csc_id = CSCDetId(csc_id1.endcap(), csc_id1.station(), csc_id1.ring()==4 ? 1 : csc_id1.ring(), 
-       csc_id1.chamber(), 0);
-      int stub_halfstrip = csc_id1.ring() == 4 ? csc_stub.getStrip()+128 : csc_stub.getStrip();
+        csc_id1.chamber(), 0);
+      const CSCCorrelatedLCTDigi& csc_stub1 = CSCCorrelatedLCTDigi(1, csc_stub.isValid(), csc_stub.getQuality(), csc_stub.getKeyWG(), 
+        emtfhit_halfstrip, csc_stub.getPattern(), csc_stub.getBend(), csc_stub.getBX(), 0, 0, 0, 1);
+      const GlobalPoint& stub_gp = cscStubMatcher_->getGlobalPosition(csc_id1, csc_stub1);
+      float emtfhit_phi = stub_gp.phi(); 
       //if (csc_id1.ring() == 4) std::cout <<"EMTFhit in ring4 " << csc_id1 <<" "<< csc_stub << std::endl;
       for (const auto& sim_stub: cscStubMatcher_->lctsInChamber(csc_id.rawId())){
         bool matched = sim_stub.isValid() == csc_stub.isValid() && sim_stub.getQuality() == csc_stub.getQuality() 
-        && sim_stub.getPattern() == csc_stub.getPattern() && sim_stub.getStrip() == stub_halfstrip 
+        && sim_stub.getPattern() == csc_stub.getPattern() && sim_stub.getStrip() == emtfhit_halfstrip 
         && sim_stub.getKeyWG() == csc_stub.getKeyWG() && sim_stub.getBend() == csc_stub.getBend() 
         && sim_stub.getBX() == csc_stub.getBX();
         if (matched) {
           if (not stubMatched[csc_id.station() - 1])
               nMatchingStubs++;
           stubMatched[csc_id.station() - 1] = true;
+          if (verboseEMTFTrack_)
+            std::cout <<"EMTF matching, stub in EMTF is matched to simStub, CSCid "<< csc_id <<" stub "<< sim_stub << std::endl;
         }
-        //else {
-        //  std::cout <<"NOT matched in CSCid "<< csc_id <<" emtfhit "<< csc_stub <<" simstub "<< sim_stub << std::endl;
-        //}
       }
+      const int st(gem::detIdToMEStation(csc_id1.station(), csc_id1.ring()));
       const auto& lct = cscStubMatcher_->bestLctInChamber(csc_id);
+      float cscstub_phi = -9.0;
+      beststubMatched[csc_id.station()-1] = (lct.isValid() == csc_stub.isValid() && lct.getQuality() == csc_stub.getQuality() 
+        && lct.getPattern() == csc_stub.getPattern() && lct.getStrip() == emtfhit_halfstrip 
+        && lct.getKeyWG() == csc_stub.getKeyWG() && lct.getBend() == csc_stub.getBend() 
+        && lct.getBX() == csc_stub.getBX());
+      if (beststubMatched[csc_id.station()-1]) nMatchingbestStubs++;
+      if (lct.isValid()){
+        const GlobalPoint& simstub_gp = cscStubMatcher_->getGlobalPosition(csc_id, lct);
+        cscstub_phi = simstub_gp.phi();
+      }
+
+      bool digiMatcher_chamber = (csc_id.chamber()%2) ?  csc_id.chamber() == tree.cscDigi().chamber_dg_odd[st] : csc_id.chamber() == tree.cscDigi().chamber_dg_even[st];
+      // convert station and ring number to index
+      // index runs from 2 to 10, subtract 2
+      unsigned csc_idx = CSCDetId::iChamberType(csc_id.station(), csc_id1.ring()==4 ? 1 : csc_id1.ring()) - 2;
+       std::vector<unsigned> athresholds = {
+      anodeThresholds_[csc_idx * 3], anodeThresholds_[csc_idx * 3 + 1], anodeThresholds_[csc_idx * 3 + 2]};
+       std::vector<unsigned> cthresholds = {
+      cathodeThresholds_[csc_idx * 3], cathodeThresholds_[csc_idx * 3 + 1], cathodeThresholds_[csc_idx * 3 + 2]};
+      unsigned anodeHMT =0;  unsigned cathodeHMT = 0;
+      //if (digiMatcher_chamber){
+          // assign the bits
+      unsigned anodeHits = (csc_id.chamber()%2) ? tree.cscDigi().nwires_dg_odd[st] : tree.cscDigi().nwires_dg_even[st]; 
+      unsigned cathodeHits = (csc_id.chamber()%2) ? tree.cscDigi().ncomparators_dg_odd[st] : tree.cscDigi().ncomparators_dg_even[st]; 
+      //unsigned anodeHits = std::max(tree.cscDigi().nwires_dg_odd[st], tree.cscDigi().nwires_dg_even[st]); 
+      //unsigned cathodeHits = std::max(tree.cscDigi().ncomparators_dg_odd[st], tree.cscDigi().ncomparators_dg_even[st]); 
+      for (unsigned i = 0; i < athresholds.size(); i++) {
+          if (anodeHits >= athresholds[i]) {
+              anodeHMT = i + 1;
+              if (verboseEMTFTrack_)
+                std::cout<<"CSCid "<< csc_id <<" anode hits "<< anodeHits <<" anode HMT "<< anodeHMT 
+                <<" this thresh "<<athresholds[i] << std::endl;
+          }
+          if (cathodeHits >= cthresholds[i]) {
+              cathodeHMT = i + 1;
+              if (verboseEMTFTrack_)
+                std::cout<<"CSCid "<< csc_id <<" cathode hits "<< cathodeHits <<" cathode HMT "<< cathodeHMT 
+                << " this thresh "<< cthresholds[i] << std::endl;
+          }
+        }
+      //}
+      
       switch (csc_id.station()){
         case 1:
           tree.l1mu().emtfhit_st1_ring = csc_id.ring();
           tree.l1mu().emtfhit_st1_pattern = csc_stub.getPattern();
           tree.l1mu().emtfhit_st1_wire = csc_stub.getKeyWG();
-          tree.l1mu().emtfhit_st1_halfstrip = stub_halfstrip;
+          tree.l1mu().emtfhit_st1_halfstrip = emtfhit_halfstrip;
+          tree.l1mu().emtfhit_st1_phi = emtfhit_phi;
+          tree.l1mu().simhits_st1_phi = (csc_id.chamber()%2) ? tree.cscSimHit().phi_csc_sh_odd[st] : tree.cscSimHit().phi_csc_sh_even[st];
+          tree.l1mu().emtfhit_st1_nwiredigis = (csc_id.chamber()%2) ? tree.cscDigi().nwires_dg_odd[st] : tree.cscDigi().nwires_dg_even[st];
+          tree.l1mu().emtfhit_st1_ncomparatordigis = (csc_id.chamber()%2) ? tree.cscDigi().ncomparators_dg_odd[st] : tree.cscDigi().ncomparators_dg_even[st];
+          tree.l1mu().emtfhit_st1_nstripdigis = (csc_id.chamber()%2) ? tree.cscDigi().nstrips_dg_odd[st] : tree.cscDigi().nstrips_dg_even[st];
+          tree.l1mu().emtfhit_st1_anodeHMT = anodeHMT;
+          tree.l1mu().emtfhit_st1_cathodeHMT = cathodeHMT;
+          tree.l1mu().emtfhit_st1_digiChmatch = digiMatcher_chamber;
         if (lct.isValid()){
           tree.l1mu().cscstub_st1_found = true;
           tree.l1mu().cscstub_st1_ring = csc_id.ring();
           tree.l1mu().cscstub_st1_pattern = lct.getPattern();
           tree.l1mu().cscstub_st1_wire = lct.getKeyWG();
           tree.l1mu().cscstub_st1_halfstrip = lct.getStrip();
+          tree.l1mu().cscstub_st1_phi = cscstub_phi;
         }
         break;
         case 2:
@@ -345,12 +424,21 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           tree.l1mu().emtfhit_st2_pattern = csc_stub.getPattern();
           tree.l1mu().emtfhit_st2_wire =  csc_stub.getKeyWG();
           tree.l1mu().emtfhit_st2_halfstrip =  csc_stub.getStrip();
+          tree.l1mu().emtfhit_st2_phi = emtfhit_phi;
+          tree.l1mu().simhits_st2_phi = (csc_id.chamber()%2) ? tree.cscSimHit().phi_csc_sh_odd[st] : tree.cscSimHit().phi_csc_sh_even[st];
+          tree.l1mu().emtfhit_st2_nwiredigis = (csc_id.chamber()%2) ? tree.cscDigi().nwires_dg_odd[st] : tree.cscDigi().nwires_dg_even[st];
+          tree.l1mu().emtfhit_st2_ncomparatordigis = (csc_id.chamber()%2) ? tree.cscDigi().ncomparators_dg_odd[st] : tree.cscDigi().ncomparators_dg_even[st];
+          tree.l1mu().emtfhit_st2_nstripdigis = (csc_id.chamber()%2) ? tree.cscDigi().nstrips_dg_odd[st] : tree.cscDigi().nstrips_dg_even[st];
+          tree.l1mu().emtfhit_st2_anodeHMT = anodeHMT;
+          tree.l1mu().emtfhit_st2_cathodeHMT = cathodeHMT;
+          tree.l1mu().emtfhit_st2_digiChmatch = digiMatcher_chamber;
         if (lct.isValid()){
           tree.l1mu().cscstub_st2_found = true;
           tree.l1mu().cscstub_st2_ring = csc_id.ring();
           tree.l1mu().cscstub_st2_pattern = lct.getPattern();
           tree.l1mu().cscstub_st2_wire = lct.getKeyWG();
           tree.l1mu().cscstub_st2_halfstrip = lct.getStrip();
+          tree.l1mu().cscstub_st2_phi = cscstub_phi;
         }
         break;
         case 3:
@@ -358,12 +446,21 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           tree.l1mu().emtfhit_st3_pattern =  csc_stub.getPattern();
           tree.l1mu().emtfhit_st3_wire =  csc_stub.getKeyWG();
           tree.l1mu().emtfhit_st3_halfstrip =  csc_stub.getStrip();
+          tree.l1mu().emtfhit_st3_phi = emtfhit_phi;
+          tree.l1mu().simhits_st3_phi = (csc_id.chamber()%2) ? tree.cscSimHit().phi_csc_sh_odd[st] : tree.cscSimHit().phi_csc_sh_even[st];
+          tree.l1mu().emtfhit_st3_nwiredigis = (csc_id.chamber()%2) ? tree.cscDigi().nwires_dg_odd[st] : tree.cscDigi().nwires_dg_even[st];
+          tree.l1mu().emtfhit_st3_ncomparatordigis = (csc_id.chamber()%2) ? tree.cscDigi().ncomparators_dg_odd[st] : tree.cscDigi().ncomparators_dg_even[st];
+          tree.l1mu().emtfhit_st3_nstripdigis = (csc_id.chamber()%2) ? tree.cscDigi().nstrips_dg_odd[st] : tree.cscDigi().nstrips_dg_even[st];
+          tree.l1mu().emtfhit_st3_anodeHMT = anodeHMT;
+          tree.l1mu().emtfhit_st3_cathodeHMT = cathodeHMT;
+          tree.l1mu().emtfhit_st3_digiChmatch = digiMatcher_chamber;
         if (lct.isValid()){
           tree.l1mu().cscstub_st3_found = true;
           tree.l1mu().cscstub_st3_ring = csc_id.ring();
           tree.l1mu().cscstub_st3_pattern = lct.getPattern();
           tree.l1mu().cscstub_st3_wire = lct.getKeyWG();
           tree.l1mu().cscstub_st3_halfstrip = lct.getStrip();
+          tree.l1mu().cscstub_st3_phi = cscstub_phi;
         }
         break;
         case 4:
@@ -371,12 +468,21 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
           tree.l1mu().emtfhit_st4_pattern =  csc_stub.getPattern();
           tree.l1mu().emtfhit_st4_wire =  csc_stub.getKeyWG();
           tree.l1mu().emtfhit_st4_halfstrip =  csc_stub.getStrip();
+          tree.l1mu().emtfhit_st4_phi = emtfhit_phi;
+          tree.l1mu().simhits_st4_phi = (csc_id.chamber()%2) ? tree.cscSimHit().phi_csc_sh_odd[st] : tree.cscSimHit().phi_csc_sh_even[st];
+          tree.l1mu().emtfhit_st4_nwiredigis = (csc_id.chamber()%2) ? tree.cscDigi().nwires_dg_odd[st] : tree.cscDigi().nwires_dg_even[st];
+          tree.l1mu().emtfhit_st4_ncomparatordigis = (csc_id.chamber()%2) ? tree.cscDigi().ncomparators_dg_odd[st] : tree.cscDigi().ncomparators_dg_even[st];
+          tree.l1mu().emtfhit_st4_nstripdigis = (csc_id.chamber()%2) ? tree.cscDigi().nstrips_dg_odd[st] : tree.cscDigi().nstrips_dg_even[st];
+          tree.l1mu().emtfhit_st4_anodeHMT = anodeHMT;
+          tree.l1mu().emtfhit_st4_cathodeHMT = cathodeHMT;
+          tree.l1mu().emtfhit_st4_digiChmatch = digiMatcher_chamber;
         if (lct.isValid()){
           tree.l1mu().cscstub_st4_found = true;
           tree.l1mu().cscstub_st4_ring = csc_id.ring();
           tree.l1mu().cscstub_st4_pattern = lct.getPattern();
           tree.l1mu().cscstub_st4_wire = lct.getKeyWG();
           tree.l1mu().cscstub_st4_halfstrip = lct.getStrip();
+          tree.l1mu().cscstub_st4_phi = cscstub_phi;
         }
         break;
         default: std::cout<<"Error!! station from CSC id is > 4 "<<csc_id << std::endl; 
@@ -388,6 +494,12 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     tree.l1mu().cscstub_st4_matched = stubMatched[3];
     tree.l1mu().nstubs_matched_TF   = nMatchingStubs;
     tree.l1mu().allstubs_matched_TF = nMatchingStubs == emtfTrack->nStubs();
+    tree.l1mu().cscstub_st1_bestmatched = beststubMatched[0];
+    tree.l1mu().cscstub_st2_bestmatched = beststubMatched[1];
+    tree.l1mu().cscstub_st3_bestmatched = beststubMatched[2];
+    tree.l1mu().cscstub_st4_bestmatched = beststubMatched[3];
+    tree.l1mu().nstubs_bestmatched_TF   = nMatchingbestStubs;
+    tree.l1mu().allstubs_bestmatched_TF = nMatchingbestStubs == emtfTrack->nStubs();
     tree.l1mu().has_emtfTrack = 1;
     tree.l1mu().emtf_pt = emtfTrack->pt();
     tree.l1mu().emtf_eta = emtfTrack->eta();
@@ -422,6 +534,8 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     tree.l1mu().lctpattern2 = emtfTrack->lctpattern(1); 
     tree.l1mu().lctpattern3 = emtfTrack->lctpattern(2); 
     tree.l1mu().lctpattern4 = emtfTrack->lctpattern(3); 
+
+
   }
 
   if (muon != nullptr) {
@@ -434,4 +548,14 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     tree.l1mu().L1Mu_bx = muon->bx();
     tree.l1mu().L1Mu_quality = muon->quality();
   }
+
+  if (emtfShower != nullptr){
+    tree.l1mu().emtfShower_valid = emtfShower->isValid();
+    tree.l1mu().emtfShower_tftype = emtfShower->trackFinderType();
+    tree.l1mu().emtfShower_processor = emtfShower->processor();
+    tree.l1mu().emtfShower_nominal = emtfShower->isOneNominalInTime();
+    tree.l1mu().emtfShower_tight = emtfShower->isOneTightInTime();
+    tree.l1mu().emtfShower_twoloose = emtfShower->isTwoLooseInTime();
+  }
+
 }

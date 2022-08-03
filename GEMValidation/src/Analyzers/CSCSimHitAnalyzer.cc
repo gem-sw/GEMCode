@@ -119,8 +119,19 @@ void CSCSimHitAnalyzer::analyze(TreeManager& tree)
       stripIntercept -= 0.25;
     }
 
+    int nstrips = 0; int nwires = 0;
+    for (unsigned int ilayer=1; ilayer<= 6; ilayer++){
+      const CSCDetId& csc_id = CSCDetId(id.endcap(), id.station(), id.ring(), id.chamber(), ilayer);
+      const auto&  hitstrips = match_->hitStripsInDetId(csc_id.rawId());
+      const auto&  hitwires  = match_->hitWiregroupsInDetId(csc_id.rawId());
+      nstrips += hitstrips.size();
+      nwires  += hitwires.size();
+    }
+
     if (odd) {
       tree.cscSimHit().chamber_sh_odd[st] = id.chamber();
+      tree.cscSimHit().nstrips_sh_odd[st]  = nstrips;
+      tree.cscSimHit().nwires_sh_odd[st] = nwires;
       tree.cscSimHit().nlayers_csc_sh_odd[st] = nlayers;
       tree.cscSimHit().has_csc_sh_odd[st] = true;
       tree.cscSimHit().eta_csc_sh_odd[st] = keygp.eta();
@@ -131,6 +142,8 @@ void CSCSimHitAnalyzer::analyze(TreeManager& tree)
     }
     else {
       tree.cscSimHit().chamber_sh_even[st] = id.chamber();
+      tree.cscSimHit().nstrips_sh_even[st]  = nstrips;
+      tree.cscSimHit().nwires_sh_even[st] = nwires;
       tree.cscSimHit().nlayers_csc_sh_even[st] = nlayers;
       tree.cscSimHit().has_csc_sh_even[st] = true;
       tree.cscSimHit().eta_csc_sh_even[st] = keygp.eta();
@@ -144,6 +157,8 @@ void CSCSimHitAnalyzer::analyze(TreeManager& tree)
     if (st==1 or st==2){
       if (odd) {
         tree.cscSimHit().chamber_sh_odd[0] = id.chamber();
+        tree.cscSimHit().nstrips_sh_odd[0]  += nstrips;
+        tree.cscSimHit().nwires_sh_odd[0] += nwires;
         tree.cscSimHit().nlayers_csc_sh_odd[0] = nlayers;
         tree.cscSimHit().has_csc_sh_odd[0] = true;
         tree.cscSimHit().eta_csc_sh_odd[0] = keygp.eta();
@@ -154,6 +169,8 @@ void CSCSimHitAnalyzer::analyze(TreeManager& tree)
       }
       else {
         tree.cscSimHit().chamber_sh_even[0] = id.chamber();
+        tree.cscSimHit().nstrips_sh_even[0]  += nstrips;
+        tree.cscSimHit().nwires_sh_even[0] += nwires;
         tree.cscSimHit().nlayers_csc_sh_even[0] = nlayers;
         tree.cscSimHit().has_csc_sh_even[0] = true;
         tree.cscSimHit().eta_csc_sh_even[0] = keygp.eta();
