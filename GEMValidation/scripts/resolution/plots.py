@@ -2,6 +2,7 @@ import os
 
 from resolution.GEMStub import *
 from resolution.CSCStub import *
+from resolution.L1Mu import *
 
 ## need to create directory structure - assume it does not exist yet
 def makeDir(plotter):
@@ -13,12 +14,13 @@ def makeDir(plotter):
         base + analyzer + "/resolution",
         base + analyzer + "/resolution/GEMStub",
         base + analyzer + "/resolution/CSCStub",
+        base + analyzer + "/resolution/L1Mu",
     ]
     for p in paths:
         if not os.path.exists(p):
             os.mkdir(p)
 
-def makeResolutionPlots(plotter):
+def makeResolutionPlots(plotter, text):
     makeDir(plotter)
     CSCStub(plotter)
     GEMStub(plotter)
@@ -26,3 +28,7 @@ def makeResolutionPlots(plotter):
 def makeResolutionComparisonPlots(plotter, plotter2):
     CSCPosResolutionComparison(plotter, plotter2)
     CSCBendResolutionComparison(plotter, plotter2)
+
+def makeComparePlots(plotterlist, text):
+    #CSCStubComparison1DAll(plotterlist, text)
+    EMTFInputsCompare(plotterlist, text) 

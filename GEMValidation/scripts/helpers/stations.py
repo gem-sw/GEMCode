@@ -10,6 +10,17 @@ class Station:
         self.phi_max = 3.2
         self.l_min = 0
         self.l_max = 170
+        if label == "ME0":
+            self.ring = 1
+            self.station = 0
+        else:
+            self.station = int(label[2])
+            if label[-1] == "a":
+                self.ring = 1
+            elif label[-1] == "b":
+                self.ring = 4
+            else:
+                self.ring = int(label[-1])
 
 ## csc
 ME11 = Station(1.55, 2.4, 'ME1/1', 'ME11')

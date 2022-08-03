@@ -1,5 +1,9 @@
-from ROOT import gStyle, TH1F, TCanvas, TLegend, kRed, kBlue, TLatex, TEfficiency, SetOwnership, TH2F
+from ROOT import gStyle, TH1F, TCanvas, TLegend, TLatex, TEfficiency, SetOwnership, TH2F
+from ROOT import kRed, kBlue, kGreen, kMagenta, kOrange, kCyan, kBlack
 from helpers.cuts import AND
+
+kcolors = [kRed, kBlue, kGreen+2, kMagenta+2, kOrange, kCyan+1, kBlack]
+markers = [24, 25, 26, 27, 32, 28, 21]
 
 #_______________________________________________________________________________
 def drawCSCLabel(title, x=0.17, y=0.35, font_size=0.):
@@ -36,7 +40,7 @@ def drawPuLabel(pu, x=0.17, y=0.35, font_size=0.):
 
 #_______________________________________________________________________________
 def draw_1D(t, title, h_bins, to_draw, extra_cut, opt = "",
-             color = kBlue, marker_st = 20):
+             color = kBlue, marker_st = 20, line_st = 10):
 
     nBins  = int(h_bins[1:-1].split(',')[0])
     minBin = float(h_bins[1:-1].split(',')[1])
@@ -45,10 +49,14 @@ def draw_1D(t, title, h_bins, to_draw, extra_cut, opt = "",
     num = TH1F("num", "", nBins, minBin, maxBin)
     t.Draw(to_draw + ">>num", extra_cut, "goff")
 
+    if line_st >= 10:
+        line_st = marker_st%10
+
     num.SetLineWidth(2)
     num.SetLineColor(color)
     num.SetMarkerStyle(marker_st)
     num.SetMarkerColor(color)
+    num.SetLineStyle(line_st)
     num.SetMarkerSize(.5)
 
     SetOwnership(num, False)

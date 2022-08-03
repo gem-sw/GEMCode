@@ -61,7 +61,7 @@ genphi = "genParticle.phi"
 
 ## cut on the generator pT
 def ok_pt(pt_min):
-    return TCut("genParticle.pt > %f"%(pt_min))
+    return TCut("genParticle.pt >= %f"%(pt_min))
 
 ## eta for a station
 def ok_eta(eta_min, eta_max):
@@ -211,7 +211,7 @@ def dphi_pad1(st):
 
 ## l1Mu
 def ok_emtf(pt):
-    return TCut("l1Mu.has_emtfTrack && l1Mu.emtf_pt > %f"%(pt))
+    return TCut("l1Mu.has_emtfTrack && l1Mu.emtf_pt >= %f"%(pt))
 
 def ok_emtfcand():
     return TCut("l1Mu.has_emtfRegCand")
@@ -221,7 +221,7 @@ def ok_l1mu():
 
 ## l1Track
 def ok_l1track(pt):
-    return TCut("l1Track.has_l1Track && l1Track.l1Track_pt > %f"%(pt))
+    return TCut("l1Track.has_l1Track && l1Track.l1Track_pt >= %f"%(pt))
 
 def ok_l1trackmuon(pt):
-    return TCut("l1Track.has_l1TrackMuon && l1Track.l1TrackMuon_pt > %f"%(pt))
+    return TCut("l1Track.has_l1TrackMuon && l1Track.l1TrackMuon_pt >= %f"%(pt))

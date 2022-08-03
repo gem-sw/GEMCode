@@ -32,7 +32,7 @@ def makeDir(plotter):
         if not os.path.exists(p):
             os.mkdir(p)
 
-def makeEfficiencyPlots(plotter):
+def makeEfficiencyPlots(plotter, text):
     makeDir(plotter)
     CSCSimHit(plotter)
     CSCDigi(plotter)
@@ -40,8 +40,9 @@ def makeEfficiencyPlots(plotter):
     GEMSimHit(plotter)
     GEMDigi(plotter)
     GEMStub(plotter)
-    L1Mu(plotter)
-    L1Track(plotter)
+    L1Mu(plotter, text)
+    #L1Track(plotter)
 
-def makeEfficiencyComparisonPlots(plotter, plotter2):
-    CSCStubComparison(plotter, plotter2)
+def makeEfficiencyComparisonPlots(plotterlist, text):
+    #CSCStubComparisonAll(plotterlist, text)
+    L1MuComparisonEtaAll(plotterlist, text)

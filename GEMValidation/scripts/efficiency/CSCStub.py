@@ -1,4 +1,4 @@
-from ROOT import gStyle, TH1F, TCanvas, TLegend, kRed, kBlue, kOrange, kGreen, kBlack
+from ROOT import gStyle, TH1F, TCanvas, TLegend, kRed, kBlue, kOrange, kGreen, kBlack, kMagenta, kYellow
 
 from helpers.cuts import *
 from helpers.Helpers import *
@@ -679,43 +679,54 @@ def CSCStub(plotter):
     MultipleCSCLCTPhi(plotter)
     MultipleCSCLCTL(plotter)
 
-def CSCStubComparison(plotter, plotter2):
+def CSCStubComparison(plotterlist, st, dencut, numcut, plotsuffix, text):
 
     toPlot = "TMath::Abs(eta)"
     xTitle = "Generated muon |#eta|"
+    yTitle = plotsuffix + " Efficiency"
     title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
 
+    hlist = []
+    h_bins = "(25,%f,%f)"%(cscStations[st].eta_min,cscStations[st].eta_max)
+    nBins = int(h_bins[1:-1].split(',')[0])
+    minBin = float(h_bins[1:-1].split(',')[1])
+    maxBin = float(h_bins[1:-1].split(',')[2])
+
+    c = newCanvas()
+    base  = TH1F("base",title,nBins,minBin,maxBin)
+    base.SetMinimum(plotterlist[0].yMin)
+    base.SetMaximum(plotterlist[0].yMax)
+    base.GetXaxis().SetLabelSize(0.05)
+    base.GetYaxis().SetLabelSize(0.05)
+    base.GetXaxis().SetTitleSize(0.05)
+    base.GetYaxis().SetTitleSize(0.05)
+    base.Draw("")
+    CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+
+  
+
+    leg = TLegend(0.45,0.2,.75,0.5, "", "brNDC");
+    leg.SetBorderSize(0)
+    leg.SetFillStyle(0)
+    leg.SetTextSize(0.05)
+    for i, plotter in enumerate(plotterlist):
+        #hlist.append(draw_geff(plotter.tree, title, h_bins, toPlot, ok_csc_sh(st), ok_csc_clct(st), "same", kcolors[i], markers[i]))
+        hlist.append(draw_geff(plotter.tree, title, h_bins, toPlot, dencut, numcut, "same", kcolors[i], markers[i]))
+        leg.AddEntry(hlist[-1], plotter.legend,"pl")
+
+    leg.Draw("same");
+
+    csc = drawCSCLabel(cscStations[st].label, 0.85,0.85,0.05)
+    txt = drawCSCLabel(text, 0.15,0.25,0.035)
+
+    c.Print("%sEff_CSC%s_comparison_%s%s"%(plotterlist[0].targetDir + subdirectory, plotsuffix, cscStations[st].labelc,  plotterlist[0].ext))
+
+    del c, base, leg, csc, hlist
+
+
+def CSCStubComparisonAll(plotterlist, text):
+    
     for st in range(0,len(cscStations)):
-
-        h_bins = "(25,%f,%f)"%(cscStations[st].eta_min,cscStations[st].eta_max)
-        nBins = int(h_bins[1:-1].split(',')[0])
-        minBin = float(h_bins[1:-1].split(',')[1])
-        maxBin = float(h_bins[1:-1].split(',')[2])
-
-        c = newCanvas()
-        base  = TH1F("base",title,nBins,minBin,maxBin)
-        base.SetMinimum(plotter.yMin)
-        base.SetMaximum(plotter.yMax)
-        base.GetXaxis().SetLabelSize(0.05)
-        base.GetYaxis().SetLabelSize(0.05)
-        base.GetXaxis().SetTitleSize(0.05)
-        base.GetYaxis().SetTitleSize(0.05)
-        base.Draw("")
-        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
-
-        h2 = draw_geff(plotter.tree, title, h_bins, toPlot, ok_csc_sh(st), ok_csc_clct(st), "same", kBlack)
-        h3 = draw_geff(plotter2.tree, title, h_bins, toPlot, ok_csc_sh(st), ok_csc_clct(st), "same", kBlue)
-
-        leg = TLegend(0.45,0.2,.75,0.5, "", "brNDC");
-        leg.SetBorderSize(0)
-        leg.SetFillStyle(0)
-        leg.SetTextSize(0.05)
-        leg.AddEntry(h2, "Run-2 CLCT","pl")
-        leg.AddEntry(h3, "Run-3 CLCT","pl")
-        leg.Draw("same");
-
-        csc = drawCSCLabel(cscStations[st].label, 0.85,0.85,0.05)
-
-        c.Print("%sEff_CSCCLCT_comparison_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
-
-        del c, base, leg, csc, h2, h3
+        CSCStubComparison(plotterlist, st, ok_csc_sh(st), ok_csc_clct(st), "CLCT", text)
+        CSCStubComparison(plotterlist, st, ok_csc_sh(st), ok_csc_alct(st), "ALCT", text)
+        CSCStubComparison(plotterlist, st, ok_csc_sh(st), ok_csc_lct(st),   "LCT", text)
