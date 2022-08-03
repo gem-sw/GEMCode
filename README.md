@@ -3,8 +3,8 @@
 ## Instruction to use GEMCode package
 
 ```
-cmsrel CMSSW_12_5_0_pre2
-cd CMSSW_12_5_0_pre2/src
+cmsrel CMSSW_12_5_0_pre4
+cd CMSSW_12_5_0_pre4/src
 cmsenv
 git cms-addpkg L1Trigger/CSCTriggerPrimitives
 git clone  https://github.com/gem-sw/GEMCode
