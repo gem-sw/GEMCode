@@ -1,0 +1,55 @@
+# GEMCode
+
+## Instruction to use GEMCode package
+
+```
+cmsrel CMSSW_12_5_0_pre2
+cd CMSSW_12_5_0_pre2/src
+cmsenv
+git cms-addpkg L1Trigger/CSCTriggerPrimitives
+git clone  https://github.com/gem-sw/GEMCode
+scram b -j 9
+```
+
+
+## GEMCSCAnalyzer: simtrack based analyzer to analyzer muon trigger MC efficiency
+![GEMCSCAnalyzer scheme](https://github.com/gem-sw/GEMCode/blob/for-CMSSW_12_0_1_X/docs/GEMCSCAnalyzer.png?raw=true)
+
+The MC simluation:
+  - Firstly gen particles are generated either from collisions or from particle guns. 
+  - The charged particle (here we only care about muons) can genrate the simtrack when it flies through the detectors,  
+and meanwhile register the simhits in the detectors. The simtrack and simhits can be associated through track id. 
+  - Then simhits in detectors produce the digi in simulation.  
+  - The trigger emulator uses digis in the detectors to build trigger stubs,
+like anode local charged track(ALCT), cathode-LCT (CLCT) and LCT for CSC muon triggering. 
+  - The next step is that track-finder builds muon track by collecting and using trigger stubs from different muons stations. EMTF emulator is the muon track-finder for endcap, OMTF
+is the  muon track-finder for overlap region (0.9<eta<1.1) and BMTF is for barrel region. 
+  - Finally the muon track is sent to regional muon trigger and global muon trigger for muon triggering
+  - After LS3 upgrade, inner tracker would join the L1 trigger system and L1Track could also trigger on muons.  
+  
+GEMCSC analyzer is designed to analyse the muon trigger efficienies in different steps by matching simhits/digis/trigger stub/muon tracks to simtrack.
+
+### SimHits Matchers
+The simHits matchers are implemented in CMSSW module Validation/MuonHits. These matchers match the CSC/GEM/ME0/RPC/DT simhits to simtrack by track id. 
+
+### CSC/GEM/ME0/DT/RPCDigi Matchers
+The CSCDigi matcher is in Validation/MuonCSCDigis, GEMDigi matcher for GE11 and GE21 is in Validation/MuonGEMDigis and ME0/DT/RPCDigi matchers are under GEMValidation/src/Matchers.
+
+The digi matcher is associating the digi to simtrack via the simhits. The matching process is done by comparing the simhit position and digi position in each layer. 
+
+### CSC/ME0Stub Matchers
+CSCStub matcher is in Validation/MuonCSCDigis and ME0Stub matcher is NOT included yet in this package.  ME0 trigger stub emulation is not fully implemented yet.
+
+The trigger stub is built by using the digi in different layers and therefore the stub and simtrack association is done by comparing the stub position with digi position
+
+### Rechits Matchers
+Rechits are built in reco step and rechit efficiency study is not included here.
+
+CSCRechits matcher is in Validation/CSCRecHits and GEMValidation/src/Matchers
+
+### Configuration to run GEMCSCAnalyzer
+The example configuration to run GEMCSCAnalyzer is GEMValidation/test/runGEMCSCAnalyzer_cfg.py
+
+
+## MuonNtuplizer: rate study
+MuonNtuplizer could be used for trigger rate study by filling track information into TTree
