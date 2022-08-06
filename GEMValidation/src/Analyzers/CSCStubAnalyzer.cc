@@ -532,8 +532,8 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
         cscStubTree.perp_lct_even[st] = gp.perp();
         cscStubTree.bx_lct_even[st] = lct.getBX();
         cscStubTree.hs_lct_even[st] = lct.getStrip();
-        cscStubTree.qs_lct_odd[st] = lct.getStrip(4);
-        cscStubTree.es_lct_odd[st] = lct.getStrip(8);
+        cscStubTree.qs_lct_even[st] = lct.getStrip(4);
+        cscStubTree.es_lct_even[st] = lct.getStrip(8);
         cscStubTree.wg_lct_even[st] = lct.getKeyWG();
         cscStubTree.quality_lct_even[st] = lct.getQuality();
       }
