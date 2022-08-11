@@ -18,6 +18,7 @@ public:
   void init(const edm::Event& iEvent, const edm::EventSetup& iSetup);
 
   void setMatcher(const GenParticleMatcher& match_sh);
+  void setiev (int i) {iev_ = i;}
 
   // initialize the event
   void analyze(const edm::Event& ev, const edm::EventSetup& es,
@@ -36,6 +37,7 @@ public:
   bool stableParticle_;
   float etaMin_;
   float etaMax_;
+  int iev_;
 };
 
 #endif

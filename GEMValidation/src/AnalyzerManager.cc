@@ -14,6 +14,7 @@ AnalyzerManager::AnalyzerManager(const edm::ParameterSet& conf, edm::ConsumesCol
   l1mu_.reset(new L1MuAnalyzer(conf, std::move(iC)));
   runSim_ = conf.getParameter<bool>("runSim");
   useGEM_ = conf.getParameter<bool>("useGEMs");
+  iev_ = 0;
   // l1track_.reset(new L1TrackAnalyzer(conf, std::move(iC)));
   // recotrack_.reset(new RecoTrackAnalyzer(conf));
 }
@@ -69,6 +70,8 @@ void AnalyzerManager::analyze(const edm::Event& ev,
 
 void
 AnalyzerManager::analyze(TreeManager& tree, const SimTrack& t, const SimVertex& v, const edm::Event& ev) {
+  gent_->setiev(iev_);
+  simt_->setiev(iev_);
   gent_->analyze(tree);
   simt_->analyze(tree, t, v, ev);
   gemsh_->analyze(tree);

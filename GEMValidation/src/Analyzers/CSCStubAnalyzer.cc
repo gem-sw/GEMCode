@@ -510,7 +510,7 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
 
     const bool odd(id.chamber()%2==1);
 
-    auto fill = [lct, gp, odd](gem::CSCStubStruct& cscStubTree, int st) mutable {
+    auto fill = [lct, gp, odd, id](gem::CSCStubStruct& cscStubTree, int st) mutable {
       if (odd) {
         cscStubTree.has_lct_odd[st] = true;
         cscStubTree.bend_lct_odd[st] = lct.getPattern();
@@ -522,6 +522,7 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
         cscStubTree.qs_lct_odd[st] = lct.getStrip(4);
         cscStubTree.es_lct_odd[st] = lct.getStrip(8);
         cscStubTree.wg_lct_odd[st] = lct.getKeyWG();
+        cscStubTree.chamber_lct_odd[st] = id.chamber();
         cscStubTree.quality_lct_odd[st] = lct.getQuality();
       }
       else {
@@ -535,6 +536,7 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
         cscStubTree.qs_lct_even[st] = lct.getStrip(4);
         cscStubTree.es_lct_even[st] = lct.getStrip(8);
         cscStubTree.wg_lct_even[st] = lct.getKeyWG();
+        cscStubTree.chamber_lct_even[st] = id.chamber();
         cscStubTree.quality_lct_even[st] = lct.getQuality();
       }
     };

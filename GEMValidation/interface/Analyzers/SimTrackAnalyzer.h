@@ -19,6 +19,7 @@ public:
   ~SimTrackAnalyzer() {}
 
   void init();
+  void setiev (int i) {iev_ = i;} 
 
   bool isSimTrackGood(const SimTrack& t);
 
@@ -34,6 +35,7 @@ public:
   double simTrackMinEta_;
   double simTrackMaxEta_;
   std::vector<int> pdgIds_;
+  int iev_;
 };
 
 #endif
