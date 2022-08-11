@@ -330,6 +330,7 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     //however, LCT from ME1A would have halfstrip from 128-223 with ring number = 1
     for (const auto& stub : *emtfTrack->emtfHits()){
       if (not stub.Is_CSC()) continue;
+      //const CSCCorrelatedLCTDigi& csc_stub = stub.CreateCSCCorrelatedLCTDigi(isRun3);
       const CSCCorrelatedLCTDigi& csc_stub = stub.CreateCSCCorrelatedLCTDigi();
       const CSCDetId& csc_id1 = stub.CSC_DetId();
       uint16_t emtfhit_halfstrip = csc_id1.ring() == 4 ? csc_stub.getStrip()+128 : csc_stub.getStrip();

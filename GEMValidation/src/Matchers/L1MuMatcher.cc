@@ -93,7 +93,7 @@ void
 L1MuMatcher::matchEmtfTrackToSimTrack(const SimTrack& simtrack, const l1t::EMTFTrackCollection& tracks)
 {
   if (deltaREMTFTrack_ < 0) {
-    bool isRun3 = true;
+    //bool isRun3 = true;
     for (const auto& trk : tracks) {
       int bx = trk.BX();
       if ( bx < minBXEMTFTrack_ or bx > maxBXEMTFTrack_) continue;
@@ -106,7 +106,8 @@ L1MuMatcher::matchEmtfTrackToSimTrack(const SimTrack& simtrack, const l1t::EMTFT
                   <<" phi "<< emtf::deg_to_rad(trk.Phi_glob())
                   <<" phi_local "<< emtf::deg_to_rad(trk.Phi_loc()) << std::endl;
       for (const auto& stub : trk.Hits()){
-        const CSCCorrelatedLCTDigi& csc_stub = stub.CreateCSCCorrelatedLCTDigi(isRun3);
+        //const CSCCorrelatedLCTDigi& csc_stub = stub.CreateCSCCorrelatedLCTDigi(isRun3);
+        const CSCCorrelatedLCTDigi& csc_stub = stub.CreateCSCCorrelatedLCTDigi();
         const CSCDetId& csc_id = stub.CSC_DetId();
         if (verboseEMTFTrack_)
           std::cout << "\tCSCDetId " << csc_id << " CSC stub "
