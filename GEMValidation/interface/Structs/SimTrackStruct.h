@@ -12,8 +12,10 @@ namespace gem {
     int charge;
     int endcap;
     int pdgid;
+    int sim_iev;
 
     void init() {
+      sim_iev = 0;
       run = 0;
       ievent = 0;
       time = 0;
@@ -36,6 +38,7 @@ namespace gem {
     };
 
     void book(TTree* t) {
+      t->Branch("sim_iev", &sim_iev);
       t->Branch("run", &run);
       t->Branch("ievent", &ievent);
       t->Branch("time", &time);

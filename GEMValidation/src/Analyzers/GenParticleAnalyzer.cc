@@ -27,6 +27,7 @@ void GenParticleAnalyzer::setMatcher(const GenParticleMatcher& match_sh)
 void GenParticleAnalyzer::analyze(TreeManager& tree)
 {
   // genparticle properties
+  tree.genParticle().genp_iev = iev_;
   tree.genParticle().pt = match_->getMatch()->pt();
   tree.genParticle().pz = match_->getMatch()->pz();
   tree.genParticle().phi = match_->getMatch()->phi();

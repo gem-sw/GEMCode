@@ -11,8 +11,10 @@ namespace gem {
     int charge;
     int endcap;
     int pdgid;
+    int genp_iev;
 
     void init() {
+      genp_iev = 0;
       pt = 0.;
       phi = 0.;
       eta = -9.;
@@ -23,6 +25,7 @@ namespace gem {
     };
 
     void book(TTree* t) {
+      t->Branch("genp_iev", &genp_iev);
       t->Branch("pt", &pt);
       t->Branch("pz", &pz);
       t->Branch("eta", &eta);

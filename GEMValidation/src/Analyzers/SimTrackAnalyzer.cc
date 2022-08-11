@@ -11,6 +11,7 @@ SimTrackAnalyzer::SimTrackAnalyzer(const edm::ParameterSet& conf, edm::ConsumesC
   simTrackMinEta_ = simTrack.getParameter<double>("minEta");
   simTrackMaxEta_ = simTrack.getParameter<double>("maxEta");
   pdgIds_ = simTrack.getParameter<std::vector<int> >("pdgIds");
+  iev_ = 0;
 }
 
 void SimTrackAnalyzer::init()
@@ -20,6 +21,7 @@ void SimTrackAnalyzer::init()
 void SimTrackAnalyzer::analyze(TreeManager& tree, const SimTrack& t, const SimVertex& v, const edm::Event& ev)
 {
   //event information for tracking
+  tree.simTrack().sim_iev = iev_;
   tree.simTrack().run = ev.id().run();
   tree.simTrack().ievent = ev.id().event();
   tree.simTrack().time = ev.time().value();

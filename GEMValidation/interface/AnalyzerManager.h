@@ -30,6 +30,8 @@ class AnalyzerManager
 
   /// initialize
   void setMatcher(const MatcherManager&);
+  ///
+  void setiev (int i) {iev_ = i;} 
 
   /// do the matching
   void analyze(const edm::Event& ev, const edm::EventSetup& es, const MatcherSuperManager& manager, my::TreeManager& tree);
@@ -53,6 +55,7 @@ class AnalyzerManager
   std::unique_ptr<L1MuAnalyzer> l1mu_;
   std::unique_ptr<L1TrackAnalyzer> l1track_;
   std::unique_ptr<RecoTrackAnalyzer> recotrack_;
+  int iev_;
   bool runSim_;
   bool useGEM_;
 };

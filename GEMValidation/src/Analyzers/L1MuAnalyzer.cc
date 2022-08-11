@@ -324,13 +324,13 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     bool stubMatched[4] = {false, false, false, false};
     bool beststubMatched[4] = {false, false, false, false};
     const auto& cscStubMatcher_ = match_->cscStubMatcher();
-    bool isRun3 = true;
+    //bool isRun3 = true;
     //stub created by EMTF hit has following conventions:
     //stub from ME1a would have halfstrip from 0-96 and with ring number = 4
     //however, LCT from ME1A would have halfstrip from 128-223 with ring number = 1
     for (const auto& stub : *emtfTrack->emtfHits()){
       if (not stub.Is_CSC()) continue;
-      const CSCCorrelatedLCTDigi& csc_stub = stub.CreateCSCCorrelatedLCTDigi(isRun3);
+      const CSCCorrelatedLCTDigi& csc_stub = stub.CreateCSCCorrelatedLCTDigi();
       const CSCDetId& csc_id1 = stub.CSC_DetId();
       uint16_t emtfhit_halfstrip = csc_id1.ring() == 4 ? csc_stub.getStrip()+128 : csc_stub.getStrip();
       const CSCDetId& csc_id = CSCDetId(csc_id1.endcap(), csc_id1.station(), csc_id1.ring()==4 ? 1 : csc_id1.ring(), 
@@ -339,6 +339,8 @@ void L1MuAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         emtfhit_halfstrip, csc_stub.getPattern(), csc_stub.getBend(), csc_stub.getBX(), 0, 0, 0, 1);
       const GlobalPoint& stub_gp = cscStubMatcher_->getGlobalPosition(csc_id1, csc_stub1);
       float emtfhit_phi = stub_gp.phi(); 
+      if (verboseEMTFTrack_)
+          std::cout <<"EMTFhit "<< csc_id <<" stub "<< csc_stub1 << std::endl;
       //if (csc_id1.ring() == 4) std::cout <<"EMTFhit in ring4 " << csc_id1 <<" "<< csc_stub << std::endl;
       for (const auto& sim_stub: cscStubMatcher_->lctsInChamber(csc_id.rawId())){
         bool matched = sim_stub.isValid() == csc_stub.isValid() && sim_stub.getQuality() == csc_stub.getQuality() 
