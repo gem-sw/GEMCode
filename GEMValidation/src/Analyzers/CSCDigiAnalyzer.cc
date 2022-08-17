@@ -149,20 +149,27 @@ void CSCDigiAnalyzer::analyze(TreeManager& tree)
     const bool odd(id.chamber()%2==1);
 
     int nstrips = 0; int ncomparators = 0;
+    int totalstrips = 0; int totalcomparators = 0;
     for (unsigned int ilayer=1; ilayer<= 6; ilayer++){
       const CSCDetId& csc_id = CSCDetId(id.endcap(), id.station(), id.ring(), id.chamber(), ilayer);
       const auto&  hitstrips = match_->stripsInDetId(csc_id.rawId());
       const auto&  hitcomparators = match_->comparatorsInDetId(csc_id.rawId());
       nstrips += hitstrips.size();
       ncomparators += hitcomparators.size();
+      totalcomparators += match_->getTotalComparators(csc_id.rawId());
+      totalstrips += match_->getTotalStrips(csc_id.rawId());
     }
 
     if (odd){
-      tree.cscDigi().nstrips_dg_odd[st] = nstrips;
+      tree.cscDigi().nstrips_dg_odd[st]      = nstrips;
       tree.cscDigi().ncomparators_dg_odd[st] = ncomparators;
+      tree.cscDigi().totalstrips_dg_odd[st]      = totalstrips;
+      tree.cscDigi().totalcomparators_dg_odd[st] = totalcomparators;
     }else{
       tree.cscDigi().nstrips_dg_even[st] = nstrips;
       tree.cscDigi().ncomparators_dg_even[st] = ncomparators;
+      tree.cscDigi().totalstrips_dg_even[st]      = totalstrips;
+      tree.cscDigi().totalcomparators_dg_even[st] = totalcomparators;
     }
     if (odd) tree.cscDigi().has_csc_strips_odd[st] = true;
     else     tree.cscDigi().has_csc_strips_even[st] = true;
@@ -181,9 +188,13 @@ void CSCDigiAnalyzer::analyze(TreeManager& tree)
       if (odd){
         tree.cscDigi().nstrips_dg_odd[0] += nstrips;
         tree.cscDigi().ncomparators_dg_odd[0] += ncomparators;
+        tree.cscDigi().totalstrips_dg_odd[0] += totalstrips;
+        tree.cscDigi().totalcomparators_dg_odd[0] += totalcomparators;
       }else{
         tree.cscDigi().nstrips_dg_even[0] += nstrips;
         tree.cscDigi().ncomparators_dg_even[0] += ncomparators;
+        tree.cscDigi().totalstrips_dg_even[0] += totalstrips;
+        tree.cscDigi().totalcomparators_dg_even[0] += totalcomparators;
       }
     }
   }
@@ -199,33 +210,40 @@ void CSCDigiAnalyzer::analyze(TreeManager& tree)
     const bool odd(id.chamber()%2==1);
 
     int nwires = 0;
+    int totalwires = 0;
     for (unsigned int ilayer=1; ilayer<= 6; ilayer++){
       const CSCDetId& csc_id = CSCDetId(id.endcap(), id.station(), id.ring(), id.chamber(), ilayer);
       const auto&  hitwires  = match_->wiregroupsInDetId(csc_id.rawId());
       nwires  += hitwires.size();
+      totalwires += match_->getTotalWires(csc_id.rawId());
     }
 
-    if (odd) tree.cscDigi().has_csc_wires_odd[st] = true;
-    else tree.cscDigi().has_csc_wires_even[st] = true;
-    if (odd)
-      tree.cscDigi().nwires_dg_odd[st] = nwires;
-    else
-      tree.cscDigi().nwires_dg_even[st] = nwires;
+    if (odd){
+        tree.cscDigi().has_csc_wires_odd[st] = true;
+        tree.cscDigi().nwires_dg_odd[st] = nwires;
+        tree.cscDigi().totalwires_dg_odd[st] = totalwires;
+    }else{
+        tree.cscDigi().has_csc_wires_even[st] = true;
+        tree.cscDigi().nwires_dg_even[st] = nwires;
+        tree.cscDigi().totalwires_dg_even[st] = totalwires;
+    }
 
     if (odd) tree.cscDigi().nlayers_wg_dg_odd[st] = nlayers;
     else tree.cscDigi().nlayers_wg_dg_even[st] = nlayers;
 
     // case ME11
     if (st==1 or st==2){
-      if (odd) tree.cscDigi().has_csc_wires_odd[0] = true;
-      else tree.cscDigi().has_csc_wires_even[0] = true;
-
-      if (odd) tree.cscDigi().nlayers_wg_dg_odd[0] = nlayers;
-      else tree.cscDigi().nlayers_wg_dg_even[0] = nlayers;
-      if (odd)
-        tree.cscDigi().nwires_dg_odd[0] += nwires;
-      else
-        tree.cscDigi().nwires_dg_even[0] += nwires;
+      if (odd){
+          tree.cscDigi().has_csc_wires_odd[0] = true;
+          tree.cscDigi().nlayers_wg_dg_odd[0] = nlayers;
+          tree.cscDigi().nwires_dg_odd[0] += nwires;
+          tree.cscDigi().totalwires_dg_odd[0] += totalwires;
+      }else {
+          tree.cscDigi().has_csc_wires_even[0] = true;
+          tree.cscDigi().nlayers_wg_dg_even[0] = nlayers;
+          tree.cscDigi().nwires_dg_even[0] += nwires;
+          tree.cscDigi().totalwires_dg_even[0] += totalwires;
+      }
     }
   }
 }

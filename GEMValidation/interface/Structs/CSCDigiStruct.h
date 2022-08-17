@@ -38,6 +38,13 @@ namespace gem {
     int ncomparators_dg_even[nStations];
     int ncomparators_dg_odd[nStations];
 
+    int totalwires_dg_odd[nStations];
+    int totalwires_dg_even[nStations];
+    int totalstrips_dg_odd[nStations];
+    int totalstrips_dg_even[nStations];
+    int totalcomparators_dg_even[nStations];
+    int totalcomparators_dg_odd[nStations];
+
     Int_t wiregroup_odd[nStations];
     Int_t wiregroup_even[nStations];
 
@@ -74,6 +81,12 @@ namespace gem {
         nstrips_dg_odd[i] = 0;
         ncomparators_dg_odd[i] = 0;
         ncomparators_dg_even[i] = 0;
+        totalwires_dg_odd[i] = 0;
+        totalwires_dg_even[i] = 0;
+        totalstrips_dg_even[i] = 0;
+        totalstrips_dg_odd[i] = 0;
+        totalcomparators_dg_odd[i] = 0;
+        totalcomparators_dg_even[i] = 0;
       }
     };
 
@@ -87,12 +100,19 @@ namespace gem {
 
       t->Branch("chamber_dg_odd", chamber_dg_odd, "chamber_dg_odd[11]/I");
       t->Branch("chamber_dg_even", chamber_dg_even, "chamber_dg_even[11]/I");
-      t->Branch("nwires_dg_odd",    nwires_dg_odd,   "nwires_dg_odd[11]/I");
-      t->Branch("nwires_dg_even",    nwires_dg_even,   "nwires_dg_even[11]/I");
-      t->Branch("nstrips_dg_odd",   nstrips_dg_odd,  "nstrips_dg_odd[11]/I");
-      t->Branch("nstrips_dg_even",   nstrips_dg_even,  "nstrips_dg_even[11]/I");
-      t->Branch("ncomparators_dg_even",    ncomparators_dg_even,   "ncomparators_dg_even[11]/I");
+      t->Branch("nwires_dg_odd",          nwires_dg_odd,         "nwires_dg_odd[11]/I");
+      t->Branch("nwires_dg_even",         nwires_dg_even,        "nwires_dg_even[11]/I");
+      t->Branch("nstrips_dg_odd",         nstrips_dg_odd,        "nstrips_dg_odd[11]/I");
+      t->Branch("nstrips_dg_even",        nstrips_dg_even,       "nstrips_dg_even[11]/I");
+      t->Branch("ncomparators_dg_even",   ncomparators_dg_even,  "ncomparators_dg_even[11]/I");
       t->Branch("ncomparators_dg_odd",    ncomparators_dg_odd,   "ncomparators_dg_odd[11]/I");
+      t->Branch("totalwires_dg_odd",         totalwires_dg_odd,         "totalwires_dg_odd[11]/I");
+      t->Branch("totalwires_dg_even",        totalwires_dg_even,        "totalwires_dg_even[11]/I");
+      t->Branch("totalstrips_dg_odd",        totalstrips_dg_odd,        "totalstrips_dg_odd[11]/I");
+      t->Branch("totalstrips_dg_even",       totalstrips_dg_even,       "totalstrips_dg_even[11]/I");
+      t->Branch("totalcomparators_dg_even",  totalcomparators_dg_even,  "totalcomparators_dg_even[11]/I");
+      t->Branch("totalcomparators_dg_odd",   totalcomparators_dg_odd,   "totalcomparators_dg_odd[11]/I");
+
 
       t->Branch("nlayers_wg_dg_odd", nlayers_wg_dg_odd, "nlayers_wg_dg_odd[11]/I");
       t->Branch("nlayers_wg_dg_even", nlayers_wg_dg_even, "nlayers_wg_dg_even[11]/I");
