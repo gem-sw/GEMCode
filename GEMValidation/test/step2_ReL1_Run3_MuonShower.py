@@ -205,7 +205,7 @@ if not options.run3:
 process.simCscTriggerPrimitiveDigis.commonParam.runME11ILT =False
 process.simCscTriggerPrimitiveDigisCath = process.simCscTriggerPrimitiveDigis.clone()
 process.simCscTriggerPrimitiveDigisAnod = process.simCscTriggerPrimitiveDigis.clone()
-process.simCscTriggerPrimitiveDigis.showerParam.source =2
+process.simCscTriggerPrimitiveDigis.showerParam.source =3
 process.simCscTriggerPrimitiveDigisCath.showerParam.source =0
 process.simCscTriggerPrimitiveDigisAnod.showerParam.source =1
 process.simEmtfShowersCath = process.simEmtfShowers.clone()
