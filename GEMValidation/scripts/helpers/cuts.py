@@ -179,6 +179,56 @@ def ok_csc_lcts(n_min = 2):
     else:
         return ok_2_csc_lcts()
 
+
+ok_me11_sh = ok_csc_sh(0)
+ok_me12_sh = ok_csc_sh(3)
+ok_me13_sh = ok_csc_sh(4)
+
+ok_me21_sh = ok_csc_sh(5)
+ok_me22_sh = ok_csc_sh(6)
+ok_me31_sh = ok_csc_sh(7)
+
+ok_me32_sh = ok_csc_sh(8)
+ok_me41_sh = ok_csc_sh(9)
+ok_me42_sh = ok_csc_sh(10)
+
+ok_me1_sh = OR(ok_me11_sh, ok_me12_sh, ok_me13_sh)
+ok_me2_sh = OR(ok_me21_sh, ok_me22_sh)
+ok_me3_sh = OR(ok_me31_sh, ok_me32_sh)
+ok_me4_sh = OR(ok_me41_sh, ok_me42_sh)
+
+def ok_2_csc_sh():
+    ok_me1_me2 = AND(ok_me1_sh, ok_me2_sh)
+    ok_me1_me3 = AND(ok_me1_sh, ok_me3_sh)
+    ok_me1_me4 = AND(ok_me1_sh, ok_me4_sh)
+    ok_me2_me3 = AND(ok_me2_sh, ok_me3_sh)
+    ok_me2_me4 = AND(ok_me2_sh, ok_me4_sh)
+    ok_me3_me4 = AND(ok_me3_sh, ok_me4_sh)
+
+    return OR(ok_me1_me2, ok_me1_me3, ok_me1_me4, ok_me2_me3, ok_me2_me4, ok_me3_me4)
+
+def ok_3_csc_sh():
+    ok_me1_me2_me3 = AND(ok_me1_sh, ok_me2_sh, ok_me3_sh)
+    ok_me1_me2_me4 = AND(ok_me1_sh, ok_me2_sh, ok_me4_sh)
+    ok_me1_me3_me4 = AND(ok_me1_sh, ok_me3_sh, ok_me4_sh)
+    ok_me2_me3_me4 = AND(ok_me2_sh, ok_me3_sh, ok_me4_sh)
+
+    return OR(ok_me1_me2_me3, ok_me1_me2_me4, ok_me1_me3_me4, ok_me2_me3_me4)
+
+def ok_4_csc_sh():
+    return AND(ok_me1_sh, ok_me2_sh, ok_me3_sh, ok_me4_sh)
+
+def ok_csc_sh(n_min = 2):
+    if n_min == 2:
+        return ok_2_csc_sh()
+    elif n_min == 3:
+        return ok_3_csc_sh()
+    elif n_min == 4:
+        return ok_4_csc_sh()
+    else:
+        return ok_2_csc_sh()
+
+
 ## GEM simhit
 def ok_gem_sh(st):
     return TCut("gemSimHit.has_gem_sh_even[%d] || gemSimHit.has_gem_sh_odd[%d]"%(st,st))

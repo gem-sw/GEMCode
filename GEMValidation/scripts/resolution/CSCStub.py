@@ -25,6 +25,63 @@ iPeriod = 0
 iPos = 0
 if( iPos==0 ): CMS_lumi.relPosX = 0.12
 
+def CSCCNDigis(plotter, st, toPlot1, h_bins, xtitle, cuts, suffix, text):
+
+
+        #h_bins = "(100,-1,1)"
+        nBins = int(h_bins[1:-1].split(',')[0])
+        minBin = float(h_bins[1:-1].split(',')[1])
+        maxBin = float(h_bins[1:-1].split(',')[2])
+
+        c = newCanvas()
+        gPad.SetGrid(1,1)
+        base  = TH1F("base","base",nBins,minBin,maxBin)
+        base.SetMinimum(0)
+        base.SetMaximum(0.08)
+        base.GetXaxis().SetLabelSize(0.05)
+        base.GetYaxis().SetLabelSize(0.05)
+        base.GetXaxis().SetTitleSize(0.05)
+        base.GetYaxis().SetTitleSize(0.05)
+        base.GetXaxis().SetTitle(xtitle)
+        base.GetYaxis().SetTitle("Events")
+        base.Draw("")
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+
+        #toPlot1 = delta_fhs_clct(st)
+        h1 = draw_1D(plotter.tree, title, h_bins, toPlot1, cuts, "same", kBlue)
+
+        #h1.Scale(1./h1.GetEntries())
+        base.SetMaximum(h1.GetBinContent(h1.GetMaximumBin()) * 1.2)
+        h1.Draw("histsame")
+
+        #leg = TLegend(0.15,0.6,.45,0.9, "", "brNDC");
+        #leg.SetBorderSize(0)
+        #leg.SetFillStyle(0)
+        #leg.SetTextSize(0.05)
+        #leg.AddEntry(h1, "","pl")
+        #leg.Draw("same");
+
+        txt = drawCSCLabel(text, 0.15,0.25,0.035)
+        csc = drawCSCLabel(cscStations[st].label, 0.85,0.85,0.05)
+
+        c.Print("%sCSC_NDigis_%s_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  suffix, plotter.ext))
+
+        del base, csc, h1, c, txt
+
+
+def makeNDigis(plotter, text):
+    ndigisbins = "(50, 0, 50)"
+    xtitle_wire = "nwiredigis"
+    xtitle_comp = "ncomparatordigis"
+    xtitle_strip = "nstripdigis"
+    for st in range(0,len(cscStations)):
+        nwiredigi = "max(cscDigi.nwires_dg_even[%d], cscDigi.nwires_dg_odd[%d])"%(st,st)
+        ncompdigi = "max(cscDigi.ncomparators_dg_even[%d], cscDigi.ncomparators_dg_odd[%d])"%(st,st)
+        nstripdigi = "max(cscDigi.nstrips_dg_even[%d], cscDigi.nstrips_dg_odd[%d])"%(st,st)
+        CSCCNDigis(plotter, st, nwiredigi, ndigisbins, xtitle_wire, nwiredigi+">0.5", xtitle_wire, text)
+        CSCCNDigis(plotter, st, ncompdigi, ndigisbins, xtitle_comp, ncompdigi+">0.5", xtitle_comp, text)
+        CSCCNDigis(plotter, st, nstripdigi, ndigisbins, xtitle_strip, nstripdigi+">0.5", xtitle_strip, text)
+
 def CSCCLCTPos1(plotter):
 
     for st in range(0,len(cscStations)):
@@ -134,7 +191,7 @@ def CSCCLCTBend(plotter):
         maxBin = float(h_bins[1:-1].split(',')[2])
 
         c = newCanvas()
-        gPad.SetGrid(1,1)
+        gPad.SetGrid(1,2)
         base  = TH1F("base",title,nBins,minBin,maxBin)
         base.SetMinimum(0)
         base.SetMaximum(0.08)
@@ -166,11 +223,497 @@ def CSCCLCTBend(plotter):
 
         del c, base, leg, csc, h1
 
+def CSCDigiAveragedBX(plotter, text):
 
-def CSCStub(plotter):
-    CSCCLCTPos(plotter)
-    CSCCLCTPos1(plotter)
-    CSCCLCTBend(plotter)
+    xTitle = "Averaged BX"
+    yTitle = "Normalized"
+    title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
+
+    for st in range(0,len(cscStations)):
+
+        if st==1 or st==2: continue
+        h_bins = "(32,3.5,11.5)"
+        nBins = int(h_bins[1:-1].split(',')[0])
+        minBin = float(h_bins[1:-1].split(',')[1])
+        maxBin = float(h_bins[1:-1].split(',')[2])
+
+        c = newCanvas()
+        gPad.SetGrid(1,1)
+        base  = TH1F("base",title,nBins,minBin,maxBin)
+        base.SetMinimum(0)
+        base.SetMaximum(0.08)
+        base.GetXaxis().SetLabelSize(0.05)
+        base.GetYaxis().SetLabelSize(0.05)
+        base.GetXaxis().SetTitleSize(0.05)
+        base.GetYaxis().SetTitleSize(0.05)
+        base.Draw("")
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+
+        #toPlot1 = delta_bend_clct(st)
+        compbx = "max(cscDigi.ncompsbx_dg_even[%d],cscDigi.ncompsbx_dg_odd[%d])+1"%(st, st)
+        wirebx = "max(cscDigi.nwiresbx_dg_even[%d],cscDigi.nwiresbx_dg_odd[%d])"%(st, st)
+
+
+        h1 = draw_1D(plotter.tree, title, h_bins, wirebx, ok_csc_wire(st), "same", kBlue)
+        h2 = draw_1D(plotter.tree, title, h_bins, compbx, ok_csc_strip(st), "same", kRed)
+
+        h1.Scale(1./h1.GetEntries())
+        h2.Scale(1./h2.GetEntries())
+        #base.SetMaximum(h1.GetBinContent(h1.GetMaximumBin()) * 1.2)
+        base.SetMaximum(0.8)
+        h1.Draw("histsame")
+        h2.Draw("histsame")
+
+        leg = TLegend(0.15,0.7,.45,0.8, "", "brNDC");
+        leg.SetBorderSize(0)
+        leg.SetFillStyle(0)
+        leg.SetTextSize(0.04)
+        leg.AddEntry(h1, "Matched Wire digis","pl")
+        leg.AddEntry(h2, "Matched Comparator digis","pl")
+        leg.Draw("same");
+
+        csc = drawCSCLabel(cscStations[st].label, 0.85,0.85,0.05)
+        txt = drawCSCLabel(text, 0.15,0.2,0.04)
+
+        c.Print("%sRes_CSCDigi_AveragedBX_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
+
+        del c, base, leg, csc, h1, txt
+
+def CSCDigiAveragedBXDiff(plotter, text):
+
+    xTitle = "Averaged BX Difference"
+    yTitle = "Normalized"
+    title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
+
+    h_bins = "(14, -3.5, 3.5)"
+    for st in range(0,len(cscStations)):
+
+        if st==1 or st==2: continue
+        nBins = int(h_bins[1:-1].split(',')[0])
+        minBin = float(h_bins[1:-1].split(',')[1])
+        maxBin = float(h_bins[1:-1].split(',')[2])
+
+        c = newCanvas()
+        gPad.SetGrid(1,1)
+        gStyle.SetPaintTextFormat("1.3f");
+        base  = TH1F("base",title,nBins,minBin,maxBin)
+        base.SetMinimum(0)
+        base.SetMaximum(0.08)
+        base.GetXaxis().SetLabelSize(0.05)
+        base.GetYaxis().SetLabelSize(0.05)
+        base.GetXaxis().SetTitleSize(0.05)
+        base.GetYaxis().SetTitleSize(0.05)
+        base.Draw("")
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+
+        bxdiff_even = "cscDigi.nwiresbx_dg_even[%d]-cscDigi.ncompsbx_dg_even[%d]-1"%(st, st)
+        bxdiff_odd  = "cscDigi.nwiresbx_dg_odd[%d] -cscDigi.ncompsbx_dg_odd[%d]-1"%(st,st)
+        todraw = "(cscDigi.has_csc_strips_even[%d] && cscDigi.has_csc_wires_even[%d] ? (%s) : (%s))"%(st, st,bxdiff_even,bxdiff_odd)
+        cuts = "(cscDigi.has_csc_strips_even[%d] && cscDigi.has_csc_wires_even[%d]) || (cscDigi.has_csc_strips_odd[%d] && cscDigi.has_csc_wires_odd[%d])"%(st,st,st,st)
+
+        h1 = draw_1D(plotter.tree, title, h_bins, todraw, cuts, "same", kGreen+2)
+
+        h1.Scale(1./h1.GetEntries())
+        h1.SetMarkerSize(1.8)
+        #base.SetMaximum(h1.GetBinContent(h1.GetMaximumBin()) * 1.2)
+        base.SetMaximum(0.8)
+        h1.Draw("histtextsame")
+
+        leg = TLegend(0.15,0.7,.50,0.8, "", "brNDC");
+        leg.SetBorderSize(0)
+        leg.SetFillStyle(0)
+        leg.SetTextSize(0.035)
+        #leg.SetTextFont(42)
+        leg.AddEntry(h1, "Matched Wire digis - Matched Comparator digis","l")
+        leg.Draw("same");
+
+        csc = drawCSCLabel(cscStations[st].label, 0.85,0.85,0.05)
+        txt = drawCSCLabel(text, 0.15,0.25,0.04)
+
+        c.Print("%sRes_CSCDigi_Diff_AveragedBX_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
+
+        del c, base, leg, csc, h1, txt
+
+def CSCDigiAveragedBXNHits2D(plotter, text):
+    xTitle = "Averaged BX of matched comparator digis"
+    yTitle = "Total comparator digis"
+    xTitlea = "Averaged BX of matched wire digis"
+    yTitlea = "Total wire digis"
+    title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
+    titlea = "%s;%s;%s"%(topTitle,xTitlea,yTitlea)
+    xbins = "(7, 4.5, 11.5)"
+    ybins  = "(7, 4, 32)"
+    xnBins  = int(xbins[1:-1].split(',')[0])
+    ynBins  = int(ybins[1:-1].split(',')[0])
+
+    gStyle.SetPaintTextFormat("1.0f");
+    for st in range(0,len(cscStations)):
+
+        if st==1 or st==2: continue
+        c = newCanvas()
+        gPad.SetGrid(1,1)
+        gPad.SetRightMargin(0.15)
+
+        compsbx = "(cscDigi.ncompsbx_dg_even[%d] > cscDigi.ncompsbx_dg_odd[%d] ? cscDigi.ncompsbx_dg_even[%d]+1 : cscDigi.ncompsbx_dg_odd[%d]+1)"%(st,st,st,st)
+        wiresbx = "(cscDigi.nwiresbx_dg_even[%d] > cscDigi.nwiresbx_dg_odd[%d] ? cscDigi.nwiresbx_dg_even[%d] : cscDigi.nwiresbx_dg_odd[%d])"%(st,st,st,st)
+        ytodraw = "(cscDigi.ncompsbx_dg_even[%d] > cscDigi.ncompsbx_dg_odd[%d] ? cscDigi.totalcomparators_dg_even[%d] : cscDigi.totalcomparators_dg_odd[%d])"%(st,st,st,st)
+        ytodrawa = "(cscDigi.nwiresbx_dg_even[%d] > cscDigi.nwiresbx_dg_odd[%d] ? cscDigi.totalwires_dg_even[%d] : cscDigi.totalwires_dg_odd[%d])"%(st,st,st,st)
+        cuts = ok_csc_digi(st)
+
+
+        hist = draw_2D(plotter.tree, title, xbins, ybins, "%s:%s"%(ytodraw, compsbx), ok_csc_strip(st), "")
+        histA = draw_2D(plotter.tree, titlea, xbins, ybins, "%s:%s"%(ytodrawa, wiresbx), ok_csc_wire(st), "")
+        for i in range(xnBins):
+            total = hist.GetBinContent(i+1, ynBins) + hist.GetBinContent(i+1, ynBins+1)
+            hist.SetBinContent(i+1, ynBins, total)
+            totala = histA.GetBinContent(i+1, ynBins) + histA.GetBinContent(i+1, ynBins+1)
+            histA.SetBinContent(i+1, ynBins, totala)
+        hist.SetMarkerColor(kRed)
+        hist.SetMarkerSize(1.8)
+        drawopt = "colz"
+        if max(xnBins, ynBins) <= 20:
+            drawopt = "colztext"
+        hist.Draw(drawopt)
+        hist.GetXaxis().SetLabelSize(0.04)
+        hist.GetYaxis().SetLabelSize(0.04)
+        hist.GetXaxis().SetTitleSize(0.04)
+        hist.GetYaxis().SetTitleSize(0.04)
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+        txt = drawCSCLabel(text, 0.15,0.75,0.03)
+
+        csc = drawCSCLabel(cscStations[st].label, 0.75,0.85,0.05)
+        txt = drawCSCLabel(text, 0.15,0.8,0.04)
+
+        c.Print("%sRes_CSCComparatorDigi_AveragedBX_vs_ncomparators_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
+
+
+        c = newCanvas()
+        gPad.SetGrid(1,1)
+        gPad.SetRightMargin(0.15)
+        histA.SetMarkerColor(kRed)
+        histA.SetMarkerSize(1.8)
+        histA.Draw(drawopt)
+        histA.GetXaxis().SetLabelSize(0.04)
+        histA.GetYaxis().SetLabelSize(0.04)
+        histA.GetXaxis().SetTitleSize(0.04)
+        histA.GetYaxis().SetTitleSize(0.04)
+
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+        txt = drawCSCLabel(text, 0.15,0.75,0.03)
+
+        csc = drawCSCLabel(cscStations[st].label, 0.75,0.85,0.05)
+        txt = drawCSCLabel(text, 0.15,0.8,0.04)
+
+        c.Print("%sRes_CSCWireDigi_AveragedBX_vs_nwires_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
+
+        del c, csc, hist, txt
+
+
+
+def CSCDigiAveragedBXDiffNHits2D(plotter, text):
+    xTitle = "Averaged_Wiredigis_BX- Averaged_Comparatordigis_BX"
+    yTitle = "Total comparator digis"
+    title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
+    xbins = "(7, -3.5, 3.5)"
+    ybins  = "(7, 4, 32)"
+    xnBins  = int(xbins[1:-1].split(',')[0])
+    ynBins  = int(ybins[1:-1].split(',')[0])
+
+    gStyle.SetPaintTextFormat("1.0f");
+    for st in range(0,len(cscStations)):
+
+        if st==1 or st==2: continue
+        c = newCanvas()
+        gPad.SetGrid(1,1)
+        gPad.SetRightMargin(0.15)
+
+        bxdiff_even = "cscDigi.nwiresbx_dg_even[%d]-cscDigi.ncompsbx_dg_even[%d]-1"%(st, st)
+        bxdiff_odd  = "cscDigi.nwiresbx_dg_odd[%d] -cscDigi.ncompsbx_dg_odd[%d]-1"%(st,st)
+        xtodraw = "(cscDigi.has_csc_strips_even[%d] && cscDigi.has_csc_wires_even[%d] ? (%s) : (%s))"%(st, st,bxdiff_even,bxdiff_odd)
+        ytodraw = "(cscDigi.has_csc_strips_even[%d] ? cscDigi.totalcomparators_dg_even[%d] : cscDigi.totalcomparators_dg_odd[%d])"%(st,st,st)
+        cuts = "(cscDigi.has_csc_strips_even[%d] && cscDigi.has_csc_wires_even[%d]) || (cscDigi.has_csc_strips_odd[%d] && cscDigi.has_csc_wires_odd[%d])"%(st,st,st,st)
+
+        hist = draw_2D(plotter.tree, title, xbins, ybins, "%s:%s"%(ytodraw, xtodraw), cuts, "")
+        for i in range(xnBins):
+            total = hist.GetBinContent(i+1, ynBins) + hist.GetBinContent(i+1, ynBins+1)
+            hist.SetBinContent(i+1, ynBins, total)
+        hist.SetMarkerColor(kRed)
+        hist.SetMarkerSize(1.8)
+        drawopt = "colz"
+        if max(xnBins, ynBins) <= 20:
+            drawopt = "colztext"
+        hist.Draw(drawopt)
+        hist.GetXaxis().SetLabelSize(0.04)
+        hist.GetYaxis().SetLabelSize(0.04)
+        hist.GetXaxis().SetTitleSize(0.04)
+        hist.GetYaxis().SetTitleSize(0.04)
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+        txt = drawCSCLabel(text, 0.15,0.75,0.03)
+
+        csc = drawCSCLabel(cscStations[st].label, 0.75,0.85,0.05)
+        txt = drawCSCLabel(text, 0.15,0.8,0.04)
+
+        c.Print("%sRes_CSCDigi_wiredigi_comparatordigi_Diff_AveragedBX_vs_ncomparators_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
+
+        del c, csc, hist, txt
+
+
+
+def CSCCLCTALCTBX(plotter, text):
+
+    xTitle = "BX"
+    yTitle = "Normalized"
+    title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
+
+    for st in range(0,len(cscStations)):
+
+        if st==1 or st==2: continue
+        h_bins = "(16,-0.5,15.5)"
+        nBins = int(h_bins[1:-1].split(',')[0])
+        minBin = float(h_bins[1:-1].split(',')[1])
+        maxBin = float(h_bins[1:-1].split(',')[2])
+
+        c = newCanvas()
+        gPad.SetGrid(1,1)
+        base  = TH1F("base",title,nBins,minBin,maxBin)
+        base.SetMinimum(0)
+        base.SetMaximum(0.08)
+        base.GetXaxis().SetLabelSize(0.05)
+        base.GetYaxis().SetLabelSize(0.05)
+        base.GetXaxis().SetTitleSize(0.05)
+        base.GetYaxis().SetTitleSize(0.05)
+        base.Draw("")
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+
+        #toPlot1 = delta_bend_clct(st)
+        clctbx = "max(cscStub.bx_clct_even[%d],cscStub.bx_clct_odd[%d])+1"%(st, st)
+        alctbx = "max(cscStub.bx_alct_even[%d],cscStub.bx_alct_odd[%d])+5"%(st, st)
+
+
+        h1 = draw_1D(plotter.tree, title, h_bins, alctbx, ok_csc_alct(st), "same", kBlue)
+        h2 = draw_1D(plotter.tree, title, h_bins, clctbx, ok_csc_clct(st), "same", kRed)
+
+        h1.Scale(1./h1.GetEntries())
+        h2.Scale(1./h2.GetEntries())
+        #base.SetMaximum(h1.GetBinContent(h1.GetMaximumBin()) * 1.2)
+        base.SetMaximum(1.1)
+        h1.Draw("histsame")
+        h2.Draw("histsame")
+
+        leg = TLegend(0.15,0.7,.45,0.8, "", "brNDC");
+        leg.SetBorderSize(0)
+        leg.SetFillStyle(0)
+        leg.SetTextSize(0.05)
+        leg.AddEntry(h1, "ALCT","pl")
+        leg.AddEntry(h2, "CLCT","pl")
+        leg.Draw("same");
+
+        csc = drawCSCLabel(cscStations[st].label, 0.85,0.85,0.05)
+        txt = drawCSCLabel(text, 0.15,0.2,0.04)
+
+        c.Print("%sRes_CSCALCTCLCT_BX_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
+
+        del c, base, leg, csc, h1, txt
+
+
+def CSCCLCTALCTBXDiff(plotter, text):
+
+    xTitle = "BX"
+    yTitle = "Normalized"
+    title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
+
+    h_bins = "(7, -3.5, 3.5)"
+    for st in range(0,len(cscStations)):
+
+        if st==1 or st==2: continue
+        nBins = int(h_bins[1:-1].split(',')[0])
+        minBin = float(h_bins[1:-1].split(',')[1])
+        maxBin = float(h_bins[1:-1].split(',')[2])
+
+        c = newCanvas()
+        gPad.SetGrid(1,1)
+        gStyle.SetPaintTextFormat("1.3f");
+        base  = TH1F("base",title,nBins,minBin,maxBin)
+        base.SetMinimum(0)
+        base.SetMaximum(0.08)
+        base.GetXaxis().SetLabelSize(0.05)
+        base.GetYaxis().SetLabelSize(0.05)
+        base.GetXaxis().SetTitleSize(0.05)
+        base.GetYaxis().SetTitleSize(0.05)
+        base.Draw("")
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+
+        bxdiff_even = "cscStub.bx_alct_even[%d]+4-cscStub.bx_clct_even[%d]"%(st,st)
+        bxdiff_odd  = "cscStub.bx_alct_odd[%d]+4-cscStub.bx_clct_odd[%d]"%(st,st)
+        todraw = "(cscStub.has_clct_even[%d] && cscStub.has_alct_even[%d] ? (%s) : (%s))"%(st, st,bxdiff_even,bxdiff_odd)
+        cuts = "(cscStub.has_clct_even[%d] && cscStub.has_alct_even[%d]) || (cscStub.has_clct_odd[%d] && cscStub.has_alct_odd[%d])"%(st,st,st,st)
+
+
+        h1 = draw_1D(plotter.tree, title, h_bins, todraw, cuts, "same", kGreen+2)
+
+        h1.Scale(1./h1.GetEntries())
+        h1.SetMarkerSize(1.8)
+        #base.SetMaximum(h1.GetBinContent(h1.GetMaximumBin()) * 1.2)
+        base.SetMaximum(1.1)
+        h1.Draw("histtextsame")
+
+        leg = TLegend(0.15,0.7,.45,0.8, "", "brNDC");
+        leg.SetBorderSize(0)
+        leg.SetFillStyle(0)
+        leg.SetTextSize(0.05)
+        leg.AddEntry(h1, "ALCT-CLCT","l")
+        leg.Draw("same");
+
+        csc = drawCSCLabel(cscStations[st].label, 0.85,0.85,0.05)
+        txt = drawCSCLabel(text, 0.15,0.25,0.04)
+
+        c.Print("%sRes_CSCALCTCLCTDiff_BX_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
+
+        del c, base, leg, csc, h1, txt
+
+def CSCALCTCLCTBXNHits2D(plotter, text):
+    xTitle = "CLCT BX"
+    yTitle = "Total Comparator digis"
+    xTitlea = "ALCT BX"
+    yTitlea = "Total Wire digis"
+    title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
+    titlea = "%s;%s;%s"%(topTitle,xTitlea,yTitlea)
+    xbins = "(7, 4.5, 11.5)"
+    ybins  = "(7, 4, 32)"
+    xnBins  = int(xbins[1:-1].split(',')[0])
+    ynBins  = int(ybins[1:-1].split(',')[0])
+
+    gStyle.SetPaintTextFormat("1.0f");
+    for st in range(0,len(cscStations)):
+
+        if st==1 or st==2: continue
+        c = newCanvas()
+        gPad.SetGrid(1,1)
+        gPad.SetRightMargin(0.15)
+
+        clctbx = "max(cscStub.bx_clct_even[%d],cscStub.bx_clct_odd[%d])+1"%(st, st)
+        alctbx = "max(cscStub.bx_alct_even[%d],cscStub.bx_alct_odd[%d])+5"%(st, st)
+        #xtodraw = alctbx+"-"+clctbx
+        #xtodraw = clctbx
+        ytodraw = "(cscStub.bx_clct_even[%d] > cscStub.bx_clct_odd[%d] ? cscDigi.totalcomparators_dg_even[%d] : cscDigi.totalcomparators_dg_odd[%d])"%(st,st,st,st)
+        ytodrawa = "(cscStub.bx_alct_even[%d] > cscStub.bx_alct_odd[%d] ? cscDigi.totalwires_dg_even[%d] : cscDigi.totalwires_dg_odd[%d])"%(st,st,st,st)
+        cuts = AND(ok_csc_clct(st), ok_csc_alct(st))
+
+
+        hist = draw_2D(plotter.tree, title, xbins, ybins, "%s:%s"%(ytodraw, clctbx), ok_csc_clct(st), "")
+        histA = draw_2D(plotter.tree, titlea, xbins, ybins, "%s:%s"%(ytodrawa, alctbx), ok_csc_alct(st), "")
+        for i in range(xnBins):
+            total = hist.GetBinContent(i+1, ynBins) + hist.GetBinContent(i+1, ynBins+1)
+            hist.SetBinContent(i+1, ynBins, total)
+            totala = histA.GetBinContent(i+1, ynBins) + histA.GetBinContent(i+1, ynBins+1)
+            histA.SetBinContent(i+1, ynBins, totala)
+        hist.SetMarkerColor(kRed)
+        hist.SetMarkerSize(1.8)
+        drawopt = "colz"
+        if max(xnBins, ynBins) <= 20:
+            drawopt = "colztext"
+        hist.Draw(drawopt)
+        hist.GetXaxis().SetLabelSize(0.04)
+        hist.GetYaxis().SetLabelSize(0.04)
+        hist.GetXaxis().SetTitleSize(0.04)
+        hist.GetYaxis().SetTitleSize(0.04)
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+        txt = drawCSCLabel(text, 0.15,0.75,0.03)
+
+        csc = drawCSCLabel(cscStations[st].label, 0.75,0.85,0.05)
+        txt = drawCSCLabel(text, 0.15,0.8,0.04)
+
+        c.Print("%sRes_CSCCLCT_BX_vs_ncomparators_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
+
+
+        c = newCanvas()
+        gPad.SetGrid(1,1)
+        gPad.SetRightMargin(0.15)
+        histA.SetMarkerColor(kRed)
+        histA.SetMarkerSize(1.8)
+        histA.Draw(drawopt)
+        histA.GetXaxis().SetLabelSize(0.04)
+        histA.GetYaxis().SetLabelSize(0.04)
+        histA.GetXaxis().SetTitleSize(0.04)
+        histA.GetYaxis().SetTitleSize(0.04)
+
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+        txt = drawCSCLabel(text, 0.15,0.75,0.03)
+
+        csc = drawCSCLabel(cscStations[st].label, 0.75,0.85,0.05)
+        txt = drawCSCLabel(text, 0.15,0.8,0.04)
+
+        c.Print("%sRes_CSCALCT_BX_vs_nwires_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
+
+        del c, csc, hist, txt
+
+
+
+def CSCALCTCLCTBXDiffNHits2D(plotter, text):
+    xTitle = "ALCT-CLCT BX"
+    yTitle = "Total Comparator digis"
+    title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
+    xbins = "(7, -3.5, 3.5)"
+    ybins  = "(7, 4, 32)"
+    xnBins  = int(xbins[1:-1].split(',')[0])
+    ynBins  = int(ybins[1:-1].split(',')[0])
+
+    gStyle.SetPaintTextFormat("1.0f");
+    for st in range(0,len(cscStations)):
+
+        if st==1 or st==2: continue
+        c = newCanvas()
+        gPad.SetGrid(1,1)
+        gPad.SetRightMargin(0.15)
+
+        clctbx = "max(cscStub.bx_clct_even[%d],cscStub.bx_clct_odd[%d])"%(st, st)
+        alctbx = "max(cscStub.bx_alct_even[%d],cscStub.bx_alct_odd[%d])+4"%(st, st)
+        xtodraw = alctbx+"-"+clctbx
+        bxdiff_even = "cscStub.bx_alct_even[%d]+4-cscStub.bx_clct_even[%d]"%(st,st)
+        bxdiff_odd  = "cscStub.bx_alct_odd[%d]+4-cscStub.bx_clct_odd[%d]"%(st,st)
+        xtodraw = "(cscStub.has_clct_even[%d] && cscStub.has_alct_even[%d] ? (%s) : (%s))"%(st, st,bxdiff_even,bxdiff_odd)
+        cuts = "(cscStub.has_clct_even[%d] && cscStub.has_alct_even[%d]) || (cscStub.has_clct_odd[%d] && cscStub.has_alct_odd[%d])"%(st,st,st,st)
+        ytodraw = "(cscStub.has_clct_even[%d] ? cscDigi.totalcomparators_dg_even[%d] : cscDigi.totalcomparators_dg_odd[%d])"%(st,st,st)
+        cuts = AND(ok_csc_clct(st), ok_csc_alct(st))
+
+
+        hist = draw_2D(plotter.tree, title, xbins, ybins, "%s:%s"%(ytodraw, xtodraw), cuts, "")
+        for i in range(xnBins):
+            total = hist.GetBinContent(i+1, ynBins) + hist.GetBinContent(i+1, ynBins+1)
+            hist.SetBinContent(i+1, ynBins, total)
+        hist.SetMarkerColor(kRed)
+        hist.SetMarkerSize(1.8)
+        drawopt = "colz"
+        if max(xnBins, ynBins) <= 20:
+            drawopt = "colztext"
+        hist.Draw(drawopt)
+        hist.GetXaxis().SetLabelSize(0.04)
+        hist.GetYaxis().SetLabelSize(0.04)
+        hist.GetXaxis().SetTitleSize(0.04)
+        hist.GetYaxis().SetTitleSize(0.04)
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+        txt = drawCSCLabel(text, 0.15,0.75,0.03)
+
+        csc = drawCSCLabel(cscStations[st].label, 0.75,0.85,0.05)
+        txt = drawCSCLabel(text, 0.15,0.8,0.04)
+
+        c.Print("%sRes_CSCALCTCLCTDiff_BX_vs_ncomparators_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
+
+        del c, csc, hist, txt
+
+
+def CSCStub(plotter, text):
+    #CSCCLCTPos(plotter)
+    #CSCCLCTPos1(plotter)
+    #CSCCLCTBend(plotter)
+    CSCDigiAveragedBX(plotter,text)
+    CSCDigiAveragedBXDiff(plotter,text)
+    CSCDigiAveragedBXDiffNHits2D(plotter, text)
+    CSCDigiAveragedBXNHits2D(plotter, text)
+    CSCCLCTALCTBX(plotter,text)
+    CSCCLCTALCTBXDiff(plotter,text)
+    CSCALCTCLCTBXDiffNHits2D(plotter, text)
+    CSCALCTCLCTBXNHits2D(plotter, text)
 
 def CSCPosResolutionComparison(plotter, plotter2):
 
@@ -437,24 +980,25 @@ def CSCStubComparison1D(plotterlist, variable, varsuffix, h_bins, st, cuts, text
     ymax = 0.0
     for i, plotter in enumerate(plotterlist):
         toPlot1 = variable
-        #print("i ", i, " plotter.analyzer ", plotter.analyzer, " plotterlist[i].analyzer ", plotterlist[i].analyzer)
         hlist.append(draw_1D(plotter.tree, title, h_bins, toPlot1, cuts, "same", kcolors[i], markers[i]))
         #hlist[-1].Scale(1./hlist[-1].GetEntries())
+        hlist[i].SetBinContent(1, hlist[i].GetBinContent(0))
+        hlist[i].SetBinContent(nBins, hlist[i].GetBinContent(nBins+1))
         if hlist[-1].GetBinContent(hlist[-1].GetMaximumBin()) > ymax:
             ymax = hlist[-1].GetBinContent(hlist[-1].GetMaximumBin())
 
     base.SetMaximum(ymax * 1.3)
     base.Draw("")
     CMS_lumi.CMS_lumi(c, iPeriod, iPos)
-    leg = TLegend(0.15,0.6,.45,0.9, "", "brNDC");
-    leg = TLegend(0.15,0.6,.45,0.9, "", "brNDC");
+    leg = TLegend(0.15,0.6,.48,0.9, "", "brNDC");
     #leg.SetHeader("EMTF pT >= %d GeV"%ptcut)
     leg.SetBorderSize(0)
     leg.SetFillStyle(0)
     leg.SetTextSize(0.04)
     for i in range(0, len(hlist)):
+        integral =  hlist[i].Integral(1, nBins-1)
         hlist[i].Draw("histsame")
-        leg.AddEntry(hlist[i], plotterlist[i].legend,"pl")
+        leg.AddEntry(hlist[i], plotterlist[i].legend+": %d"%integral,"pl")
     leg.Draw("same");
     
     csc = drawCSCLabel(cscStations[st].label, 0.85,0.85,0.05)
@@ -467,9 +1011,9 @@ def CSCStubComparison1D(plotterlist, variable, varsuffix, h_bins, st, cuts, text
 def CSCStubComparison1DAll(plotterlist, text):
     ## slope 0-15
     ## Run2 pattern, 0-16
-    bins = "(16, 0, 16)"
-    qbins = "(7, 0, 7)"
-    fslopebins = "(80, -2.0, 2.0)"
+    bins = "(17, 0, 17)"
+    qbins = "(8, 0, 8)"
+    fslopebins = "(80, -5.0, 5.0)"
     for st in range(0, len(cscStations)):
         cuts = ok_csc_clct(st)
         lctcuts = ok_csc_lct(st)

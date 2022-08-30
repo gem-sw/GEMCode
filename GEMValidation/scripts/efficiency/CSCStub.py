@@ -1,4 +1,4 @@
-from ROOT import gStyle, TH1F, TCanvas, TLegend, kRed, kBlue, kOrange, kGreen, kBlack, kMagenta, kYellow
+from ROOT import gStyle, TH1F, TCanvas, TLegend, kRed, kBlue, kOrange, kGreen, kBlack, kMagenta, kYellow,gPad
 
 from helpers.cuts import *
 from helpers.Helpers import *
@@ -12,7 +12,8 @@ topTitle = ""
 yTitle = "Efficiency"
 subdirectory = "efficiency/CSCStub/"
 #title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
-
+xGrid=2
+yGrid=2
 setTDRStyle()
 
 iPeriod = 0
@@ -693,6 +694,8 @@ def CSCStubComparison(plotterlist, st, dencut, numcut, plotsuffix, text):
     maxBin = float(h_bins[1:-1].split(',')[2])
 
     c = newCanvas()
+    gPad.SetGridx(xGrid)
+    gPad.SetGridy(yGrid)
     base  = TH1F("base",title,nBins,minBin,maxBin)
     base.SetMinimum(plotterlist[0].yMin)
     base.SetMaximum(plotterlist[0].yMax)
@@ -705,7 +708,7 @@ def CSCStubComparison(plotterlist, st, dencut, numcut, plotsuffix, text):
 
   
 
-    leg = TLegend(0.45,0.2,.75,0.5, "", "brNDC");
+    leg = TLegend(0.45,0.15,.75,0.15+len(plotterlist)*0.05, "", "brNDC");
     leg.SetBorderSize(0)
     leg.SetFillStyle(0)
     leg.SetTextSize(0.05)

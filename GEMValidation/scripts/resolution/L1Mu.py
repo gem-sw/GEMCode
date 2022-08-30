@@ -232,7 +232,6 @@ def EMTFInputsCompare(plotterlist, text):
         plotsuffix = "quality" + "_"+ptetasuffix
         EMTFTrackComparison1D(plotterlist, "l1Mu.quality", "(16, 0, 16)", ptcut, plotsuffix, text)
 
-    """
         for dphi in dphilist:
             var = "l1Mu."+dphi
             plotsuffix = dphi + "_"+ptetasuffix
@@ -280,7 +279,6 @@ def EMTFInputsCompare(plotterlist, text):
                 if not nomatch:
                     plotsuffix =   "stubpattern_st%d_"%st+ptetasuffix
                 EMTFTrackInputResolution(plotterlist, emtfhit_pattern, cscstub_pattern, xtitle,qbins, cuts, plotsuffix, text)
-    """
     #for plotter in plotterlist:
     #    for dphi in dphilist:
     #        var = "l1Mu."+dphi

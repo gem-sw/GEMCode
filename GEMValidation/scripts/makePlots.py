@@ -13,7 +13,7 @@ sys.argv.append( '-b' )
 gROOT.SetBatch(1)
 
 class GEMCSCStubPlotter():
-  def __init__(self, inputFile, baseDir, analyzer = "GEMCSCAnalyzer"):
+  def __init__(self, inputFile, baseDir, sample, analyzer = "GEMCSCAnalyzer"):
     self.inputFile = inputFile
     self.baseDir = baseDir
     if not os.path.isdir(self.baseDir): 
@@ -23,14 +23,15 @@ class GEMCSCStubPlotter():
     self.analyzer = analyzer
     self.targetDir = self.baseDir + self.analyzer + "/"
     self.file = TFile.Open(self.inputFile)
+    self.sample = sample
     self.dirAna = (self.file).Get(self.analyzer)
     self.tree = self.dirAna.Get("simTrack")
     self.treeFriends = ["genParticle", "cscSimHit", "cscDigi", "cscStub",
                         "gemSimHit", "gemDigi", "gemStub", "l1Mu", "l1Track"]
     for p in self.treeFriends:
       self.tree.AddFriend(self.dirAna.Get(p))
-    self.yMin = 0.5
-    self.yMax = 1.1
+    self.yMin = 0.45
+    self.yMax = 1.05
   def setLegend(self, leg):
     self.legend = leg
   def getTree(self):
@@ -40,33 +41,32 @@ pT=1000
 inputFile = "out_gemcscana_%dGeV_all.root"%pT
 baseDir = "RelValpT%dplots/"%pT
 text="RelValpT%dGeV"%pT
-inputFile = "out_gemcscana_100GeV_all.root"
-baseDir = "RelValpT100plots/"
-text="RelValpT100GeV"
-inputFile = "out_gemcscana_10GeV_all.root"
-baseDir = "RelValpT10plots/"
-text="RelValpT10GeV"
 ## needs to be cleaned up
-plotter  = GEMCSCStubPlotter(inputFile, baseDir)
+plotter  = GEMCSCStubPlotter(inputFile, baseDir, text)
 plotter.setLegend("Run3OldEmulator")
-plotter0 = GEMCSCStubPlotter(inputFile, baseDir, "GEMCSCAnalyzerRun2")
+plotter0 = GEMCSCStubPlotter(inputFile, baseDir, text, "GEMCSCAnalyzerRun2")
 plotter0.setLegend("Run2Emulator")
-plotter2 = GEMCSCStubPlotter(inputFile, baseDir, "GEMCSCAnalyzerRun3CCLUTILT")
+plotter2 = GEMCSCStubPlotter(inputFile, baseDir, text, "GEMCSCAnalyzerRun3CCLUTILT")
 plotter2.setLegend("Run3NewEmulator")
-plotter3 = GEMCSCStubPlotter(inputFile, baseDir, "GEMCSCAnalyzerRun3CCLUTv1")
-plotter3.setLegend("Run3NoDeadTimeNoILT")
-plotter4 = GEMCSCStubPlotter(inputFile, baseDir, "GEMCSCAnalyzerRun3CCLUTv2")
-plotter4.setLegend("Run3NoCCLUTNoILT")
+plotter3 = GEMCSCStubPlotter(inputFile, baseDir, text, "GEMCSCAnalyzerRun3CCLUTv1")
+plotter3.setLegend("Run3WithDeadTimeNoILT")
+plotter4 = GEMCSCStubPlotter(inputFile, baseDir, text, "GEMCSCAnalyzerRun3CCLUTv2")
+#plotter4.setLegend("Run3NoCCLUTNoILT")
+plotter4.setLegend("Run3PreTrigMatch")
 plotter5 = GEMCSCStubPlotter(inputFile, baseDir, "GEMCSCAnalyzerRun3CCLUT")
-plotter5.setLegend("Run3NoILT")
+plotter5.setLegend("Run3CCLUTNoILT")
+plotter6 = GEMCSCStubPlotter(inputFile, baseDir, "GEMCSCAnalyzerRun3CCLUTv0")
+plotter6.setLegend("Run3NoDeadTimezone")
 #makeEfficiencyPlots(plotter , text)
 #makeResolutionPlots(plotter , text)
 #
 #makeEfficiencyPlots(plotter2, text)
-#makeResolutionPlots(plotter2, text)
+makeResolutionPlots(plotter2, text)
+#makeNDigis(plotter2, text)
 #
 #makeEfficiencyPlots(plotter0, text)
-#makeResolutionPlots(plotter0, text)
+makeResolutionPlots(plotter0, text)
+#makeNDigis(plotter0, text)
 #
 #makeEfficiencyPlots(plotter3, text)
 #makeResolutionPlots(plotter3, text)
@@ -75,10 +75,12 @@ plotter5.setLegend("Run3NoILT")
 #makeResolutionPlots(plotter4, text)
 #
 #plotterlist = [plotter0, plotter, plotter2, plotter5, plotter3, plotter4]
-plotterlist = [plotter0, plotter, plotter2, plotter4]
+#plotterlist = [plotter0, plotter, plotter2, plotter4]
+plotterlist = [plotter0, plotter, plotter2, plotter3, plotter6]
 ### efficiency comparison
 #makeEfficiencyComparisonPlots(plotterlist, text)
-#makeResolutionComparisonPlots(plotter, plotter2)
+#makeResolutionComparisonPlots(plotter0, plotter2)
 #makeComparePlots(plotterlist, text)
 treename = "compareTree"
-analyzeTwoTrees(plotter0, plotter2, treename, inputFile.replace("gemcscana","compare"))
+#analyzeTwoTrees(plotter0, plotter2, treename, "test"+inputFile.replace("gemcscana","compare"))
+
