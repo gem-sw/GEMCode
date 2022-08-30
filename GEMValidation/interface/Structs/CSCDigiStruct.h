@@ -37,6 +37,10 @@ namespace gem {
     int nstrips_dg_even[nStations];
     int ncomparators_dg_even[nStations];
     int ncomparators_dg_odd[nStations];
+    float nwiresbx_dg_odd[nStations];
+    float nwiresbx_dg_even[nStations];
+    float ncompsbx_dg_even[nStations];
+    float ncompsbx_dg_odd[nStations];
 
     int totalwires_dg_odd[nStations];
     int totalwires_dg_even[nStations];
@@ -81,6 +85,10 @@ namespace gem {
         nstrips_dg_odd[i] = 0;
         ncomparators_dg_odd[i] = 0;
         ncomparators_dg_even[i] = 0;
+        nwiresbx_dg_odd[i]  = 0.0;
+        nwiresbx_dg_even[i] = 0.0;
+        ncompsbx_dg_odd[i]  = 0.0;
+        ncompsbx_dg_even[i] = 0.0;
         totalwires_dg_odd[i] = 0;
         totalwires_dg_even[i] = 0;
         totalstrips_dg_even[i] = 0;
@@ -106,6 +114,10 @@ namespace gem {
       t->Branch("nstrips_dg_even",        nstrips_dg_even,       "nstrips_dg_even[11]/I");
       t->Branch("ncomparators_dg_even",   ncomparators_dg_even,  "ncomparators_dg_even[11]/I");
       t->Branch("ncomparators_dg_odd",    ncomparators_dg_odd,   "ncomparators_dg_odd[11]/I");
+      t->Branch("nwiresbx_dg_odd",        nwiresbx_dg_odd,       "nwiresbx_dg_odd[11]/F");
+      t->Branch("nwiresbx_dg_even",       nwiresbx_dg_even,      "nwiresbx_dg_even[11]/F");
+      t->Branch("ncompsbx_dg_even",       ncompsbx_dg_even,      "ncompsbx_dg_even[11]/F");
+      t->Branch("ncompsbx_dg_odd",        ncompsbx_dg_odd,       "ncompsbx_dg_odd[11]/F");
       t->Branch("totalwires_dg_odd",         totalwires_dg_odd,         "totalwires_dg_odd[11]/I");
       t->Branch("totalwires_dg_even",        totalwires_dg_even,        "totalwires_dg_even[11]/I");
       t->Branch("totalstrips_dg_odd",        totalstrips_dg_odd,        "totalstrips_dg_odd[11]/I");
