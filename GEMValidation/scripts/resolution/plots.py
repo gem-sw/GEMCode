@@ -22,13 +22,14 @@ def makeDir(plotter):
 
 def makeResolutionPlots(plotter, text):
     makeDir(plotter)
-    CSCStub(plotter)
-    GEMStub(plotter)
+    CSCStub(plotter, text)
+    #GEMStub(plotter)
+    makeNDigis(plotter, text)
 
 def makeResolutionComparisonPlots(plotter, plotter2):
     CSCPosResolutionComparison(plotter, plotter2)
     CSCBendResolutionComparison(plotter, plotter2)
 
 def makeComparePlots(plotterlist, text):
-    #CSCStubComparison1DAll(plotterlist, text)
-    EMTFInputsCompare(plotterlist, text) 
+    CSCStubComparison1DAll(plotterlist, text)
+    #EMTFInputsCompare(plotterlist, text) 
