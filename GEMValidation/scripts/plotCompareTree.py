@@ -13,7 +13,7 @@ yGrid = 2
 
 setTDRStyle()
 
-iPeriod = 0
+iPeriod = -1
 iPos = 0
 if( iPos==0 ): CMS_lumi.relPosX = 0.12
 
@@ -336,16 +336,16 @@ for st in range(0, len(cscStations)):
     thistext = chamberstr 
     for it, todraw in enumerate(todrawlist):
         todraw = todraw + chamberstr
-        #xtitle = xtitlelist[it]
-        #cuts1 = genetacut1 +" && " +todraw +">0 "
-        #plotsuffix = "differentPt_"+todraw+"_noEMTFptCut"
-        #CompareTrees(filelist, todraw, ptlegs, xtitle, nhits_bins, cuts1, plotsuffix, thistext, outfolder_combined)
-        #cuts2 = genetacut2 +" && " +todraw +">0 "
-        #plotsuffix = "differentPt_"+todraw+"_Run2EMTFPTlargerv2"
-        #CompareTrees(filelist, todraw, ptlegs, xtitle, nhits_bins, cuts1, plotsuffix, thistext, outfolder_combined)
-        #cuts3 = genetacut3 +" && " +todraw +">0 "
-        #plotsuffix = "differentPt_"+todraw+"_Run2EMTFPTlargerv3"
-        #CompareTrees(filelist, todraw, ptlegs, xtitle, nhits_bins, cuts1, plotsuffix, thistext, outfolder_combined)
+        xtitle = xtitlelist[it]
+        cuts1 = genetacut1 +" && " +todraw +">0 "
+        plotsuffix = "differentPt_"+todraw+"_noEMTFptCut"
+        CompareTrees(filelist, todraw, ptlegs, xtitle, nhits_bins, cuts1, plotsuffix, thistext, outfolder_combined)
+        cuts2 = genetacut2 +" && " +todraw +">0 "
+        plotsuffix = "differentPt_"+todraw+"_Run2EMTFPTlargerv2"
+        CompareTrees(filelist, todraw, ptlegs, xtitle, nhits_bins, cuts1, plotsuffix, thistext, outfolder_combined)
+        cuts3 = genetacut3 +" && " +todraw +">0 "
+        plotsuffix = "differentPt_"+todraw+"_Run2EMTFPTlargerv3"
+        CompareTrees(filelist, todraw, ptlegs, xtitle, nhits_bins, cuts1, plotsuffix, thistext, outfolder_combined)
 
 varlist = ["totalcomps_dg_ME11","totalcomps_dg_ME21","totalcomps_dg_ME31","totalcomps_dg_ME41"]
 leglist = ["Total comparator hits in ME11", "Total comparator hits in ME21","Total comparator hits in ME31","Total comparator hits in ME41"]

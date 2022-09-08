@@ -16,7 +16,7 @@ xGrid=2
 yGrid=2
 setTDRStyle()
 
-iPeriod = 0
+iPeriod = -1
 iPos = 0
 if( iPos==0 ): CMS_lumi.relPosX = 0.12
 
@@ -732,4 +732,7 @@ def CSCStubComparisonAll(plotterlist, text):
     for st in range(0,len(cscStations)):
         CSCStubComparison(plotterlist, st, ok_csc_sh(st), ok_csc_clct(st), "CLCT", text)
         CSCStubComparison(plotterlist, st, ok_csc_sh(st), ok_csc_alct(st), "ALCT", text)
-        CSCStubComparison(plotterlist, st, ok_csc_sh(st), ok_csc_lct(st),   "LCT", text)
+        lctcut = TCut("(cscStub.has_lct_even[%d] && cscStub.matchtype_lct_even[%d]==3) || (cscStub.has_lct_odd[%d] && cscStub.matchtype_lct_odd[%d]==3)"%(st,st,st,st))
+        #print("LCT eff ",st," dencut ",ok_csc_sh(st)," numcut ",  ok_csc_lct(st))
+        #CSCStubComparison(plotterlist, st, ok_csc_sh(st), ok_csc_lct(st),   "LCT", text)
+        CSCStubComparison(plotterlist, st, ok_csc_sh(st), lctcut,   "LCT", text)

@@ -16,7 +16,7 @@ subdirectory = "efficiency/L1Mu/"
 
 setTDRStyle()
 
-iPeriod = 0
+iPeriod = -1
 iPos = 0
 if( iPos==0 ): CMS_lumi.relPosX = 0.12
 

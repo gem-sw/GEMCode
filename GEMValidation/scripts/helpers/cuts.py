@@ -218,7 +218,7 @@ def ok_3_csc_sh():
 def ok_4_csc_sh():
     return AND(ok_me1_sh, ok_me2_sh, ok_me3_sh, ok_me4_sh)
 
-def ok_csc_sh(n_min = 2):
+def ok_csc_sh_track(n_min = 2):
     if n_min == 2:
         return ok_2_csc_sh()
     elif n_min == 3:

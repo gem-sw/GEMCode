@@ -37,12 +37,18 @@ class GEMCSCStubPlotter():
   def getTree(self):
     return self.tree
 
-pT=1000
-inputFile = "out_gemcscana_%dGeV_all.root"%pT
-baseDir = "RelValpT%dplots/"%pT
+pT=10
+#inputFile = "out_gemcscana_%dGeV_all.root"%pT
+#baseDir = "RelValpT%dplots/"%pT
+inputFile = "out_gemcscana_%dGeV_all_condor_tightLCTmatch.root"%pT
+baseDir = "RelValpT%dplots_condor_tightLCTmatch/"%pT
 text="RelValpT%dGeV"%pT
+
+#inputFile = "out_gemcscana_test.root"
+#baseDir = "TestRelValpT%dplots/"%pT
+#text="RelValpT%dGeV"%pT
 ## needs to be cleaned up
-plotter  = GEMCSCStubPlotter(inputFile, baseDir, text)
+plotter  = GEMCSCStubPlotter(inputFile, baseDir, text, "GEMCSCAnalyzer")
 plotter.setLegend("Run3OldEmulator")
 plotter0 = GEMCSCStubPlotter(inputFile, baseDir, text, "GEMCSCAnalyzerRun2")
 plotter0.setLegend("Run2Emulator")
@@ -53,34 +59,36 @@ plotter3.setLegend("Run3WithDeadTimeNoILT")
 plotter4 = GEMCSCStubPlotter(inputFile, baseDir, text, "GEMCSCAnalyzerRun3CCLUTv2")
 #plotter4.setLegend("Run3NoCCLUTNoILT")
 plotter4.setLegend("Run3PreTrigMatch")
-plotter5 = GEMCSCStubPlotter(inputFile, baseDir, "GEMCSCAnalyzerRun3CCLUT")
+plotter5 = GEMCSCStubPlotter(inputFile, baseDir, text, "GEMCSCAnalyzerRun3CCLUT")
 plotter5.setLegend("Run3CCLUTNoILT")
-plotter6 = GEMCSCStubPlotter(inputFile, baseDir, "GEMCSCAnalyzerRun3CCLUTv0")
+plotter6 = GEMCSCStubPlotter(inputFile, baseDir, text, "GEMCSCAnalyzerRun3CCLUTv0")
 plotter6.setLegend("Run3NoDeadTimezone")
-#makeEfficiencyPlots(plotter , text)
-#makeResolutionPlots(plotter , text)
-#
-#makeEfficiencyPlots(plotter2, text)
+
+makeEfficiencyPlots(plotter , text)
+makeResolutionPlots(plotter , text)
+
+makeEfficiencyPlots(plotter2, text)
 makeResolutionPlots(plotter2, text)
-#makeNDigis(plotter2, text)
-#
-#makeEfficiencyPlots(plotter0, text)
+
+makeEfficiencyPlots(plotter0, text)
 makeResolutionPlots(plotter0, text)
-#makeNDigis(plotter0, text)
-#
-#makeEfficiencyPlots(plotter3, text)
-#makeResolutionPlots(plotter3, text)
-#
-#makeEfficiencyPlots(plotter4, text)
-#makeResolutionPlots(plotter4, text)
-#
+
+makeEfficiencyPlots(plotter3, text)
+makeResolutionPlots(plotter3, text)
+
+makeEfficiencyPlots(plotter4, text)
+makeResolutionPlots(plotter4, text)
+
 #plotterlist = [plotter0, plotter, plotter2, plotter5, plotter3, plotter4]
 #plotterlist = [plotter0, plotter, plotter2, plotter4]
 plotterlist = [plotter0, plotter, plotter2, plotter3, plotter6]
 ### efficiency comparison
-#makeEfficiencyComparisonPlots(plotterlist, text)
-#makeResolutionComparisonPlots(plotter0, plotter2)
-#makeComparePlots(plotterlist, text)
+makeEfficiencyComparisonPlots(plotterlist, text)
+makeResolutionComparisonPlots(plotter0, plotter2)
+makeComparePlots(plotterlist, text)
 treename = "compareTree"
 #analyzeTwoTrees(plotter0, plotter2, treename, "test"+inputFile.replace("gemcscana","compare"))
+#analyzeTwoTrees(plotter0, plotter2, treename, "totaldigi"+inputFile.replace("gemcscana","compare"))
+#analyzeTwoTrees(plotter6, plotter2, treename, "Run3deadtime"+inputFile.replace("gemcscana","compare"))
+#analyzeTwoTrees(plotter0, plotter6, treename, "ME11ineff"+inputFile.replace("gemcscana","compare"))
 

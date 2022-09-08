@@ -44,5 +44,5 @@ def makeEfficiencyPlots(plotter, text):
     #L1Track(plotter)
 
 def makeEfficiencyComparisonPlots(plotterlist, text):
-    #CSCStubComparisonAll(plotterlist, text)
+    CSCStubComparisonAll(plotterlist, text)
     L1MuComparisonEtaAll(plotterlist, text)
