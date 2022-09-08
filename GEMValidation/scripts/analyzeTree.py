@@ -11,6 +11,19 @@ def printCSCSimhitsInSimtrack(tree):
     if tree.has_csc_sh_odd[st]:
         print(cscStations[st].label," simhits in odd  ", tree.has_csc_sh_odd[st], " chamber ", tree.chamber_sh_odd[st]," eta ", tree.eta_csc_sh_odd[st]," phi ", tree.phi_csc_sh_odd[st]," strip ", tree.strip_csc_sh_odd[st])
 
+def printCSCCLCTInSimtrack(tree, st):
+    """print out stubs for the simtrack"""
+    chamberstring = "+%s"%(cscStations[st].label)
+    if tree.eta < 0.0:
+        chamberstring = "-%s"%(cscStations[st].label)
+    if tree.has_clct_even[st]:
+        chamberstring += "/%d"%tree.chamber_sh_even[st]
+        print(cscStations[st].label, " Stub in ", chamberstring, " hs %3d"%tree.hs_clct_even[st]," es %4d"%tree.es_clct_even[st]," bend %2d"%tree.bend_clct_even[st])
+    if tree.has_clct_odd[st]:
+        chamberstring += "/%d"%tree.chamber_sh_odd[st]
+        print(cscStations[st].label, " Stub in ", chamberstring, " hs %3d"%tree.hs_clct_odd[st]," es %4d"%tree.es_clct_odd[st]," bend %2d"%tree.bend_clct_odd[st])
+
+
 def printCSCStubInSimtrack(tree, st):
     """print out stubs for the simtrack"""
     chamberstring = "+%s"%(cscStations[st].label)
@@ -92,6 +105,12 @@ def analyzeTwoTrees(plotter0, plotter1, treename, filename):
     tree0_clct_st_bx               = []
     tree1_alct_st_bx               = []
     tree1_clct_st_bx               = []
+    tree0_lct_st_alctbx            = []
+    tree0_lct_st_clctbx            = []
+    tree1_lct_st_alctbx            = []
+    tree1_lct_st_clctbx            = []
+    tree0_lct_st_matchtype         = []
+    tree1_lct_st_matchtype         = []
     nwires_dg_st                   = []
     ncomps_dg_st                   = []
     nstrips_dg_st                  = []
@@ -112,6 +131,12 @@ def analyzeTwoTrees(plotter0, plotter1, treename, filename):
         tree0_clct_st_bx.append(array( 'f', maxn*[ 0 ]))
         tree1_alct_st_bx.append(array( 'f', maxn*[ 0 ]))
         tree1_clct_st_bx.append(array( 'f', maxn*[ 0 ]))
+        tree0_lct_st_alctbx.append(array( 'f', maxn*[ 0 ]))
+        tree0_lct_st_clctbx.append(array( 'f', maxn*[ 0 ]))
+        tree1_lct_st_alctbx.append(array( 'f', maxn*[ 0 ]))
+        tree1_lct_st_clctbx.append(array( 'f', maxn*[ 0 ]))
+        tree0_lct_st_matchtype.append(array( 'f', maxn*[ 0 ]))
+        tree1_lct_st_matchtype.append(array( 'f', maxn*[ 0 ]))
         nwires_dg_st.append(array( 'f', maxn*[ 0 ]))
         ncomps_dg_st.append(array( 'f', maxn*[ 0 ]))
         nstrips_dg_st.append(array( 'f', maxn*[ 0 ]))
@@ -188,6 +213,14 @@ def analyzeTwoTrees(plotter0, plotter1, treename, filename):
             tree0_lct_pattern_all[st][0] = max(tree0.bend_lct_odd[st], tree0.bend_lct_even[st])
             tree0_alct_st_bx[st][0]      = max(tree0.bx_alct_odd[st], tree0.bx_alct_even[st])
             tree0_clct_st_bx[st][0]      = max(tree0.bx_clct_odd[st], tree0.bx_clct_even[st])
+            if tree0.has_lct_even[st]:
+                tree0_lct_st_alctbx[st][0]      = tree0.alctbx_lct_even[st]
+                tree0_lct_st_clctbx[st][0]      = tree0.clctbx_lct_even[st]
+                tree0_lct_st_matchtype[st][0]   = tree0.matchtype_lct_even[st]
+            else:
+                tree0_lct_st_alctbx[st][0]      = tree0.alctbx_lct_odd[st]
+                tree0_lct_st_clctbx[st][0]      = tree0.clctbx_lct_odd[st]
+                tree0_lct_st_matchtype[st][0]   = tree0.matchtype_lct_odd[st]
             nwires_dg_st[st][0]          = max(tree0.nwires_dg_even[st], tree0.nwires_dg_odd[st])
             ncomps_dg_st[st][0]          = max(tree0.ncomparators_dg_even[st], tree0.ncomparators_dg_odd[st])
             nstrips_dg_st[st][0]         = max(tree0.nstrips_dg_even[st], tree0.nstrips_dg_odd[st])
@@ -225,6 +258,14 @@ def analyzeTwoTrees(plotter0, plotter1, treename, filename):
             tree1_lct_pattern_all[st][0] = max(tree1.bend_lct_odd[st], tree1.bend_lct_even[st])
             tree1_alct_st_bx[st][0]      = max(tree1.bx_alct_odd[st], tree1.bx_alct_even[st])
             tree1_clct_st_bx[st][0]      = max(tree1.bx_clct_odd[st], tree1.bx_clct_even[st])
+            if tree1.has_lct_even[st]:
+                tree1_lct_st_alctbx[st][0]      = tree1.alctbx_lct_even[st]
+                tree1_lct_st_clctbx[st][0]      = tree1.clctbx_lct_even[st]
+                tree1_lct_st_matchtype[st][0]   = tree1.matchtype_lct_even[st]
+            else:
+                tree1_lct_st_alctbx[st][0]      = tree1.alctbx_lct_odd[st]
+                tree1_lct_st_clctbx[st][0]      = tree1.clctbx_lct_odd[st]
+                tree1_lct_st_matchtype[st][0]   = tree1.matchtype_lct_odd[st]
 
         for st in range(0, 4):
             tree1_emtfhit_st_phi[st][0]      = getattr(tree1, "emtfhit_st%d_phi"%(st+1))
@@ -404,6 +445,12 @@ def analyzeTwoTrees(plotter0, plotter1, treename, filename):
         newTree.Branch("tree0_clct_bx_%s"%cscStations[st].labelc,       tree0_clct_st_bx[st],'I')
         newTree.Branch("tree1_alct_bx_%s"%cscStations[st].labelc,       tree1_alct_st_bx[st],'I')
         newTree.Branch("tree1_clct_bx_%s"%cscStations[st].labelc,       tree1_clct_st_bx[st],'I')
+        newTree.Branch("tree0_lct_alctbx_%s"%cscStations[st].labelc,    tree0_lct_st_alctbx[st],'I')
+        newTree.Branch("tree0_lct_clctbx_%s"%cscStations[st].labelc,    tree0_lct_st_clctbx[st],'I')
+        newTree.Branch("tree1_lct_alctbx_%s"%cscStations[st].labelc,    tree1_lct_st_alctbx[st],'I')
+        newTree.Branch("tree1_lct_clctbx_%s"%cscStations[st].labelc,    tree1_lct_st_clctbx[st],'I')
+        newTree.Branch("tree0_lct_matchtype_%s"%cscStations[st].labelc, tree0_lct_st_matchtype[st],'I')
+        newTree.Branch("tree1_lct_matchtype_%s"%cscStations[st].labelc, tree1_lct_st_matchtype[st],'I')
         newTree.Branch("ncomps_dg_%s"%cscStations[st].labelc,       ncomps_dg_st[st], 'I')
         newTree.Branch("nwires_dg_%s"%cscStations[st].labelc,       nwires_dg_st[st], 'I')
         newTree.Branch("nstrips_dg_%s"%cscStations[st].labelc,      nstrips_dg_st[st], 'I')
@@ -415,7 +462,7 @@ def analyzeTwoTrees(plotter0, plotter1, treename, filename):
     debuglist = {}
     debugevents = False
     nstart = 0
-    if debugevents: nstart=8385
+    #if debugevents: nstart=8385
     nevent = 0
     Totevents = 0; Badevents = 0
     evlist_display = open("eventlist_display%s.txt"%filename, "w+")
@@ -423,9 +470,10 @@ def analyzeTwoTrees(plotter0, plotter1, treename, filename):
     #for nEv in range(8385, 8500):
     for nEv in range(nstart, totalEntries0):
         nevent += 1
-        print("nevent ", nevent, " ievent from tree ", tree0.ievent)
         tree0.GetEntry(nEv)
         tree1.GetEntry(nEv)
+        if debugevents and not (tree0.ievent >= 2000 and tree0.ievent<=3000 ): continue
+        print("nevent ", nevent, " ievent from tree ", tree0.ievent)
 
         
         extractTree0()
@@ -467,16 +515,55 @@ def analyzeTwoTrees(plotter0, plotter1, treename, filename):
         #print("st1_dphi_emtfhit_sim0 ", st1_dphi_emtfhit_sim0, " st1_dphi_emtfhit_sim1 ", st1_dphi_emtfhit_sim1," diff ", abs(st1_dphi_emtfhit_sim1-st1_dphi_emtfhit_sim0))
         #if st1_dphi_emtfhit_sim1 > -9 and st1_dphi_emtfhit_sim0 > -9 and abs(st1_dphi_emtfhit_sim1-st1_dphi_emtfhit_sim0)>0.001:
         if abs(tree0.eta)>1.65: Totevents += 1 
-        if tree0.emtf_pt >= 20 and tree1.emtf_pt < 20 and abs(tree0.eta)>1.65 and debugevents:
+        chamberlist = ""; endcap = "+"
+        if tree0.eta < 0.0: endcap = "-"
+
+        ch_st1 = None; ch_st2 = None
+        ch_display = ""
+        dodisplay = False
+        #if (tree0.matchtype_lct_odd[5]==2 and tree1.matchtype_lct_odd[5]==3) or (tree0.matchtype_lct_even[5]==2 and tree1.matchtype_lct_even[5]==3) and debugevents:
+        if max(tree0.totalwires_dg_even[5],       tree0.totalwires_dg_odd[5]) > 60 and  debugevents and False:
+            print("-------------------------- Analyzing the ievent ",tree0.ievent," nEv ", nevent," with tree0 too many wire digis -------------------")
+            Badevents += 1
+            print("total wire digis ",  max(tree0.totalwires_dg_even[5],       tree0.totalwires_dg_odd[5]))
+            if abs(tree0.eta)>1.65 and (tree0.has_csc_sh_odd[5] or tree0.has_csc_sh_even[5]):
+                chstr = "/%d"%tree0.chamber_sh_odd[5]
+                if tree0.has_csc_sh_even[5]: chstr = "/%d"%tree0.chamber_sh_even[5]
+                ch_st1 = int(chstr[1:])
+                chamberlist = cscStations[5].label[:2]+endcap+cscStations[5].label[2:]+chstr+","
+                ##format: run event endcap station ring chamber
+                if tree0.eta < 0.0: ch_display += "1 %d 2 2 1 %d,"%(tree0.ievent, ch_st1)
+                else: ch_display += "1 %d 1 2 1 %d,"%(tree0.ievent, ch_st1)
+                #debuglist[tree0.ievent] = chamberlist[:-1]
+                dodisplay = True
+                print("bad event with chamber ", chamberlist[:-1], " display format ", ch_display)
+
+        if (tree0.has_lct_odd[0] or tree0.has_lct_even[0]) and not(tree1.has_lct_odd[0] or tree1.has_lct_even[0]) and debugevents:
+            print("-------------------------- Analyzing the ievent ",tree0.ievent," nEv ", nevent," with tree0 has LCT but not tree1 ----------------------------")
+            if (tree1.has_clct_odd[0] or tree1.has_clct_even[0]): print("CLCT in Tree1")
+            if (tree1.has_alct_odd[0] or tree1.has_alct_even[0]): print("ALCT in Tree1")
+            #printEmtfTrack(tree0)
+            #printCSCCLCTInSimtrack(tree0, 0)
+            printCSCStubInSimtrack(tree0, 0)
+            printCSCStubInSimtrack(tree1, 0)
+            Badevents += 1
+            if abs(tree0.eta)>1.65 and (tree0.has_csc_sh_odd[0] or tree0.has_csc_sh_even[0]):
+                chstr = "/%d"%tree0.chamber_sh_odd[0]
+                if tree0.has_csc_sh_even[0]: chstr = "/%d"%tree0.chamber_sh_even[0]
+                ch_st1 = int(chstr[1:])
+                chamberlist = cscStations[0].label[:2]+endcap+cscStations[0].label[2:]+chstr+","
+                if tree0.eta < 0.0: ch_display += "1 %d 2 1 1 %d,"%(tree0.ievent, ch_st1)
+                else: ch_display += "1 %d 1 1 1 %d,"%(tree0.ievent, ch_st1)
+                #debuglist[tree0.ievent] = chamberlist[:-1]
+                dodisplay = True
+                print("bad event with chamber ", chamberlist[:-1], " display format ", ch_display)
+
+        if tree0.emtf_pt >= 20 and tree1.emtf_pt < 20 and abs(tree0.eta)>1.65 and debugevents and False:
             print("-------------------------- Analyzing the ievent ",tree0.ievent," nEv ", nevent," with different phi from CSC stub ----------------------------")
             print("\t ========= Analyzer ", plotter0.analyzer, " =========")
             printEmtfTrack(tree0)
             Badevents += 1
-            chamberlist = ""; endcap = "+"
-            if tree0.eta < 0.0: endcap = "-"
 
-            ch_st1 = None; ch_st2 = None
-            ch_display = ""
             if abs(tree0.eta)>1.65 and (tree0.has_lct_odd[0] or tree0.has_lct_even[0]):
                 printCSCStubInSimtrack(tree0, 0)
                 chstr = "/%d"%tree0.chamber_lct_odd[0]
@@ -535,7 +622,7 @@ def analyzeTwoTrees(plotter0, plotter1, treename, filename):
             if abs(tree1.eta)>1.65 and (tree1.has_lct_odd[9] or tree1.has_lct_even[9]):
                 printCSCStubInSimtrack(tree1, 9)
             if ch_st1 and tree0.emtfhit_st1_phi > -9 and abs(deltaPhi(tree0.emtfhit_st1_phi, tree1.emtfhit_st1_phi)) > 0.003:
-                ##format: run event endcap ring chamber
+                ##format: run event endcap station ring chamber
                 if tree0.eta < 0.0: ch_display += "1 %d 2 1 1 %d,"%(tree0.ievent, ch_st1)
                 else: ch_display += "1 %d 1 1 1 %d,"%(tree0.ievent, ch_st1)
             if ch_st2 and tree0.emtfhit_st2_phi > -9 and abs(deltaPhi(tree0.emtfhit_st2_phi, tree1.emtfhit_st2_phi)) > 0.003:
@@ -547,9 +634,11 @@ def analyzeTwoTrees(plotter0, plotter1, treename, filename):
             if ch_st2 and tree0.emtfhit_st4_phi > -9 and abs(deltaPhi(tree0.emtfhit_st4_phi, tree1.emtfhit_st4_phi)) > 0.003:
                 if tree0.eta < 0.0: ch_display += "1 %d 2 4 1 %d,"%(tree0.ievent, ch_st2)
                 else: ch_display += "1 %d 1 4 1 %d,"%(tree0.ievent, ch_st2)
+            dodisplay = True
 
+        if dodisplay:
             print("list of chambers ", chamberlist[:-1], "\n")
-            print("event for display ", ch_display)
+            print("chambers in display format", ch_display)
             if ch_display != "":
                 for ch in ch_display.split(",")[:-1]:
                     evlist_display.write(ch+"\n")

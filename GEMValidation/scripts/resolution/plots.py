@@ -23,7 +23,7 @@ def makeDir(plotter):
 def makeResolutionPlots(plotter, text):
     makeDir(plotter)
     CSCStub(plotter, text)
-    #GEMStub(plotter)
+    GEMStub(plotter)
     makeNDigis(plotter, text)
 
 def makeResolutionComparisonPlots(plotter, plotter2):
@@ -32,4 +32,4 @@ def makeResolutionComparisonPlots(plotter, plotter2):
 
 def makeComparePlots(plotterlist, text):
     CSCStubComparison1DAll(plotterlist, text)
-    #EMTFInputsCompare(plotterlist, text) 
+    EMTFInputsCompare(plotterlist, text) 
