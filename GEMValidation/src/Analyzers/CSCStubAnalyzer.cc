@@ -509,8 +509,18 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
     const GlobalPoint& gp = match_->getGlobalPosition(d, lct);
 
     const bool odd(id.chamber()%2==1);
+    // when  matchTypeTight = false, then it would allow to do  LCT-simtrack match with ALCT=only or CLCT-only 
+    int matchType = 0; //1:ALCTonly, 2:CLCTonly, 3:ALCT_CLCT or ALCT_GEMCopad or CLCT_copad
+    const auto& alct = match_->bestAlctInChamber(d);
+    const auto& clct = match_->bestClctInChamber(d);
+    if (alct.isValid() and clct.isValid() and lct.getCLCT() == clct and lct.getALCT() == alct)
+      matchType = 3;
+    else if (clct.isValid() and lct.getCLCT() == clct)
+      matchType = 2;
+    else if (alct.isValid() and lct.getALCT() == alct)
+      matchType = 1;
 
-    auto fill = [lct, gp, odd, id](gem::CSCStubStruct& cscStubTree, int st) mutable {
+    auto fill = [lct, gp, odd, id, matchType](gem::CSCStubStruct& cscStubTree, int st) mutable {
       if (odd) {
         cscStubTree.has_lct_odd[st] = true;
         cscStubTree.bend_lct_odd[st] = lct.getPattern();
@@ -518,6 +528,14 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
         cscStubTree.eta_lct_odd[st] = gp.eta();
         cscStubTree.perp_lct_odd[st] = gp.perp();
         cscStubTree.bx_lct_odd[st] = lct.getBX();
+        cscStubTree.alctbx_lct_odd[st] = lct.getALCT().isValid() ? lct.getALCT().getBX() : 0;
+        cscStubTree.clctbx_lct_odd[st] = lct.getCLCT().isValid() ? lct.getCLCT().getBX() : 0;
+        cscStubTree.clctpattern_lct_odd[st] = lct.getCLCT().isValid() ? lct.getCLCT().getPattern() : -1;
+        cscStubTree.clctquality_lct_odd[st] = lct.getCLCT().isValid() ? lct.getCLCT().getQuality() : -1;
+        cscStubTree.bxdiff_lct_odd[st] = (lct.getCLCT().isValid() and lct.getALCT().isValid()) ? \
+         (lct.getALCT().getBX()-lct.getCLCT().getBX() ) : -9;
+        cscStubTree.matchtype_lct_odd[st] = matchType;
+        cscStubTree.simtype_lct_odd[st] = lct.getType();
         cscStubTree.hs_lct_odd[st] = lct.getStrip();
         cscStubTree.qs_lct_odd[st] = lct.getStrip(4);
         cscStubTree.es_lct_odd[st] = lct.getStrip(8);
@@ -532,6 +550,14 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
         cscStubTree.eta_lct_even[st] = gp.eta();
         cscStubTree.perp_lct_even[st] = gp.perp();
         cscStubTree.bx_lct_even[st] = lct.getBX();
+        cscStubTree.alctbx_lct_even[st] = lct.getALCT().isValid() ? lct.getALCT().getBX() : 0;
+        cscStubTree.clctbx_lct_even[st] = lct.getCLCT().isValid() ? lct.getCLCT().getBX() : 0;
+        cscStubTree.clctpattern_lct_even[st] = lct.getCLCT().isValid() ? lct.getCLCT().getPattern() : -1;
+        cscStubTree.clctquality_lct_even[st] = lct.getCLCT().isValid() ? lct.getCLCT().getQuality() : -1;
+        cscStubTree.bxdiff_lct_even[st] = (lct.getCLCT().isValid() and lct.getALCT().isValid()) ? \
+         (lct.getALCT().getBX()-lct.getCLCT().getBX() ) : -9;
+        cscStubTree.matchtype_lct_even[st] = matchType;
+        cscStubTree.simtype_lct_even[st] = lct.getType();
         cscStubTree.hs_lct_even[st] = lct.getStrip();
         cscStubTree.qs_lct_even[st] = lct.getStrip(4);
         cscStubTree.es_lct_even[st] = lct.getStrip(8);
