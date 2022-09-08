@@ -26,6 +26,22 @@ namespace gem {
     int bx_alct_even[nStations];
     int bx_clct_even[nStations];
 
+    int alctbx_lct_odd[nStations];
+    int clctbx_lct_odd[nStations];
+    int bxdiff_lct_odd[nStations];
+    int matchtype_lct_odd[nStations];
+    int simtype_lct_odd[nStations];
+    int alctbx_lct_even[nStations];
+    int clctbx_lct_even[nStations];
+    int bxdiff_lct_even[nStations];
+    int matchtype_lct_even[nStations];
+    int simtype_lct_even[nStations];
+
+    int clctquality_lct_odd[nStations];
+    int clctquality_lct_even[nStations];
+    int clctpattern_lct_odd[nStations];
+    int clctpattern_lct_even[nStations];
+
     int bend_clct_odd[nStations];
     int bend_clct_even[nStations];
 
@@ -76,8 +92,6 @@ namespace gem {
     int quality_alct_even[nStations];
     int quality_lct_odd[nStations];
     int quality_lct_even[nStations];
-
-    int lct_type[nStations];
 
     // floats
     float phi_lct_odd[nStations];
@@ -149,6 +163,22 @@ namespace gem {
 
         bx_lct_odd[i] = -9;
         bx_lct_even[i] = -9;
+
+
+        alctbx_lct_odd[i] = -9;
+        clctbx_lct_odd[i] = -9;
+        bxdiff_lct_odd[i] = -9;
+        matchtype_lct_odd[i] = -1;
+        simtype_lct_odd[i] = -1;
+        alctbx_lct_even[i] = -9;
+        clctbx_lct_even[i] = -9;
+        bxdiff_lct_even[i] = -9;
+        matchtype_lct_even[i] = -1;
+        simtype_lct_even[i] = -1;
+        clctquality_lct_odd [i] = -9;
+        clctquality_lct_odd [i] = -9;
+        clctpattern_lct_even[i] = -9;
+        clctpattern_lct_even[i] = -9;
 
         hs_lct_odd[i] = 0;
         hs_lct_even[i] = 0;
@@ -231,8 +261,6 @@ namespace gem {
         bx_alct_odd[i] = -9;
         bx_alct_even[i] = -9;
 
-        lct_type[i] = -1;
-
         run3slope_clct_odd[i] = -99;
         run3slope_clct_even[i] = -99;
 
@@ -295,6 +323,20 @@ namespace gem {
 
       t->Branch("bx_lct_odd", bx_lct_odd, "bx_lct_odd[11]/I");
       t->Branch("bx_lct_even", bx_lct_even, "bx_lct_even[11]/I");
+      t->Branch("alctbx_lct_odd",  alctbx_lct_odd,  "alctbx_lct_odd[11]/I");
+      t->Branch("alctbx_lct_even", alctbx_lct_even, "alctbx_lct_even[11]/I");
+      t->Branch("clctbx_lct_odd",  clctbx_lct_odd,  "clctbx_lct_odd[11]/I");
+      t->Branch("clctbx_lct_even", clctbx_lct_even, "clctbx_lct_even[11]/I");
+      t->Branch("clctpattern_lct_odd",  clctpattern_lct_odd,  "clctpattern_lct_odd[11]/I");
+      t->Branch("clctpattern_lct_even", clctpattern_lct_even, "clctpattern_lct_even[11]/I");
+      t->Branch("clctquality_lct_odd",  clctquality_lct_odd,  "clctquality_lct_odd[11]/I");
+      t->Branch("clctquality_lct_even", clctquality_lct_even, "clctquality_lct_even[11]/I");
+      t->Branch("bxdiff_lct_odd",  bxdiff_lct_odd,  "bxdiff_lct_odd[11]/I");
+      t->Branch("bxdiff_lct_even", bxdiff_lct_even, "bxdiff_lct_even[11]/I");
+      t->Branch("matchtype_lct_odd",  matchtype_lct_odd,  "matchtype_lct_odd[11]/I");
+      t->Branch("matchtype_lct_even", matchtype_lct_even, "matchtype_lct_even[11]/I");
+      t->Branch("simtype_lct_odd",  simtype_lct_odd,  "simtype_lct_odd[11]/I");
+      t->Branch("simtype_lct_even", simtype_lct_even, "simtype_lct_even[11]/I");
 
       t->Branch("hs_lct_odd", hs_lct_odd, "hs_lct_odd[11]/I");
       t->Branch("hs_lct_even", hs_lct_even, "hs_lct_even[11]/I");
@@ -361,8 +403,6 @@ namespace gem {
 
       t->Branch("passdphi_odd", passdphi_odd, "passdphi_odd[11]/F");
       t->Branch("passdphi_even", passdphi_even, "passdphi_even[11]/F");
-
-      t->Branch("lct_type", lct_type, "lct_type[11]/I");
 
       t->Branch("run3slope_clct_odd",  run3slope_clct_odd,  "run3slope_clct_odd[11]/I");
       t->Branch("run3slope_clct_even", run3slope_clct_even, "run3slope_clct_even[11]/I");
