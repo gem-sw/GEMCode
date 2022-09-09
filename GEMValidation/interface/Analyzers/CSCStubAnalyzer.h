@@ -65,6 +65,7 @@ public:
   int minBXLCT_, maxBXLCT_;
   int minBXMPLCT_, maxBXMPLCT_;
   int minBXShower_, maxBXShower_;
+  int matchDeltaStrip_, matchDeltaWG_;
 
   // best here means "closest in phi"
   std::pair<GEMDigi, GlobalPoint>

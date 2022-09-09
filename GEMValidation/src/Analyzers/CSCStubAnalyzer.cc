@@ -4,6 +4,13 @@
 
 CSCStubAnalyzer::CSCStubAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCollector&& iC)
 {
+  //get detlaWG and deltaStrip for finding out the LCT match type
+  const auto& wireDigi = conf.getParameter<edm::ParameterSet>("cscWireDigi");
+  matchDeltaWG_ = wireDigi.getParameter<int>("matchDeltaWG");
+
+  const auto& stripDigi = conf.getParameter<edm::ParameterSet>("cscStripDigi");
+  matchDeltaStrip_ = stripDigi.getParameter<int>("matchDeltaStrip");
+
   const auto& cscPreCLCT = conf.getParameter<edm::ParameterSet>("cscPreCLCT");
   minBXPreCLCT_ = cscPreCLCT.getParameter<int>("minBX");
   maxBXPreCLCT_ = cscPreCLCT.getParameter<int>("maxBX");
@@ -513,11 +520,12 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
     int matchType = 0; //1:ALCTonly, 2:CLCTonly, 3:ALCT_CLCT or ALCT_GEMCopad or CLCT_copad
     const auto& alct = match_->bestAlctInChamber(d);
     const auto& clct = match_->bestClctInChamber(d);
-    if (alct.isValid() and clct.isValid() and lct.getCLCT() == clct and lct.getALCT() == alct)
+    if (alct.isValid() and clct.isValid() and (abs(lct.getStrip()-clct.getKeyStrip())<=matchDeltaStrip_*2)\ 
+      and abs(lct.getKeyWG() - alct.getKeyWG())<=matchDeltaWG_)
       matchType = 3;
-    else if (clct.isValid() and lct.getCLCT() == clct)
+    else if (clct.isValid() and abs(lct.getStrip()-clct.getKeyStrip())<=matchDeltaStrip_*2)
       matchType = 2;
-    else if (alct.isValid() and lct.getALCT() == alct)
+    else if (alct.isValid() and abs(lct.getKeyWG() - alct.getKeyWG()) <=matchDeltaWG_)
       matchType = 1;
 
     auto fill = [lct, gp, odd, id, matchType](gem::CSCStubStruct& cscStubTree, int st) mutable {
