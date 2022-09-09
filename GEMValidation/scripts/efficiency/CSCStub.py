@@ -16,7 +16,7 @@ xGrid=2
 yGrid=2
 setTDRStyle()
 
-iPeriod = -1
+iPeriod = 0 ## use -1 to hide PU
 iPos = 0
 if( iPos==0 ): CMS_lumi.relPosX = 0.12
 
@@ -661,9 +661,169 @@ def MultipleCSCLCTL(plotter):
 
     del c, base, h1, leg
 
+def CSCALCTEffVsNHits(plotter, text, Nhits_thresholds):
+
+    xTitle = "Generated muon |#eta|"
+    yTitle = "ALCT Efficiency"
+    title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
+    toPlot = "TMath::Abs(eta)"
+    for st in range(0,len(cscStations)):
+
+        h_bins = "(25,%f,%f)"%(cscStations[st].eta_min,cscStations[st].eta_max)
+        nBins = int(h_bins[1:-1].split(',')[0])
+        minBin = float(h_bins[1:-1].split(',')[1])
+        maxBin = float(h_bins[1:-1].split(',')[2])
+
+        c = newCanvas()
+        gPad.SetGridx(xGrid)
+        gPad.SetGridy(yGrid)
+        base  = TH1F("base",title,nBins,minBin,maxBin)
+        base.SetMinimum(0.0)
+        base.SetMaximum(plotter.yMax+0.05)
+        base.GetXaxis().SetLabelSize(0.05)
+        base.GetYaxis().SetLabelSize(0.05)
+        base.GetXaxis().SetTitleSize(0.05)
+        base.GetYaxis().SetTitleSize(0.05)
+
+        histlist = []
+        for i,nhits in enumerate(Nhits_thresholds):
+            hitscut = None
+            if i < len(Nhits_thresholds)/2.0:
+                hitscut = TCut("(has_csc_sh_even[%d] && totalwires_dg_even[%d]<=%d) || (has_csc_sh_odd[%d] && totalwires_dg_odd[%d]<=%d)"%(st,st,nhits,st,st,nhits))
+            else:
+                hitscut = TCut("(has_csc_sh_even[%d] && totalwires_dg_even[%d]>=%d) || (has_csc_sh_odd[%d] && totalwires_dg_odd[%d]>=%d)"%(st,st,nhits,st,st,nhits))
+            histlist.append(draw_geff(plotter.tree, title, h_bins, toPlot, hitscut, ok_csc_alct(st), "same", kcolors[i], markers[i]))
+
+        base.Draw("")
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+        leg = TLegend(0.45,0.15,.75,0.15+0.04*len(Nhits_thresholds), "", "brNDC");
+        leg.SetBorderSize(0)
+        leg.SetFillStyle(0)
+        leg.SetTextSize(0.04)
+        for i, hist in enumerate(histlist):
+            hist.Draw("same")
+            if i < len(Nhits_thresholds)/2.0:
+                leg.AddEntry(hist, "Total wire digis <= %d"%Nhits_thresholds[i],"pl")
+            else:
+                leg.AddEntry(hist, "Total wire digis >= %d"%Nhits_thresholds[i],"pl")
+        leg.Draw("same");
+
+        csc = drawCSCLabel(cscStations[st].label, 0.85,0.85,0.05)
+        txt = drawCSCLabel(text, 0.15,0.25,0.035)
+
+        c.Print("%sEff_CSCALCT_vs_totalwiredigis_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
+        del c, base, leg, csc, histlist,txt
 
 
-def CSCStub(plotter):
+def CSCCLCTEffVsNHits(plotter, text, Nhits_thresholds):
+
+    xTitle = "Generated muon |#eta|"
+    yTitle = "CLCT Efficiency"
+    title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
+    toPlot = "TMath::Abs(eta)"
+    for st in range(0,len(cscStations)):
+
+        h_bins = "(25,%f,%f)"%(cscStations[st].eta_min,cscStations[st].eta_max)
+        nBins = int(h_bins[1:-1].split(',')[0])
+        minBin = float(h_bins[1:-1].split(',')[1])
+        maxBin = float(h_bins[1:-1].split(',')[2])
+
+        c = newCanvas()
+        gPad.SetGridx(xGrid)
+        gPad.SetGridy(yGrid)
+        base  = TH1F("base",title,nBins,minBin,maxBin)
+        base.SetMinimum(0.0)
+        base.SetMaximum(plotter.yMax+0.05)
+        base.GetXaxis().SetLabelSize(0.05)
+        base.GetYaxis().SetLabelSize(0.05)
+        base.GetXaxis().SetTitleSize(0.05)
+        base.GetYaxis().SetTitleSize(0.05)
+
+        histlist = []
+        for i,nhits in enumerate(Nhits_thresholds):
+            hitscut = None
+            if i < len(Nhits_thresholds)/2.0:
+                hitscut = TCut("(has_csc_sh_even[%d] && totalcomparators_dg_even[%d]<=%d) || (has_csc_sh_odd[%d] && totalcomparators_dg_odd[%d]<=%d)"%(st,st,nhits,st,st,nhits))
+            else:
+                hitscut = TCut("(has_csc_sh_even[%d] && totalcomparators_dg_even[%d]>=%d) || (has_csc_sh_odd[%d] && totalcomparators_dg_odd[%d]>=%d)"%(st,st,nhits,st,st,nhits))
+            histlist.append(draw_geff(plotter.tree, title, h_bins, toPlot, hitscut, ok_csc_clct(st), "same", kcolors[i], markers[i]))
+
+        base.Draw("")
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+        leg = TLegend(0.45,0.15,.78,0.15+0.04*len(Nhits_thresholds), "", "brNDC");
+        leg.SetBorderSize(0)
+        leg.SetFillStyle(0)
+        leg.SetTextSize(0.04)
+        for i, hist in enumerate(histlist):
+            hist.Draw("same")
+            if i < len(Nhits_thresholds)/2.0:
+                leg.AddEntry(hist, "Total comparator digis <= %d"%Nhits_thresholds[i],"pl")
+            else:
+                leg.AddEntry(hist, "Total comparator digis >= %d"%Nhits_thresholds[i],"pl")
+        leg.Draw("same");
+
+        csc = drawCSCLabel(cscStations[st].label, 0.85,0.85,0.05)
+        txt = drawCSCLabel(text, 0.15,0.25,0.035)
+
+        c.Print("%sEff_CSCCLCT_vs_totalcompdigis_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
+        del c, base, leg, csc, histlist,txt
+
+
+def CSCLCTEffVsNHits(plotter, text, Nhits_thresholds):
+
+    xTitle = "Generated muon |#eta|"
+    yTitle = "LCT Efficiency"
+    title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
+    toPlot = "TMath::Abs(eta)"
+    for st in range(0,len(cscStations)):
+
+        h_bins = "(25,%f,%f)"%(cscStations[st].eta_min,cscStations[st].eta_max)
+        nBins = int(h_bins[1:-1].split(',')[0])
+        minBin = float(h_bins[1:-1].split(',')[1])
+        maxBin = float(h_bins[1:-1].split(',')[2])
+
+        c = newCanvas()
+        gPad.SetGridx(xGrid)
+        gPad.SetGridy(yGrid)
+        base  = TH1F("base",title,nBins,minBin,maxBin)
+        base.SetMinimum(0.0)
+        base.SetMaximum(plotter.yMax+0.05)
+        base.GetXaxis().SetLabelSize(0.05)
+        base.GetYaxis().SetLabelSize(0.05)
+        base.GetXaxis().SetTitleSize(0.05)
+        base.GetYaxis().SetTitleSize(0.05)
+
+        histlist = []
+        for i,nhits in enumerate(Nhits_thresholds):
+            hitscut = None
+            if i < len(Nhits_thresholds)/2.0:
+                hitscut = TCut("(has_csc_sh_even[%d] && totalcomparators_dg_even[%d]<=%d) || (has_csc_sh_odd[%d] && totalcomparators_dg_odd[%d]<=%d)"%(st,st,nhits,st,st,nhits))
+            else:
+                hitscut = TCut("(has_csc_sh_even[%d] && totalcomparators_dg_even[%d]>=%d) || (has_csc_sh_odd[%d] && totalcomparators_dg_odd[%d]>=%d)"%(st,st,nhits,st,st,nhits))
+            histlist.append(draw_geff(plotter.tree, title, h_bins, toPlot, hitscut, ok_csc_lct(st), "same", kcolors[i], markers[i]))
+
+        base.Draw("")
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+        leg = TLegend(0.45,0.15,.78,0.15+0.04*len(Nhits_thresholds), "", "brNDC");
+        leg.SetBorderSize(0)
+        leg.SetFillStyle(0)
+        leg.SetTextSize(0.04)
+        for i, hist in enumerate(histlist):
+            hist.Draw("same")
+            if i < len(Nhits_thresholds)/2.0:
+                leg.AddEntry(hist, "Total comparator digis <= %d"%Nhits_thresholds[i],"pl")
+            else:
+                leg.AddEntry(hist, "Total comparator digis >= %d"%Nhits_thresholds[i],"pl")
+        leg.Draw("same");
+
+        csc = drawCSCLabel(cscStations[st].label, 0.85,0.85,0.05)
+        txt = drawCSCLabel(text, 0.15,0.25,0.035)
+
+        c.Print("%sEff_CSCLCT_vs_totalcompdigis_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
+        del c, base, leg, csc, histlist,txt
+
+
+def CSCStub(plotter, text=""):
     CSCALCT(plotter)
     CSCALCTL(plotter)
     CSCCLCT(plotter)
@@ -679,6 +839,10 @@ def CSCStub(plotter):
     MultipleCSCLCTEta(plotter)
     MultipleCSCLCTPhi(plotter)
     MultipleCSCLCTL(plotter)
+    Nhits_thresholds = [6, 9, 12, 15,18, 21]
+    CSCALCTEffVsNHits(plotter, text, Nhits_thresholds)
+    CSCCLCTEffVsNHits(plotter, text, Nhits_thresholds)
+    CSCLCTEffVsNHits(plotter, text, Nhits_thresholds)
 
 def CSCStubComparison(plotterlist, st, dencut, numcut, plotsuffix, text):
 
@@ -728,6 +892,7 @@ def CSCStubComparison(plotterlist, st, dencut, numcut, plotsuffix, text):
 
 
 def CSCStubComparisonAll(plotterlist, text):
+
     
     for st in range(0,len(cscStations)):
         CSCStubComparison(plotterlist, st, ok_csc_sh(st), ok_csc_clct(st), "CLCT", text)

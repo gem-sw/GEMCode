@@ -17,6 +17,7 @@ iPeriod = -1
 iPos = 0
 if( iPos==0 ): CMS_lumi.relPosX = 0.12
 
+## scripts to compare two TTrees
 def CompareTrees(filelist, var, leglist, xtitle, h_bins, cuts, plotsuffix, text, outfolder):
     """ compare the variable between stubs used by EMTF and stubs matched to simtrack """
 
@@ -161,6 +162,8 @@ def compare2D(t, title, xbins, ybins, xtodraw, ytodraw, cuts, text, plotsuffix, 
     hist = draw_2D(t, title, xbins, ybins, "%s:%s"%(ytodraw, xtodraw), cuts, "")
     drawopt = "colz"
     if max(xnBins, ynBins) <= 20:
+        hist.SetMarkerSize(2)
+        hist.SetMarkerColor(kRed)
         drawopt = "colztext"
     hist.Draw(drawopt)
     hist.GetXaxis().SetLabelSize(0.04)
@@ -222,10 +225,11 @@ def EMTFEtaEff(tree, dencutlist, numcutlist, leglist, text, plotsuffix, outfolde
 
 
 pT= 1000
-outfolder = "Compareplots%dGeV/"%pT
+suffix="_condor_looseLCTmatch20220908v2"
+outfolder = "Compareplots%dGeV%s/"%(pT,suffix)
 if not os.path.isdir(outfolder):
     os.mkdir(outfolder)
-inputFile = "testout_compare_%dGeV_all.root"%pT
+inputFile = "testout_compare_%dGeV_all%s.root"%(pT, suffix)
 text= "RelValpT%dGeV"%pT
 tfile = TFile.Open(inputFile)
 treename = "compareTree"
@@ -266,6 +270,21 @@ for n in range(6, 17):
     plotsuffix= "EMTFTrackpT_Run2vsRun3_ring1_allstation_nwiresthreshgreater%d"%n
     compare2D(tree, title, xbins_pt, xbins_pt, xtodraw_pt, ytodraw_pt, emtfcut, text, plotsuffix, outfolder)
 
+
+for st in range(0, len(cscStations)):
+    if st == 1 or st==2: continue
+    xTitle="LCT match type, Run3 emualtor"
+    yTitle="LCT match type, Run2 emualtor"
+    title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
+    chamberstr = cscStations[st].labelc
+    thistext = chamberstr 
+    lctmatch_title = "LCT Match type in %s"%chamberstr+"Run2 Emulator vs Run3 Emulator"
+    lctmatchtype_bins = "(5,-1,4)"
+    matchtypey = "tree0_lct_matchtype_%s"%cscStations[st].labelc
+    matchtypex = "tree1_lct_matchtype_%s"%cscStations[st].labelc
+    matchtypecut = "tree0_lct_matchtype_%s>0"%cscStations[st].labelc
+    plotsuffix = "lct_matchtype_Run2vsRun3_%s"%cscStations[st].labelc
+    compare2D(tree, title, lctmatchtype_bins, lctmatchtype_bins, matchtypex, matchtypey, matchtypecut, text, plotsuffix, outfolder)
 
 plotsuffix = "missstub_Run2EMTFpTG20_Run3EMTFpTL20"
 plotsuffix2 = "matchstub_Run2EMTFpTG20_Run3EMTFpTL20"
@@ -320,32 +339,34 @@ EMTFEtaEff(tree, dencutlist_wires2, numcutlist_nhits0, leglist_wires2, text, plo
 plotsuffix = "EMTFEff_Run3Emulator_dennwiresmax_numempt20"
 EMTFEtaEff(tree, dencutlist_wires2, numcutlist_nhits1, leglist_wires2, text, plotsuffix, outfolder)
 
-
-filelist = ["out_compare_10GeV_all.root", "out_compare_100GeV_all.root", "out_compare_1000GeV_all.root"]
-ptlegs = ["sim muon, pT=10GeV","sim muon, pT=100GeV","sim muon, pT=1000GeV"]
 nhits_bins = "(60,0,60)"
-todrawlist = ["totalcomps_dg_","totalwires_dg_"]
-xtitlelist = ["Total comparator digis", "Total wire digis"]
-outfolder_combined = "Compareplots_allpTs/"
-genetacut1 = "abs(tree1_gen_eta)>1.60"
-genetacut2 = "abs(tree1_gen_eta)>1.60 && tree0_emtf_pt > tree1_emtf_pt*2"
-genetacut3 = "abs(tree1_gen_eta)>1.60 && tree0_emtf_pt > 20 && tree1_emtf_pt < 20"
-for st in range(0, len(cscStations)):
-    if st == 1 or st==2: continue
-    chamberstr = cscStations[st].labelc
-    thistext = chamberstr 
-    for it, todraw in enumerate(todrawlist):
-        todraw = todraw + chamberstr
-        xtitle = xtitlelist[it]
-        cuts1 = genetacut1 +" && " +todraw +">0 "
-        plotsuffix = "differentPt_"+todraw+"_noEMTFptCut"
-        CompareTrees(filelist, todraw, ptlegs, xtitle, nhits_bins, cuts1, plotsuffix, thistext, outfolder_combined)
-        cuts2 = genetacut2 +" && " +todraw +">0 "
-        plotsuffix = "differentPt_"+todraw+"_Run2EMTFPTlargerv2"
-        CompareTrees(filelist, todraw, ptlegs, xtitle, nhits_bins, cuts1, plotsuffix, thistext, outfolder_combined)
-        cuts3 = genetacut3 +" && " +todraw +">0 "
-        plotsuffix = "differentPt_"+todraw+"_Run2EMTFPTlargerv3"
-        CompareTrees(filelist, todraw, ptlegs, xtitle, nhits_bins, cuts1, plotsuffix, thistext, outfolder_combined)
+def plotpTcomparison():
+    filelist = ["out_compare_10GeV_all.root", "out_compare_100GeV_all.root", "out_compare_1000GeV_all.root"]
+    ptlegs = ["sim muon, pT=10GeV","sim muon, pT=100GeV","sim muon, pT=1000GeV"]
+    todrawlist = ["totalcomps_dg_","totalwires_dg_"]
+    xtitlelist = ["Total comparator digis", "Total wire digis"]
+    outfolder_combined = "Compareplots_allpTs/"
+    genetacut1 = "abs(tree1_gen_eta)>1.60"
+    genetacut2 = "abs(tree1_gen_eta)>1.60 && tree0_emtf_pt > tree1_emtf_pt*2"
+    genetacut3 = "abs(tree1_gen_eta)>1.60 && tree0_emtf_pt > 20 && tree1_emtf_pt < 20"
+
+    for st in range(0, len(cscStations)):
+        if st == 1 or st==2: continue
+        chamberstr = cscStations[st].labelc
+        thistext = chamberstr 
+        for it, todraw in enumerate(todrawlist):
+            todraw = todraw + chamberstr
+            xtitle = xtitlelist[it]
+            cuts1 = genetacut1 +" && " +todraw +">0 "
+            plotsuffix = "differentPt_"+todraw+"_noEMTFptCut"
+            CompareTrees(filelist, todraw, ptlegs, xtitle, nhits_bins, cuts1, plotsuffix, thistext, outfolder_combined)
+            cuts2 = genetacut2 +" && " +todraw +">0 "
+            plotsuffix = "differentPt_"+todraw+"_Run2EMTFPTlargerv2"
+            CompareTrees(filelist, todraw, ptlegs, xtitle, nhits_bins, cuts1, plotsuffix, thistext, outfolder_combined)
+            cuts3 = genetacut3 +" && " +todraw +">0 "
+            plotsuffix = "differentPt_"+todraw+"_Run2EMTFPTlargerv3"
+            CompareTrees(filelist, todraw, ptlegs, xtitle, nhits_bins, cuts1, plotsuffix, thistext, outfolder_combined)
+
 
 varlist = ["totalcomps_dg_ME11","totalcomps_dg_ME21","totalcomps_dg_ME31","totalcomps_dg_ME41"]
 leglist = ["Total comparator hits in ME11", "Total comparator hits in ME21","Total comparator hits in ME31","Total comparator hits in ME41"]

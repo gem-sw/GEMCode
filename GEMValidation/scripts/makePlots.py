@@ -31,17 +31,16 @@ class GEMCSCStubPlotter():
     for p in self.treeFriends:
       self.tree.AddFriend(self.dirAna.Get(p))
     self.yMin = 0.45
-    self.yMax = 1.05
+    self.yMax = 1.08
   def setLegend(self, leg):
     self.legend = leg
   def getTree(self):
     return self.tree
 
-pT=10
-#inputFile = "out_gemcscana_%dGeV_all.root"%pT
-#baseDir = "RelValpT%dplots/"%pT
-inputFile = "out_gemcscana_%dGeV_all_condor_tightLCTmatch.root"%pT
-baseDir = "RelValpT%dplots_condor_tightLCTmatch/"%pT
+pT=1000
+suffix = "_condor_looseLCTmatch20220908v2"
+inputFile = "out_gemcscana_%dGeV_all%s.root"%(pT, suffix)
+baseDir = "RelValpT%dplots%s/"%(pT, suffix)
 text="RelValpT%dGeV"%pT
 
 #inputFile = "out_gemcscana_test.root"
@@ -79,8 +78,6 @@ makeResolutionPlots(plotter3, text)
 makeEfficiencyPlots(plotter4, text)
 makeResolutionPlots(plotter4, text)
 
-#plotterlist = [plotter0, plotter, plotter2, plotter5, plotter3, plotter4]
-#plotterlist = [plotter0, plotter, plotter2, plotter4]
 plotterlist = [plotter0, plotter, plotter2, plotter3, plotter6]
 ### efficiency comparison
 makeEfficiencyComparisonPlots(plotterlist, text)
@@ -88,7 +85,4 @@ makeResolutionComparisonPlots(plotter0, plotter2)
 makeComparePlots(plotterlist, text)
 treename = "compareTree"
 #analyzeTwoTrees(plotter0, plotter2, treename, "test"+inputFile.replace("gemcscana","compare"))
-#analyzeTwoTrees(plotter0, plotter2, treename, "totaldigi"+inputFile.replace("gemcscana","compare"))
-#analyzeTwoTrees(plotter6, plotter2, treename, "Run3deadtime"+inputFile.replace("gemcscana","compare"))
-#analyzeTwoTrees(plotter0, plotter6, treename, "ME11ineff"+inputFile.replace("gemcscana","compare"))
 

@@ -91,6 +91,9 @@ def ok_csc_digi(st):
 
 ## csc stub
 def ok_csc_lct(st):
+    return TCut("(cscStub.has_lct_even[%d] && cscStub.matchtype_lct_even[%d]==3) || (cscStub.has_lct_odd[%d] && cscStub.matchtype_lct_odd[%d]==3)"%(st,st,st,st))
+
+def ok_csc_lct_loose(st):
     return TCut("cscStub.has_lct_even[%d] || cscStub.has_lct_odd[%d]"%(st,st))
 
 def ok_csc_alct(st):

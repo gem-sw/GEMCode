@@ -36,7 +36,7 @@ def makeEfficiencyPlots(plotter, text):
     makeDir(plotter)
     CSCSimHit(plotter)
     CSCDigi(plotter)
-    CSCStub(plotter)
+    CSCStub(plotter, text)
     GEMSimHit(plotter)
     GEMDigi(plotter)
     GEMStub(plotter)

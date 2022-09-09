@@ -13,7 +13,7 @@ subdirectory = "resolution/L1Mu/"
 
 setTDRStyle()
 
-iPeriod = -1
+iPeriod = 0 # use -1 to hide PU
 iPos = 0
 if( iPos==0 ): CMS_lumi.relPosX = 0.12
 
