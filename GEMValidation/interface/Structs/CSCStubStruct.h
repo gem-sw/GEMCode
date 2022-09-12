@@ -82,6 +82,8 @@ namespace gem {
 
     int bend_lct_odd[nStations];
     int bend_lct_even[nStations];
+    int run3slope_lct_odd[nStations];
+    int run3slope_lct_even[nStations];
 
     int passdphi_odd[nStations];
     int passdphi_even[nStations];
@@ -158,6 +160,8 @@ namespace gem {
 
         bend_lct_odd[i] = -9;
         bend_lct_even[i] = -9;
+        run3slope_lct_odd[i] = -9;
+        run3slope_lct_even[i] = -9;
         dphi_lct_odd[i] = -9;
         dphi_lct_even[i] = -9;
 
@@ -320,6 +324,8 @@ namespace gem {
 
       t->Branch("bend_lct_odd", bend_lct_odd, "bend_lct_odd[11]/I");
       t->Branch("bend_lct_even", bend_lct_even, "bend_lct_even[11]/I");
+      t->Branch("run3slope_lct_odd",  run3slope_lct_odd,  "run3slope_lct_odd[11]/I");
+      t->Branch("run3slope_lct_even", run3slope_lct_even, "run3slope_lct_even[11]/I");
 
       t->Branch("bx_lct_odd", bx_lct_odd, "bx_lct_odd[11]/I");
       t->Branch("bx_lct_even", bx_lct_even, "bx_lct_even[11]/I");

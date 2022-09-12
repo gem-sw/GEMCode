@@ -10,3 +10,5 @@
 #*
 *#*
 plots
+*/test/.*
+*/test/*.log

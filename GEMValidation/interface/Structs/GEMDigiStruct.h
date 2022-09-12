@@ -21,6 +21,9 @@ namespace gem {
     int bx_dg_odd[nStations];
     int bx_dg_even[nStations];
 
+    int total_dg_odd[nStations];
+    int total_dg_even[nStations];
+
     void init() {
 
       for (unsigned i = 0 ; i < nStations; i++) {
@@ -35,6 +38,9 @@ namespace gem {
 
         bx_dg_odd[i] = -9;
         bx_dg_even[i] = -9;
+
+        total_dg_odd[i] = 0;
+        total_dg_even[i] = 0;
       }
     };
 
@@ -51,6 +57,8 @@ namespace gem {
 
       t->Branch("bx_dg_odd", bx_dg_odd, "bx_dg_odd[3]/I");
       t->Branch("bx_dg_even", bx_dg_even, "bx_dg_even[3]/I");
+      t->Branch("total_dg_odd",  total_dg_odd,  "total_dg_odd[3]/I");
+      t->Branch("total_dg_even", total_dg_even, "total_dg_even[3]/I");
     }
   };
 }  // namespace
