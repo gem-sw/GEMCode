@@ -1,6 +1,7 @@
 #include "GEMCode/GEMValidation/interface/Analyzers/CSCStubAnalyzer.h"
 #include "GEMCode/GEMValidation/interface/Helpers.h"
 #include "L1Trigger/CSCTriggerPrimitives/interface/CSCPatternBank.h"
+#include "DataFormats/Math/interface/deltaPhi.h"
 
 CSCStubAnalyzer::CSCStubAnalyzer(const edm::ParameterSet& conf, edm::ConsumesCollector&& iC)
 {
@@ -517,21 +518,30 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
 
     const bool odd(id.chamber()%2==1);
     // when  matchTypeTight = false, then it would allow to do  LCT-simtrack match with ALCT=only or CLCT-only 
-    int matchType = 0; //1:ALCTonly, 2:CLCTonly, 3:ALCT_CLCT or ALCT_GEMCopad or CLCT_copad
+    int matchType = 0; //1:ALCTonly, 2:CLCTonly, 3:ALCT_CLCT or ALCT_GEMCopad or CLCT_GEMCopad
     const auto& alct = match_->bestAlctInChamber(d);
     const auto& clct = match_->bestClctInChamber(d);
-    if (alct.isValid() and clct.isValid() and (abs(lct.getStrip()-clct.getKeyStrip())<=matchDeltaStrip_*2)\ 
-      and abs(lct.getKeyWG() - alct.getKeyWG())<=matchDeltaWG_)
+    //GEM station: 0=ME0, 1=GE11, 2=GE21
+    //cuts on dphi: 0.004, on deta: 0.2
+    float gem_phi = odd ? tree.gemStub().phi_pad1_odd[1] : tree.gemStub().phi_pad1_even[1];
+    float gem_eta = odd ? tree.gemStub().eta_pad1_odd[1] : tree.gemStub().eta_pad1_even[1];
+    bool CLCTCopad = lct.getType() == 5 and abs(deltaPhi(gem_phi, gp.phi())<=0.004);
+    bool ALCTCopad = lct.getType() == 4 and abs(gem_eta - gp.eta())<=0.1;
+    //assume that ALCT+2GEM and CLCT+2GEM is good
+    if (ALCTCopad or CLCTCopad or (alct.isValid() and clct.isValid() and (abs(lct.getStrip()-clct.getKeyStrip())<=matchDeltaStrip_*2) \
+            and abs(lct.getKeyWG() - alct.getKeyWG())<=matchDeltaWG_))
       matchType = 3;
     else if (clct.isValid() and abs(lct.getStrip()-clct.getKeyStrip())<=matchDeltaStrip_*2)
       matchType = 2;
     else if (alct.isValid() and abs(lct.getKeyWG() - alct.getKeyWG()) <=matchDeltaWG_)
       matchType = 1;
+    const int run3slope = lct.isRun3() ? lct.getSlope() : convertRun2PIDToRun3Slope(lct.getPattern());
 
-    auto fill = [lct, gp, odd, id, matchType](gem::CSCStubStruct& cscStubTree, int st) mutable {
+    auto fill = [lct, gp, odd, id, matchType, run3slope](gem::CSCStubStruct& cscStubTree, int st) mutable {
       if (odd) {
         cscStubTree.has_lct_odd[st] = true;
         cscStubTree.bend_lct_odd[st] = lct.getPattern();
+        cscStubTree.run3slope_lct_odd[st]  =  run3slope; 
         cscStubTree.phi_lct_odd[st] = gp.phi();
         cscStubTree.eta_lct_odd[st] = gp.eta();
         cscStubTree.perp_lct_odd[st] = gp.perp();
@@ -554,6 +564,7 @@ void CSCStubAnalyzer::analyze(TreeManager& tree)
       else {
         cscStubTree.has_lct_even[st] = true;
         cscStubTree.bend_lct_even[st] = lct.getPattern();
+        cscStubTree.run3slope_lct_even[st]  =  run3slope; 
         cscStubTree.phi_lct_even[st] = gp.phi();
         cscStubTree.eta_lct_even[st] = gp.eta();
         cscStubTree.perp_lct_even[st] = gp.perp();
