@@ -2,8 +2,16 @@ import numpy as np
 #pts = [2, 5, 10, 20, 30, 60, 100, 400, 1000, 10000.0]
 pts = [2, 5, 7, 10, 20, 30, 40, 60, 100, 200, 400, 1000, 2000, 10000.0] ##Zprime samples
 ptbins =  np.asarray(pts)
-ptbins = "(50,0,100.0)" ##flat pt distribution sample
+#ptbins = "(20,0,100.0)" ##flat pt distribution sample
+if isinstance(ptbins, str):
+    nBins = int(ptbins[1:-1].split(',')[0])
+    minBin = float(ptbins[1:-1].split(',')[1])
+    maxBin = float(ptbins[1:-1].split(',')[2])
+    binwidth = (maxBin-minBin)/nBins
+    ptbinlist = [minBin+n*binwidth for n in range(0,nBins+1)]
+    ptbins = np.asarray(ptbinlist)
 
+print("ptbins in station.py ",ptbins)
 
 class Station:
 

@@ -890,14 +890,58 @@ def CSCStubComparison(plotterlist, st, dencut, numcut, plotsuffix, text):
 
     del c, base, leg, csc, hlist
 
+def CSCStubComparisonPt(plotterlist, st, dencut, numcut, plotsuffix, text):
+
+    toPlot = "pt"
+    xTitle = "Generated muon p_{T} [GeV]"
+    yTitle = plotsuffix + " Efficiency"
+    title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
+    hlist = []
+
+    c = newCanvas()
+    gPad.SetGridx(xGrid)
+    gPad.SetGridy(yGrid)
+    base  = TH1F("base",title,len(ptbins)-1, ptbins)
+    base.SetMinimum(plotterlist[0].yMin)
+    base.SetMaximum(plotterlist[0].yMax)
+    base.GetXaxis().SetLabelSize(0.05)
+    base.GetYaxis().SetLabelSize(0.05)
+    base.GetXaxis().SetTitleSize(0.05)
+    base.GetYaxis().SetTitleSize(0.05)
+    c.SetLogx()
+    base.Draw("")
+    CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+
+  
+
+    leg = TLegend(0.45,0.15,.75,0.15+len(plotterlist)*0.05, "", "brNDC");
+    leg.SetBorderSize(0)
+    leg.SetFillStyle(0)
+    leg.SetTextSize(0.05)
+    for i, plotter in enumerate(plotterlist):
+        hlist.append(draw_geff_ptbins(plotter.tree, title, ptbins, toPlot, dencut, numcut, "same", kcolors[i], markers[i]))
+        leg.AddEntry(hlist[-1], plotter.legend,"pl")
+
+    leg.Draw("same");
+
+    csc = drawCSCLabel(cscStations[st].label, 0.85,0.85,0.05)
+    txt = drawCSCLabel(text, 0.15,0.25,0.035)
+
+    c.Print("%sPtEff_CSC%s_comparison_%s%s"%(plotterlist[0].targetDir + subdirectory, plotsuffix, cscStations[st].labelc,  plotterlist[0].ext))
+
+    del c, base, leg, csc, hlist
+
 
 def CSCStubComparisonAll(plotterlist, text):
 
     
     for st in range(0,len(cscStations)):
+        lctcut = TCut("(cscStub.has_lct_even[%d] && cscStub.matchtype_lct_even[%d]==3) || (cscStub.has_lct_odd[%d] && cscStub.matchtype_lct_odd[%d]==3)"%(st,st,st,st))
         CSCStubComparison(plotterlist, st, ok_csc_sh(st), ok_csc_clct(st), "CLCT", text)
         CSCStubComparison(plotterlist, st, ok_csc_sh(st), ok_csc_alct(st), "ALCT", text)
-        lctcut = TCut("(cscStub.has_lct_even[%d] && cscStub.matchtype_lct_even[%d]==3) || (cscStub.has_lct_odd[%d] && cscStub.matchtype_lct_odd[%d]==3)"%(st,st,st,st))
         #print("LCT eff ",st," dencut ",ok_csc_sh(st)," numcut ",  ok_csc_lct(st))
         #CSCStubComparison(plotterlist, st, ok_csc_sh(st), ok_csc_lct(st),   "LCT", text)
         CSCStubComparison(plotterlist, st, ok_csc_sh(st), lctcut,   "LCT", text)
+        CSCStubComparisonPt(plotterlist, st, ok_csc_sh(st), ok_csc_clct(st), "CLCT", text)
+        CSCStubComparisonPt(plotterlist, st, ok_csc_sh(st), ok_csc_alct(st), "ALCT", text)
+        CSCStubComparisonPt(plotterlist, st, ok_csc_sh(st), lctcut,   "LCT", text)

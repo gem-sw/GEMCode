@@ -147,3 +147,53 @@ def draw_geff(t, title, h_bins, to_draw, den_cut, extra_num_cut,
 
     SetOwnership(eff, False)
     return eff
+
+#_______________________________________________________________________________
+def draw_geff_ptbins(t, title, ptbins, to_draw, den_cut, extra_num_cut,
+              opt = "", color = kBlue, marker_st = 1, marker_sz = 1.):
+    """Make an efficiency plot"""
+
+    ## total numerator selection cut
+    num_cut = AND(den_cut,extra_num_cut)
+
+
+    num = TH1F("num", "", len(ptbins)-1, ptbins)
+    den = TH1F("den", "", len(ptbins)-1, ptbins)
+
+    t.Draw(to_draw + ">>num", num_cut, "goff")
+    t.Draw(to_draw + ">>den", den_cut, "goff")
+
+    debug = False 
+    if debug:
+        print("Denominator cut", den_cut, den.GetEntries())
+        print("Numerator cut", num_cut, num.GetEntries())
+
+    ## check if the number of passed entries larger than total entries
+    doConsistencyCheck = False
+    if doConsistencyCheck:
+        nBins = len(ptbins)-1
+        for i in range(0,nBins):
+            print(i, num.GetBinContent(i), den.GetBinContent(i))
+            if num.GetBinContent(i) > den.GetBinContent(i):
+                print(">>>Error: passed entries > total entries")
+
+    eff = TEfficiency(num, den)
+
+    ## plotting options
+    if not "same" in opt:
+        num.Reset()
+        num.GetYaxis().SetRangeUser(0.0,1.1)
+        num.SetStats(0)
+        num.SetTitle(title)
+        num.Draw()
+
+    eff.SetLineWidth(2)
+    eff.SetLineColor(color)
+    eff.SetMarkerStyle(marker_st)
+    eff.SetMarkerColor(color)
+    eff.SetMarkerSize(marker_sz)
+    eff.Draw(opt + " same")
+
+    SetOwnership(eff, False)
+    return eff
+
