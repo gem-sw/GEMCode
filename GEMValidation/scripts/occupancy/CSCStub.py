@@ -21,7 +21,7 @@ iPeriod = 0
 iPos = 0
 if( iPos==0 ): CMS_lumi.relPosX = 0.12
 
-def CLCTPattern(plotter):
+def CLCTPattern(plotter, text):
 
     for st in range(0,len(cscStations)):
 
@@ -66,12 +66,13 @@ def CLCTPattern(plotter):
         leg.Draw("same");
 
         csc = drawCSCLabel(cscStations[st].label, 0.85,0.85,0.05)
+        txt = drawCSCLabel(text, 0.15,0.25,0.035)
 
         c.Print("%sOcc_CSCCLCT_pos_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
 
         del c, base, h2, leg, csc, h1, h3
 
-def CSCFloatSlope(plotter, even):
+def CSCFloatSlope(plotter, text, even):
 
     xTitle = "True muon p_{T} * charge [GeV]"
     yTitle = "CLCT Slope * endcap [Half-strips/layer]"
@@ -102,6 +103,7 @@ def CSCFloatSlope(plotter, even):
         CMS_lumi.CMS_lumi(c, iPeriod, iPos)
 
         csc = drawCSCLabel(cscStations[st].label, 0.75,0.85,0.05)
+        txt = drawCSCLabel(text, 0.15,0.25,0.035)
 
         if even:
             c.Print("%sOcc_CSCCLCT_floatslope_even_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
@@ -110,7 +112,7 @@ def CSCFloatSlope(plotter, even):
 
         del c, base, csc
 
-def CSCFloatSlopeV2(plotter, even):
+def CSCFloatSlopeV2(plotter, text, even):
 
     xTitle = "True muon p_{T} * charge [GeV]"
     yTitle = "CLCT Slope * endcap [Half-strips/layer]"
@@ -151,6 +153,7 @@ def CSCFloatSlopeV2(plotter, even):
         CMS_lumi.CMS_lumi(c, iPeriod, iPos)
 
         csc = drawCSCLabel(cscStations[st].label, 0.75,0.85,0.05)
+        txt = drawCSCLabel(text, 0.15,0.25,0.035)
 
         if even:
             c.Print("%sOcc_CSCCLCT_floatslope_even_final_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
@@ -161,9 +164,9 @@ def CSCFloatSlopeV2(plotter, even):
 
 
 
-def CSCStub(plotter):
+def CSCStub(plotter, text):
     #CLCTPattern(plotter)
-    CSCFloatSlope(plotter,True)
-    CSCFloatSlope(plotter,False)
-    CSCFloatSlopeV2(plotter,True)
-    CSCFloatSlopeV2(plotter,False)
+    CSCFloatSlope(plotter, text, True)
+    CSCFloatSlope(plotter, text, False)
+    CSCFloatSlopeV2(plotter, text, True)
+    CSCFloatSlopeV2(plotter, text, False)

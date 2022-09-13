@@ -1,3 +1,10 @@
+import numpy as np
+#pts = [2, 5, 10, 20, 30, 60, 100, 400, 1000, 10000.0]
+pts = [2, 5, 7, 10, 20, 30, 40, 60, 100, 200, 400, 1000, 2000, 10000.0] ##Zprime samples
+ptbins =  np.asarray(pts)
+ptbins = "(50,0,100.0)" ##flat pt distribution sample
+
+
 class Station:
 
     ## constructor

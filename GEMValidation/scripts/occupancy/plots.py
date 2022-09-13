@@ -1,6 +1,7 @@
 import os
 
 from occupancy.CSCStub import *
+from occupancy.SimTrack import *
 
 ## need to create directory structure - assume it does not exist yet
 def makeDir(plotter):
@@ -11,11 +12,13 @@ def makeDir(plotter):
         base + analyzer,
         base + analyzer + "/occupancy",
         base + analyzer + "/occupancy/CSCStub",
+        base + analyzer + "/occupancy/SimTrack",
     ]
     for p in paths:
         if not os.path.exists(p):
             os.mkdir(p)
 
-def makeOccupancyPlots(plotter):
+def makeOccupancyPlots(plotter, text):
     makeDir(plotter)
-    CSCStub(plotter)
+    CSCStub(plotter, text)
+    simTrackProperties(plotter, text)

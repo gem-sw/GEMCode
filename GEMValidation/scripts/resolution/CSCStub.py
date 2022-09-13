@@ -4,7 +4,7 @@
 
 ## bending resolution GEM-CSC
 
-from ROOT import gStyle, TH1F, TCanvas, TLegend, kRed, kBlue, kOrange, kGreen, kBlack, kMagenta, gPad
+from ROOT import gStyle, TH1F, TCanvas, TLegend, kRed, kBlue, kOrange, kGreen, kBlack, kMagenta, gPad,THStack
 
 from helpers.cuts import *
 from helpers.Helpers import *
@@ -489,10 +489,12 @@ def CSCLCTMatchType(plotter, text):
         matchtype = "max(cscStub.matchtype_lct_even[%d],cscStub.matchtype_lct_odd[%d])"%(st, st)
         matchtype = "(has_lct_even[%d] ? cscStub.matchtype_lct_even[%d] : cscStub.matchtype_lct_odd[%d])"%(st, st,st)
         cscshcut = "has_csc_sh_even[%d] || has_csc_sh_odd[%d]"%(st, st)
+        lctcut = "has_lct_even[%d] || (has_lct_odd[%d] && !has_lct_even[%d])"%(st,st,st)
         
 
         #h1 = draw_1D(plotter.tree, title, h_bins, matchtype, cscshcut, "same", kGreen+2)
-        h1 = draw_1D(plotter.tree, title, h_bins, matchtype, ok_csc_lct_loose(st), "same", kGreen+2)
+        #h1 = draw_1D(plotter.tree, title, h_bins, matchtype, ok_csc_lct_loose(st), "same", kGreen+2)
+        h1 = draw_1D(plotter.tree, title, h_bins, matchtype, lctcut, "same", kGreen+2)
         h2 = draw_1D(plotter.tree, title, h_bins, matchtype, AND(ok_csc_sh(st), TCut("!(cscStub.has_lct_even[%d] || cscStub.has_lct_odd[%d])"%(st,st))), "same", kGreen+2)
         #h2.Print("ALL")
         
@@ -608,7 +610,7 @@ def CSCLCTBXComparisonBadMatch(plotter, text):
     titlec = "%s;%s;%s"%(topTitle,xTitleclct,yTitleclct)
     titlea = "%s;%s;%s"%(topTitle,xTitlealct,yTitlealct)
 
-    xbins = "(7, 4.5, 11.5)"
+    xbins = "(7, 3.5, 10.5)"
     #xbins = "(20, -9.5, 10.5)"
     xnBins  = int(xbins[1:-1].split(',')[0])
 
@@ -631,8 +633,9 @@ def CSCLCTBXComparisonBadMatch(plotter, text):
         ytodrawc = "(has_lct_even[%d] ?  cscStub.clctbx_lct_even[%d]+1 : cscStub.clctbx_lct_odd[%d]+1)"%(st,st,st)
         ytodrawa = "(has_lct_even[%d] ?  cscStub.alctbx_lct_even[%d]+5 : cscStub.alctbx_lct_odd[%d]+5)"%(st,st,st)
 
-        hist  = draw_2D(plotter.tree, titlec, xbins, xbins, "%s:%s"%(ytodrawc, clctbx), AND(ok_csc_lct_loose(st), cscshcutc), "")
-        histA = draw_2D(plotter.tree, titlea, xbins, xbins, "%s:%s"%(ytodrawa, alctbx), AND(ok_csc_lct_loose(st), cscshcuta), "")
+        ok_csc_lct_loose = TCut("has_lct_even[%d] || (has_lct_odd[%d] && !has_lct_even[%d])"%(st,st,st))
+        hist  = draw_2D(plotter.tree, titlec, xbins, xbins, "%s:%s"%(ytodrawc, clctbx), AND(ok_csc_lct_loose, cscshcutc), "")
+        histA = draw_2D(plotter.tree, titlea, xbins, xbins, "%s:%s"%(ytodrawa, alctbx), AND(ok_csc_lct_loose, cscshcuta), "")
         #for i in range(xnBins):
         #    total = hist.GetBinContent(i+1, ynBins) + hist.GetBinContent(i+1, ynBins+1)
         #    hist.SetBinContent(i+1, ynBins, total)
@@ -788,7 +791,7 @@ def CSCCLCTPatternComparisonBadMatch(plotter, text):
 def CSCCLCTHSComparisonBadMatch(plotter, text):
 
     #yTitle = "Normalized"
-    xTitle = "Halfstrip difference of CLCT matched to simtrack and CLCT used in LCT"
+    xTitle = "Halfstrip difference of CLCT used in LCT and CLCT matched to simtrack"
     yTitle = "Entries"
     title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
     yTitleclct = "Haflstrip of CLCT used in LCT"
@@ -824,7 +827,7 @@ def CSCCLCTHSComparisonBadMatch(plotter, text):
 
 
         cscshcutc = TCut("(has_lct_even[%d] && has_clct_even[%d] && cscStub.matchtype_lct_even[%d]==1) || (has_lct_odd[%d] && has_clct_odd[%d] && cscStub.matchtype_lct_odd[%d]==1)"%(st,st,st,st,st,st))
-        todraw = "((has_clct_even[%d] && has_lct_even[%d] && cscStub.matchtype_lct_even[%d]==1) ? cscStub.hs_clct_even[%d]-cscStub.hs_lct_even[%d] : cscStub.hs_clct_odd[%d]-cscStub.hs_lct_odd[%d])"%(st,st,st,st,st,st,st)
+        todraw = "((has_clct_even[%d] && has_lct_even[%d] && cscStub.matchtype_lct_even[%d]==1) ? cscStub.hs_lct_even[%d]-cscStub.hs_clct_even[%d] : cscStub.hs_lct_odd[%d]-cscStub.hs_clct_odd[%d])"%(st,st,st,st,st,st,st)
         #hscut = TCut("abs("+todraw+")>=4")
 
         #hist  = draw_1D(plotter.tree, title, xbins, todraw, AND(hscut, cscshcutc), "", kGreen+2)
@@ -872,6 +875,108 @@ def CSCCLCTHSComparisonBadMatch(plotter, text):
         gStyle.SetOptStat(0);
 
 
+def CSCCLCTPatternQualityBadMatch(plotter, text):
+
+    #yTitle = "Normalized"
+    xTitle = "BX difference of CLCT used in LCT and CLCT matched to simtrack"
+    yTitle = "Entries"
+    title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
+
+    xbins = "(8, -3.5, 4.5)"
+    nBins  = int(xbins[1:-1].split(',')[0])
+    minBin = float(xbins[1:-1].split(',')[1])
+    maxBin = float(xbins[1:-1].split(',')[2])
+
+    for st in range(0,len(cscStations)):
+
+        if st==1 or st==2: continue
+
+        c = newCanvas()
+        gPad.SetGrid(1,1)
+        #gPad.SetRightMargin(0.15)
+        base  = TH1F("base",title,nBins,minBin,maxBin)
+        base.SetMinimum(0)
+        #base.SetMaximum(0.08)
+        base.GetXaxis().SetLabelSize(0.04)
+        base.GetYaxis().SetLabelSize(0.04)
+        base.GetXaxis().SetTitleSize(0.04)
+        base.GetYaxis().SetTitleSize(0.04)
+        base.Draw("")
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+
+
+        #toPlot1 = delta_bend_clct(st)
+
+
+        ## case1: good CLCT quality > bad CLCT quality
+        ## case2: good CLCT quality==badCLCT quality, run3slope smaller
+        ## case4: rest
+        case1even = "cscStub.quality_clct_even[%d]>cscStub.clctquality_lct_even[%d]"%(st,st)
+        case1odd  = "cscStub.quality_clct_odd[%d]>cscStub.clctquality_lct_odd[%d]"%(st,st)
+        case1cut= TCut("(has_lct_even[%d] && has_clct_even[%d] && cscStub.matchtype_lct_even[%d]==1 && %s) || (has_lct_odd[%d] && has_clct_odd[%d] && cscStub.matchtype_lct_odd[%d]==1 && %s)"%(st,st,st,case1even, st,st,st, case1odd))
+        case2even = "cscStub.quality_clct_even[%d]==cscStub.clctquality_lct_even[%d] && cscStub.run3slope_clct_even[%d]<cscStub.run3slope_lct_even[%d]"%(st,st,st,st)
+        case2odd  = "cscStub.quality_clct_odd[%d]==cscStub.clctquality_lct_odd[%d] && cscStub.run3slope_clct_odd[%d]<cscStub.run3slope_lct_odd[%d]"%(st,st,st,st)
+        case2cut= TCut("(has_lct_even[%d] && has_clct_even[%d] && cscStub.matchtype_lct_even[%d]==1 && %s) || (has_lct_odd[%d] && has_clct_odd[%d] && cscStub.matchtype_lct_odd[%d]==1 && %s)"%(st,st,st,case2even, st,st,st, case2odd))
+        case3even = "((cscStub.quality_clct_even[%d]<cscStub.clctquality_lct_even[%d])|| (cscStub.quality_clct_even[%d]==cscStub.clctquality_lct_even[%d] && cscStub.run3slope_clct_even[%d]>=cscStub.run3slope_lct_even[%d]))"%(st,st,st,st,st,st)
+        case3odd  = "((cscStub.quality_clct_odd[%d]<cscStub.clctquality_lct_odd[%d])|| (cscStub.quality_clct_odd[%d]==cscStub.clctquality_lct_odd[%d] && cscStub.run3slope_clct_odd[%d]>=cscStub.run3slope_lct_odd[%d]))"%(st,st,st,st,st,st)
+        case3cut= TCut("(has_lct_even[%d] && has_clct_even[%d] && cscStub.matchtype_lct_even[%d]==1 && %s) || (has_lct_odd[%d] && has_clct_odd[%d] && cscStub.matchtype_lct_odd[%d]==1 && %s)"%(st,st,st,case3even, st,st,st, case3odd))
+        todraw = "((has_clct_even[%d] && has_lct_even[%d] && cscStub.matchtype_lct_even[%d]==1) ? cscStub.clctbx_lct_even[%d]-cscStub.bx_clct_even[%d] : cscStub.clctbx_lct_odd[%d]-cscStub.bx_clct_odd[%d])"%(st,st,st,st,st,st,st)
+        todraw1 = "(( has_lct_even[%d] && cscStub.matchtype_lct_even[%d]==1) ? cscStub.clctbx_lct_even[%d]-cscStub.bx_clct_even[%d] : cscStub.clctbx_lct_odd[%d]-cscStub.bx_clct_odd[%d])"%(st,st,st,st,st,st)
+        #hscut = TCut("abs("+todraw+")>=4")
+        totcut= TCut("(has_lct_even[%d] && has_clct_even[%d] && cscStub.matchtype_lct_even[%d]==1) || (has_lct_odd[%d] && has_clct_odd[%d] && cscStub.matchtype_lct_odd[%d]==1)"%(st,st,st,st,st,st))
+        totcut2= TCut("(has_lct_even[%d] && cscStub.matchtype_lct_even[%d]==1) || (has_lct_odd[%d] && cscStub.matchtype_lct_odd[%d]==1)"%(st,st,st,st))
+        clctmissingcut= TCut("(has_lct_even[%d] && !has_clct_even[%d] && cscStub.matchtype_lct_even[%d]==1) || (has_lct_odd[%d] && !has_clct_odd[%d] && cscStub.matchtype_lct_odd[%d]==1)"%(st,st,st,st,st,st))
+        cscshcutc = TCut("(has_lct_even[%d] ? (cscStub.matchtype_lct_even[%d]==1 && has_clct_even[%d]) : (cscStub.matchtype_lct_odd[%d]==1 && has_clct_odd[%d]))"%(st,st,st,st,st))
+        
+
+        hist   = draw_1D(plotter.tree, title, xbins, todraw, case1cut, "", kGreen+2)
+        hist2  = draw_1D(plotter.tree, title, xbins, todraw, case2cut, "", kRed)
+        #hist3  = draw_1D(plotter.tree, title, xbins, todraw, case3cut, "", kBlue)
+        hist4  = draw_1D(plotter.tree, title, xbins, todraw1,cscshcutc, "", kBlack)
+        #print("case2 cut ", case2cut)
+        #print("case3 cut ", case3cut)
+        #print(cscStations[st].label, " Total entrie from hist4 ", hist4.GetEntries(), " missing Good CLCT ", hist5.GetEntries())
+        #bin1 = hist4.GetBinContent(0)+hist4.GetBinContent(1)
+        #binn = hist4.GetBinContent(nBins)+hist4.GetBinContent(nBins+1)
+        #hist4.SetBinContent(1, bin1)
+        #hist4.SetBinContent(nBins, binn)
+        print("hist ", hist.GetEntries(), " hist2 ", hist2.GetEntries()," hist4 ", hist4.GetEntries())
+        hist3 = hist4-hist2-hist
+        hist3.SetLineColor(kBlue)
+
+        hist.SetFillColor(kGreen+2)
+        hist2.SetFillColor(kRed)
+        hist3.SetFillColor(kBlue)
+
+        hs = THStack("all_matchtype1", title)
+        hs.Add(hist)
+        hs.Add(hist2)
+        hs.Add(hist3)
+        leg = TLegend(0.15,0.72,.6,0.88, "", "brNDC");
+        leg.SetBorderSize(0)
+        leg.SetFillStyle(0)
+        leg.SetTextSize(0.035)
+        leg.SetTextFont(42)
+        totevts = hist4.GetEntries()
+        leg.SetHeader("Total events: %d"%(totevts))
+        leg.AddEntry(hist,  "Good CLCT with better quality:%d events"%hist.GetEntries(),"pl")
+        leg.AddEntry(hist2, "Equal quality but Good CLCT with smaller bending:%d events"%hist2.GetEntries(),"pl")
+        leg.AddEntry(hist3, "Rest events in the category:%d events"%hist3.GetEntries(),"pl")
+
+
+        base.SetMaximum(hs.GetMaximum() * 1.5)
+        hs.Draw("same")
+        hist4.SetMarkerSize(1.3)
+        hist4.Draw("sametext")
+        #hist6.Draw("sametext")
+        leg.Draw("same");
+
+        csc = drawCSCLabel(cscStations[st].label, 0.75,0.85,0.05)
+        txt = drawCSCLabel(text, 0.15,0.2,0.04)
+
+        c.Print("%sRes_CSCLCTBadMatch_CLCTComparisonForSorting_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
+        del c, csc, hs, txt
+        
 
 
 def CSCCLCTALCTBX(plotter, text):

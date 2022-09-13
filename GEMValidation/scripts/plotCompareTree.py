@@ -367,7 +367,7 @@ def plotpTcomparison():
             plotsuffix = "differentPt_"+todraw+"_Run2EMTFPTlargerv3"
             CompareTrees(filelist, todraw, ptlegs, xtitle, nhits_bins, cuts1, plotsuffix, thistext, outfolder_combined)
 
-
+plotpTcomparison()
 varlist = ["totalcomps_dg_ME11","totalcomps_dg_ME21","totalcomps_dg_ME31","totalcomps_dg_ME41"]
 leglist = ["Total comparator hits in ME11", "Total comparator hits in ME21","Total comparator hits in ME31","Total comparator hits in ME41"]
 xtitle = "Total comparator hits"
