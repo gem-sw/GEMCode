@@ -347,6 +347,52 @@ def L1MuComparisonEta2(plotterlist, leglist, text, denom_cutlist, num_cutlist, p
         del c, base, leg, hlist
 
 
+def L1MuComparisonPt(plotterlist, text, denom_cut, num_cut, plotsuffix):
+
+    toPlot = "pt"
+    xTitle = "Generated muon p_{T} [GeV]"
+    title = "%s;%s;%s"%(topTitle,xTitle,yTitle)
+
+    ptList = [0, 3, 5, 10, 15, 20]
+    etacuttext = "|#eta_{sim}|>1.65"
+
+    for ptcut in ptList:
+        hlist = []
+
+        c = newCanvas()
+        gPad.SetGridx(xGrid)
+        gPad.SetGridy(yGrid)
+        c.SetLogx()
+
+        base  = TH1F("base",title,len(ptbins)-1, ptbins)
+        base.SetMinimum(plotterlist[0].yMin)
+        #base.SetMinimum(0.0)
+        base.SetMaximum(plotterlist[0].yMax)
+        base.GetXaxis().SetLabelSize(0.05)
+        base.GetYaxis().SetLabelSize(0.05)
+        base.GetXaxis().SetTitleSize(0.05)
+        base.GetYaxis().SetTitleSize(0.05)
+        base.Draw("")
+        CMS_lumi.CMS_lumi(c, iPeriod, iPos)
+
+
+        leg = TLegend(0.45,0.2,.75,0.5, "", "brNDC");
+        leg.SetHeader(etacuttext+",EMTF p_{T} >= %d GeV"%ptcut)
+        leg.SetBorderSize(0)
+        leg.SetFillStyle(0)
+        leg.SetTextSize(0.04)
+        for i, plotter in enumerate(plotterlist):
+            hlist.append(draw_geff_ptbins(plotter.tree, title, ptbins, toPlot, denom_cut, AND(num_cut, ok_emtf(ptcut)), "same", kcolors[i], markers[i]))
+            leg.AddEntry(hlist[-1], plotter.legend,"pl")
+        leg.Draw("same");
+
+
+        txt = drawCSCLabel(text, 0.15,0.25,0.035)
+        ptstr = "pT%d_%s"%(ptcut, plotsuffix)
+        c.Print("%sPtEff_EMTFPt_comparison_%s%s"%(plotterlist[0].targetDir + subdirectory, ptstr, plotterlist[0].ext))
+        del c, base, leg, hlist
+
+
 def L1MuComparisonEtaAll(plotterlist, text):
 
     #denom_cut = AND(ok_eta(1.2, 2.4), ok_2_csc_lcts())
@@ -355,6 +401,11 @@ def L1MuComparisonEtaAll(plotterlist, text):
     #pt
     plotsuffix=""
     L1MuComparisonEta(plotterlist, text, denom_cut, num_cut, plotsuffix)
+    denometa_cut = AND(ok_eta(1.65, 2.4), ok_2_csc_sh())
+    plotsuffix="eta1p65"
+    L1MuComparisonPt(plotterlist, text, denom_cut, num_cut, plotsuffix)
+    return ##ignore the following part for now
+    
 
     dcut = AND(denom_cut, TCut("l1Mu.has_emtfTrack"))
     ncut = TCut("l1Mu.nstubs == l1Mu.nstubs_matched_TF")
