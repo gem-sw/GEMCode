@@ -741,9 +741,12 @@ def CSCCLCTPatternComparisonBadMatch(plotter, text):
     #yTitle = "Normalized"
     yTitleclct = "Run2 pattern of CLCT used in LCT"
     xTitleclct = "Run2 pattern of CLCT matched simtrack"
+    yTitleclct = "Run3 slope of CLCT used in LCT"
+    xTitleclct = "Run3 slope of CLCT matched simtrack"
     titlec = "%s;%s;%s"%(topTitle,xTitleclct,yTitleclct)
 
-    xbins = "(11, 0.5, 11.5)"
+    #xbins = "(11, 0.5, 11.5)" # for run2pattern
+    xbins = "(16, -0.5, 15.5)"
     xnBins  = int(xbins[1:-1].split(',')[0])
 
     for st in range(0,len(cscStations)):
@@ -759,14 +762,12 @@ def CSCCLCTPatternComparisonBadMatch(plotter, text):
 
         cscshcutc = TCut("(has_lct_even[%d] ? cscStub.matchtype_lct_even[%d]==1 : cscStub.matchtype_lct_odd[%d]==1)"%(st,st,st))
         clctpid   = "(has_lct_even[%d] ? cscStub.pattern_clct_even[%d] : cscStub.pattern_clct_odd[%d])"%(st, st,st)
-        ytodrawc = "(has_lct_even[%d] ? cscStub.clctpattern_lct_even[%d] : cscStub.clctpattern_lct_odd[%d])"%(st,st,st)
+        lctpid    = "(has_lct_even[%d] ? cscStub.clctpattern_lct_even[%d] : cscStub.clctpattern_lct_odd[%d])"%(st,st,st)
+        clctslope = "(has_lct_even[%d] ? cscStub.run3slope_clct_even[%d] : cscStub.run3slope_clct_odd[%d])"%(st, st,st)
+        lctslope  = "(has_lct_even[%d] ? cscStub.run3slope_lct_even[%d] : cscStub.run3slope_lct_odd[%d])"%(st,st,st)
 
-        hist  = draw_2D(plotter.tree, titlec, xbins, xbins, "%s:%s"%(ytodrawc, clctpid), AND(ok_csc_lct_loose(st), cscshcutc), "")
-        #for i in range(xnBins):
-        #    total = hist.GetBinContent(i+1, ynBins) + hist.GetBinContent(i+1, ynBins+1)
-        #    hist.SetBinContent(i+1, ynBins, total)
-        #    totala = histA.GetBinContent(i+1, ynBins) + histA.GetBinContent(i+1, ynBins+1)
-        #    histA.SetBinContent(i+1, ynBins, totala)
+        #hist  = draw_2D(plotter.tree, titlec, xbins, xbins, "%s:%s"%(lctpid, clctpid), AND(ok_csc_lct_loose(st), cscshcutc), "")
+        hist  = draw_2D(plotter.tree, titlec, xbins, xbins, "%s:%s"%(lctslope, clctslope), AND(ok_csc_lct_loose(st), cscshcutc), "")
         hist.SetMarkerColor(kRed)
         hist.SetMarkerSize(1.8)
         drawopt = "colz"
@@ -780,10 +781,13 @@ def CSCCLCTPatternComparisonBadMatch(plotter, text):
         hist.GetYaxis().SetTitleSize(0.04)
         CMS_lumi.CMS_lumi(c, iPeriod, iPos)
 
-        csc = drawCSCLabel(cscStations[st].label, 0.15,0.85,0.05)
-        txt = drawCSCLabel(text, 0.15,0.2,0.04)
+        #csc = drawCSCLabel(cscStations[st].label, 0.15,0.85,0.05)
+        #txt = drawCSCLabel(text, 0.15,0.2,0.04)
+        csc = drawCSCLabel(cscStations[st].label, 0.75,0.85,0.05)
+        txt = drawCSCLabel(text, 0.55,0.2,0.04)
 
-        c.Print("%sRes_CSCLCTBadMatch_CLCTPatternComparison_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
+        #c.Print("%sRes_CSCLCTBadMatch_CLCTPatternComparison_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
+        c.Print("%sRes_CSCLCTBadMatch_CLCTRun3slopeComparison_%s%s"%(plotter.targetDir + subdirectory, cscStations[st].labelc,  plotter.ext))
 
         del c, csc, hist, txt
 
