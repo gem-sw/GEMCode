@@ -157,8 +157,8 @@ void CSCDigiAnalyzer::analyze(TreeManager& tree)
       const auto&  hitcomparators = match_->comparatorsInDetId(csc_id.rawId());
       nstrips += hitstrips.size();
       ncomparators += hitcomparators.size();
-      totalcomparators += match_->getTotalComparators(csc_id.rawId());
-      totalstrips += match_->getTotalStrips(csc_id.rawId());
+      totalcomparators += match_->totalComparators(csc_id.rawId());
+      totalstrips += match_->totalStrips(csc_id.rawId());
     }
     for (const auto& comp : match_->comparatorDigisInChamber(id.rawId())){
       compara_avgbx += comp.getTimeBin();
@@ -225,7 +225,7 @@ void CSCDigiAnalyzer::analyze(TreeManager& tree)
       const CSCDetId& csc_id = CSCDetId(id.endcap(), id.station(), id.ring(), id.chamber(), ilayer);
       const auto&  hitwires  = match_->wiregroupsInDetId(csc_id.rawId());
       nwires  += hitwires.size();
-      totalwires += match_->getTotalWires(csc_id.rawId());
+      totalwires += match_->totalWires(csc_id.rawId());
     }
     for (const auto& w : match_->wireDigisInChamber(id)){
         wires_avgbx += w.getTimeBin();
