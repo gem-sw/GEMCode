@@ -3,18 +3,17 @@
 ## Instruction to use GEMCode package
 
 ```
-cmsrel CMSSW_12_5_0_pre4
-cd CMSSW_12_5_0_pre4/src
+cmsrel CMSSW_12_6_0_pre2
+cd CMSSW_12_6_0_pre2/src
 cmsenv
-git cms-addpkg L1Trigger/CSCTriggerPrimitives
 git clone  https://github.com/gem-sw/GEMCode
 scram b -j 9
 ```
-Right now GEMCSCAnalyzer in this branch includes the total number of digis information from CSCDigiMatcher. And this feature is only included in tahuang1991:from-CMSSW_12_5_0_pre4_CSCStubMatcher CMSSW version. Hopefully it would be merged to cmssw master branch soon. 
+Right now to run L1 reemulation with lastest CSC trigger emulator, the new feature of CLCT sorting by quality+bending is only included in tahuang1991:from-CMSSW_12_6_0_pre2_newCLCTSorting CMSSW version. Hopefully it would be merged to cmssw master branch in short future. 
 
-To pull the updates from tahuang1991:from-CMSSW_12_5_0_pre4_CSCStubMatcher
+To pull the updates from tahuang1991:from-CMSSW_12_6_0_pre2_newCLCTSorting before compiling
 ```
-git cms-merge-topic tahuang1991:from-CMSSW_12_5_0_pre4_CSCStubMatcher
+git cms-merge-topic tahuang1991:from-CMSSW_12_6_0_pre2_newCLCTSorting
 ```
 
 ## GEMCSCAnalyzer: simtrack based analyzer to analyze muon trigger MC efficiency
