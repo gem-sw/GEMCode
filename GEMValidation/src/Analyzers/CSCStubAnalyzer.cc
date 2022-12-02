@@ -372,7 +372,9 @@ void CSCStubAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       cscTree.csc_shower_ring->push_back(id.ring());
       cscTree.csc_shower_chamber->push_back(id.chamber());
       cscTree.csc_shower_sector->push_back(id.triggerSector());
-      cscTree.csc_shower_bx->push_back(0);
+      cscTree.csc_shower_bx->push_back(digiIt->getBX());
+      cscTree.csc_shower_anodehits->push_back(digiIt->getWireNHits());
+      cscTree.csc_shower_cathodehits->push_back(digiIt->getComparatorNHits());
       cscTree.csc_shower_isLooseInTime->push_back(digiIt->isLooseInTime());
       cscTree.csc_shower_isNominalInTime->push_back(digiIt->isNominalInTime());
       cscTree.csc_shower_isTightInTime->push_back(digiIt->isTightInTime());
