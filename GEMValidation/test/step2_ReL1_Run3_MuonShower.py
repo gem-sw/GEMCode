@@ -2,11 +2,11 @@
 # using:
 # Revision: 1.19
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v
-# with command line options: step2bis.py --filein file:step3.root --fileout file:step2bis.root --mc --eventcontent FEVTDEBUG --datatier GEN-SIM-DIGI-L1 --conditions auto:phase1_2021_realistic --step L1 --geometry DB:Extended --era Run3 --python_filename step2bis_L1.py --no_exec -n 10
+# with command line options: step2bis.py --filein file:step3.root --fileout file:step2bis.root --mc --eventcontent FEVTDEBUG --datatier GEN-SIM-DIGI-L1 --conditions auto:phase1_2022_realistic --step L1 --geometry DB:Extended --era Run3 --python_filename step2bis_L1.py --no_exec -n 10
 import FWCore.ParameterSet.Config as cms
 from FWCore.ParameterSet.VarParsing import VarParsing
 from Configuration.Eras.Era_Run3_cff import Run3
-from Configuration.Eras.Era_Run2_2018_cff import Run2_2018
+from Configuration.Eras.Era_Run3_cff import run3_common
 
 options = VarParsing('analysis')
 options.register ("test", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
@@ -20,7 +20,7 @@ options.parseArguments()
 
 process_era = Run3
 if not options.run3:
-      process_era = Run2_2018
+      process_era = run3_common
 
 process = cms.Process("ReL1", process_era)
 
@@ -51,10 +51,10 @@ process.maxEvents = cms.untracked.PSet(
 process.source = cms.Source(
       "PoolSource",
       fileNames = cms.untracked.vstring(
-            #"file:/uscms/home/menendez/nobackup/Trigger/Data/28BC606A-86A3-E811-A897-02163E00B16E.root"
-            #"file:/uscms/home/dildick/nobackup/work/LLPStudiesWithSergoEtAL/CMSSW_12_0_0_pre2/src/132B0128-FF59-DB4A-A3AD-AF4D8B4D21D2.root"
-            "file:/eos/uscms/store/data/Run2018D/EphemeralZeroBias2/RAW/v1/000/320/673/00000/06B5F1BD-5695-E811-B52D-FA163EADBDBF.root"
-            #"/store/user/nimenend/HTo2LongLivedTo4q_MH_125_MFF_1_CTau_10000mm_TuneCP5_14TeV_pythia/HTo2LongLivedTo4q_MH_125_MFF_1_CTau_10000mm_TuneCP5_14TeV_pythia/200710_130547/0000/step2_1.root"
+            # DATA -> cmsRun step2_ReL1_Run3_MuonShower.py run3=True runOnData=True runOnRaw=True test=True
+            #"file:/eos/cms/store/group/phys_smp/fernanpe/e85e3c7f-2b1f-4125-a8a7-e44b94b88885.root"
+            # MC -> cmsRun step2_ReL1_Run3_MuonShower.py run3=True runOnData=False runOnRaw=True test=True
+            "file:/eos/cms/store/group/phys_smp/fernanpe/03E41585-26D9-8E43-AB1D-9687B8816EEA.root"
     ),
     secondaryFileNames = cms.untracked.vstring(),
     duplicateCheckMode = cms.untracked.string('noDuplicateCheck')
@@ -116,9 +116,10 @@ process.TFileService = cms.Service("TFileService",
 # Other statements
 from Configuration.AlCa.GlobalTag import GlobalTag
 if options.runOnData:
-      process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run2_data', '')
+      process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run3_data', '')
 else:
-      process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '')
+      process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2022_realistic', '')
+
 
 from GEMCode.GEMValidation.cscTriggerCustoms import runOn110XMC, runOn110XMC_IgnoreIncorrectGEMDB
 if options.runOnRaw:
@@ -205,9 +206,7 @@ if not options.run3:
 process.simCscTriggerPrimitiveDigis.commonParam.runME11ILT =False
 process.simCscTriggerPrimitiveDigisCath = process.simCscTriggerPrimitiveDigis.clone()
 process.simCscTriggerPrimitiveDigisAnod = process.simCscTriggerPrimitiveDigis.clone()
-process.simCscTriggerPrimitiveDigis.showerParam.source =3
-process.simCscTriggerPrimitiveDigisCath.showerParam.source =0
-process.simCscTriggerPrimitiveDigisAnod.showerParam.source =1
+
 process.simEmtfShowersCath = process.simEmtfShowers.clone()
 process.simEmtfShowersCath.CSCShowerInput = cms.InputTag(
 	'simCscTriggerPrimitiveDigisCath')

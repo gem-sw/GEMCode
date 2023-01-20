@@ -673,6 +673,8 @@ namespace my {
     p_ints csc_shower_ring;
     p_ints csc_shower_chamber;
     p_ints csc_shower_sector;
+    p_ints csc_shower_anodehits;
+    p_ints csc_shower_cathodehits;
     p_ints csc_shower_isLooseInTime;
     p_ints csc_shower_isNominalInTime;
     p_ints csc_shower_isTightInTime;
@@ -755,6 +757,8 @@ namespace my {
       csc_shower_ring = new t_ints;
       csc_shower_chamber = new t_ints;
       csc_shower_sector = new t_ints;
+      csc_shower_anodehits = new t_ints;
+      csc_shower_cathodehits = new t_ints;
       csc_shower_isLooseInTime = new t_ints;
       csc_shower_isNominalInTime = new t_ints;
       csc_shower_isTightInTime = new t_ints;
@@ -838,6 +842,8 @@ namespace my {
       t->Branch("csc_shower_ring", &csc_shower_ring);
       t->Branch("csc_shower_chamber", &csc_shower_chamber);
       t->Branch("csc_shower_sector", &csc_shower_sector);
+      t->Branch("csc_shower_anodehits", &csc_shower_anodehits);
+      t->Branch("csc_shower_cathodehits", &csc_shower_cathodehits);
       t->Branch("csc_shower_isLooseInTime", &csc_shower_isLooseInTime);
       t->Branch("csc_shower_isNominalInTime", &csc_shower_isNominalInTime);
       t->Branch("csc_shower_isTightInTime", &csc_shower_isTightInTime);
