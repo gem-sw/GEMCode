@@ -1,20 +1,16 @@
 # GEMCode
 
-## Instruction to use GEMCode package
+
+## Instruction to use GEMCode package for CMSSW_13_0_x
 
 ```
-cmsrel CMSSW_12_6_0_pre2
-cd CMSSW_12_6_0_pre2/src
+cmsrel CMSSW_13_0_3
+cd CMSSW_13_0_3/src
 cmsenv
 git clone  https://github.com/gem-sw/GEMCode
 scram b -j 9
 ```
-Right now to run L1 reemulation with lastest CSC trigger emulator, the new feature of CLCT sorting by quality+bending is only included in tahuang1991:from-CMSSW_12_6_0_pre2_newCLCTSorting CMSSW version. Hopefully it would be merged to cmssw master branch in short future. 
 
-To pull the updates from tahuang1991:from-CMSSW_12_6_0_pre2_newCLCTSorting before compiling
-```
-git cms-merge-topic tahuang1991:from-CMSSW_12_6_0_pre2_newCLCTSorting
-```
 
 ## GEMCSCAnalyzer: simtrack based analyzer to analyze muon trigger MC efficiency
 ![GEMCSCAnalyzer scheme](https://github.com/gem-sw/GEMCode/blob/for-CMSSW_12_0_1_X/docs/GEMCSCAnalyzer.png?raw=true)
@@ -65,3 +61,32 @@ GEMValidation/scripts/makePlots.py is used to plot efficiency and resolution etc
 
 ## MuonNtuplizer: rate study
 MuonNtuplizer could be used for trigger rate study by filling track information into TTree
+
+## Typical RelVal Samples 
+| Data path     | Description |
+| ----------- | ----------- |
+| /RelValSingleMuPt10*/CMSSW_X_Y_Z_*/GEN-SIM-DIGI-RAW with X/Y/Z replaced by real CMSSW version number | fixed pt, 10/100/1000 GeV, PU0|
+| /RelValZpToMM_m6000_14TeV/CMSSW_X_Y_Z_*/GEN-SIM-DIGI-RAW with X/Y/Z replaced by real CMSSW version number | Zprime sample with mass = 6000 GeV | 
+
+ 
+
+## Deprecated instruction for old CMSSW Release 
+<details>
+<summary>CMSSW_12_6_x</summary>
+
+```
+cmsrel CMSSW_12_6_0_pre2
+cd CMSSW_12_6_0_pre2/src
+cmsenv
+git clone  https://github.com/gem-sw/GEMCode
+scram b -j 9
+```
+Right now to run L1 reemulation with lastest CSC trigger emulator, the new feature of CLCT sorting by quality+bending is only included in tahuang1991:from-CMSSW_12_6_0_pre2_newCLCTSorting CMSSW version. Hopefully it would be merged to cmssw master branch in short future. 
+
+To pull the updates from tahuang1991:from-CMSSW_12_6_0_pre2_newCLCTSorting before compiling
+```
+git cms-merge-topic tahuang1991:from-CMSSW_12_6_0_pre2_newCLCTSorting
+```
+
+</details>
+
