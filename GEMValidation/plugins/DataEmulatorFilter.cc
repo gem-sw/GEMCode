@@ -3,7 +3,7 @@
 
 #include "FWCore/Utilities/interface/EDGetToken.h"
 #include "FWCore/Framework/interface/Frameworkfwd.h"
-#include "FWCore/Framework/interface/EDFilter.h"
+#include "FWCore/Framework/interface/one/EDFilter.h"
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/Framework/interface/EventSetup.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
@@ -23,7 +23,7 @@
 #include <iostream>
 using namespace std;
 
-class DataEmulatorFilter : public edm::EDFilter {
+class DataEmulatorFilter : public edm::one::EDFilter <>{
 public:
   /// Constructor
   explicit DataEmulatorFilter(const edm::ParameterSet &conf);
@@ -60,6 +60,8 @@ private:
   edm::InputTag alcts_e_tag_;
   edm::InputTag clcts_e_tag_;
   edm::InputTag lcts_e_tag_;
+
+  edm::ESGetToken<CSCBadChambers, CSCBadChambersRcd> pBadChambersToken_;
 
   edm::EDGetTokenT<CSCALCTDigiCollection> alcts_d_token_;
   edm::EDGetTokenT<CSCCLCTDigiCollection> clcts_d_token_;
@@ -153,9 +155,11 @@ bool DataEmulatorFilter::filter(edm::Event& ev, const edm::EventSetup& setup)
   // Find conditions data for bad chambers & cache it.  Needed for efficiency
   // calculations.
   if (checkBadChambers_) {
-    edm::ESHandle<CSCBadChambers> pBad;
-    setup.get<CSCBadChambersRcd>().get(pBad);
-    badChambers_ = pBad.product();
+    //edm::ESHandle<CSCBadChambers> pBad;
+    //setup.get<CSCBadChambersRcd>().get(pBad);
+    //badChambers_ = pBad.product();
+    pBadChambersToken_ = esConsumes<CSCBadChambers, CSCBadChambersRcd>();
+    badChambers_ = &setup.getData(pBadChambersToken_);
   }
 
   // Get the collections of ALCTs, CLCTs, and correlated LCTs from event.
