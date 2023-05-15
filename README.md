@@ -4,8 +4,8 @@
 ## Instruction to use GEMCode package for CMSSW_13_0_x
 
 ```
-cmsrel CMSSW_13_0_3
-cd CMSSW_13_0_3/src
+cmsrel CMSSW_13_0_0_pre4
+cd CMSSW_13_0_0_pre4/src
 cmsenv
 git clone  https://github.com/gem-sw/GEMCode
 scram b -j 9
