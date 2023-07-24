@@ -2,7 +2,7 @@ from WMCore.Configuration import Configuration
 config = Configuration()
 
 config.section_("General")
-config.General.requestName = 'GEMCSCanalyzer1000GeV0908v1addghost'
+config.General.requestName = 'GEMCSCanalyzer1000GeV0930CMSSW1260'
 config.General.workArea = 'crab_projects'
 config.General.transferLogs=False
 config.section_("JobType")
@@ -14,7 +14,8 @@ config.JobType.inputFiles = [] #hadd nano will not be needed once nano tools are
 config.JobType.sendPythonFolder	 = True
 config.JobType.allowUndistributedCMSSW = True
 config.section_("Data")
-config.Data.inputDataset = '/RelValSingleMuPt1000/CMSSW_12_4_0_pre3-123X_mcRun3_2021_realistic_v14-v1/GEN-SIM-DIGI-RAW'
+#config.Data.inputDataset = '/RelValSingleMuPt1000/CMSSW_12_4_0_pre3-123X_mcRun3_2021_realistic_v14-v1/GEN-SIM-DIGI-RAW'
+config.Data.inputDataset = '/RelValSingleMuPt1000/CMSSW_12_6_0_pre2-125X_mcRun3_2022_realistic_v3-v1/GEN-SIM-DIGI-RAW'
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'FileBased'
 #config.Data.splitting = 'EventAwareLumiBased'

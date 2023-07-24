@@ -2,7 +2,7 @@ from WMCore.Configuration import Configuration
 config = Configuration()
 
 config.section_("General")
-config.General.requestName = 'GEMCSCanalyzerZpToMuMuM6000NoPU0827v1'
+config.General.requestName = 'GEMCSCanalyzerZpToMuMuM6000NoPU0911v2'
 config.General.workArea = 'crab_projects'
 config.General.transferLogs=False
 config.section_("JobType")

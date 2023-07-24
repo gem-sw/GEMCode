@@ -49,6 +49,7 @@ process.MessageLogger = cms.Service("MessageLogger",
 )
 """
 inputFile = 'file:/eos/user/t/tahuang/RelValSamples/CMSSW_12_4_0_pre3/1000GeV/27a95851-6358-485b-b15b-619f3404d795.root'
+inputFile = ['/store/relval/CMSSW_12_6_0_pre2/RelValSingleMuPt1000/GEN-SIM-DIGI-RAW/125X_mcRun3_2022_realistic_v3-v1/2580000/87eaae84-afff-43d2-89c6-7f3014aefda8.root','/store/relval/CMSSW_12_6_0_pre2/RelValSingleMuPt1000/GEN-SIM-DIGI-RAW/125X_mcRun3_2022_realistic_v3-v1/2580000/dd11e39c-9b3a-4a80-81a9-05e99e7a58c4.root']
 process.source = cms.Source(
   "PoolSource",
   eventsToProcess = cms.untracked.VEventRange('%d:%d-%d:%d'%(options.runNumber, options.processEvent, options.runNumber, options.processEvent)),
@@ -65,7 +66,8 @@ process.TFileService = cms.Service("TFileService",
 ## global tag for upgrade studies
 from Configuration.AlCa.GlobalTag import GlobalTag
 #process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '')
-process.GlobalTag = GlobalTag(process.GlobalTag, '123X_mcRun3_2021_realistic_v14', '')
+#process.GlobalTag = GlobalTag(process.GlobalTag, '123X_mcRun3_2021_realistic_v14', '')
+process.GlobalTag = GlobalTag(process.GlobalTag, '125X_mcRun3_2022_realistic_v3', '')
 
 
 process.simCscTriggerPrimitiveDigis.selectedChambers = options.selectedChambers
@@ -105,11 +107,19 @@ process.simCscTriggerPrimitiveDigisRun3CCLUT.commonParam.runME11ILT = False
 process.simCscTriggerPrimitiveDigisRun3CCLUT.commonParam.run3 = True
 process.simCscTriggerPrimitiveDigisRun3CCLUT.commonParam.runPhase2 = True
 process.simCscTriggerPrimitiveDigisRun3CCLUT.commonParam.GEMPadDigiClusterProducer = cms.InputTag("")
-process.simCscTriggerPrimitiveDigisRun3CCLUT.clctPhase2.verbosity = cms.int32(1)
 process.simCscTriggerPrimitiveDigisRun3CCLUT.selectedChambers = options.selectedChambers
+process.simCscTriggerPrimitiveDigisRun3CCLUT.clctPhase2.verbosity = cms.int32(10)
+process.simCscTriggerPrimitiveDigisRun3CCLUT.clctPhase2GEM.verbosity = cms.int32(10)
 process.simCscTriggerPrimitiveDigisRun3CCLUT.tmbPhase2.verbosity = cms.int32(10)
 process.simCscTriggerPrimitiveDigisRun3CCLUT.tmbPhase1.verbosity = cms.int32(5)
-#print("Run3 CCLUT, common parameter ", process.simCscTriggerPrimitiveDigisRun3CCLUT.commonParam)
+process.simCscTriggerPrimitiveDigisRun3CCLUT.clctPhase2.clctLocalShowerZone = 30
+process.simCscTriggerPrimitiveDigisRun3CCLUT.clctPhase2.clctLocalShowerThresh = 12
+process.simCscTriggerPrimitiveDigisRun3CCLUT.clctPhase2GEM.clctLocalShowerZone = 30
+process.simCscTriggerPrimitiveDigisRun3CCLUT.clctPhase2GEM.clctLocalShowerThresh = 12
+process.simCscTriggerPrimitiveDigisRun3CCLUT.tmbPhase2.sortClctBx     = False 
+process.simCscTriggerPrimitiveDigisRun3CCLUT.tmbPhase2GE11.sortClctBx = False 
+print("Run3 CCLUT, CLCT parameter ", process.simCscTriggerPrimitiveDigisRun3CCLUT.clctPhase2)
+print("Run3 CCLUT, CLCTGEM parameter ", process.simCscTriggerPrimitiveDigisRun3CCLUT.clctPhase2GEM)
 process.simEmtfDigisRun3CCLUT = process.simEmtfDigis.clone()
 process.simEmtfDigisRun3CCLUT.CSCInput = cms.InputTag(
     'simCscTriggerPrimitiveDigisRun3CCLUT','MPCSORTED',process._Process__name)
@@ -165,8 +175,18 @@ process.simCscTriggerPrimitiveDigisRun3CCLUTILT.commonParam.runCCLUT_TMB = cms.b
 process.simCscTriggerPrimitiveDigisRun3CCLUTILT.commonParam.runME11ILT = True
 process.simCscTriggerPrimitiveDigisRun3CCLUTILT.commonParam.run3 = True
 process.simCscTriggerPrimitiveDigisRun3CCLUTILT.commonParam.runPhase2 = True
+process.simCscTriggerPrimitiveDigisRun3CCLUTILT.clctPhase2.verbosity = cms.int32(10)
+process.simCscTriggerPrimitiveDigisRun3CCLUTILT.clctPhase2GEM.verbosity = cms.int32(10)
+process.simCscTriggerPrimitiveDigisRun3CCLUTILT.tmbPhase2.verbosity = cms.int32(10)
+process.simCscTriggerPrimitiveDigisRun3CCLUTILT.tmbPhase1.verbosity = cms.int32(5)
+process.simCscTriggerPrimitiveDigisRun3CCLUTILT.clctPhase2.clctLocalShowerZone = 20
+process.simCscTriggerPrimitiveDigisRun3CCLUTILT.clctPhase2.clctLocalShowerThresh = 10
+process.simCscTriggerPrimitiveDigisRun3CCLUTILT.clctPhase2GEM.clctLocalShowerZone = 20
+process.simCscTriggerPrimitiveDigisRun3CCLUTILT.clctPhase2GEM.clctLocalShowerThresh = 10
+process.simCscTriggerPrimitiveDigisRun3CCLUTILT.tmbPhase2.sortClctBx     = False 
+process.simCscTriggerPrimitiveDigisRun3CCLUTILT.tmbPhase2GE11.sortClctBx = False 
 process.simCscTriggerPrimitiveDigisRun3CCLUTILT.commonParam.GEMPadDigiClusterProducer = cms.InputTag("simMuonGEMPadDigiClusters")
-#print("Run-3 patterns with CCLUT, with ILT emulation, common parameter ", process.simCscTriggerPrimitiveDigisRun3CCLUTILT.commonParam)
+print("Run-3 patterns with CCLUT,CLCT phase2 ", process.simCscTriggerPrimitiveDigisRun3CCLUTILT.clctPhase2)
 process.simEmtfDigisRun3CCLUTILT = process.simEmtfDigis.clone()
 process.simEmtfDigisRun3CCLUTILT.CSCInput = cms.InputTag(
     'simCscTriggerPrimitiveDigisRun3CCLUTILT','MPCSORTED',process._Process__name)
