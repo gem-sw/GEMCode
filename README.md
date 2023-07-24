@@ -81,12 +81,14 @@ cmsenv
 git clone  https://github.com/gem-sw/GEMCode
 scram b -j 9
 ```
-Right now to run L1 reemulation with lastest CSC trigger emulator, the new feature of CLCT sorting by quality+bending is only included in tahuang1991:from-CMSSW_12_6_0_pre2_newCLCTSorting CMSSW version. Hopefully it would be merged to cmssw master branch in short future. 
-
-To pull the updates from tahuang1991:from-CMSSW_12_6_0_pre2_newCLCTSorting before compiling
+To run GEMCode with phase2 MC sample, the following configuration from GEMCode/GEMValidation/test could be used:
 ```
-git cms-merge-topic tahuang1991:from-CMSSW_12_6_0_pre2_newCLCTSorting
+cmsRun runGEMCSCAnalyzer_Phase2_cfg.py
 ```
+The one of 125X muon sample is /SingleMuon_Pt-0To200_Eta-1p4To3p1-gun/Phase2Fall22DRMiniAOD-PU200_125X_mcRun4_realistic_v2-v1/GEN-SIM-DIGI-RAW-MINIAOD
+and the full 125X sample compain is explained in the twiki: https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideL1TPhase2Instructions#Phase2Fall22_Campaign_125X_sampl
 
+The samples can be queried from cms DAS website through: 
+https://cmsweb.cern.ch/das/request?input=dataset+dataset%3D%2F%2A%2FPhase2Fall22DRMiniAOD-PU200%2A125X%2A%2FGEN-SIM-DIGI-RAW-MINIAOD&instance=prod/global&idx=150&limit=50
 </details>
 
